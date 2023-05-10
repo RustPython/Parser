@@ -35,7 +35,7 @@ use crate::{
     Mode,
 };
 use log::trace;
-use num_bigint::BigInt;
+use malachite_bigint::BigInt;
 use num_traits::{Num, Zero};
 use std::{char, cmp::Ordering, ops::Index, slice::SliceIndex, str::FromStr};
 use unic_emoji_char::is_emoji_presentation;
@@ -1360,7 +1360,7 @@ impl std::fmt::Display for LexicalErrorType {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use num_bigint::BigInt;
+    use malachite_bigint::BigInt;
 
     const WINDOWS_EOL: &str = "\r\n";
     const MAC_EOL: &str = "\r";

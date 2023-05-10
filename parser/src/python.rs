@@ -1,5 +1,5 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: 4ad71899432c2dd721d23812499e7f4385a10cb13467dbf34b4043443888f745
+// sha3: 5b283ac4fb75961faa865fa48facd04eb934dc9500dc46f3c7c128ba0d860a73
 use crate::{
     ast::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
@@ -9,7 +9,7 @@ use crate::{
     token::{self, StringKind},
     text_size::TextSize, parser::optional_range
 };
-use num_bigint::BigInt;
+use malachite_bigint::BigInt;
 #[allow(unused_extern_crates)]
 extern crate lalrpop_util as __lalrpop_util;
 #[allow(unused_imports)]
@@ -30,7 +30,7 @@ mod __parse__Top {
     token::{self, StringKind},
     text_size::TextSize, parser::optional_range
 };
-    use num_bigint::BigInt;
+    use malachite_bigint::BigInt;
     #[allow(unused_extern_crates)]
     extern crate lalrpop_util as __lalrpop_util;
     #[allow(unused_imports)]
