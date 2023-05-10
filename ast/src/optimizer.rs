@@ -55,7 +55,7 @@ impl<U> crate::fold::Fold<U> for ConstantOptimizer {
 
 #[cfg(test)]
 mod tests {
-    use num_bigint::BigInt;
+    use malachite_bigint::BigInt;
     use rustpython_parser_core::text_size::TextRange;
 
     #[cfg(feature = "constant-optimization")]

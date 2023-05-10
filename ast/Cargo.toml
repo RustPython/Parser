@@ -26,8 +26,8 @@ rustpython-parser-core = { workspace = true }
 rustpython-literal = { workspace = true, optional = true }
 
 is-macro = { workspace = true }
-num-bigint = { workspace = true }
 static_assertions = "1.1.0"
 num-complex = { workspace = true, optional = true }
 once_cell = { workspace = true, optional = true }
 pyo3 = { workspace = true, optional = true, features = ["num-bigint", "num-complex"] }
+malachite-bigint = { workspace = true }
