@@ -14,7 +14,7 @@ pub trait Fold<U> {
     #[cfg(not(feature = "more-attributes"))]
     fn map_user_cfg(
         &mut self,
-        _user: U,
+        _user: std::marker::PhantomData<U>,
     ) -> Result<std::marker::PhantomData<Self::TargetU>, Self::Error> {
         Ok(std::marker::PhantomData)
     }
@@ -111,10 +111,7 @@ pub fn fold_mod<U, F: Fold<U> + ?Sized>(
             type_ignores,
             custom,
         }) => {
-            #[cfg(not(feature = "more-attributes"))]
-            let custom = std::marker::PhantomData;
-            #[cfg(feature = "more-attributes")]
-            let custom = folder.map_user(custom)?;
+            let custom = folder.map_user_cfg(custom)?;
             Ok(Mod::Module(ModModule {
                 body: Foldable::fold(body, folder)?,
                 type_ignores: Foldable::fold(type_ignores, folder)?,
@@ -122,20 +119,14 @@ pub fn fold_mod<U, F: Fold<U> + ?Sized>(
             }))
         }
         Mod::Interactive(ModInteractive { body, custom }) => {
-            #[cfg(not(feature = "more-attributes"))]
-            let custom = std::marker::PhantomData;
-            #[cfg(feature = "more-attributes")]
-            let custom = folder.map_user(custom)?;
+            let custom = folder.map_user_cfg(custom)?;
             Ok(Mod::Interactive(ModInteractive {
                 body: Foldable::fold(body, folder)?,
                 custom,
             }))
         }
         Mod::Expression(ModExpression { body, custom }) => {
-            #[cfg(not(feature = "more-attributes"))]
-            let custom = std::marker::PhantomData;
-            #[cfg(feature = "more-attributes")]
-            let custom = folder.map_user(custom)?;
+            let custom = folder.map_user_cfg(custom)?;
             Ok(Mod::Expression(ModExpression {
                 body: Foldable::fold(body, folder)?,
                 custom,
@@ -146,10 +137,7 @@ pub fn fold_mod<U, F: Fold<U> + ?Sized>(
             returns,
             custom,
         }) => {
-            #[cfg(not(feature = "more-attributes"))]
-            let custom = std::marker::PhantomData;
-            #[cfg(feature = "more-attributes")]
-            let custom = folder.map_user(custom)?;
+            let custom = folder.map_user_cfg(custom)?;
             Ok(Mod::FunctionType(ModFunctionType {
                 argtypes: Foldable::fold(argtypes, folder)?,
                 returns: Foldable::fold(returns, folder)?,
@@ -900,10 +888,7 @@ pub fn fold_comprehension<U, F: Fold<U> + ?Sized>(
         is_async,
         custom,
     } = node;
-    #[cfg(not(feature = "more-attributes"))]
-    let custom = std::marker::PhantomData;
-    #[cfg(feature = "more-attributes")]
-    let custom = folder.map_user(custom)?;
+    let custom = folder.map_user_cfg(custom)?;
     Ok(Comprehension {
         target: Foldable::fold(target, folder)?,
         iter: Foldable::fold(iter, folder)?,
@@ -965,10 +950,7 @@ pub fn fold_arguments<U, F: Fold<U> + ?Sized>(
         defaults,
         custom,
     } = node;
-    #[cfg(not(feature = "more-attributes"))]
-    let custom = std::marker::PhantomData;
-    #[cfg(feature = "more-attributes")]
-    let custom = folder.map_user(custom)?;
+    let custom = folder.map_user_cfg(custom)?;
     Ok(Arguments {
         posonlyargs: Foldable::fold(posonlyargs, folder)?,
         args: Foldable::fold(args, folder)?,
@@ -1071,10 +1053,7 @@ pub fn fold_withitem<U, F: Fold<U> + ?Sized>(
         optional_vars,
         custom,
     } = node;
-    #[cfg(not(feature = "more-attributes"))]
-    let custom = std::marker::PhantomData;
-    #[cfg(feature = "more-attributes")]
-    let custom = folder.map_user(custom)?;
+    let custom = folder.map_user_cfg(custom)?;
     Ok(Withitem {
         context_expr: Foldable::fold(context_expr, folder)?,
         optional_vars: Foldable::fold(optional_vars, folder)?,
@@ -1100,10 +1079,7 @@ pub fn fold_match_case<U, F: Fold<U> + ?Sized>(
         body,
         custom,
     } = node;
-    #[cfg(not(feature = "more-attributes"))]
-    let custom = std::marker::PhantomData;
-    #[cfg(feature = "more-attributes")]
-    let custom = folder.map_user(custom)?;
+    let custom = folder.map_user_cfg(custom)?;
     Ok(MatchCase {
         pattern: Foldable::fold(pattern, folder)?,
         guard: Foldable::fold(guard, folder)?,
@@ -1223,10 +1199,7 @@ pub fn fold_type_ignore<U, F: Fold<U> + ?Sized>(
             tag,
             custom,
         }) => {
-            #[cfg(not(feature = "more-attributes"))]
-            let custom = std::marker::PhantomData;
-            #[cfg(feature = "more-attributes")]
-            let custom = folder.map_user(custom)?;
+            let custom = folder.map_user_cfg(custom)?;
             Ok(TypeIgnore::TypeIgnore(TypeIgnoreTypeIgnore {
                 lineno: Foldable::fold(lineno, folder)?,
                 tag: Foldable::fold(tag, folder)?,

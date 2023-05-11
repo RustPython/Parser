@@ -425,7 +425,7 @@ class FoldTraitDefVisitor(EmitVisitor):
                 self.map_user(user)
             }
             #[cfg(not(feature = "more-attributes"))]
-            fn map_user_cfg(&mut self, _user: U) -> Result<std::marker::PhantomData<Self::TargetU>, Self::Error> {
+            fn map_user_cfg(&mut self, _user: std::marker::PhantomData<U>) -> Result<std::marker::PhantomData<Self::TargetU>, Self::Error> {
                 Ok(std::marker::PhantomData)
             }
             """,
@@ -496,11 +496,12 @@ class FoldImplVisitor(EmitVisitor):
                 f"{fields_pattern[0]} {{ {fields_pattern[1]}}} {fields_pattern[2]} => {{",
                 depth + 2,
             )
-            if not type_info.has_attributes:
-                self.emit('#[cfg(not(feature = "more-attributes"))]', depth + 3)
-                self.emit("let custom = std::marker::PhantomData;", depth + 3)
-                self.emit('#[cfg(feature = "more-attributes")]', depth + 3)
-            self.emit("let custom = folder.map_user(custom)?;", depth + 3)
+
+            map_user_suffix = "" if type_info.has_attributes else "_cfg"
+            self.emit(
+                f"let custom = folder.map_user{map_user_suffix}(custom)?;", depth + 3
+            )
+
             self.gen_construction(
                 fields_pattern[0], cons.fields, fields_pattern[2], depth + 3
             )
@@ -533,11 +534,8 @@ class FoldImplVisitor(EmitVisitor):
         fields_pattern = self.make_pattern(struct_name, struct_name, product.fields)
         self.emit(f"let {struct_name} {{ {fields_pattern[1]} }} = node;", depth + 1)
 
-        if not has_attributes:
-            self.emit('#[cfg(not(feature = "more-attributes"))]', depth + 3)
-            self.emit("let custom = std::marker::PhantomData;", depth + 3)
-            self.emit('#[cfg(feature = "more-attributes")]', depth + 3)
-        self.emit("let custom = folder.map_user(custom)?;", depth + 3)
+        map_user_suffix = "" if has_attributes else "_cfg"
+        self.emit(f"let custom = folder.map_user{map_user_suffix}(custom)?;", depth + 3)
 
         self.gen_construction(struct_name, product.fields, "", depth + 1)
 
@@ -956,11 +954,7 @@ def write_ast_def(mod, type_info, f):
 
 
 def write_fold_def(mod, type_info, f):
-    f.write(
-        """
-use crate::generic::Custom;
-"""
-    )
+    f.write("use crate::generic::Custom;")
     FoldModuleVisitor(f, type_info).visit(mod)
 
 
