@@ -47,6 +47,7 @@ impl<U> From<ModFunctionType<U>> for Mod<U> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum Mod<U = ()> {
     Module(ModModule<U>),
     Interactive(ModInteractive<U>),
@@ -367,6 +368,7 @@ impl<U> From<StmtExpr<U>> for StmtKind<U> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum StmtKind<U = ()> {
     FunctionDef(StmtFunctionDef<U>),
     AsyncFunctionDef(StmtAsyncFunctionDef<U>),
@@ -727,6 +729,7 @@ impl<U> From<ExprSlice<U>> for ExprKind<U> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum ExprKind<U = ()> {
     BoolOp(ExprBoolOp<U>),
     NamedExpr(ExprNamedExpr<U>),
@@ -759,6 +762,7 @@ pub enum ExprKind<U = ()> {
 pub type Expr<U = ()> = Attributed<ExprKind<U>, U>;
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum ExprContext {
     Load,
     Store,
@@ -766,12 +770,14 @@ pub enum ExprContext {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum Boolop {
     And,
     Or,
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum Operator {
     Add,
     Sub,
@@ -789,6 +795,7 @@ pub enum Operator {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum Unaryop {
     Invert,
     Not,
@@ -797,6 +804,7 @@ pub enum Unaryop {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum Cmpop {
     Eq,
     NotEq,
@@ -832,6 +840,7 @@ impl<U> From<ExcepthandlerExceptHandler<U>> for ExcepthandlerKind<U> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum ExcepthandlerKind<U = ()> {
     ExceptHandler(ExcepthandlerExceptHandler<U>),
 }
@@ -978,6 +987,7 @@ impl<U> From<PatternMatchOr<U>> for PatternKind<U> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum PatternKind<U = ()> {
     MatchValue(PatternMatchValue<U>),
     MatchSingleton(PatternMatchSingleton),
@@ -1003,6 +1013,7 @@ impl From<TypeIgnoreTypeIgnore> for TypeIgnore {
 }
 
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "is_macro", derive(is_macro::Is))]
 pub enum TypeIgnore {
     TypeIgnore(TypeIgnoreTypeIgnore),
 }
