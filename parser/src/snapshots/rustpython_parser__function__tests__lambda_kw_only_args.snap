@@ -5,12 +5,10 @@ expression: parse_ast
 Ok(
     [
         Attributed {
-            range: 0..20,
             custom: (),
             node: Expr(
                 StmtExpr {
                     value: Attributed {
-                        range: 0..20,
                         custom: (),
                         node: Lambda(
                             ExprLambda {
@@ -20,7 +18,6 @@ Ok(
                                     vararg: None,
                                     kwonlyargs: [
                                         Attributed {
-                                            range: 10..11,
                                             custom: (),
                                             node: ArgData {
                                                 arg: Identifier(
@@ -28,10 +25,10 @@ Ok(
                                                 ),
                                                 annotation: None,
                                                 type_comment: None,
+                                                range: 10..11,
                                             },
                                         },
                                         Attributed {
-                                            range: 13..14,
                                             custom: (),
                                             node: ArgData {
                                                 arg: Identifier(
@@ -39,10 +36,10 @@ Ok(
                                                 ),
                                                 annotation: None,
                                                 type_comment: None,
+                                                range: 13..14,
                                             },
                                         },
                                         Attributed {
-                                            range: 16..17,
                                             custom: (),
                                             node: ArgData {
                                                 arg: Identifier(
@@ -50,15 +47,16 @@ Ok(
                                                 ),
                                                 annotation: None,
                                                 type_comment: None,
+                                                range: 16..17,
                                             },
                                         },
                                     ],
                                     kw_defaults: [],
                                     kwarg: None,
                                     defaults: [],
+                                    range: 7..17,
                                 },
                                 body: Attributed {
-                                    range: 19..20,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -66,12 +64,15 @@ Ok(
                                                 1,
                                             ),
                                             kind: None,
+                                            range: 19..20,
                                         },
                                     ),
                                 },
+                                range: 0..20,
                             },
                         ),
                     },
+                    range: 0..20,
                 },
             ),
         },

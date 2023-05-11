@@ -4,18 +4,15 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..22,
         custom: (),
         node: Expr(
             StmtExpr {
                 value: Attributed {
-                    range: 0..22,
                     custom: (),
                     node: JoinedStr(
                         ExprJoinedStr {
                             values: [
                                 Attributed {
-                                    range: 0..22,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -23,16 +20,15 @@ expression: parse_ast
                                                 "Hello world",
                                             ),
                                             kind: None,
+                                            range: 0..22,
                                         },
                                     ),
                                 },
                                 Attributed {
-                                    range: 9..22,
                                     custom: (),
                                     node: FormattedValue(
                                         ExprFormattedValue {
                                             value: Attributed {
-                                                range: 17..20,
                                                 custom: (),
                                                 node: Constant(
                                                     ExprConstant {
@@ -40,6 +36,7 @@ expression: parse_ast
                                                             "!",
                                                         ),
                                                         kind: None,
+                                                        range: 17..20,
                                                     },
                                                 ),
                                             },
@@ -47,13 +44,16 @@ expression: parse_ast
                                                 0,
                                             ),
                                             format_spec: None,
+                                            range: 9..22,
                                         },
                                     ),
                                 },
                             ],
+                            range: 0..22,
                         },
                     ),
                 },
+                range: 0..22,
             },
         ),
     },

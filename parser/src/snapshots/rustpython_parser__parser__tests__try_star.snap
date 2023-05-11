@@ -4,24 +4,20 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..260,
         custom: (),
         node: TryStar(
             StmtTryStar {
                 body: [
                     Attributed {
-                        range: 9..98,
                         custom: (),
                         node: Raise(
                             StmtRaise {
                                 exc: Some(
                                     Attributed {
-                                        range: 15..98,
                                         custom: (),
                                         node: Call(
                                             ExprCall {
                                                 func: Attributed {
-                                                    range: 15..29,
                                                     custom: (),
                                                     node: Name(
                                                         ExprName {
@@ -29,12 +25,12 @@ expression: parse_ast
                                                                 "ExceptionGroup",
                                                             ),
                                                             ctx: Load,
+                                                            range: 15..29,
                                                         },
                                                     ),
                                                 },
                                                 args: [
                                                     Attributed {
-                                                        range: 30..34,
                                                         custom: (),
                                                         node: Constant(
                                                             ExprConstant {
@@ -42,22 +38,20 @@ expression: parse_ast
                                                                     "eg",
                                                                 ),
                                                                 kind: None,
+                                                                range: 30..34,
                                                             },
                                                         ),
                                                     },
                                                     Attributed {
-                                                        range: 44..97,
                                                         custom: (),
                                                         node: List(
                                                             ExprList {
                                                                 elts: [
                                                                     Attributed {
-                                                                        range: 45..58,
                                                                         custom: (),
                                                                         node: Call(
                                                                             ExprCall {
                                                                                 func: Attributed {
-                                                                                    range: 45..55,
                                                                                     custom: (),
                                                                                     node: Name(
                                                                                         ExprName {
@@ -65,12 +59,12 @@ expression: parse_ast
                                                                                                 "ValueError",
                                                                                             ),
                                                                                             ctx: Load,
+                                                                                            range: 45..55,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 args: [
                                                                                     Attributed {
-                                                                                        range: 56..57,
                                                                                         custom: (),
                                                                                         node: Constant(
                                                                                             ExprConstant {
@@ -78,21 +72,21 @@ expression: parse_ast
                                                                                                     1,
                                                                                                 ),
                                                                                                 kind: None,
+                                                                                                range: 56..57,
                                                                                             },
                                                                                         ),
                                                                                     },
                                                                                 ],
                                                                                 keywords: [],
+                                                                                range: 45..58,
                                                                             },
                                                                         ),
                                                                     },
                                                                     Attributed {
-                                                                        range: 60..72,
                                                                         custom: (),
                                                                         node: Call(
                                                                             ExprCall {
                                                                                 func: Attributed {
-                                                                                    range: 60..69,
                                                                                     custom: (),
                                                                                     node: Name(
                                                                                         ExprName {
@@ -100,12 +94,12 @@ expression: parse_ast
                                                                                                 "TypeError",
                                                                                             ),
                                                                                             ctx: Load,
+                                                                                            range: 60..69,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 args: [
                                                                                     Attributed {
-                                                                                        range: 70..71,
                                                                                         custom: (),
                                                                                         node: Constant(
                                                                                             ExprConstant {
@@ -113,21 +107,21 @@ expression: parse_ast
                                                                                                     2,
                                                                                                 ),
                                                                                                 kind: None,
+                                                                                                range: 70..71,
                                                                                             },
                                                                                         ),
                                                                                     },
                                                                                 ],
                                                                                 keywords: [],
+                                                                                range: 60..72,
                                                                             },
                                                                         ),
                                                                     },
                                                                     Attributed {
-                                                                        range: 74..84,
                                                                         custom: (),
                                                                         node: Call(
                                                                             ExprCall {
                                                                                 func: Attributed {
-                                                                                    range: 74..81,
                                                                                     custom: (),
                                                                                     node: Name(
                                                                                         ExprName {
@@ -135,12 +129,12 @@ expression: parse_ast
                                                                                                 "OSError",
                                                                                             ),
                                                                                             ctx: Load,
+                                                                                            range: 74..81,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 args: [
                                                                                     Attributed {
-                                                                                        range: 82..83,
                                                                                         custom: (),
                                                                                         node: Constant(
                                                                                             ExprConstant {
@@ -148,21 +142,21 @@ expression: parse_ast
                                                                                                     3,
                                                                                                 ),
                                                                                                 kind: None,
+                                                                                                range: 82..83,
                                                                                             },
                                                                                         ),
                                                                                     },
                                                                                 ],
                                                                                 keywords: [],
+                                                                                range: 74..84,
                                                                             },
                                                                         ),
                                                                     },
                                                                     Attributed {
-                                                                        range: 86..96,
                                                                         custom: (),
                                                                         node: Call(
                                                                             ExprCall {
                                                                                 func: Attributed {
-                                                                                    range: 86..93,
                                                                                     custom: (),
                                                                                     node: Name(
                                                                                         ExprName {
@@ -170,12 +164,12 @@ expression: parse_ast
                                                                                                 "OSError",
                                                                                             ),
                                                                                             ctx: Load,
+                                                                                            range: 86..93,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 args: [
                                                                                     Attributed {
-                                                                                        range: 94..95,
                                                                                         custom: (),
                                                                                         node: Constant(
                                                                                             ExprConstant {
@@ -183,39 +177,42 @@ expression: parse_ast
                                                                                                     4,
                                                                                                 ),
                                                                                                 kind: None,
+                                                                                                range: 94..95,
                                                                                             },
                                                                                         ),
                                                                                     },
                                                                                 ],
                                                                                 keywords: [],
+                                                                                range: 86..96,
                                                                             },
                                                                         ),
                                                                     },
                                                                 ],
                                                                 ctx: Load,
+                                                                range: 44..97,
                                                             },
                                                         ),
                                                     },
                                                 ],
                                                 keywords: [],
+                                                range: 15..98,
                                             },
                                         ),
                                     },
                                 ),
                                 cause: None,
+                                range: 9..98,
                             },
                         ),
                     },
                 ],
                 handlers: [
                     Attributed {
-                        range: 99..180,
                         custom: (),
                         node: ExceptHandler(
                             ExcepthandlerExceptHandler {
                                 type_: Some(
                                     Attributed {
-                                        range: 107..116,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -223,6 +220,7 @@ expression: parse_ast
                                                     "TypeError",
                                                 ),
                                                 ctx: Load,
+                                                range: 107..116,
                                             },
                                         ),
                                     },
@@ -234,17 +232,14 @@ expression: parse_ast
                                 ),
                                 body: [
                                     Attributed {
-                                        range: 127..180,
                                         custom: (),
                                         node: Expr(
                                             StmtExpr {
                                                 value: Attributed {
-                                                    range: 127..180,
                                                     custom: (),
                                                     node: Call(
                                                         ExprCall {
                                                             func: Attributed {
-                                                                range: 127..132,
                                                                 custom: (),
                                                                 node: Name(
                                                                     ExprName {
@@ -252,18 +247,17 @@ expression: parse_ast
                                                                             "print",
                                                                         ),
                                                                         ctx: Load,
+                                                                        range: 127..132,
                                                                     },
                                                                 ),
                                                             },
                                                             args: [
                                                                 Attributed {
-                                                                    range: 133..179,
                                                                     custom: (),
                                                                     node: JoinedStr(
                                                                         ExprJoinedStr {
                                                                             values: [
                                                                                 Attributed {
-                                                                                    range: 133..179,
                                                                                     custom: (),
                                                                                     node: Constant(
                                                                                         ExprConstant {
@@ -271,21 +265,19 @@ expression: parse_ast
                                                                                                 "caught ",
                                                                                             ),
                                                                                             kind: None,
+                                                                                            range: 133..179,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 Attributed {
-                                                                                    range: 133..179,
                                                                                     custom: (),
                                                                                     node: FormattedValue(
                                                                                         ExprFormattedValue {
                                                                                             value: Attributed {
-                                                                                                range: 143..150,
                                                                                                 custom: (),
                                                                                                 node: Call(
                                                                                                     ExprCall {
                                                                                                         func: Attributed {
-                                                                                                            range: 143..147,
                                                                                                             custom: (),
                                                                                                             node: Name(
                                                                                                                 ExprName {
@@ -293,12 +285,12 @@ expression: parse_ast
                                                                                                                         "type",
                                                                                                                     ),
                                                                                                                     ctx: Load,
+                                                                                                                    range: 143..147,
                                                                                                                 },
                                                                                                             ),
                                                                                                         },
                                                                                                         args: [
                                                                                                             Attributed {
-                                                                                                                range: 148..149,
                                                                                                                 custom: (),
                                                                                                                 node: Name(
                                                                                                                     ExprName {
@@ -306,11 +298,13 @@ expression: parse_ast
                                                                                                                             "e",
                                                                                                                         ),
                                                                                                                         ctx: Load,
+                                                                                                                        range: 148..149,
                                                                                                                     },
                                                                                                                 ),
                                                                                                             },
                                                                                                         ],
                                                                                                         keywords: [],
+                                                                                                        range: 143..150,
                                                                                                     },
                                                                                                 ),
                                                                                             },
@@ -318,11 +312,11 @@ expression: parse_ast
                                                                                                 0,
                                                                                             ),
                                                                                             format_spec: None,
+                                                                                            range: 133..179,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 Attributed {
-                                                                                    range: 133..179,
                                                                                     custom: (),
                                                                                     node: Constant(
                                                                                         ExprConstant {
@@ -330,21 +324,19 @@ expression: parse_ast
                                                                                                 " with nested ",
                                                                                             ),
                                                                                             kind: None,
+                                                                                            range: 133..179,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 Attributed {
-                                                                                    range: 133..179,
                                                                                     custom: (),
                                                                                     node: FormattedValue(
                                                                                         ExprFormattedValue {
                                                                                             value: Attributed {
-                                                                                                range: 165..177,
                                                                                                 custom: (),
                                                                                                 node: Attribute(
                                                                                                     ExprAttribute {
                                                                                                         value: Attributed {
-                                                                                                            range: 165..166,
                                                                                                             custom: (),
                                                                                                             node: Name(
                                                                                                                 ExprName {
@@ -352,6 +344,7 @@ expression: parse_ast
                                                                                                                         "e",
                                                                                                                     ),
                                                                                                                     ctx: Load,
+                                                                                                                    range: 165..166,
                                                                                                                 },
                                                                                                             ),
                                                                                                         },
@@ -359,6 +352,7 @@ expression: parse_ast
                                                                                                             "exceptions",
                                                                                                         ),
                                                                                                         ctx: Load,
+                                                                                                        range: 165..177,
                                                                                                     },
                                                                                                 ),
                                                                                             },
@@ -366,33 +360,36 @@ expression: parse_ast
                                                                                                 0,
                                                                                             ),
                                                                                             format_spec: None,
+                                                                                            range: 133..179,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                             ],
+                                                                            range: 133..179,
                                                                         },
                                                                     ),
                                                                 },
                                                             ],
                                                             keywords: [],
+                                                            range: 127..180,
                                                         },
                                                     ),
                                                 },
+                                                range: 127..180,
                                             },
                                         ),
                                     },
                                 ],
+                                range: 99..180,
                             },
                         ),
                     },
                     Attributed {
-                        range: 181..260,
                         custom: (),
                         node: ExceptHandler(
                             ExcepthandlerExceptHandler {
                                 type_: Some(
                                     Attributed {
-                                        range: 189..196,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -400,6 +397,7 @@ expression: parse_ast
                                                     "OSError",
                                                 ),
                                                 ctx: Load,
+                                                range: 189..196,
                                             },
                                         ),
                                     },
@@ -411,17 +409,14 @@ expression: parse_ast
                                 ),
                                 body: [
                                     Attributed {
-                                        range: 207..260,
                                         custom: (),
                                         node: Expr(
                                             StmtExpr {
                                                 value: Attributed {
-                                                    range: 207..260,
                                                     custom: (),
                                                     node: Call(
                                                         ExprCall {
                                                             func: Attributed {
-                                                                range: 207..212,
                                                                 custom: (),
                                                                 node: Name(
                                                                     ExprName {
@@ -429,18 +424,17 @@ expression: parse_ast
                                                                             "print",
                                                                         ),
                                                                         ctx: Load,
+                                                                        range: 207..212,
                                                                     },
                                                                 ),
                                                             },
                                                             args: [
                                                                 Attributed {
-                                                                    range: 213..259,
                                                                     custom: (),
                                                                     node: JoinedStr(
                                                                         ExprJoinedStr {
                                                                             values: [
                                                                                 Attributed {
-                                                                                    range: 213..259,
                                                                                     custom: (),
                                                                                     node: Constant(
                                                                                         ExprConstant {
@@ -448,21 +442,19 @@ expression: parse_ast
                                                                                                 "caught ",
                                                                                             ),
                                                                                             kind: None,
+                                                                                            range: 213..259,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 Attributed {
-                                                                                    range: 213..259,
                                                                                     custom: (),
                                                                                     node: FormattedValue(
                                                                                         ExprFormattedValue {
                                                                                             value: Attributed {
-                                                                                                range: 223..230,
                                                                                                 custom: (),
                                                                                                 node: Call(
                                                                                                     ExprCall {
                                                                                                         func: Attributed {
-                                                                                                            range: 223..227,
                                                                                                             custom: (),
                                                                                                             node: Name(
                                                                                                                 ExprName {
@@ -470,12 +462,12 @@ expression: parse_ast
                                                                                                                         "type",
                                                                                                                     ),
                                                                                                                     ctx: Load,
+                                                                                                                    range: 223..227,
                                                                                                                 },
                                                                                                             ),
                                                                                                         },
                                                                                                         args: [
                                                                                                             Attributed {
-                                                                                                                range: 228..229,
                                                                                                                 custom: (),
                                                                                                                 node: Name(
                                                                                                                     ExprName {
@@ -483,11 +475,13 @@ expression: parse_ast
                                                                                                                             "e",
                                                                                                                         ),
                                                                                                                         ctx: Load,
+                                                                                                                        range: 228..229,
                                                                                                                     },
                                                                                                                 ),
                                                                                                             },
                                                                                                         ],
                                                                                                         keywords: [],
+                                                                                                        range: 223..230,
                                                                                                     },
                                                                                                 ),
                                                                                             },
@@ -495,11 +489,11 @@ expression: parse_ast
                                                                                                 0,
                                                                                             ),
                                                                                             format_spec: None,
+                                                                                            range: 213..259,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 Attributed {
-                                                                                    range: 213..259,
                                                                                     custom: (),
                                                                                     node: Constant(
                                                                                         ExprConstant {
@@ -507,21 +501,19 @@ expression: parse_ast
                                                                                                 " with nested ",
                                                                                             ),
                                                                                             kind: None,
+                                                                                            range: 213..259,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                                 Attributed {
-                                                                                    range: 213..259,
                                                                                     custom: (),
                                                                                     node: FormattedValue(
                                                                                         ExprFormattedValue {
                                                                                             value: Attributed {
-                                                                                                range: 245..257,
                                                                                                 custom: (),
                                                                                                 node: Attribute(
                                                                                                     ExprAttribute {
                                                                                                         value: Attributed {
-                                                                                                            range: 245..246,
                                                                                                             custom: (),
                                                                                                             node: Name(
                                                                                                                 ExprName {
@@ -529,6 +521,7 @@ expression: parse_ast
                                                                                                                         "e",
                                                                                                                     ),
                                                                                                                     ctx: Load,
+                                                                                                                    range: 245..246,
                                                                                                                 },
                                                                                                             ),
                                                                                                         },
@@ -536,6 +529,7 @@ expression: parse_ast
                                                                                                             "exceptions",
                                                                                                         ),
                                                                                                         ctx: Load,
+                                                                                                        range: 245..257,
                                                                                                     },
                                                                                                 ),
                                                                                             },
@@ -543,28 +537,34 @@ expression: parse_ast
                                                                                                 0,
                                                                                             ),
                                                                                             format_spec: None,
+                                                                                            range: 213..259,
                                                                                         },
                                                                                     ),
                                                                                 },
                                                                             ],
+                                                                            range: 213..259,
                                                                         },
                                                                     ),
                                                                 },
                                                             ],
                                                             keywords: [],
+                                                            range: 207..260,
                                                         },
                                                     ),
                                                 },
+                                                range: 207..260,
                                             },
                                         ),
                                     },
                                 ],
+                                range: 181..260,
                             },
                         ),
                     },
                 ],
                 orelse: [],
                 finalbody: [],
+                range: 0..260,
             },
         ),
     },

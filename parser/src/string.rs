@@ -3,6 +3,7 @@
 // The lexer doesn't do any special handling of f-strings, it just treats them as
 // regular strings. Since the parser has no definition of f-string formats (Pending PEP 701)
 // we have to do the parsing here, manually.
+use crate::text_size::TextRange;
 use crate::{
     ast::{self, Constant, Expr, ExprKind, Int},
     lexer::{LexicalError, LexicalErrorType},
@@ -68,7 +69,11 @@ impl<'a> StringParser<'a> {
 
     #[inline]
     fn expr(&self, node: ExprKind) -> Expr {
-        Expr::new(self.start..self.end, node)
+        Expr::new(node)
+    }
+
+    fn range(&self) -> TextRange {
+        TextRange::new(self.start, self.end)
     }
 
     fn parse_unicode_literal(&mut self, literal_number: usize) -> Result<char, LexicalError> {
@@ -237,6 +242,7 @@ impl<'a> StringParser<'a> {
                         self.expr(
                             ast::ExprJoinedStr {
                                 values: parsed_spec,
+                                range: self.range(),
                             }
                             .into(),
                         ),
@@ -316,6 +322,7 @@ impl<'a> StringParser<'a> {
                                 ),
                                 conversion: Int::new(conversion as _),
                                 format_spec: spec,
+                                range: self.range(),
                             }
                             .into(),
                         )]
@@ -325,6 +332,7 @@ impl<'a> StringParser<'a> {
                                 ast::ExprConstant {
                                     value: Constant::Str(expression.to_owned() + "="),
                                     kind: None,
+                                    range: self.range(),
                                 }
                                 .into(),
                             ),
@@ -332,6 +340,7 @@ impl<'a> StringParser<'a> {
                                 ast::ExprConstant {
                                     value: trailing_seq.into(),
                                     kind: None,
+                                    range: self.range(),
                                 }
                                 .into(),
                             ),
@@ -353,6 +362,7 @@ impl<'a> StringParser<'a> {
                                         }) as _,
                                     ),
                                     format_spec: spec,
+                                    range: self.range(),
                                 }
                                 .into(),
                             ),
@@ -400,6 +410,7 @@ impl<'a> StringParser<'a> {
                                 ast::ExprConstant {
                                     value: constant_piece.drain(..).collect::<String>().into(),
                                     kind: None,
+                                    range: self.range(),
                                 }
                                 .into(),
                             ),
@@ -424,6 +435,7 @@ impl<'a> StringParser<'a> {
                     ast::ExprConstant {
                         value: constant_piece.drain(..).collect::<String>().into(),
                         kind: None,
+                        range: self.range(),
                     }
                     .into(),
                 ),
@@ -465,6 +477,7 @@ impl<'a> StringParser<'a> {
                                 ast::ExprConstant {
                                     value: content.drain(..).collect::<String>().into(),
                                     kind: None,
+                                    range: self.range(),
                                 }
                                 .into(),
                             ),
@@ -503,6 +516,7 @@ impl<'a> StringParser<'a> {
                     ast::ExprConstant {
                         value: content.into(),
                         kind: None,
+                        range: self.range(),
                     }
                     .into(),
                 ),
@@ -537,6 +551,7 @@ impl<'a> StringParser<'a> {
             ast::ExprConstant {
                 value: Constant::Bytes(content.chars().map(|c| c as u8).collect()),
                 kind: None,
+                range: self.range(),
             }
             .into(),
         ))
@@ -556,6 +571,7 @@ impl<'a> StringParser<'a> {
             ast::ExprConstant {
                 value: Constant::Str(content),
                 kind: self.kind.is_unicode().then(|| "u".to_string()),
+                range: self.range(),
             }
             .into(),
         ))
@@ -624,13 +640,11 @@ pub(crate) fn parse_strings(
                 }
             }
         }
-        return Ok(Expr::new(
-            initial_start..last_end,
-            ast::ExprConstant {
-                value: Constant::Bytes(content),
-                kind: None,
-            },
-        ));
+        return Ok(Expr::new(ast::ExprConstant {
+            value: Constant::Bytes(content),
+            kind: None,
+            range: TextRange::new(initial_start, last_end),
+        }));
     }
 
     if !has_fstring {
@@ -646,13 +660,11 @@ pub(crate) fn parse_strings(
                 }
             }
         }
-        return Ok(Expr::new(
-            initial_start..last_end,
-            ast::ExprConstant {
-                value: Constant::Str(content.join("")),
-                kind: initial_kind,
-            },
-        ));
+        return Ok(Expr::new(ast::ExprConstant {
+            value: Constant::Str(content.join("")),
+            kind: initial_kind,
+            range: TextRange::new(initial_start, last_end),
+        }));
     }
 
     // De-duplicate adjacent constants.
@@ -660,13 +672,11 @@ pub(crate) fn parse_strings(
     let mut current: Vec<String> = vec![];
 
     let take_current = |current: &mut Vec<String>| -> Expr {
-        Expr::new(
-            initial_start..last_end,
-            ast::ExprConstant {
-                value: Constant::Str(current.drain(..).join("")),
-                kind: initial_kind.clone(),
-            },
-        )
+        Expr::new(ast::ExprConstant {
+            value: Constant::Str(current.drain(..).join("")),
+            kind: initial_kind.clone(),
+            range: TextRange::new(initial_start, last_end),
+        })
     };
 
     for (start, (source, kind, triple_quoted), end) in values {
@@ -690,10 +700,10 @@ pub(crate) fn parse_strings(
         deduped.push(take_current(&mut current));
     }
 
-    Ok(Expr::new(
-        initial_start..last_end,
-        ast::ExprJoinedStr { values: deduped },
-    ))
+    Ok(Expr::new(ast::ExprJoinedStr {
+        values: deduped,
+        range: TextRange::new(initial_start, last_end),
+    }))
 }
 
 // TODO: consolidate these with ParseError

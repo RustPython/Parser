@@ -95,7 +95,7 @@ pub fn parse_expression_starts_at(
     offset: TextSize,
 ) -> Result<ast::Expr, ParseError> {
     parse_starts_at(source, Mode::Expression, path, offset).map(|top| match top {
-        ast::Mod::Expression(ast::ModExpression { body }) => *body,
+        ast::Mod::Expression(ast::ModExpression { body, .. }) => *body,
         _ => unreachable!(),
     })
 }

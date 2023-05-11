@@ -3,12 +3,10 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 Attributed {
-    range: 0..48,
     custom: (),
     node: ListComp(
         ExprListComp {
             elt: Attributed {
-                range: 1..2,
                 custom: (),
                 node: Name(
                     ExprName {
@@ -16,19 +14,18 @@ Attributed {
                             "x",
                         ),
                         ctx: Load,
+                        range: 1..2,
                     },
                 ),
             },
             generators: [
                 Comprehension {
                     target: Attributed {
-                        range: 7..12,
                         custom: (),
                         node: Tuple(
                             ExprTuple {
                                 elts: [
                                     Attributed {
-                                        range: 7..8,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -36,11 +33,11 @@ Attributed {
                                                     "y",
                                                 ),
                                                 ctx: Store,
+                                                range: 7..8,
                                             },
                                         ),
                                     },
                                     Attributed {
-                                        range: 10..12,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -48,16 +45,17 @@ Attributed {
                                                     "y2",
                                                 ),
                                                 ctx: Store,
+                                                range: 10..12,
                                             },
                                         ),
                                     },
                                 ],
                                 ctx: Store,
+                                range: 7..12,
                             },
                         ),
                     },
                     iter: Attributed {
-                        range: 16..17,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -65,15 +63,16 @@ Attributed {
                                     "z",
                                 ),
                                 ctx: Load,
+                                range: 16..17,
                             },
                         ),
                     },
                     ifs: [],
                     is_async: false,
+                    range: 3..17,
                 },
                 Comprehension {
                     target: Attributed {
-                        range: 22..23,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -81,11 +80,11 @@ Attributed {
                                     "a",
                                 ),
                                 ctx: Store,
+                                range: 22..23,
                             },
                         ),
                     },
                     iter: Attributed {
-                        range: 27..28,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -93,17 +92,16 @@ Attributed {
                                     "b",
                                 ),
                                 ctx: Load,
+                                range: 27..28,
                             },
                         ),
                     },
                     ifs: [
                         Attributed {
-                            range: 32..37,
                             custom: (),
                             node: Compare(
                                 ExprCompare {
                                     left: Attributed {
-                                        range: 32..33,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -111,6 +109,7 @@ Attributed {
                                                     "a",
                                                 ),
                                                 ctx: Load,
+                                                range: 32..33,
                                             },
                                         ),
                                     },
@@ -119,7 +118,6 @@ Attributed {
                                     ],
                                     comparators: [
                                         Attributed {
-                                            range: 36..37,
                                             custom: (),
                                             node: Constant(
                                                 ExprConstant {
@@ -127,20 +125,20 @@ Attributed {
                                                         5,
                                                     ),
                                                     kind: None,
+                                                    range: 36..37,
                                                 },
                                             ),
                                         },
                                     ],
+                                    range: 32..37,
                                 },
                             ),
                         },
                         Attributed {
-                            range: 41..47,
                             custom: (),
                             node: Compare(
                                 ExprCompare {
                                     left: Attributed {
-                                        range: 41..42,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -148,6 +146,7 @@ Attributed {
                                                     "a",
                                                 ),
                                                 ctx: Load,
+                                                range: 41..42,
                                             },
                                         ),
                                     },
@@ -156,7 +155,6 @@ Attributed {
                                     ],
                                     comparators: [
                                         Attributed {
-                                            range: 45..47,
                                             custom: (),
                                             node: Constant(
                                                 ExprConstant {
@@ -164,17 +162,21 @@ Attributed {
                                                         10,
                                                     ),
                                                     kind: None,
+                                                    range: 45..47,
                                                 },
                                             ),
                                         },
                                     ],
+                                    range: 41..47,
                                 },
                             ),
                         },
                     ],
                     is_async: false,
+                    range: 18..47,
                 },
             ],
+            range: 0..48,
         },
     ),
 }

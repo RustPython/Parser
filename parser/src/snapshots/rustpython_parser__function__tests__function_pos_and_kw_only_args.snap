@@ -5,7 +5,6 @@ expression: parse_ast
 Ok(
     [
         Attributed {
-            range: 0..32,
             custom: (),
             node: FunctionDef(
                 StmtFunctionDef {
@@ -16,7 +15,6 @@ Ok(
                         posonlyargs: [],
                         args: [
                             Attributed {
-                                range: 6..7,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -24,10 +22,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 6..7,
                                 },
                             },
                             Attributed {
-                                range: 9..10,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -35,10 +33,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 9..10,
                                 },
                             },
                             Attributed {
-                                range: 12..13,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -46,13 +44,13 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 12..13,
                                 },
                             },
                         ],
                         vararg: None,
                         kwonlyargs: [
                             Attributed {
-                                range: 18..19,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -60,10 +58,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 18..19,
                                 },
                             },
                             Attributed {
-                                range: 21..22,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -71,10 +69,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 21..22,
                                 },
                             },
                             Attributed {
-                                range: 24..25,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -82,23 +80,29 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 24..25,
                                 },
                             },
                         ],
                         kw_defaults: [],
                         kwarg: None,
                         defaults: [],
+                        range: 6..25,
                     },
                     body: [
                         Attributed {
-                            range: 28..32,
                             custom: (),
-                            node: Pass,
+                            node: Pass(
+                                StmtPass {
+                                    range: 28..32,
+                                },
+                            ),
                         },
                     ],
                     decorator_list: [],
                     returns: None,
                     type_comment: None,
+                    range: 0..32,
                 },
             ),
         },

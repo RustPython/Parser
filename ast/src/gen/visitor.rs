@@ -31,9 +31,9 @@ pub trait Visitor<U = ()> {
             StmtKind::Global(data) => self.visit_stmt_Global(data),
             StmtKind::Nonlocal(data) => self.visit_stmt_Nonlocal(data),
             StmtKind::Expr(data) => self.visit_stmt_Expr(data),
-            StmtKind::Pass => self.visit_stmt_Pass(()),
-            StmtKind::Break => self.visit_stmt_Break(()),
-            StmtKind::Continue => self.visit_stmt_Continue(()),
+            StmtKind::Pass(data) => self.visit_stmt_Pass(data),
+            StmtKind::Break(data) => self.visit_stmt_Break(data),
+            StmtKind::Continue(data) => self.visit_stmt_Continue(data),
         }
     }
     fn visit_stmt_FunctionDef(&mut self, node: StmtFunctionDef) {
@@ -338,18 +338,9 @@ pub trait Visitor<U = ()> {
             self.visit_expr(*value);
         }
     }
-    fn visit_stmt_Pass(&mut self, node: ()) {
-        self.generic_visit_stmt_Pass(())
-    }
-    fn generic_visit_stmt_Pass(&mut self, node: ()) {}
-    fn visit_stmt_Break(&mut self, node: ()) {
-        self.generic_visit_stmt_Break(())
-    }
-    fn generic_visit_stmt_Break(&mut self, node: ()) {}
-    fn visit_stmt_Continue(&mut self, node: ()) {
-        self.generic_visit_stmt_Continue(())
-    }
-    fn generic_visit_stmt_Continue(&mut self, node: ()) {}
+    fn visit_stmt_Pass(&mut self, node: StmtPass) {}
+    fn visit_stmt_Break(&mut self, node: StmtBreak) {}
+    fn visit_stmt_Continue(&mut self, node: StmtContinue) {}
     fn visit_expr(&mut self, node: Expr) {
         self.generic_visit_expr(node)
     }

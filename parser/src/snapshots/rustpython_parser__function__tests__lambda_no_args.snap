@@ -5,12 +5,10 @@ expression: parse_ast
 Ok(
     [
         Attributed {
-            range: 0..9,
             custom: (),
             node: Expr(
                 StmtExpr {
                     value: Attributed {
-                        range: 0..9,
                         custom: (),
                         node: Lambda(
                             ExprLambda {
@@ -22,9 +20,9 @@ Ok(
                                     kw_defaults: [],
                                     kwarg: None,
                                     defaults: [],
+                                    range: 0..9,
                                 },
                                 body: Attributed {
-                                    range: 8..9,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -32,12 +30,15 @@ Ok(
                                                 1,
                                             ),
                                             kind: None,
+                                            range: 8..9,
                                         },
                                     ),
                                 },
+                                range: 0..9,
                             },
                         ),
                     },
+                    range: 0..9,
                 },
             ),
         },

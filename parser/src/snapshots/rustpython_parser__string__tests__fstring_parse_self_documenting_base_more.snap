@@ -4,7 +4,6 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..38,
         custom: (),
         node: Constant(
             ExprConstant {
@@ -12,11 +11,11 @@ expression: parse_ast
                     "mix ",
                 ),
                 kind: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: Constant(
             ExprConstant {
@@ -24,11 +23,11 @@ expression: parse_ast
                     "user=",
                 ),
                 kind: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: Constant(
             ExprConstant {
@@ -36,16 +35,15 @@ expression: parse_ast
                     "",
                 ),
                 kind: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: FormattedValue(
             ExprFormattedValue {
                 value: Attributed {
-                    range: 7..11,
                     custom: (),
                     node: Name(
                         ExprName {
@@ -53,6 +51,7 @@ expression: parse_ast
                                 "user",
                             ),
                             ctx: Load,
+                            range: 7..11,
                         },
                     ),
                 },
@@ -60,11 +59,11 @@ expression: parse_ast
                     114,
                 ),
                 format_spec: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: Constant(
             ExprConstant {
@@ -72,11 +71,11 @@ expression: parse_ast
                     " with text and ",
                 ),
                 kind: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: Constant(
             ExprConstant {
@@ -84,11 +83,11 @@ expression: parse_ast
                     "second=",
                 ),
                 kind: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: Constant(
             ExprConstant {
@@ -96,16 +95,15 @@ expression: parse_ast
                     "",
                 ),
                 kind: None,
+                range: 0..38,
             },
         ),
     },
     Attributed {
-        range: 0..38,
         custom: (),
         node: FormattedValue(
             ExprFormattedValue {
                 value: Attributed {
-                    range: 29..35,
                     custom: (),
                     node: Name(
                         ExprName {
@@ -113,6 +111,7 @@ expression: parse_ast
                                 "second",
                             ),
                             ctx: Load,
+                            range: 29..35,
                         },
                     ),
                 },
@@ -120,6 +119,7 @@ expression: parse_ast
                     114,
                 ),
                 format_spec: None,
+                range: 0..38,
             },
         ),
     },

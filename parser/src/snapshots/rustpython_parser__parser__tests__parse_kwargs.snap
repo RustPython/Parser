@@ -4,17 +4,14 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..32,
         custom: (),
         node: Expr(
             StmtExpr {
                 value: Attributed {
-                    range: 0..32,
                     custom: (),
                     node: Call(
                         ExprCall {
                             func: Attributed {
-                                range: 0..7,
                                 custom: (),
                                 node: Name(
                                     ExprName {
@@ -22,12 +19,12 @@ expression: parse_ast
                                             "my_func",
                                         ),
                                         ctx: Load,
+                                        range: 0..7,
                                     },
                                 ),
                             },
                             args: [
                                 Attributed {
-                                    range: 8..20,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -35,13 +32,13 @@ expression: parse_ast
                                                 "positional",
                                             ),
                                             kind: None,
+                                            range: 8..20,
                                         },
                                     ),
                                 },
                             ],
                             keywords: [
                                 Attributed {
-                                    range: 22..31,
                                     custom: (),
                                     node: KeywordData {
                                         arg: Some(
@@ -50,7 +47,6 @@ expression: parse_ast
                                             ),
                                         ),
                                         value: Attributed {
-                                            range: 30..31,
                                             custom: (),
                                             node: Constant(
                                                 ExprConstant {
@@ -58,15 +54,19 @@ expression: parse_ast
                                                         2,
                                                     ),
                                                     kind: None,
+                                                    range: 30..31,
                                                 },
                                             ),
                                         },
+                                        range: 22..31,
                                     },
                                 },
                             ],
+                            range: 0..32,
                         },
                     ),
                 },
+                range: 0..32,
             },
         ),
     },

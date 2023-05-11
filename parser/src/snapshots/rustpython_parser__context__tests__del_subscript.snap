@@ -4,18 +4,15 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..8,
         custom: (),
         node: Delete(
             StmtDelete {
                 targets: [
                     Attributed {
-                        range: 4..8,
                         custom: (),
                         node: Subscript(
                             ExprSubscript {
                                 value: Attributed {
-                                    range: 4..5,
                                     custom: (),
                                     node: Name(
                                         ExprName {
@@ -23,11 +20,11 @@ expression: parse_ast
                                                 "x",
                                             ),
                                             ctx: Load,
+                                            range: 4..5,
                                         },
                                     ),
                                 },
                                 slice: Attributed {
-                                    range: 6..7,
                                     custom: (),
                                     node: Name(
                                         ExprName {
@@ -35,14 +32,17 @@ expression: parse_ast
                                                 "y",
                                             ),
                                             ctx: Load,
+                                            range: 6..7,
                                         },
                                     ),
                                 },
                                 ctx: Del,
+                                range: 4..8,
                             },
                         ),
                     },
                 ],
+                range: 0..8,
             },
         ),
     },

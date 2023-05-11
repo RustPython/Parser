@@ -4,19 +4,16 @@ expression: "parse_program(source, \"<test>\").unwrap()"
 ---
 [
     Attributed {
-        range: 0..11,
         custom: (),
         node: Assign(
             StmtAssign {
                 targets: [
                     Attributed {
-                        range: 0..4,
                         custom: (),
                         node: Tuple(
                             ExprTuple {
                                 elts: [
                                     Attributed {
-                                        range: 0..1,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -24,11 +21,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                     "a",
                                                 ),
                                                 ctx: Store,
+                                                range: 0..1,
                                             },
                                         ),
                                     },
                                     Attributed {
-                                        range: 3..4,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -36,23 +33,23 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                     "b",
                                                 ),
                                                 ctx: Store,
+                                                range: 3..4,
                                             },
                                         ),
                                     },
                                 ],
                                 ctx: Store,
+                                range: 0..4,
                             },
                         ),
                     },
                 ],
                 value: Attributed {
-                    range: 7..11,
                     custom: (),
                     node: Tuple(
                         ExprTuple {
                             elts: [
                                 Attributed {
-                                    range: 7..8,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -60,11 +57,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                 4,
                                             ),
                                             kind: None,
+                                            range: 7..8,
                                         },
                                     ),
                                 },
                                 Attributed {
-                                    range: 10..11,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -72,15 +69,18 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                 5,
                                             ),
                                             kind: None,
+                                            range: 10..11,
                                         },
                                     ),
                                 },
                             ],
                             ctx: Load,
+                            range: 7..11,
                         },
                     ),
                 },
                 type_comment: None,
+                range: 0..11,
             },
         ),
     },

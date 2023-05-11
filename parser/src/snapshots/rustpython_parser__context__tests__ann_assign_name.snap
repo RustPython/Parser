@@ -4,12 +4,10 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..10,
         custom: (),
         node: AnnAssign(
             StmtAnnAssign {
                 target: Attributed {
-                    range: 0..1,
                     custom: (),
                     node: Name(
                         ExprName {
@@ -17,11 +15,11 @@ expression: parse_ast
                                 "x",
                             ),
                             ctx: Store,
+                            range: 0..1,
                         },
                     ),
                 },
                 annotation: Attributed {
-                    range: 3..6,
                     custom: (),
                     node: Name(
                         ExprName {
@@ -29,12 +27,12 @@ expression: parse_ast
                                 "int",
                             ),
                             ctx: Load,
+                            range: 3..6,
                         },
                     ),
                 },
                 value: Some(
                     Attributed {
-                        range: 9..10,
                         custom: (),
                         node: Constant(
                             ExprConstant {
@@ -42,11 +40,13 @@ expression: parse_ast
                                     1,
                                 ),
                                 kind: None,
+                                range: 9..10,
                             },
                         ),
                     },
                 ),
                 simple: true,
+                range: 0..10,
             },
         ),
     },

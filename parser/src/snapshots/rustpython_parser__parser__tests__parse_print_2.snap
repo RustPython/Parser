@@ -4,17 +4,14 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..23,
         custom: (),
         node: Expr(
             StmtExpr {
                 value: Attributed {
-                    range: 0..23,
                     custom: (),
                     node: Call(
                         ExprCall {
                             func: Attributed {
-                                range: 0..5,
                                 custom: (),
                                 node: Name(
                                     ExprName {
@@ -22,12 +19,12 @@ expression: parse_ast
                                             "print",
                                         ),
                                         ctx: Load,
+                                        range: 0..5,
                                     },
                                 ),
                             },
                             args: [
                                 Attributed {
-                                    range: 6..19,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -35,11 +32,11 @@ expression: parse_ast
                                                 "Hello world",
                                             ),
                                             kind: None,
+                                            range: 6..19,
                                         },
                                     ),
                                 },
                                 Attributed {
-                                    range: 21..22,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -47,14 +44,17 @@ expression: parse_ast
                                                 2,
                                             ),
                                             kind: None,
+                                            range: 21..22,
                                         },
                                     ),
                                 },
                             ],
                             keywords: [],
+                            range: 0..23,
                         },
                     ),
                 },
+                range: 0..23,
             },
         ),
     },

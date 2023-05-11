@@ -3,12 +3,10 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 Attributed {
-    range: 0..14,
     custom: (),
     node: GeneratorExp(
         ExprGeneratorExp {
             elt: Attributed {
-                range: 1..2,
                 custom: (),
                 node: Name(
                     ExprName {
@@ -16,13 +14,13 @@ Attributed {
                             "x",
                         ),
                         ctx: Load,
+                        range: 1..2,
                     },
                 ),
             },
             generators: [
                 Comprehension {
                     target: Attributed {
-                        range: 7..8,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -30,11 +28,11 @@ Attributed {
                                     "y",
                                 ),
                                 ctx: Store,
+                                range: 7..8,
                             },
                         ),
                     },
                     iter: Attributed {
-                        range: 12..13,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -42,13 +40,16 @@ Attributed {
                                     "z",
                                 ),
                                 ctx: Load,
+                                range: 12..13,
                             },
                         ),
                     },
                     ifs: [],
                     is_async: false,
+                    range: 3..13,
                 },
             ],
+            range: 0..14,
         },
     ),
 }

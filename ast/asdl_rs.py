@@ -295,8 +295,6 @@ class StructVisitor(EmitVisitor):
         # can just wrap it in Attributed<>
 
         for t in sum.types:
-            if not t.fields:
-                continue
             self.sum_subtype_struct(type_info, t, rust_name, depth)
 
         generics, generics_applied = self.apply_generics(name, "U = ()", "U")
@@ -310,13 +308,10 @@ class StructVisitor(EmitVisitor):
                     f'#[is(name = "{rust_field_name(t.name)}_{rust_name.lower()}")]',
                     depth + 1,
                 )
-            if t.fields:
-                (t_generics_applied,) = self.apply_generics(t.name, "U")
-                self.emit(
-                    f"{t.name}({rust_name}{t.name}{t_generics_applied}),", depth + 1
-                )
-            else:
-                self.emit(f"{t.name},", depth + 1)
+            (t_generics_applied,) = self.apply_generics(t.name, "U")
+            self.emit(
+                f"{t.name}({rust_name}{t.name}{t_generics_applied}),", depth + 1
+            )
         self.emit("}", depth)
         if type_info.has_attributes:
             self.emit(
@@ -332,6 +327,7 @@ class StructVisitor(EmitVisitor):
         self.emit(f"pub struct {payload_name}{generics} {{", depth)
         for f in t.fields:
             self.visit(f, sum_type_info, "pub ", depth + 1, t.name)
+        self.emit("pub range: TextRange", depth + 1)
         self.emit("}", depth)
         self.emit(
             textwrap.dedent(
@@ -345,6 +341,14 @@ class StructVisitor(EmitVisitor):
             ),
             depth,
         )
+
+        self.emit(f"impl{generics_applied} Ranged for {payload_name}{generics_applied} {{", depth)
+        self.emit("#[inline]", depth + 1)
+        self.emit("fn range(&self) -> TextRange {", depth + 1)
+        self.emit("self.range", depth + 2)
+        self.emit("}", depth + 1)
+        self.emit("}", depth)
+        self.emit("", depth)
 
     def visitConstructor(self, cons, parent, depth):
         if cons.fields:
@@ -394,10 +398,22 @@ class StructVisitor(EmitVisitor):
             data_def = f"{data_name}{generics}"
         else:
             data_def = data_name
+            generics_applied = ""
+
         self.emit(f"pub struct {data_def} {{", depth)
         for f in product.fields:
             self.visit(f, type_info, "pub ", depth + 1)
+        self.emit("pub range: TextRange", depth + 1)
         self.emit("}", depth)
+
+        self.emit(f"impl{generics_applied} Ranged for {data_name}{generics_applied} {{", depth)
+        self.emit("#[inline]", depth + 1)
+        self.emit("fn range(&self) -> TextRange {", depth + 1)
+        self.emit("self.range", depth + 2)
+        self.emit("}", depth + 1)
+        self.emit("}", depth)
+        self.emit("", depth)
+
         if product.attributes:
             # attributes should just be location info
             if not has_expr:
@@ -406,6 +422,7 @@ class StructVisitor(EmitVisitor):
                 f"pub type {rust_name}<U = ()> = Attributed<{data_name}{generics_applied}, U>;",
                 depth,
             )
+
         self.emit("", depth)
 
 
@@ -420,9 +437,9 @@ class FoldTraitDefVisitor(EmitVisitor):
         )
         self.emit(
             """
-            fn map_attributed<T>(&mut self, attributed: Attributed<T, U>) -> Result<Attributed<T, Self::TargetU>, Self::Error> {
+            fn map_attributed<T>(&mut self, attributed: Attributed<T, U>) -> Result<Attributed<T, Self::TargetU>, Self::Error> where T: Ranged{
                 let custom = self.map_user(attributed.custom)?;
-                Ok(Attributed { range: attributed.range, custom, node: attributed.node })
+                Ok(Attributed { custom, node: attributed.node })
             }""",
             depth + 1,
         )
@@ -452,11 +469,11 @@ class FoldTraitDefVisitor(EmitVisitor):
 class FoldImplVisitor(EmitVisitor):
     def visitModule(self, mod, depth):
         self.emit(
-            "fn fold_attributed<U, F: Fold<U> + ?Sized, T, MT>(folder: &mut F, node: Attributed<T, U>, f: impl FnOnce(&mut F, T) -> Result<MT, F::Error>) -> Result<Attributed<MT, F::TargetU>, F::Error> {",
+            "fn fold_attributed<U, F: Fold<U> + ?Sized, T, MT>(folder: &mut F, node: Attributed<T, U>, f: impl FnOnce(&mut F, T) -> Result<MT, F::Error>) -> Result<Attributed<MT, F::TargetU>, F::Error> where T: Ranged{",
             depth,
         )
         self.emit(
-            "let node = folder.map_attributed(node)?; Ok(Attributed { custom: node.custom, range: node.range, node: f(folder, node.node)? })",
+            "let node = folder.map_attributed(node)?; Ok(Attributed { custom: node.custom, node: f(folder, node.node)? })",
             depth + 1,
         )
         self.emit("}", depth)
@@ -472,6 +489,7 @@ class FoldImplVisitor(EmitVisitor):
             name, "T", "U", "F::TargetU"
         )
         enum_name = rust_type_name(name)
+        simple = is_simple(sum)
 
         self.emit(f"impl<T, U> Foldable<T, U> for {enum_name}{apply_t} {{", depth)
         self.emit(f"type Mapped = {enum_name}{apply_u};", depth + 1)
@@ -493,14 +511,14 @@ class FoldImplVisitor(EmitVisitor):
         self.emit("match node {", depth + 1)
         for cons in sum.types:
             fields_pattern = self.make_pattern(
-                enum_name, type_info.rust_suffix, cons.name, cons.fields
+                enum_name, type_info.rust_suffix, cons.name, cons.fields, simple
             )
             self.emit(
-                f"{fields_pattern[0]} {{ {fields_pattern[1]} }} {fields_pattern[2]} => {{",
+                f"{fields_pattern[0]} {{ {fields_pattern[1]}}} {fields_pattern[2]} => {{",
                 depth + 2,
             )
             self.gen_construction(
-                fields_pattern[0], cons.fields, fields_pattern[2], depth + 3
+                fields_pattern[0], cons.fields, fields_pattern[2], depth + 3, simple
             )
             self.emit("}", depth + 2)
         self.emit("}", depth + 1)
@@ -534,15 +552,15 @@ class FoldImplVisitor(EmitVisitor):
             rust_name = struct_name + "Data"
         else:
             rust_name = struct_name
-        fields_pattern = self.make_pattern(rust_name, struct_name, None, product.fields)
+        fields_pattern = self.make_pattern(rust_name, struct_name, None, product.fields, False)
         self.emit(f"let {rust_name} {{ {fields_pattern[1]} }} = node;", depth + 1)
-        self.gen_construction(rust_name, product.fields, "", depth + 1)
+        self.gen_construction(rust_name, product.fields, "", depth + 1, False)
         if has_attributes:
             self.emit("})", depth)
         self.emit("}", depth)
 
-    def make_pattern(self, rust_name, suffix, fieldname, fields):
-        if fields:
+    def make_pattern(self, rust_name, suffix, fieldname: str, fields, simple_sum: bool):
+        if fields or not simple_sum:
             header = f"{rust_name}{suffix}::{fieldname}({rust_name}{fieldname}"
             footer = ")"
         else:
@@ -550,13 +568,20 @@ class FoldImplVisitor(EmitVisitor):
             footer = ""
 
         body = ",".join(rust_field(f.name) for f in fields)
+
+        if not simple_sum:
+            body = f"range, {body}"
+
         return header, body, footer
 
-    def gen_construction(self, header, fields, footer, depth):
+    def gen_construction(self, header, fields, footer, depth, simple_sum: bool):
         self.emit(f"Ok({header} {{", depth)
         for field in fields:
             name = rust_field(field.name)
             self.emit(f"{name}: Foldable::fold({name}, folder)?,", depth + 1)
+
+        if not simple_sum:
+            self.emit("range", depth + 1)
         self.emit(f"}}{footer})", depth)
 
 
@@ -595,16 +620,13 @@ class VisitorTraitDefVisitor(StructVisitor):
 
     def emit_visitor(self, nodename, depth, has_node=True):
         type_info = self.type_info[nodename]
-        if has_node:
-            node_type = type_info.rust_sum_name
-            node_value = "node"
-        else:
-            node_type = "()"
-            node_value = "()"
+        node_type = type_info.rust_sum_name
         self.emit(
             f"fn visit_{type_info.sum_name}(&mut self, node: {node_type}) {{", depth
         )
-        self.emit(f"self.generic_visit_{type_info.sum_name}({node_value})", depth + 1)
+        if has_node:
+            self.emit(f"self.generic_visit_{type_info.sum_name}(node)", depth + 1)
+
         self.emit("}", depth)
 
     def emit_generic_visitor_signature(self, nodename, depth, has_node=True):
@@ -628,16 +650,15 @@ class VisitorTraitDefVisitor(StructVisitor):
 
     def visit_match_for_type(self, nodename, rust_name, type_, depth):
         self.emit(f"{rust_name}::{type_.name}", depth)
-        if type_.fields:
-            self.emit("(data)", depth)
-            data = "data"
-        else:
-            data = "()"
-        self.emit(f"=> self.visit_{nodename}_{type_.name}({data}),", depth)
+        self.emit("(data)", depth)
+        self.emit(f"=> self.visit_{nodename}_{type_.name}(data),", depth)
 
     def visit_sum_type(self, name, type_, depth):
         self.emit_visitor(type_.name, depth, has_node=type_.fields)
-        self.emit_generic_visitor_signature(type_.name, depth, has_node=type_.fields)
+        if not type_.fields:
+            return
+
+        self.emit_generic_visitor_signature(type_.name, depth, has_node=True)
         for f in type_.fields:
             fieldname = rust_field(f.name)
             field_type = self.type_info.get(f.type)
@@ -956,10 +977,18 @@ class ChainOfVisitors:
 
 
 def write_ast_def(mod, type_info, f):
+    f.write("""
+use crate::text_size::{TextRange};
+use crate::Ranged;
+""")
+
     StructVisitor(f, type_info).visit(mod)
 
 
 def write_fold_def(mod, type_info, f):
+    f.write("""
+use crate::Ranged;
+""")
     FoldModuleVisitor(f, type_info).visit(mod)
 
 

@@ -4,12 +4,10 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..28,
         custom: (),
         node: If(
             StmtIf {
                 test: Attributed {
-                    range: 3..4,
                     custom: (),
                     node: Constant(
                         ExprConstant {
@@ -17,17 +15,16 @@ expression: parse_ast
                                 1,
                             ),
                             kind: None,
+                            range: 3..4,
                         },
                     ),
                 },
                 body: [
                     Attributed {
-                        range: 6..8,
                         custom: (),
                         node: Expr(
                             StmtExpr {
                                 value: Attributed {
-                                    range: 6..8,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -35,21 +32,21 @@ expression: parse_ast
                                                 10,
                                             ),
                                             kind: None,
+                                            range: 6..8,
                                         },
                                     ),
                                 },
+                                range: 6..8,
                             },
                         ),
                     },
                 ],
                 orelse: [
                     Attributed {
-                        range: 9..28,
                         custom: (),
                         node: If(
                             StmtIf {
                                 test: Attributed {
-                                    range: 14..15,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -57,17 +54,16 @@ expression: parse_ast
                                                 2,
                                             ),
                                             kind: None,
+                                            range: 14..15,
                                         },
                                     ),
                                 },
                                 body: [
                                     Attributed {
-                                        range: 17..19,
                                         custom: (),
                                         node: Expr(
                                             StmtExpr {
                                                 value: Attributed {
-                                                    range: 17..19,
                                                     custom: (),
                                                     node: Constant(
                                                         ExprConstant {
@@ -75,21 +71,21 @@ expression: parse_ast
                                                                 20,
                                                             ),
                                                             kind: None,
+                                                            range: 17..19,
                                                         },
                                                     ),
                                                 },
+                                                range: 17..19,
                                             },
                                         ),
                                     },
                                 ],
                                 orelse: [
                                     Attributed {
-                                        range: 26..28,
                                         custom: (),
                                         node: Expr(
                                             StmtExpr {
                                                 value: Attributed {
-                                                    range: 26..28,
                                                     custom: (),
                                                     node: Constant(
                                                         ExprConstant {
@@ -97,17 +93,21 @@ expression: parse_ast
                                                                 30,
                                                             ),
                                                             kind: None,
+                                                            range: 26..28,
                                                         },
                                                     ),
                                                 },
+                                                range: 26..28,
                                             },
                                         ),
                                     },
                                 ],
+                                range: 9..28,
                             },
                         ),
                     },
                 ],
+                range: 0..28,
             },
         ),
     },

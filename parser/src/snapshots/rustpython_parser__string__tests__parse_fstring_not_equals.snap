@@ -4,17 +4,14 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..11,
         custom: (),
         node: FormattedValue(
             ExprFormattedValue {
                 value: Attributed {
-                    range: 3..9,
                     custom: (),
                     node: Compare(
                         ExprCompare {
                             left: Attributed {
-                                range: 3..4,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -22,6 +19,7 @@ expression: parse_ast
                                             1,
                                         ),
                                         kind: None,
+                                        range: 3..4,
                                     },
                                 ),
                             },
@@ -30,7 +28,6 @@ expression: parse_ast
                             ],
                             comparators: [
                                 Attributed {
-                                    range: 8..9,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -38,10 +35,12 @@ expression: parse_ast
                                                 2,
                                             ),
                                             kind: None,
+                                            range: 8..9,
                                         },
                                     ),
                                 },
                             ],
+                            range: 3..9,
                         },
                     ),
                 },
@@ -49,6 +48,7 @@ expression: parse_ast
                     0,
                 ),
                 format_spec: None,
+                range: 0..11,
             },
         ),
     },

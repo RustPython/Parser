@@ -4,13 +4,11 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..26,
         custom: (),
         node: Assign(
             StmtAssign {
                 targets: [
                     Attributed {
-                        range: 0..1,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -18,17 +16,16 @@ expression: parse_ast
                                     "x",
                                 ),
                                 ctx: Store,
+                                range: 0..1,
                             },
                         ),
                     },
                 ],
                 value: Attributed {
-                    range: 4..26,
                     custom: (),
                     node: ListComp(
                         ExprListComp {
                             elt: Attributed {
-                                range: 5..6,
                                 custom: (),
                                 node: Name(
                                     ExprName {
@@ -36,13 +33,13 @@ expression: parse_ast
                                             "y",
                                         ),
                                         ctx: Load,
+                                        range: 5..6,
                                     },
                                 ),
                             },
                             generators: [
                                 Comprehension {
                                     target: Attributed {
-                                        range: 11..12,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -50,17 +47,16 @@ expression: parse_ast
                                                     "y",
                                                 ),
                                                 ctx: Store,
+                                                range: 11..12,
                                             },
                                         ),
                                     },
                                     iter: Attributed {
-                                        range: 16..25,
                                         custom: (),
                                         node: Tuple(
                                             ExprTuple {
                                                 elts: [
                                                     Attributed {
-                                                        range: 17..18,
                                                         custom: (),
                                                         node: Constant(
                                                             ExprConstant {
@@ -68,11 +64,11 @@ expression: parse_ast
                                                                     1,
                                                                 ),
                                                                 kind: None,
+                                                                range: 17..18,
                                                             },
                                                         ),
                                                     },
                                                     Attributed {
-                                                        range: 20..21,
                                                         custom: (),
                                                         node: Constant(
                                                             ExprConstant {
@@ -80,11 +76,11 @@ expression: parse_ast
                                                                     2,
                                                                 ),
                                                                 kind: None,
+                                                                range: 20..21,
                                                             },
                                                         ),
                                                     },
                                                     Attributed {
-                                                        range: 23..24,
                                                         custom: (),
                                                         node: Constant(
                                                             ExprConstant {
@@ -92,22 +88,27 @@ expression: parse_ast
                                                                     3,
                                                                 ),
                                                                 kind: None,
+                                                                range: 23..24,
                                                             },
                                                         ),
                                                     },
                                                 ],
                                                 ctx: Load,
+                                                range: 16..25,
                                             },
                                         ),
                                     },
                                     ifs: [],
                                     is_async: false,
+                                    range: 7..25,
                                 },
                             ],
+                            range: 4..26,
                         },
                     ),
                 },
                 type_comment: None,
+                range: 0..26,
             },
         ),
     },

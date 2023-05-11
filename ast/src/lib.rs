@@ -19,6 +19,18 @@ pub use rustpython_parser_core::{text_size, ConversionFlag};
 
 pub type Suite<U = ()> = Vec<Stmt<U>>;
 
+pub trait Ranged {
+    fn range(&self) -> TextRange;
+
+    fn start(&self) -> TextSize {
+        self.range().start()
+    }
+
+    fn end(&self) -> TextSize {
+        self.range().end()
+    }
+}
+
 #[cfg(feature = "fold")]
 pub mod fold {
     use super::generic::*;
@@ -45,5 +57,6 @@ pub use visitor::Visitor;
 #[cfg(feature = "constant-optimization")]
 mod optimizer;
 
+use crate::text_size::{TextRange, TextSize};
 #[cfg(feature = "constant-optimization")]
 pub use optimizer::ConstantOptimizer;

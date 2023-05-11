@@ -4,7 +4,6 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 1..49,
         custom: (),
         node: FunctionDef(
             StmtFunctionDef {
@@ -16,7 +15,6 @@ expression: parse_ast
                     args: [],
                     vararg: Some(
                         Attributed {
-                            range: 20..29,
                             custom: (),
                             node: ArgData {
                                 arg: Identifier(
@@ -24,12 +22,10 @@ expression: parse_ast
                                 ),
                                 annotation: Some(
                                     Attributed {
-                                        range: 26..29,
                                         custom: (),
                                         node: Starred(
                                             ExprStarred {
                                                 value: Attributed {
-                                                    range: 27..29,
                                                     custom: (),
                                                     node: Name(
                                                         ExprName {
@@ -37,15 +33,18 @@ expression: parse_ast
                                                                 "Ts",
                                                             ),
                                                             ctx: Load,
+                                                            range: 27..29,
                                                         },
                                                     ),
                                                 },
                                                 ctx: Load,
+                                                range: 26..29,
                                             },
                                         ),
                                     },
                                 ),
                                 type_comment: None,
+                                range: 20..29,
                             },
                         },
                     ),
@@ -53,23 +52,24 @@ expression: parse_ast
                     kw_defaults: [],
                     kwarg: None,
                     defaults: [],
+                    range: 19..29,
                 },
                 body: [
                     Attributed {
-                        range: 46..49,
                         custom: (),
                         node: Expr(
                             StmtExpr {
                                 value: Attributed {
-                                    range: 46..49,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
                                             value: Ellipsis,
                                             kind: None,
+                                            range: 46..49,
                                         },
                                     ),
                                 },
+                                range: 46..49,
                             },
                         ),
                     },
@@ -77,12 +77,10 @@ expression: parse_ast
                 decorator_list: [],
                 returns: Some(
                     Attributed {
-                        range: 34..44,
                         custom: (),
                         node: Subscript(
                             ExprSubscript {
                                 value: Attributed {
-                                    range: 34..39,
                                     custom: (),
                                     node: Name(
                                         ExprName {
@@ -90,16 +88,15 @@ expression: parse_ast
                                                 "Tuple",
                                             ),
                                             ctx: Load,
+                                            range: 34..39,
                                         },
                                     ),
                                 },
                                 slice: Attributed {
-                                    range: 40..43,
                                     custom: (),
                                     node: Starred(
                                         ExprStarred {
                                             value: Attributed {
-                                                range: 41..43,
                                                 custom: (),
                                                 node: Name(
                                                     ExprName {
@@ -107,19 +104,23 @@ expression: parse_ast
                                                             "Ts",
                                                         ),
                                                         ctx: Load,
+                                                        range: 41..43,
                                                     },
                                                 ),
                                             },
                                             ctx: Load,
+                                            range: 40..43,
                                         },
                                     ),
                                 },
                                 ctx: Load,
+                                range: 34..44,
                             },
                         ),
                     },
                 ),
                 type_comment: None,
+                range: 1..49,
             },
         ),
     },

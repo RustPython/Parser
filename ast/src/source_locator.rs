@@ -1,4 +1,5 @@
 use crate::builtin::Attributed;
+use crate::Ranged;
 use rustpython_parser_core::source_code::{SourceLocation, SourceLocator, SourceRange};
 
 impl crate::fold::Fold<()> for SourceLocator<'_> {
@@ -13,11 +14,13 @@ impl crate::fold::Fold<()> for SourceLocator<'_> {
     fn map_attributed<T>(
         &mut self,
         node: Attributed<T, ()>,
-    ) -> Result<Attributed<T, Self::TargetU>, Self::Error> {
-        let start = self.locate(node.range.start());
-        let end = self.locate(node.range.end());
+    ) -> Result<Attributed<T, Self::TargetU>, Self::Error>
+    where
+        T: Ranged,
+    {
+        let start = self.locate(node.start());
+        let end = self.locate(node.end());
         Ok(Attributed {
-            range: node.range,
             custom: (start..end).into(),
             node: node.node,
         })

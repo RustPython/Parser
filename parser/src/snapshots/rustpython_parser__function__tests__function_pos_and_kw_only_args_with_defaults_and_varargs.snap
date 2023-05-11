@@ -5,7 +5,6 @@ expression: parse_ast
 Ok(
     [
         Attributed {
-            range: 0..42,
             custom: (),
             node: FunctionDef(
                 StmtFunctionDef {
@@ -16,7 +15,6 @@ Ok(
                         posonlyargs: [],
                         args: [
                             Attributed {
-                                range: 6..7,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -24,10 +22,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 6..7,
                                 },
                             },
                             Attributed {
-                                range: 9..10,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -35,10 +33,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 9..10,
                                 },
                             },
                             Attributed {
-                                range: 12..13,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -46,12 +44,12 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 12..13,
                                 },
                             },
                         ],
                         vararg: Some(
                             Attributed {
-                                range: 16..20,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -59,12 +57,12 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 16..20,
                                 },
                             },
                         ),
                         kwonlyargs: [
                             Attributed {
-                                range: 22..23,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -72,10 +70,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 22..23,
                                 },
                             },
                             Attributed {
-                                range: 25..26,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -83,10 +81,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 25..26,
                                 },
                             },
                             Attributed {
-                                range: 31..32,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -94,12 +92,12 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 31..32,
                                 },
                             },
                         ],
                         kw_defaults: [
                             Attributed {
-                                range: 27..29,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -107,11 +105,11 @@ Ok(
                                             20,
                                         ),
                                         kind: None,
+                                        range: 27..29,
                                     },
                                 ),
                             },
                             Attributed {
-                                range: 33..35,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -119,23 +117,29 @@ Ok(
                                             30,
                                         ),
                                         kind: None,
+                                        range: 33..35,
                                     },
                                 ),
                             },
                         ],
                         kwarg: None,
                         defaults: [],
+                        range: 6..35,
                     },
                     body: [
                         Attributed {
-                            range: 38..42,
                             custom: (),
-                            node: Pass,
+                            node: Pass(
+                                StmtPass {
+                                    range: 38..42,
+                                },
+                            ),
                         },
                     ],
                     decorator_list: [],
                     returns: None,
                     type_comment: None,
+                    range: 0..42,
                 },
             ),
         },

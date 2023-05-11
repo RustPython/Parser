@@ -4,18 +4,15 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..7,
         custom: (),
         node: Delete(
             StmtDelete {
                 targets: [
                     Attributed {
-                        range: 4..7,
                         custom: (),
                         node: Attribute(
                             ExprAttribute {
                                 value: Attributed {
-                                    range: 4..5,
                                     custom: (),
                                     node: Name(
                                         ExprName {
@@ -23,6 +20,7 @@ expression: parse_ast
                                                 "x",
                                             ),
                                             ctx: Load,
+                                            range: 4..5,
                                         },
                                     ),
                                 },
@@ -30,10 +28,12 @@ expression: parse_ast
                                     "y",
                                 ),
                                 ctx: Del,
+                                range: 4..7,
                             },
                         ),
                     },
                 ],
+                range: 0..7,
             },
         ),
     },

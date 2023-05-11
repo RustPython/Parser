@@ -2,43 +2,65 @@ use crate::ast::{self, Expr, ExprContext, ExprKind};
 
 pub(crate) fn set_context(expr: Expr, ctx: ExprContext) -> Expr {
     match expr.node {
-        ExprKind::Name(ast::ExprName { id, .. }) => Expr {
-            node: ast::ExprName { id, ctx }.into(),
+        ExprKind::Name(ast::ExprName { id, range, .. }) => Expr {
+            node: ast::ExprName { id, ctx, range }.into(),
             ..expr
         },
-        ExprKind::Tuple(ast::ExprTuple { elts, .. }) => Expr {
+        ExprKind::Tuple(ast::ExprTuple { elts, range, .. }) => Expr {
             node: ast::ExprTuple {
                 elts: elts
                     .into_iter()
                     .map(|elt| set_context(elt, ctx.clone()))
                     .collect(),
+                range,
                 ctx,
             }
             .into(),
             ..expr
         },
-        ExprKind::List(ast::ExprList { elts, .. }) => Expr {
+        ExprKind::List(ast::ExprList { elts, range, .. }) => Expr {
             node: ast::ExprList {
                 elts: elts
                     .into_iter()
                     .map(|elt| set_context(elt, ctx.clone()))
                     .collect(),
+                range,
                 ctx,
             }
             .into(),
             ..expr
         },
-        ExprKind::Attribute(ast::ExprAttribute { value, attr, .. }) => Expr {
-            node: ast::ExprAttribute { value, attr, ctx }.into(),
+        ExprKind::Attribute(ast::ExprAttribute {
+            value, attr, range, ..
+        }) => Expr {
+            node: ast::ExprAttribute {
+                value,
+                attr,
+                range,
+                ctx,
+            }
+            .into(),
             ..expr
         },
-        ExprKind::Subscript(ast::ExprSubscript { value, slice, .. }) => Expr {
-            node: ast::ExprSubscript { value, slice, ctx }.into(),
+        ExprKind::Subscript(ast::ExprSubscript {
+            value,
+            slice,
+            range,
+            ..
+        }) => Expr {
+            node: ast::ExprSubscript {
+                value,
+                slice,
+                range,
+                ctx,
+            }
+            .into(),
             ..expr
         },
-        ExprKind::Starred(ast::ExprStarred { value, .. }) => Expr {
+        ExprKind::Starred(ast::ExprStarred { value, range, .. }) => Expr {
             node: ast::ExprStarred {
                 value: Box::new(set_context(*value, ctx.clone())),
+                range,
                 ctx,
             }
             .into(),

@@ -3,12 +3,10 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 Attributed {
-    range: 0..8,
     custom: (),
     node: Subscript(
         ExprSubscript {
             value: Attributed {
-                range: 0..1,
                 custom: (),
                 node: Name(
                     ExprName {
@@ -16,17 +14,16 @@ Attributed {
                             "x",
                         ),
                         ctx: Load,
+                        range: 0..1,
                     },
                 ),
             },
             slice: Attributed {
-                range: 2..7,
                 custom: (),
                 node: Slice(
                     ExprSlice {
                         lower: Some(
                             Attributed {
-                                range: 2..3,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -34,13 +31,13 @@ Attributed {
                                             1,
                                         ),
                                         kind: None,
+                                        range: 2..3,
                                     },
                                 ),
                             },
                         ),
                         upper: Some(
                             Attributed {
-                                range: 4..5,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -48,13 +45,13 @@ Attributed {
                                             2,
                                         ),
                                         kind: None,
+                                        range: 4..5,
                                     },
                                 ),
                             },
                         ),
                         step: Some(
                             Attributed {
-                                range: 6..7,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -62,14 +59,17 @@ Attributed {
                                             3,
                                         ),
                                         kind: None,
+                                        range: 6..7,
                                     },
                                 ),
                             },
                         ),
+                        range: 2..7,
                     },
                 ),
             },
             ctx: Load,
+            range: 0..8,
         },
     ),
 }

@@ -5,7 +5,6 @@ expression: parse_ast
 Ok(
     [
         Attributed {
-            range: 0..23,
             custom: (),
             node: FunctionDef(
                 StmtFunctionDef {
@@ -18,7 +17,6 @@ Ok(
                         vararg: None,
                         kwonlyargs: [
                             Attributed {
-                                range: 9..10,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -26,10 +24,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 9..10,
                                 },
                             },
                             Attributed {
-                                range: 12..13,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -37,10 +35,10 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 12..13,
                                 },
                             },
                             Attributed {
-                                range: 15..16,
                                 custom: (),
                                 node: ArgData {
                                     arg: Identifier(
@@ -48,23 +46,29 @@ Ok(
                                     ),
                                     annotation: None,
                                     type_comment: None,
+                                    range: 15..16,
                                 },
                             },
                         ],
                         kw_defaults: [],
                         kwarg: None,
                         defaults: [],
+                        range: 6..16,
                     },
                     body: [
                         Attributed {
-                            range: 19..23,
                             custom: (),
-                            node: Pass,
+                            node: Pass(
+                                StmtPass {
+                                    range: 19..23,
+                                },
+                            ),
                         },
                     ],
                     decorator_list: [],
                     returns: None,
                     type_comment: None,
+                    range: 0..23,
                 },
             ),
         },

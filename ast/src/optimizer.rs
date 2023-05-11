@@ -21,7 +21,7 @@ impl<U> crate::fold::Fold<U> for ConstantOptimizer {
     }
     fn fold_expr(&mut self, node: crate::Expr<U>) -> Result<crate::Expr<U>, Self::Error> {
         match node.node {
-            crate::ExprKind::Tuple(crate::ExprTuple { elts, ctx }) => {
+            crate::ExprKind::Tuple(crate::ExprTuple { elts, ctx, range }) => {
                 let elts = elts
                     .into_iter()
                     .map(|x| self.fold_expr(x))
@@ -40,14 +40,14 @@ impl<U> crate::fold::Fold<U> for ConstantOptimizer {
                     crate::ExprKind::Constant(crate::ExprConstant {
                         value: Constant::Tuple(tuple),
                         kind: None,
+                        range,
                     })
                 } else {
-                    crate::ExprKind::Tuple(crate::ExprTuple { elts, ctx })
+                    crate::ExprKind::Tuple(crate::ExprTuple { elts, ctx, range })
                 };
                 Ok(crate::Expr {
                     node: expr,
                     custom: node.custom,
-                    range: node.range,
                 })
             }
             _ => crate::fold::fold_expr(self, node),
@@ -58,7 +58,6 @@ impl<U> crate::fold::Fold<U> for ConstantOptimizer {
 #[cfg(test)]
 mod tests {
     use num_bigint::BigInt;
-    use rustpython_parser_core::text_size::TextRange;
 
     #[cfg(feature = "constant-optimization")]
     #[test]
@@ -69,67 +68,67 @@ mod tests {
         #[allow(clippy::let_unit_value)]
         let custom = ();
         let ast = Attributed {
-            range,
             custom,
             node: ExprTuple {
                 ctx: ExprContext::Load,
                 elts: vec![
                     Attributed {
-                        range,
                         custom,
                         node: ExprConstant {
                             value: BigInt::from(1).into(),
                             kind: None,
+                            range,
                         }
                         .into(),
                     },
                     Attributed {
-                        range,
                         custom,
                         node: ExprConstant {
                             value: BigInt::from(2).into(),
                             kind: None,
+                            range,
                         }
                         .into(),
                     },
                     Attributed {
-                        range,
                         custom,
                         node: ExprTuple {
                             ctx: ExprContext::Load,
                             elts: vec![
                                 Attributed {
-                                    range,
                                     custom,
                                     node: ExprConstant {
                                         value: BigInt::from(3).into(),
                                         kind: None,
+                                        range,
                                     }
                                     .into(),
                                 },
                                 Attributed {
-                                    range,
                                     custom,
                                     node: ExprConstant {
                                         value: BigInt::from(4).into(),
                                         kind: None,
+                                        range,
                                     }
                                     .into(),
                                 },
                                 Attributed {
-                                    range,
                                     custom,
                                     node: ExprConstant {
                                         value: BigInt::from(5).into(),
                                         kind: None,
+                                        range,
                                     }
                                     .into(),
                                 },
                             ],
+                            range,
                         }
                         .into(),
                     },
                 ],
+                range,
             }
             .into(),
         };
@@ -139,7 +138,6 @@ mod tests {
         assert_eq!(
             new_ast,
             Attributed {
-                range,
                 custom,
                 node: ExprConstant {
                     value: Constant::Tuple(vec![
@@ -151,7 +149,8 @@ mod tests {
                             BigInt::from(5).into(),
                         ])
                     ]),
-                    kind: None
+                    kind: None,
+                    range,
                 }
                 .into(),
             }

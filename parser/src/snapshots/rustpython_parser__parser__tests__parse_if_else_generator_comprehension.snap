@@ -3,17 +3,14 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 Attributed {
-    range: 0..26,
     custom: (),
     node: GeneratorExp(
         ExprGeneratorExp {
             elt: Attributed {
-                range: 1..14,
                 custom: (),
                 node: IfExp(
                     ExprIfExp {
                         test: Attributed {
-                            range: 6..7,
                             custom: (),
                             node: Name(
                                 ExprName {
@@ -21,11 +18,11 @@ Attributed {
                                         "y",
                                     ),
                                     ctx: Load,
+                                    range: 6..7,
                                 },
                             ),
                         },
                         body: Attributed {
-                            range: 1..2,
                             custom: (),
                             node: Name(
                                 ExprName {
@@ -33,11 +30,11 @@ Attributed {
                                         "x",
                                     ),
                                     ctx: Load,
+                                    range: 1..2,
                                 },
                             ),
                         },
                         orelse: Attributed {
-                            range: 13..14,
                             custom: (),
                             node: Name(
                                 ExprName {
@@ -45,16 +42,17 @@ Attributed {
                                         "y",
                                     ),
                                     ctx: Load,
+                                    range: 13..14,
                                 },
                             ),
                         },
+                        range: 1..14,
                     },
                 ),
             },
             generators: [
                 Comprehension {
                     target: Attributed {
-                        range: 19..20,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -62,11 +60,11 @@ Attributed {
                                     "y",
                                 ),
                                 ctx: Store,
+                                range: 19..20,
                             },
                         ),
                     },
                     iter: Attributed {
-                        range: 24..25,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -74,13 +72,16 @@ Attributed {
                                     "z",
                                 ),
                                 ctx: Load,
+                                range: 24..25,
                             },
                         ),
                     },
                     ifs: [],
                     is_async: false,
+                    range: 15..25,
                 },
             ],
+            range: 0..26,
         },
     ),
 }

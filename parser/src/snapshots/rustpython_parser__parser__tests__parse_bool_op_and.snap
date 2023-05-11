@@ -3,14 +3,12 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 Attributed {
-    range: 0..7,
     custom: (),
     node: BoolOp(
         ExprBoolOp {
             op: And,
             values: [
                 Attributed {
-                    range: 0..1,
                     custom: (),
                     node: Name(
                         ExprName {
@@ -18,11 +16,11 @@ Attributed {
                                 "x",
                             ),
                             ctx: Load,
+                            range: 0..1,
                         },
                     ),
                 },
                 Attributed {
-                    range: 6..7,
                     custom: (),
                     node: Name(
                         ExprName {
@@ -30,10 +28,12 @@ Attributed {
                                 "y",
                             ),
                             ctx: Load,
+                            range: 6..7,
                         },
                     ),
                 },
             ],
+            range: 0..7,
         },
     ),
 }

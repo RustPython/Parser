@@ -4,14 +4,12 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..17,
         custom: (),
         node: With(
             StmtWith {
                 items: [
                     Withitem {
                         context_expr: Attributed {
-                            range: 5..6,
                             custom: (),
                             node: Constant(
                                 ExprConstant {
@@ -19,12 +17,12 @@ expression: parse_ast
                                         1,
                                     ),
                                     kind: None,
+                                    range: 5..6,
                                 },
                             ),
                         },
                         optional_vars: Some(
                             Attributed {
-                                range: 10..11,
                                 custom: (),
                                 node: Name(
                                     ExprName {
@@ -32,20 +30,26 @@ expression: parse_ast
                                             "x",
                                         ),
                                         ctx: Store,
+                                        range: 10..11,
                                     },
                                 ),
                             },
                         ),
+                        range: 5..11,
                     },
                 ],
                 body: [
                     Attributed {
-                        range: 13..17,
                         custom: (),
-                        node: Pass,
+                        node: Pass(
+                            StmtPass {
+                                range: 13..17,
+                            },
+                        ),
                     },
                 ],
                 type_comment: None,
+                range: 0..17,
             },
         ),
     },

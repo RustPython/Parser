@@ -4,7 +4,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
 ---
 [
     Attributed {
-        range: 0..98,
         custom: (),
         node: ClassDef(
             StmtClassDef {
@@ -13,7 +12,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
                 bases: [
                     Attributed {
-                        range: 10..11,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -21,11 +19,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     "A",
                                 ),
                                 ctx: Load,
+                                range: 10..11,
                             },
                         ),
                     },
                     Attributed {
-                        range: 13..14,
                         custom: (),
                         node: Name(
                             ExprName {
@@ -33,6 +31,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     "B",
                                 ),
                                 ctx: Load,
+                                range: 13..14,
                             },
                         ),
                     },
@@ -40,7 +39,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 keywords: [],
                 body: [
                     Attributed {
-                        range: 18..44,
                         custom: (),
                         node: FunctionDef(
                             StmtFunctionDef {
@@ -51,7 +49,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     posonlyargs: [],
                                     args: [
                                         Attributed {
-                                            range: 31..35,
                                             custom: (),
                                             node: ArgData {
                                                 arg: Identifier(
@@ -59,6 +56,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                 ),
                                                 annotation: None,
                                                 type_comment: None,
+                                                range: 31..35,
                                             },
                                         },
                                     ],
@@ -67,22 +65,26 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     kw_defaults: [],
                                     kwarg: None,
                                     defaults: [],
+                                    range: 31..35,
                                 },
                                 body: [
                                     Attributed {
-                                        range: 40..44,
                                         custom: (),
-                                        node: Pass,
+                                        node: Pass(
+                                            StmtPass {
+                                                range: 40..44,
+                                            },
+                                        ),
                                     },
                                 ],
                                 decorator_list: [],
                                 returns: None,
                                 type_comment: None,
+                                range: 18..44,
                             },
                         ),
                     },
                     Attributed {
-                        range: 46..98,
                         custom: (),
                         node: FunctionDef(
                             StmtFunctionDef {
@@ -93,7 +95,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     posonlyargs: [],
                                     args: [
                                         Attributed {
-                                            range: 70..74,
                                             custom: (),
                                             node: ArgData {
                                                 arg: Identifier(
@@ -101,10 +102,10 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                 ),
                                                 annotation: None,
                                                 type_comment: None,
+                                                range: 70..74,
                                             },
                                         },
                                         Attributed {
-                                            range: 76..79,
                                             custom: (),
                                             node: ArgData {
                                                 arg: Identifier(
@@ -112,6 +113,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                 ),
                                                 annotation: None,
                                                 type_comment: None,
+                                                range: 76..79,
                                             },
                                         },
                                     ],
@@ -121,7 +123,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     kwarg: None,
                                     defaults: [
                                         Attributed {
-                                            range: 80..89,
                                             custom: (),
                                             node: Constant(
                                                 ExprConstant {
@@ -129,26 +130,33 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                                         "default",
                                                     ),
                                                     kind: None,
+                                                    range: 80..89,
                                                 },
                                             ),
                                         },
                                     ],
+                                    range: 70..89,
                                 },
                                 body: [
                                     Attributed {
-                                        range: 94..98,
                                         custom: (),
-                                        node: Pass,
+                                        node: Pass(
+                                            StmtPass {
+                                                range: 94..98,
+                                            },
+                                        ),
                                     },
                                 ],
                                 decorator_list: [],
                                 returns: None,
                                 type_comment: None,
+                                range: 46..98,
                             },
                         ),
                     },
                 ],
                 decorator_list: [],
+                range: 0..98,
             },
         ),
     },

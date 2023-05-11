@@ -4,12 +4,10 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..21,
         custom: (),
         node: Expr(
             StmtExpr {
                 value: Attributed {
-                    range: 0..21,
                     custom: (),
                     node: Constant(
                         ExprConstant {
@@ -17,9 +15,11 @@ expression: parse_ast
                                 "\r",
                             ),
                             kind: None,
+                            range: 0..21,
                         },
                     ),
                 },
+                range: 0..21,
             },
         ),
     },

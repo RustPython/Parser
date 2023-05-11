@@ -4,12 +4,10 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..18,
         custom: (),
         node: Expr(
             StmtExpr {
                 value: Attributed {
-                    range: 0..18,
                     custom: (),
                     node: Lambda(
                         ExprLambda {
@@ -17,7 +15,6 @@ expression: parse_ast
                                 posonlyargs: [],
                                 args: [
                                     Attributed {
-                                        range: 7..8,
                                         custom: (),
                                         node: ArgData {
                                             arg: Identifier(
@@ -25,10 +22,10 @@ expression: parse_ast
                                             ),
                                             annotation: None,
                                             type_comment: None,
+                                            range: 7..8,
                                         },
                                     },
                                     Attributed {
-                                        range: 10..11,
                                         custom: (),
                                         node: ArgData {
                                             arg: Identifier(
@@ -36,6 +33,7 @@ expression: parse_ast
                                             ),
                                             annotation: None,
                                             type_comment: None,
+                                            range: 10..11,
                                         },
                                     },
                                 ],
@@ -44,14 +42,13 @@ expression: parse_ast
                                 kw_defaults: [],
                                 kwarg: None,
                                 defaults: [],
+                                range: 7..11,
                             },
                             body: Attributed {
-                                range: 13..18,
                                 custom: (),
                                 node: BinOp(
                                     ExprBinOp {
                                         left: Attributed {
-                                            range: 13..14,
                                             custom: (),
                                             node: Name(
                                                 ExprName {
@@ -59,12 +56,12 @@ expression: parse_ast
                                                         "x",
                                                     ),
                                                     ctx: Load,
+                                                    range: 13..14,
                                                 },
                                             ),
                                         },
                                         op: Mult,
                                         right: Attributed {
-                                            range: 17..18,
                                             custom: (),
                                             node: Name(
                                                 ExprName {
@@ -72,15 +69,19 @@ expression: parse_ast
                                                         "y",
                                                     ),
                                                     ctx: Load,
+                                                    range: 17..18,
                                                 },
                                             ),
                                         },
+                                        range: 13..18,
                                     },
                                 ),
                             },
+                            range: 0..18,
                         },
                     ),
                 },
+                range: 0..18,
             },
         ),
     },

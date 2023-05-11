@@ -4,19 +4,16 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..18,
         custom: (),
         node: Assign(
             StmtAssign {
                 targets: [
                     Attributed {
-                        range: 0..6,
                         custom: (),
                         node: Tuple(
                             ExprTuple {
                                 elts: [
                                     Attributed {
-                                        range: 1..2,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -24,11 +21,11 @@ expression: parse_ast
                                                     "x",
                                                 ),
                                                 ctx: Store,
+                                                range: 1..2,
                                             },
                                         ),
                                     },
                                     Attributed {
-                                        range: 4..5,
                                         custom: (),
                                         node: Name(
                                             ExprName {
@@ -36,23 +33,23 @@ expression: parse_ast
                                                     "y",
                                                 ),
                                                 ctx: Store,
+                                                range: 4..5,
                                             },
                                         ),
                                     },
                                 ],
                                 ctx: Store,
+                                range: 0..6,
                             },
                         ),
                     },
                 ],
                 value: Attributed {
-                    range: 9..18,
                     custom: (),
                     node: Tuple(
                         ExprTuple {
                             elts: [
                                 Attributed {
-                                    range: 10..11,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -60,11 +57,11 @@ expression: parse_ast
                                                 1,
                                             ),
                                             kind: None,
+                                            range: 10..11,
                                         },
                                     ),
                                 },
                                 Attributed {
-                                    range: 13..14,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -72,11 +69,11 @@ expression: parse_ast
                                                 2,
                                             ),
                                             kind: None,
+                                            range: 13..14,
                                         },
                                     ),
                                 },
                                 Attributed {
-                                    range: 16..17,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -84,15 +81,18 @@ expression: parse_ast
                                                 3,
                                             ),
                                             kind: None,
+                                            range: 16..17,
                                         },
                                     ),
                                 },
                             ],
                             ctx: Load,
+                            range: 9..18,
                         },
                     ),
                 },
                 type_comment: None,
+                range: 0..18,
             },
         ),
     },

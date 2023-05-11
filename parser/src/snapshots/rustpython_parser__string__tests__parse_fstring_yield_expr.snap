@@ -4,16 +4,15 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..10,
         custom: (),
         node: FormattedValue(
             ExprFormattedValue {
                 value: Attributed {
-                    range: 3..8,
                     custom: (),
                     node: Yield(
                         ExprYield {
                             value: None,
+                            range: 3..8,
                         },
                     ),
                 },
@@ -21,6 +20,7 @@ expression: parse_ast
                     0,
                 ),
                 format_spec: None,
+                range: 0..10,
             },
         ),
     },

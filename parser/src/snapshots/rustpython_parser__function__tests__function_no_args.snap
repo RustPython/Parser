@@ -5,7 +5,6 @@ expression: parse_ast
 Ok(
     [
         Attributed {
-            range: 0..13,
             custom: (),
             node: FunctionDef(
                 StmtFunctionDef {
@@ -20,17 +19,22 @@ Ok(
                         kw_defaults: [],
                         kwarg: None,
                         defaults: [],
+                        range: 5..7,
                     },
                     body: [
                         Attributed {
-                            range: 9..13,
                             custom: (),
-                            node: Pass,
+                            node: Pass(
+                                StmtPass {
+                                    range: 9..13,
+                                },
+                            ),
                         },
                     ],
                     decorator_list: [],
                     returns: None,
                     type_comment: None,
+                    range: 0..13,
                 },
             ),
         },

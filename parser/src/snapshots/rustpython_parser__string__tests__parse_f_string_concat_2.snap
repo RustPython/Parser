@@ -4,18 +4,15 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..17,
         custom: (),
         node: Expr(
             StmtExpr {
                 value: Attributed {
-                    range: 0..17,
                     custom: (),
                     node: JoinedStr(
                         ExprJoinedStr {
                             values: [
                                 Attributed {
-                                    range: 0..17,
                                     custom: (),
                                     node: Constant(
                                         ExprConstant {
@@ -23,13 +20,16 @@ expression: parse_ast
                                                 "Hello world",
                                             ),
                                             kind: None,
+                                            range: 0..17,
                                         },
                                     ),
                                 },
                             ],
+                            range: 0..17,
                         },
                     ),
                 },
+                range: 0..17,
             },
         ),
     },

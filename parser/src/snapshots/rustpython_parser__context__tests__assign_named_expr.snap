@@ -4,17 +4,14 @@ expression: parse_ast
 ---
 [
     Attributed {
-        range: 0..14,
         custom: (),
         node: If(
             StmtIf {
                 test: Attributed {
-                    range: 3..8,
                     custom: (),
                     node: NamedExpr(
                         ExprNamedExpr {
                             target: Attributed {
-                                range: 3..4,
                                 custom: (),
                                 node: Name(
                                     ExprName {
@@ -22,11 +19,11 @@ expression: parse_ast
                                             "x",
                                         ),
                                         ctx: Store,
+                                        range: 3..4,
                                     },
                                 ),
                             },
                             value: Attributed {
-                                range: 7..8,
                                 custom: (),
                                 node: Constant(
                                     ExprConstant {
@@ -34,20 +31,26 @@ expression: parse_ast
                                             1,
                                         ),
                                         kind: None,
+                                        range: 7..8,
                                     },
                                 ),
                             },
+                            range: 3..8,
                         },
                     ),
                 },
                 body: [
                     Attributed {
-                        range: 10..14,
                         custom: (),
-                        node: Pass,
+                        node: Pass(
+                            StmtPass {
+                                range: 10..14,
+                            },
+                        ),
                     },
                 ],
                 orelse: [],
+                range: 0..14,
             },
         ),
     },

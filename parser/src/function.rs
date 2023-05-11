@@ -1,11 +1,13 @@
 // Contains functions that perform validation and parsing of arguments and parameters.
 // Checks apply both to functions and to lambdas.
+use crate::text_size::TextRange;
 use crate::{
     ast,
     lexer::{LexicalError, LexicalErrorType},
     text_size::TextSize,
 };
 use rustc_hash::FxHashSet;
+use rustpython_ast::Ranged;
 
 pub(crate) struct ArgumentList {
     pub args: Vec<ast::Expr>,
@@ -116,13 +118,11 @@ pub(crate) fn parse_args(func_args: Vec<FunctionArgument>) -> Result<ArgumentLis
                     double_starred = true;
                 }
 
-                keywords.push(ast::Keyword::new(
-                    start..end,
-                    ast::KeywordData {
-                        arg: name.map(ast::Identifier::new),
-                        value,
-                    },
-                ));
+                keywords.push(ast::Keyword::new(ast::KeywordData {
+                    arg: name.map(ast::Identifier::new),
+                    value,
+                    range: TextRange::new(start, end),
+                }));
             }
             None => {
                 // Positional arguments mustn't follow keyword arguments.
