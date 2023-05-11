@@ -4,7 +4,7 @@
 // See also: https://greentreesnakes.readthedocs.io/en/latest/nodes.html#keyword
 
 use crate::{
-    ast::{self, Ranged},
+    ast::ranged::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,

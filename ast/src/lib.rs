@@ -1,13 +1,14 @@
 mod builtin;
 #[cfg(feature = "fold")]
 mod fold_helpers;
-mod generic {
+pub mod generic {
     #![allow(clippy::derive_partial_eq_without_eq)]
     pub use crate::builtin::*;
 
     include!("gen/generic.rs");
 }
-mod impls;
+pub mod ranged;
+// mod impls;  // TODO: temp disable
 #[cfg(feature = "location")]
 mod source_locator;
 #[cfg(feature = "unparse")]
@@ -18,18 +19,6 @@ pub use generic::*;
 pub use rustpython_parser_core::{text_size, ConversionFlag};
 
 pub type Suite<U = ()> = Vec<Stmt<U>>;
-
-pub trait Ranged {
-    fn range(&self) -> TextRange;
-
-    fn start(&self) -> TextSize {
-        self.range().start()
-    }
-
-    fn end(&self) -> TextSize {
-        self.range().end()
-    }
-}
 
 #[cfg(feature = "fold")]
 pub mod fold {
@@ -45,9 +34,7 @@ mod visitor {
 }
 
 #[cfg(feature = "location")]
-pub mod located {
-    include!("gen/located.rs");
-}
+pub mod located;
 
 #[cfg(feature = "location")]
 pub use rustpython_parser_core::source_code;
@@ -57,6 +44,5 @@ pub use visitor::Visitor;
 #[cfg(feature = "constant-optimization")]
 mod optimizer;
 
-use crate::text_size::{TextRange, TextSize};
 #[cfg(feature = "constant-optimization")]
 pub use optimizer::ConstantOptimizer;

@@ -1,7 +1,7 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: 888004f35fc4f9b0dfa2a4425adf0308b0b1a6bb8153ba94dc5c5f28fd3e263c
+// sha3: 8a3fbd9c7ec6b7da4f0fc78dee12593317d7407da92a4ff54c0c398bf36bee6e
 use crate::{
-    ast::{self, Ranged},
+    ast::ranged::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,
@@ -22,7 +22,7 @@ extern crate alloc;
 mod __parse__Top {
 
     use crate::{
-    ast::{self, Ranged},
+    ast::ranged::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,

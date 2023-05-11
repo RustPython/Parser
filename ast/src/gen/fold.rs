@@ -161,7 +161,7 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
     node: Stmt<U>,
 ) -> Result<Stmt<F::TargetU>, F::Error> {
     fold_attributed(folder, node, |folder, node| match node {
-        StmtKind::FunctionDef(StmtFunctionDef {
+        Stmt::FunctionDef(StmtFunctionDef {
             range,
             name,
             args,
@@ -169,7 +169,7 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             decorator_list,
             returns,
             type_comment,
-        }) => Ok(StmtKind::FunctionDef(StmtFunctionDef {
+        }) => Ok(Stmt::FunctionDef(StmtFunctionDef {
             name: Foldable::fold(name, folder)?,
             args: Foldable::fold(args, folder)?,
             body: Foldable::fold(body, folder)?,
@@ -178,7 +178,7 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::AsyncFunctionDef(StmtAsyncFunctionDef {
+        Stmt::AsyncFunctionDef(StmtAsyncFunctionDef {
             range,
             name,
             args,
@@ -186,7 +186,7 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             decorator_list,
             returns,
             type_comment,
-        }) => Ok(StmtKind::AsyncFunctionDef(StmtAsyncFunctionDef {
+        }) => Ok(Stmt::AsyncFunctionDef(StmtAsyncFunctionDef {
             name: Foldable::fold(name, folder)?,
             args: Foldable::fold(args, folder)?,
             body: Foldable::fold(body, folder)?,
@@ -195,14 +195,14 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::ClassDef(StmtClassDef {
+        Stmt::ClassDef(StmtClassDef {
             range,
             name,
             bases,
             keywords,
             body,
             decorator_list,
-        }) => Ok(StmtKind::ClassDef(StmtClassDef {
+        }) => Ok(Stmt::ClassDef(StmtClassDef {
             name: Foldable::fold(name, folder)?,
             bases: Foldable::fold(bases, folder)?,
             keywords: Foldable::fold(keywords, folder)?,
@@ -210,57 +210,57 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             decorator_list: Foldable::fold(decorator_list, folder)?,
             range,
         })),
-        StmtKind::Return(StmtReturn { range, value }) => Ok(StmtKind::Return(StmtReturn {
+        Stmt::Return(StmtReturn { range, value }) => Ok(Stmt::Return(StmtReturn {
             value: Foldable::fold(value, folder)?,
             range,
         })),
-        StmtKind::Delete(StmtDelete { range, targets }) => Ok(StmtKind::Delete(StmtDelete {
+        Stmt::Delete(StmtDelete { range, targets }) => Ok(Stmt::Delete(StmtDelete {
             targets: Foldable::fold(targets, folder)?,
             range,
         })),
-        StmtKind::Assign(StmtAssign {
+        Stmt::Assign(StmtAssign {
             range,
             targets,
             value,
             type_comment,
-        }) => Ok(StmtKind::Assign(StmtAssign {
+        }) => Ok(Stmt::Assign(StmtAssign {
             targets: Foldable::fold(targets, folder)?,
             value: Foldable::fold(value, folder)?,
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::AugAssign(StmtAugAssign {
+        Stmt::AugAssign(StmtAugAssign {
             range,
             target,
             op,
             value,
-        }) => Ok(StmtKind::AugAssign(StmtAugAssign {
+        }) => Ok(Stmt::AugAssign(StmtAugAssign {
             target: Foldable::fold(target, folder)?,
             op: Foldable::fold(op, folder)?,
             value: Foldable::fold(value, folder)?,
             range,
         })),
-        StmtKind::AnnAssign(StmtAnnAssign {
+        Stmt::AnnAssign(StmtAnnAssign {
             range,
             target,
             annotation,
             value,
             simple,
-        }) => Ok(StmtKind::AnnAssign(StmtAnnAssign {
+        }) => Ok(Stmt::AnnAssign(StmtAnnAssign {
             target: Foldable::fold(target, folder)?,
             annotation: Foldable::fold(annotation, folder)?,
             value: Foldable::fold(value, folder)?,
             simple: Foldable::fold(simple, folder)?,
             range,
         })),
-        StmtKind::For(StmtFor {
+        Stmt::For(StmtFor {
             range,
             target,
             iter,
             body,
             orelse,
             type_comment,
-        }) => Ok(StmtKind::For(StmtFor {
+        }) => Ok(Stmt::For(StmtFor {
             target: Foldable::fold(target, folder)?,
             iter: Foldable::fold(iter, folder)?,
             body: Foldable::fold(body, folder)?,
@@ -268,14 +268,14 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::AsyncFor(StmtAsyncFor {
+        Stmt::AsyncFor(StmtAsyncFor {
             range,
             target,
             iter,
             body,
             orelse,
             type_comment,
-        }) => Ok(StmtKind::AsyncFor(StmtAsyncFor {
+        }) => Ok(Stmt::AsyncFor(StmtAsyncFor {
             target: Foldable::fold(target, folder)?,
             iter: Foldable::fold(iter, folder)?,
             body: Foldable::fold(body, folder)?,
@@ -283,127 +283,125 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::While(StmtWhile {
+        Stmt::While(StmtWhile {
             range,
             test,
             body,
             orelse,
-        }) => Ok(StmtKind::While(StmtWhile {
+        }) => Ok(Stmt::While(StmtWhile {
             test: Foldable::fold(test, folder)?,
             body: Foldable::fold(body, folder)?,
             orelse: Foldable::fold(orelse, folder)?,
             range,
         })),
-        StmtKind::If(StmtIf {
+        Stmt::If(StmtIf {
             range,
             test,
             body,
             orelse,
-        }) => Ok(StmtKind::If(StmtIf {
+        }) => Ok(Stmt::If(StmtIf {
             test: Foldable::fold(test, folder)?,
             body: Foldable::fold(body, folder)?,
             orelse: Foldable::fold(orelse, folder)?,
             range,
         })),
-        StmtKind::With(StmtWith {
+        Stmt::With(StmtWith {
             range,
             items,
             body,
             type_comment,
-        }) => Ok(StmtKind::With(StmtWith {
+        }) => Ok(Stmt::With(StmtWith {
             items: Foldable::fold(items, folder)?,
             body: Foldable::fold(body, folder)?,
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::AsyncWith(StmtAsyncWith {
+        Stmt::AsyncWith(StmtAsyncWith {
             range,
             items,
             body,
             type_comment,
-        }) => Ok(StmtKind::AsyncWith(StmtAsyncWith {
+        }) => Ok(Stmt::AsyncWith(StmtAsyncWith {
             items: Foldable::fold(items, folder)?,
             body: Foldable::fold(body, folder)?,
             type_comment: Foldable::fold(type_comment, folder)?,
             range,
         })),
-        StmtKind::Match(StmtMatch {
+        Stmt::Match(StmtMatch {
             range,
             subject,
             cases,
-        }) => Ok(StmtKind::Match(StmtMatch {
+        }) => Ok(Stmt::Match(StmtMatch {
             subject: Foldable::fold(subject, folder)?,
             cases: Foldable::fold(cases, folder)?,
             range,
         })),
-        StmtKind::Raise(StmtRaise { range, exc, cause }) => Ok(StmtKind::Raise(StmtRaise {
+        Stmt::Raise(StmtRaise { range, exc, cause }) => Ok(Stmt::Raise(StmtRaise {
             exc: Foldable::fold(exc, folder)?,
             cause: Foldable::fold(cause, folder)?,
             range,
         })),
-        StmtKind::Try(StmtTry {
+        Stmt::Try(StmtTry {
             range,
             body,
             handlers,
             orelse,
             finalbody,
-        }) => Ok(StmtKind::Try(StmtTry {
+        }) => Ok(Stmt::Try(StmtTry {
             body: Foldable::fold(body, folder)?,
             handlers: Foldable::fold(handlers, folder)?,
             orelse: Foldable::fold(orelse, folder)?,
             finalbody: Foldable::fold(finalbody, folder)?,
             range,
         })),
-        StmtKind::TryStar(StmtTryStar {
+        Stmt::TryStar(StmtTryStar {
             range,
             body,
             handlers,
             orelse,
             finalbody,
-        }) => Ok(StmtKind::TryStar(StmtTryStar {
+        }) => Ok(Stmt::TryStar(StmtTryStar {
             body: Foldable::fold(body, folder)?,
             handlers: Foldable::fold(handlers, folder)?,
             orelse: Foldable::fold(orelse, folder)?,
             finalbody: Foldable::fold(finalbody, folder)?,
             range,
         })),
-        StmtKind::Assert(StmtAssert { range, test, msg }) => Ok(StmtKind::Assert(StmtAssert {
+        Stmt::Assert(StmtAssert { range, test, msg }) => Ok(Stmt::Assert(StmtAssert {
             test: Foldable::fold(test, folder)?,
             msg: Foldable::fold(msg, folder)?,
             range,
         })),
-        StmtKind::Import(StmtImport { range, names }) => Ok(StmtKind::Import(StmtImport {
+        Stmt::Import(StmtImport { range, names }) => Ok(Stmt::Import(StmtImport {
             names: Foldable::fold(names, folder)?,
             range,
         })),
-        StmtKind::ImportFrom(StmtImportFrom {
+        Stmt::ImportFrom(StmtImportFrom {
             range,
             module,
             names,
             level,
-        }) => Ok(StmtKind::ImportFrom(StmtImportFrom {
+        }) => Ok(Stmt::ImportFrom(StmtImportFrom {
             module: Foldable::fold(module, folder)?,
             names: Foldable::fold(names, folder)?,
             level: Foldable::fold(level, folder)?,
             range,
         })),
-        StmtKind::Global(StmtGlobal { range, names }) => Ok(StmtKind::Global(StmtGlobal {
+        Stmt::Global(StmtGlobal { range, names }) => Ok(Stmt::Global(StmtGlobal {
             names: Foldable::fold(names, folder)?,
             range,
         })),
-        StmtKind::Nonlocal(StmtNonlocal { range, names }) => Ok(StmtKind::Nonlocal(StmtNonlocal {
+        Stmt::Nonlocal(StmtNonlocal { range, names }) => Ok(Stmt::Nonlocal(StmtNonlocal {
             names: Foldable::fold(names, folder)?,
             range,
         })),
-        StmtKind::Expr(StmtExpr { range, value }) => Ok(StmtKind::Expr(StmtExpr {
+        Stmt::Expr(StmtExpr { range, value }) => Ok(Stmt::Expr(StmtExpr {
             value: Foldable::fold(value, folder)?,
             range,
         })),
-        StmtKind::Pass(StmtPass { range }) => Ok(StmtKind::Pass(StmtPass { range })),
-        StmtKind::Break(StmtBreak { range }) => Ok(StmtKind::Break(StmtBreak { range })),
-        StmtKind::Continue(StmtContinue { range }) => {
-            Ok(StmtKind::Continue(StmtContinue { range }))
-        }
+        Stmt::Pass(StmtPass { range }) => Ok(Stmt::Pass(StmtPass { range })),
+        Stmt::Break(StmtBreak { range }) => Ok(Stmt::Break(StmtBreak { range })),
+        Stmt::Continue(StmtContinue { range }) => Ok(Stmt::Continue(StmtContinue { range })),
     })
 }
 impl<T, U> Foldable<T, U> for Expr<T> {
@@ -420,215 +418,205 @@ pub fn fold_expr<U, F: Fold<U> + ?Sized>(
     node: Expr<U>,
 ) -> Result<Expr<F::TargetU>, F::Error> {
     fold_attributed(folder, node, |folder, node| match node {
-        ExprKind::BoolOp(ExprBoolOp { range, op, values }) => Ok(ExprKind::BoolOp(ExprBoolOp {
+        Expr::BoolOp(ExprBoolOp { range, op, values }) => Ok(Expr::BoolOp(ExprBoolOp {
             op: Foldable::fold(op, folder)?,
             values: Foldable::fold(values, folder)?,
             range,
         })),
-        ExprKind::NamedExpr(ExprNamedExpr {
+        Expr::NamedExpr(ExprNamedExpr {
             range,
             target,
             value,
-        }) => Ok(ExprKind::NamedExpr(ExprNamedExpr {
+        }) => Ok(Expr::NamedExpr(ExprNamedExpr {
             target: Foldable::fold(target, folder)?,
             value: Foldable::fold(value, folder)?,
             range,
         })),
-        ExprKind::BinOp(ExprBinOp {
+        Expr::BinOp(ExprBinOp {
             range,
             left,
             op,
             right,
-        }) => Ok(ExprKind::BinOp(ExprBinOp {
+        }) => Ok(Expr::BinOp(ExprBinOp {
             left: Foldable::fold(left, folder)?,
             op: Foldable::fold(op, folder)?,
             right: Foldable::fold(right, folder)?,
             range,
         })),
-        ExprKind::UnaryOp(ExprUnaryOp { range, op, operand }) => {
-            Ok(ExprKind::UnaryOp(ExprUnaryOp {
-                op: Foldable::fold(op, folder)?,
-                operand: Foldable::fold(operand, folder)?,
-                range,
-            }))
-        }
-        ExprKind::Lambda(ExprLambda { range, args, body }) => Ok(ExprKind::Lambda(ExprLambda {
+        Expr::UnaryOp(ExprUnaryOp { range, op, operand }) => Ok(Expr::UnaryOp(ExprUnaryOp {
+            op: Foldable::fold(op, folder)?,
+            operand: Foldable::fold(operand, folder)?,
+            range,
+        })),
+        Expr::Lambda(ExprLambda { range, args, body }) => Ok(Expr::Lambda(ExprLambda {
             args: Foldable::fold(args, folder)?,
             body: Foldable::fold(body, folder)?,
             range,
         })),
-        ExprKind::IfExp(ExprIfExp {
+        Expr::IfExp(ExprIfExp {
             range,
             test,
             body,
             orelse,
-        }) => Ok(ExprKind::IfExp(ExprIfExp {
+        }) => Ok(Expr::IfExp(ExprIfExp {
             test: Foldable::fold(test, folder)?,
             body: Foldable::fold(body, folder)?,
             orelse: Foldable::fold(orelse, folder)?,
             range,
         })),
-        ExprKind::Dict(ExprDict {
+        Expr::Dict(ExprDict {
             range,
             keys,
             values,
-        }) => Ok(ExprKind::Dict(ExprDict {
+        }) => Ok(Expr::Dict(ExprDict {
             keys: Foldable::fold(keys, folder)?,
             values: Foldable::fold(values, folder)?,
             range,
         })),
-        ExprKind::Set(ExprSet { range, elts }) => Ok(ExprKind::Set(ExprSet {
+        Expr::Set(ExprSet { range, elts }) => Ok(Expr::Set(ExprSet {
             elts: Foldable::fold(elts, folder)?,
             range,
         })),
-        ExprKind::ListComp(ExprListComp {
+        Expr::ListComp(ExprListComp {
             range,
             elt,
             generators,
-        }) => Ok(ExprKind::ListComp(ExprListComp {
+        }) => Ok(Expr::ListComp(ExprListComp {
             elt: Foldable::fold(elt, folder)?,
             generators: Foldable::fold(generators, folder)?,
             range,
         })),
-        ExprKind::SetComp(ExprSetComp {
+        Expr::SetComp(ExprSetComp {
             range,
             elt,
             generators,
-        }) => Ok(ExprKind::SetComp(ExprSetComp {
+        }) => Ok(Expr::SetComp(ExprSetComp {
             elt: Foldable::fold(elt, folder)?,
             generators: Foldable::fold(generators, folder)?,
             range,
         })),
-        ExprKind::DictComp(ExprDictComp {
+        Expr::DictComp(ExprDictComp {
             range,
             key,
             value,
             generators,
-        }) => Ok(ExprKind::DictComp(ExprDictComp {
+        }) => Ok(Expr::DictComp(ExprDictComp {
             key: Foldable::fold(key, folder)?,
             value: Foldable::fold(value, folder)?,
             generators: Foldable::fold(generators, folder)?,
             range,
         })),
-        ExprKind::GeneratorExp(ExprGeneratorExp {
+        Expr::GeneratorExp(ExprGeneratorExp {
             range,
             elt,
             generators,
-        }) => Ok(ExprKind::GeneratorExp(ExprGeneratorExp {
+        }) => Ok(Expr::GeneratorExp(ExprGeneratorExp {
             elt: Foldable::fold(elt, folder)?,
             generators: Foldable::fold(generators, folder)?,
             range,
         })),
-        ExprKind::Await(ExprAwait { range, value }) => Ok(ExprKind::Await(ExprAwait {
+        Expr::Await(ExprAwait { range, value }) => Ok(Expr::Await(ExprAwait {
             value: Foldable::fold(value, folder)?,
             range,
         })),
-        ExprKind::Yield(ExprYield { range, value }) => Ok(ExprKind::Yield(ExprYield {
+        Expr::Yield(ExprYield { range, value }) => Ok(Expr::Yield(ExprYield {
             value: Foldable::fold(value, folder)?,
             range,
         })),
-        ExprKind::YieldFrom(ExprYieldFrom { range, value }) => {
-            Ok(ExprKind::YieldFrom(ExprYieldFrom {
-                value: Foldable::fold(value, folder)?,
-                range,
-            }))
-        }
-        ExprKind::Compare(ExprCompare {
+        Expr::YieldFrom(ExprYieldFrom { range, value }) => Ok(Expr::YieldFrom(ExprYieldFrom {
+            value: Foldable::fold(value, folder)?,
+            range,
+        })),
+        Expr::Compare(ExprCompare {
             range,
             left,
             ops,
             comparators,
-        }) => Ok(ExprKind::Compare(ExprCompare {
+        }) => Ok(Expr::Compare(ExprCompare {
             left: Foldable::fold(left, folder)?,
             ops: Foldable::fold(ops, folder)?,
             comparators: Foldable::fold(comparators, folder)?,
             range,
         })),
-        ExprKind::Call(ExprCall {
+        Expr::Call(ExprCall {
             range,
             func,
             args,
             keywords,
-        }) => Ok(ExprKind::Call(ExprCall {
+        }) => Ok(Expr::Call(ExprCall {
             func: Foldable::fold(func, folder)?,
             args: Foldable::fold(args, folder)?,
             keywords: Foldable::fold(keywords, folder)?,
             range,
         })),
-        ExprKind::FormattedValue(ExprFormattedValue {
+        Expr::FormattedValue(ExprFormattedValue {
             range,
             value,
             conversion,
             format_spec,
-        }) => Ok(ExprKind::FormattedValue(ExprFormattedValue {
+        }) => Ok(Expr::FormattedValue(ExprFormattedValue {
             value: Foldable::fold(value, folder)?,
             conversion: Foldable::fold(conversion, folder)?,
             format_spec: Foldable::fold(format_spec, folder)?,
             range,
         })),
-        ExprKind::JoinedStr(ExprJoinedStr { range, values }) => {
-            Ok(ExprKind::JoinedStr(ExprJoinedStr {
-                values: Foldable::fold(values, folder)?,
-                range,
-            }))
-        }
-        ExprKind::Constant(ExprConstant { range, value, kind }) => {
-            Ok(ExprKind::Constant(ExprConstant {
-                value: Foldable::fold(value, folder)?,
-                kind: Foldable::fold(kind, folder)?,
-                range,
-            }))
-        }
-        ExprKind::Attribute(ExprAttribute {
+        Expr::JoinedStr(ExprJoinedStr { range, values }) => Ok(Expr::JoinedStr(ExprJoinedStr {
+            values: Foldable::fold(values, folder)?,
+            range,
+        })),
+        Expr::Constant(ExprConstant { range, value, kind }) => Ok(Expr::Constant(ExprConstant {
+            value: Foldable::fold(value, folder)?,
+            kind: Foldable::fold(kind, folder)?,
+            range,
+        })),
+        Expr::Attribute(ExprAttribute {
             range,
             value,
             attr,
             ctx,
-        }) => Ok(ExprKind::Attribute(ExprAttribute {
+        }) => Ok(Expr::Attribute(ExprAttribute {
             value: Foldable::fold(value, folder)?,
             attr: Foldable::fold(attr, folder)?,
             ctx: Foldable::fold(ctx, folder)?,
             range,
         })),
-        ExprKind::Subscript(ExprSubscript {
+        Expr::Subscript(ExprSubscript {
             range,
             value,
             slice,
             ctx,
-        }) => Ok(ExprKind::Subscript(ExprSubscript {
+        }) => Ok(Expr::Subscript(ExprSubscript {
             value: Foldable::fold(value, folder)?,
             slice: Foldable::fold(slice, folder)?,
             ctx: Foldable::fold(ctx, folder)?,
             range,
         })),
-        ExprKind::Starred(ExprStarred { range, value, ctx }) => {
-            Ok(ExprKind::Starred(ExprStarred {
-                value: Foldable::fold(value, folder)?,
-                ctx: Foldable::fold(ctx, folder)?,
-                range,
-            }))
-        }
-        ExprKind::Name(ExprName { range, id, ctx }) => Ok(ExprKind::Name(ExprName {
+        Expr::Starred(ExprStarred { range, value, ctx }) => Ok(Expr::Starred(ExprStarred {
+            value: Foldable::fold(value, folder)?,
+            ctx: Foldable::fold(ctx, folder)?,
+            range,
+        })),
+        Expr::Name(ExprName { range, id, ctx }) => Ok(Expr::Name(ExprName {
             id: Foldable::fold(id, folder)?,
             ctx: Foldable::fold(ctx, folder)?,
             range,
         })),
-        ExprKind::List(ExprList { range, elts, ctx }) => Ok(ExprKind::List(ExprList {
+        Expr::List(ExprList { range, elts, ctx }) => Ok(Expr::List(ExprList {
             elts: Foldable::fold(elts, folder)?,
             ctx: Foldable::fold(ctx, folder)?,
             range,
         })),
-        ExprKind::Tuple(ExprTuple { range, elts, ctx }) => Ok(ExprKind::Tuple(ExprTuple {
+        Expr::Tuple(ExprTuple { range, elts, ctx }) => Ok(Expr::Tuple(ExprTuple {
             elts: Foldable::fold(elts, folder)?,
             ctx: Foldable::fold(ctx, folder)?,
             range,
         })),
-        ExprKind::Slice(ExprSlice {
+        Expr::Slice(ExprSlice {
             range,
             lower,
             upper,
             step,
-        }) => Ok(ExprKind::Slice(ExprSlice {
+        }) => Ok(Expr::Slice(ExprSlice {
             lower: Foldable::fold(lower, folder)?,
             upper: Foldable::fold(upper, folder)?,
             step: Foldable::fold(step, folder)?,
@@ -790,19 +778,17 @@ pub fn fold_excepthandler<U, F: Fold<U> + ?Sized>(
     node: Excepthandler<U>,
 ) -> Result<Excepthandler<F::TargetU>, F::Error> {
     fold_attributed(folder, node, |folder, node| match node {
-        ExcepthandlerKind::ExceptHandler(ExcepthandlerExceptHandler {
+        Excepthandler::ExceptHandler(ExcepthandlerExceptHandler {
             range,
             type_,
             name,
             body,
-        }) => Ok(ExcepthandlerKind::ExceptHandler(
-            ExcepthandlerExceptHandler {
-                type_: Foldable::fold(type_, folder)?,
-                name: Foldable::fold(name, folder)?,
-                body: Foldable::fold(body, folder)?,
-                range,
-            },
-        )),
+        }) => Ok(Excepthandler::ExceptHandler(ExcepthandlerExceptHandler {
+            type_: Foldable::fold(type_, folder)?,
+            name: Foldable::fold(name, folder)?,
+            body: Foldable::fold(body, folder)?,
+            range,
+        })),
     })
 }
 impl<T, U> Foldable<T, U> for Arguments<T> {
@@ -979,65 +965,65 @@ pub fn fold_pattern<U, F: Fold<U> + ?Sized>(
     node: Pattern<U>,
 ) -> Result<Pattern<F::TargetU>, F::Error> {
     fold_attributed(folder, node, |folder, node| match node {
-        PatternKind::MatchValue(PatternMatchValue { range, value }) => {
-            Ok(PatternKind::MatchValue(PatternMatchValue {
+        Pattern::MatchValue(PatternMatchValue { range, value }) => {
+            Ok(Pattern::MatchValue(PatternMatchValue {
                 value: Foldable::fold(value, folder)?,
                 range,
             }))
         }
-        PatternKind::MatchSingleton(PatternMatchSingleton { range, value }) => {
-            Ok(PatternKind::MatchSingleton(PatternMatchSingleton {
+        Pattern::MatchSingleton(PatternMatchSingleton { range, value }) => {
+            Ok(Pattern::MatchSingleton(PatternMatchSingleton {
                 value: Foldable::fold(value, folder)?,
                 range,
             }))
         }
-        PatternKind::MatchSequence(PatternMatchSequence { range, patterns }) => {
-            Ok(PatternKind::MatchSequence(PatternMatchSequence {
+        Pattern::MatchSequence(PatternMatchSequence { range, patterns }) => {
+            Ok(Pattern::MatchSequence(PatternMatchSequence {
                 patterns: Foldable::fold(patterns, folder)?,
                 range,
             }))
         }
-        PatternKind::MatchMapping(PatternMatchMapping {
+        Pattern::MatchMapping(PatternMatchMapping {
             range,
             keys,
             patterns,
             rest,
-        }) => Ok(PatternKind::MatchMapping(PatternMatchMapping {
+        }) => Ok(Pattern::MatchMapping(PatternMatchMapping {
             keys: Foldable::fold(keys, folder)?,
             patterns: Foldable::fold(patterns, folder)?,
             rest: Foldable::fold(rest, folder)?,
             range,
         })),
-        PatternKind::MatchClass(PatternMatchClass {
+        Pattern::MatchClass(PatternMatchClass {
             range,
             cls,
             patterns,
             kwd_attrs,
             kwd_patterns,
-        }) => Ok(PatternKind::MatchClass(PatternMatchClass {
+        }) => Ok(Pattern::MatchClass(PatternMatchClass {
             cls: Foldable::fold(cls, folder)?,
             patterns: Foldable::fold(patterns, folder)?,
             kwd_attrs: Foldable::fold(kwd_attrs, folder)?,
             kwd_patterns: Foldable::fold(kwd_patterns, folder)?,
             range,
         })),
-        PatternKind::MatchStar(PatternMatchStar { range, name }) => {
-            Ok(PatternKind::MatchStar(PatternMatchStar {
+        Pattern::MatchStar(PatternMatchStar { range, name }) => {
+            Ok(Pattern::MatchStar(PatternMatchStar {
                 name: Foldable::fold(name, folder)?,
                 range,
             }))
         }
-        PatternKind::MatchAs(PatternMatchAs {
+        Pattern::MatchAs(PatternMatchAs {
             range,
             pattern,
             name,
-        }) => Ok(PatternKind::MatchAs(PatternMatchAs {
+        }) => Ok(Pattern::MatchAs(PatternMatchAs {
             pattern: Foldable::fold(pattern, folder)?,
             name: Foldable::fold(name, folder)?,
             range,
         })),
-        PatternKind::MatchOr(PatternMatchOr { range, patterns }) => {
-            Ok(PatternKind::MatchOr(PatternMatchOr {
+        Pattern::MatchOr(PatternMatchOr { range, patterns }) => {
+            Ok(Pattern::MatchOr(PatternMatchOr {
                 patterns: Foldable::fold(patterns, folder)?,
                 range,
             }))
