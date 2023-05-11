@@ -16,6 +16,14 @@ impl<U> From<ModModule<U>> for Mod<U> {
     }
 }
 
+#[cfg(feature = "more-attributes")]
+impl<U> Custom<U> for ModModule<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModInteractive<U> {
     pub body: Vec<Stmt<U>>,
@@ -28,6 +36,14 @@ pub struct ModInteractive<U> {
 impl<U> From<ModInteractive<U>> for Mod<U> {
     fn from(payload: ModInteractive<U>) -> Self {
         Mod::Interactive(payload)
+    }
+}
+
+#[cfg(feature = "more-attributes")]
+impl<U> Custom<U> for ModInteractive<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -46,6 +62,14 @@ impl<U> From<ModExpression<U>> for Mod<U> {
     }
 }
 
+#[cfg(feature = "more-attributes")]
+impl<U> Custom<U> for ModExpression<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModFunctionType<U> {
     pub argtypes: Vec<Expr<U>>,
@@ -59,6 +83,14 @@ pub struct ModFunctionType<U> {
 impl<U> From<ModFunctionType<U>> for Mod<U> {
     fn from(payload: ModFunctionType<U>) -> Self {
         Mod::FunctionType(payload)
+    }
+}
+
+#[cfg(feature = "more-attributes")]
+impl<U> Custom<U> for ModFunctionType<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -87,6 +119,13 @@ impl<U> From<StmtFunctionDef<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtFunctionDef<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncFunctionDef<U> {
     pub name: Identifier,
@@ -101,6 +140,13 @@ pub struct StmtAsyncFunctionDef<U> {
 impl<U> From<StmtAsyncFunctionDef<U>> for Stmt<U> {
     fn from(payload: StmtAsyncFunctionDef<U>) -> Self {
         Stmt::AsyncFunctionDef(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtAsyncFunctionDef<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -120,6 +166,13 @@ impl<U> From<StmtClassDef<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtClassDef<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtReturn<U> {
     pub value: Option<Box<Expr<U>>>,
@@ -132,6 +185,13 @@ impl<U> From<StmtReturn<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtReturn<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtDelete<U> {
     pub targets: Vec<Expr<U>>,
@@ -141,6 +201,13 @@ pub struct StmtDelete<U> {
 impl<U> From<StmtDelete<U>> for Stmt<U> {
     fn from(payload: StmtDelete<U>) -> Self {
         Stmt::Delete(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtDelete<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -158,6 +225,13 @@ impl<U> From<StmtAssign<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtAssign<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAugAssign<U> {
     pub target: Box<Expr<U>>,
@@ -169,6 +243,13 @@ pub struct StmtAugAssign<U> {
 impl<U> From<StmtAugAssign<U>> for Stmt<U> {
     fn from(payload: StmtAugAssign<U>) -> Self {
         Stmt::AugAssign(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtAugAssign<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -184,6 +265,13 @@ pub struct StmtAnnAssign<U> {
 impl<U> From<StmtAnnAssign<U>> for Stmt<U> {
     fn from(payload: StmtAnnAssign<U>) -> Self {
         Stmt::AnnAssign(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtAnnAssign<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -203,6 +291,13 @@ impl<U> From<StmtFor<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtFor<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncFor<U> {
     pub target: Box<Expr<U>>,
@@ -216,6 +311,13 @@ pub struct StmtAsyncFor<U> {
 impl<U> From<StmtAsyncFor<U>> for Stmt<U> {
     fn from(payload: StmtAsyncFor<U>) -> Self {
         Stmt::AsyncFor(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtAsyncFor<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -233,6 +335,13 @@ impl<U> From<StmtWhile<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtWhile<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtIf<U> {
     pub test: Box<Expr<U>>,
@@ -244,6 +353,13 @@ pub struct StmtIf<U> {
 impl<U> From<StmtIf<U>> for Stmt<U> {
     fn from(payload: StmtIf<U>) -> Self {
         Stmt::If(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtIf<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -261,6 +377,13 @@ impl<U> From<StmtWith<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtWith<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncWith<U> {
     pub items: Vec<Withitem<U>>,
@@ -272,6 +395,13 @@ pub struct StmtAsyncWith<U> {
 impl<U> From<StmtAsyncWith<U>> for Stmt<U> {
     fn from(payload: StmtAsyncWith<U>) -> Self {
         Stmt::AsyncWith(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtAsyncWith<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -288,6 +418,13 @@ impl<U> From<StmtMatch<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtMatch<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtRaise<U> {
     pub exc: Option<Box<Expr<U>>>,
@@ -298,6 +435,13 @@ pub struct StmtRaise<U> {
 impl<U> From<StmtRaise<U>> for Stmt<U> {
     fn from(payload: StmtRaise<U>) -> Self {
         Stmt::Raise(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtRaise<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -316,6 +460,13 @@ impl<U> From<StmtTry<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtTry<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtTryStar<U> {
     pub body: Vec<Stmt<U>>,
@@ -328,6 +479,13 @@ pub struct StmtTryStar<U> {
 impl<U> From<StmtTryStar<U>> for Stmt<U> {
     fn from(payload: StmtTryStar<U>) -> Self {
         Stmt::TryStar(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtTryStar<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -344,6 +502,13 @@ impl<U> From<StmtAssert<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtAssert<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtImport<U> {
     pub names: Vec<Alias<U>>,
@@ -353,6 +518,13 @@ pub struct StmtImport<U> {
 impl<U> From<StmtImport<U>> for Stmt<U> {
     fn from(payload: StmtImport<U>) -> Self {
         Stmt::Import(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtImport<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -370,6 +542,13 @@ impl<U> From<StmtImportFrom<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtImportFrom<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtGlobal<U> {
     pub names: Vec<Identifier>,
@@ -379,6 +558,13 @@ pub struct StmtGlobal<U> {
 impl<U> From<StmtGlobal<U>> for Stmt<U> {
     fn from(payload: StmtGlobal<U>) -> Self {
         Stmt::Global(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtGlobal<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -394,6 +580,13 @@ impl<U> From<StmtNonlocal<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtNonlocal<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtExpr<U> {
     pub value: Box<Expr<U>>,
@@ -403,6 +596,13 @@ pub struct StmtExpr<U> {
 impl<U> From<StmtExpr<U>> for Stmt<U> {
     fn from(payload: StmtExpr<U>) -> Self {
         Stmt::Expr(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtExpr<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -417,6 +617,13 @@ impl<U> From<StmtPass<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtPass<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtBreak<U> {
     pub custom: U,
@@ -428,6 +635,13 @@ impl<U> From<StmtBreak<U>> for Stmt<U> {
     }
 }
 
+impl<U> Custom<U> for StmtBreak<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtContinue<U> {
     pub custom: U,
@@ -436,6 +650,13 @@ pub struct StmtContinue<U> {
 impl<U> From<StmtContinue<U>> for Stmt<U> {
     fn from(payload: StmtContinue<U>) -> Self {
         Stmt::Continue(payload)
+    }
+}
+
+impl<U> Custom<U> for StmtContinue<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -510,6 +731,13 @@ impl<U> From<ExprBoolOp<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprBoolOp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprNamedExpr<U> {
     pub target: Box<Expr<U>>,
@@ -520,6 +748,13 @@ pub struct ExprNamedExpr<U> {
 impl<U> From<ExprNamedExpr<U>> for Expr<U> {
     fn from(payload: ExprNamedExpr<U>) -> Self {
         Expr::NamedExpr(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprNamedExpr<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -537,6 +772,13 @@ impl<U> From<ExprBinOp<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprBinOp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprUnaryOp<U> {
     pub op: Unaryop,
@@ -550,6 +792,13 @@ impl<U> From<ExprUnaryOp<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprUnaryOp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprLambda<U> {
     pub args: Box<Arguments<U>>,
@@ -560,6 +809,13 @@ pub struct ExprLambda<U> {
 impl<U> From<ExprLambda<U>> for Expr<U> {
     fn from(payload: ExprLambda<U>) -> Self {
         Expr::Lambda(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprLambda<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -577,6 +833,13 @@ impl<U> From<ExprIfExp<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprIfExp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprDict<U> {
     pub keys: Vec<Option<Expr<U>>>,
@@ -590,6 +853,13 @@ impl<U> From<ExprDict<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprDict<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSet<U> {
     pub elts: Vec<Expr<U>>,
@@ -599,6 +869,13 @@ pub struct ExprSet<U> {
 impl<U> From<ExprSet<U>> for Expr<U> {
     fn from(payload: ExprSet<U>) -> Self {
         Expr::Set(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprSet<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -615,6 +892,13 @@ impl<U> From<ExprListComp<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprListComp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSetComp<U> {
     pub elt: Box<Expr<U>>,
@@ -625,6 +909,13 @@ pub struct ExprSetComp<U> {
 impl<U> From<ExprSetComp<U>> for Expr<U> {
     fn from(payload: ExprSetComp<U>) -> Self {
         Expr::SetComp(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprSetComp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -642,6 +933,13 @@ impl<U> From<ExprDictComp<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprDictComp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprGeneratorExp<U> {
     pub elt: Box<Expr<U>>,
@@ -652,6 +950,13 @@ pub struct ExprGeneratorExp<U> {
 impl<U> From<ExprGeneratorExp<U>> for Expr<U> {
     fn from(payload: ExprGeneratorExp<U>) -> Self {
         Expr::GeneratorExp(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprGeneratorExp<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -667,6 +972,13 @@ impl<U> From<ExprAwait<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprAwait<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprYield<U> {
     pub value: Option<Box<Expr<U>>>,
@@ -679,6 +991,13 @@ impl<U> From<ExprYield<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprYield<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprYieldFrom<U> {
     pub value: Box<Expr<U>>,
@@ -688,6 +1007,13 @@ pub struct ExprYieldFrom<U> {
 impl<U> From<ExprYieldFrom<U>> for Expr<U> {
     fn from(payload: ExprYieldFrom<U>) -> Self {
         Expr::YieldFrom(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprYieldFrom<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -705,6 +1031,13 @@ impl<U> From<ExprCompare<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprCompare<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprCall<U> {
     pub func: Box<Expr<U>>,
@@ -716,6 +1049,13 @@ pub struct ExprCall<U> {
 impl<U> From<ExprCall<U>> for Expr<U> {
     fn from(payload: ExprCall<U>) -> Self {
         Expr::Call(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprCall<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -733,6 +1073,13 @@ impl<U> From<ExprFormattedValue<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprFormattedValue<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprJoinedStr<U> {
     pub values: Vec<Expr<U>>,
@@ -742,6 +1089,13 @@ pub struct ExprJoinedStr<U> {
 impl<U> From<ExprJoinedStr<U>> for Expr<U> {
     fn from(payload: ExprJoinedStr<U>) -> Self {
         Expr::JoinedStr(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprJoinedStr<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -755,6 +1109,13 @@ pub struct ExprConstant<U> {
 impl<U> From<ExprConstant<U>> for Expr<U> {
     fn from(payload: ExprConstant<U>) -> Self {
         Expr::Constant(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprConstant<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -772,6 +1133,13 @@ impl<U> From<ExprAttribute<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprAttribute<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSubscript<U> {
     pub value: Box<Expr<U>>,
@@ -783,6 +1151,13 @@ pub struct ExprSubscript<U> {
 impl<U> From<ExprSubscript<U>> for Expr<U> {
     fn from(payload: ExprSubscript<U>) -> Self {
         Expr::Subscript(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprSubscript<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -799,6 +1174,13 @@ impl<U> From<ExprStarred<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprStarred<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprName<U> {
     pub id: Identifier,
@@ -809,6 +1191,13 @@ pub struct ExprName<U> {
 impl<U> From<ExprName<U>> for Expr<U> {
     fn from(payload: ExprName<U>) -> Self {
         Expr::Name(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprName<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -825,6 +1214,13 @@ impl<U> From<ExprList<U>> for Expr<U> {
     }
 }
 
+impl<U> Custom<U> for ExprList<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprTuple<U> {
     pub elts: Vec<Expr<U>>,
@@ -835,6 +1231,13 @@ pub struct ExprTuple<U> {
 impl<U> From<ExprTuple<U>> for Expr<U> {
     fn from(payload: ExprTuple<U>) -> Self {
         Expr::Tuple(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprTuple<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -849,6 +1252,13 @@ pub struct ExprSlice<U> {
 impl<U> From<ExprSlice<U>> for Expr<U> {
     fn from(payload: ExprSlice<U>) -> Self {
         Expr::Slice(payload)
+    }
+}
+
+impl<U> Custom<U> for ExprSlice<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -973,6 +1383,13 @@ pub struct Comprehension<U> {
     #[cfg(not(feature = "more-attributes"))]
     pub custom: std::marker::PhantomData<U>,
 }
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for Comprehension<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExcepthandlerExceptHandler<U> {
@@ -985,6 +1402,13 @@ pub struct ExcepthandlerExceptHandler<U> {
 impl<U> From<ExcepthandlerExceptHandler<U>> for Excepthandler<U> {
     fn from(payload: ExcepthandlerExceptHandler<U>) -> Self {
         Excepthandler::ExceptHandler(payload)
+    }
+}
+
+impl<U> Custom<U> for ExcepthandlerExceptHandler<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -1007,6 +1431,13 @@ pub struct Arguments<U> {
     #[cfg(not(feature = "more-attributes"))]
     pub custom: std::marker::PhantomData<U>,
 }
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for Arguments<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Arg<U> {
@@ -1015,6 +1446,13 @@ pub struct Arg<U> {
     pub type_comment: Option<String>,
     pub custom: U,
 }
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for Arg<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Keyword<U> {
@@ -1022,12 +1460,26 @@ pub struct Keyword<U> {
     pub value: Expr<U>,
     pub custom: U,
 }
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for Keyword<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Alias<U> {
     pub name: Identifier,
     pub asname: Option<Identifier>,
     pub custom: U,
+}
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for Alias<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1038,6 +1490,13 @@ pub struct Withitem<U> {
     pub custom: U,
     #[cfg(not(feature = "more-attributes"))]
     pub custom: std::marker::PhantomData<U>,
+}
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for Withitem<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1050,6 +1509,13 @@ pub struct MatchCase<U> {
     #[cfg(not(feature = "more-attributes"))]
     pub custom: std::marker::PhantomData<U>,
 }
+#[cfg(feature = "more-attributes")]
+impl<T> Custom<U> for MatchCase<U> {
+    #[inline]
+    fn custom(&self) -> U {
+        self.custom
+    }
+}
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchValue<U> {
@@ -1060,6 +1526,13 @@ pub struct PatternMatchValue<U> {
 impl<U> From<PatternMatchValue<U>> for Pattern<U> {
     fn from(payload: PatternMatchValue<U>) -> Self {
         Pattern::MatchValue(payload)
+    }
+}
+
+impl<U> Custom<U> for PatternMatchValue<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -1075,6 +1548,13 @@ impl<U> From<PatternMatchSingleton<U>> for Pattern<U> {
     }
 }
 
+impl<U> Custom<U> for PatternMatchSingleton<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchSequence<U> {
     pub patterns: Vec<Pattern<U>>,
@@ -1084,6 +1564,13 @@ pub struct PatternMatchSequence<U> {
 impl<U> From<PatternMatchSequence<U>> for Pattern<U> {
     fn from(payload: PatternMatchSequence<U>) -> Self {
         Pattern::MatchSequence(payload)
+    }
+}
+
+impl<U> Custom<U> for PatternMatchSequence<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -1098,6 +1585,13 @@ pub struct PatternMatchMapping<U> {
 impl<U> From<PatternMatchMapping<U>> for Pattern<U> {
     fn from(payload: PatternMatchMapping<U>) -> Self {
         Pattern::MatchMapping(payload)
+    }
+}
+
+impl<U> Custom<U> for PatternMatchMapping<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -1116,6 +1610,13 @@ impl<U> From<PatternMatchClass<U>> for Pattern<U> {
     }
 }
 
+impl<U> Custom<U> for PatternMatchClass<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchStar<U> {
     pub name: Option<Identifier>,
@@ -1125,6 +1626,13 @@ pub struct PatternMatchStar<U> {
 impl<U> From<PatternMatchStar<U>> for Pattern<U> {
     fn from(payload: PatternMatchStar<U>) -> Self {
         Pattern::MatchStar(payload)
+    }
+}
+
+impl<U> Custom<U> for PatternMatchStar<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -1141,6 +1649,13 @@ impl<U> From<PatternMatchAs<U>> for Pattern<U> {
     }
 }
 
+impl<U> Custom<U> for PatternMatchAs<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
+    }
+}
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchOr<U> {
     pub patterns: Vec<Pattern<U>>,
@@ -1150,6 +1665,13 @@ pub struct PatternMatchOr<U> {
 impl<U> From<PatternMatchOr<U>> for Pattern<U> {
     fn from(payload: PatternMatchOr<U>) -> Self {
         Pattern::MatchOr(payload)
+    }
+}
+
+impl<U> Custom<U> for PatternMatchOr<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 
@@ -1178,6 +1700,14 @@ pub struct TypeIgnoreTypeIgnore<U> {
 impl<U> From<TypeIgnoreTypeIgnore<U>> for TypeIgnore<U> {
     fn from(payload: TypeIgnoreTypeIgnore<U>) -> Self {
         TypeIgnore::TypeIgnore(payload)
+    }
+}
+
+#[cfg(feature = "more-attributes")]
+impl<U> Custom<U> for TypeIgnoreTypeIgnore<U> {
+    #[inline]
+    fn custom(self) -> U {
+        self.custom
     }
 }
 

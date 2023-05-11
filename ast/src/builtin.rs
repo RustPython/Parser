@@ -204,44 +204,6 @@ impl std::fmt::Display for Constant {
     }
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct Attributed<T, U = ()> {
-    pub custom: U,
-    pub node: T,
-}
-
-impl<T, U> Attributed<T, U> {
-    /// Returns the node
-    #[inline]
-    pub fn node(&self) -> &T {
-        &self.node
-    }
-}
-
-impl<T> Attributed<T, ()> {
-    /// Creates a new node that spans the position specified by `range`.
-    pub fn new(node: impl Into<T>) -> Self {
-        Self {
-            custom: (),
-            node: node.into(),
-        }
-    }
-
-    /// Consumes self and returns the node.
-    #[inline]
-    pub fn into_node(self) -> T {
-        self.node
-    }
-}
-
-impl<T, U> std::ops::Deref for Attributed<T, U> {
-    type Target = T;
-
-    fn deref(&self) -> &Self::Target {
-        &self.node
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

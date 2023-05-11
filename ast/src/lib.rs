@@ -5,6 +5,10 @@ pub mod generic {
     #![allow(clippy::derive_partial_eq_without_eq)]
     pub use crate::builtin::*;
 
+    pub trait Custom<U> {
+        fn custom(self) -> U;
+    }
+
     include!("gen/generic.rs");
 }
 pub mod ranged;

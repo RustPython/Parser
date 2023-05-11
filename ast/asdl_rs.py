@@ -344,14 +344,14 @@ class StructVisitor(EmitVisitor):
             depth,
         )
 
-        # if not sum_type_info.has_attributes:
-        #     self.emit('#[cfg(feature = "more-attributes")]', depth)
-        # self.emit(f"impl Ranged for {payload_name}<TextRange> {{", depth)
-        # self.emit("#[inline]", depth + 1)
-        # self.emit("fn range(&self) -> TextRange {", depth + 1)
-        # self.emit("self.custom", depth + 2)
-        # self.emit("}", depth + 1)
-        # self.emit("}", depth)
+        if not sum_type_info.has_attributes:
+            self.emit('#[cfg(feature = "more-attributes")]', depth)
+        self.emit(f"impl<U> Custom<U> for {payload_name}<U> {{", depth)
+        self.emit("#[inline]", depth + 1)
+        self.emit("fn custom(self) -> U {", depth + 1)
+        self.emit("self.custom", depth + 2)
+        self.emit("}", depth + 1)
+        self.emit("}", depth)
         self.emit("", depth)
 
     def visitConstructor(self, cons, parent, depth):
@@ -402,13 +402,13 @@ class StructVisitor(EmitVisitor):
         self.emit_custom(product.attributes, depth + 1)
         self.emit("}", depth)
 
-        # self.emit('#[cfg(feature = "more-attributes")]', depth)
-        # self.emit(f"impl Ranged for {product_name}<TextRange> {{", depth)
-        # self.emit("#[inline]", depth + 1)
-        # self.emit("fn range(&self) -> TextRange {", depth + 1)
-        # self.emit("self.custom", depth + 2)
-        # self.emit("}", depth + 1)
-        # self.emit("}", depth)
+        self.emit('#[cfg(feature = "more-attributes")]', depth)
+        self.emit(f"impl<T> Custom<U> for {product_name}<U> {{", depth)
+        self.emit("#[inline]", depth + 1)
+        self.emit("fn custom(&self) -> U {", depth + 1)
+        self.emit("self.custom", depth + 2)
+        self.emit("}", depth + 1)
+        self.emit("}", depth)
         self.emit("", depth)
 
 
@@ -419,14 +419,6 @@ class FoldTraitDefVisitor(EmitVisitor):
         self.emit("type Error;", depth + 1)
         self.emit(
             "fn map_user(&mut self, user: U) -> Result<Self::TargetU, Self::Error>;",
-            depth + 1,
-        )
-        self.emit(
-            """
-            fn map_attributed<T>(&mut self, attributed: Attributed<T, U>) -> Result<Attributed<T, Self::TargetU>, Self::Error> where T: Ranged{
-                let custom = self.map_user(attributed.custom)?;
-                Ok(Attributed { custom, node: attributed.node })
-            }""",
             depth + 1,
         )
         self.emit(
@@ -968,7 +960,7 @@ def write_ast_def(mod, type_info, f):
 
 def write_fold_def(mod, type_info, f):
     f.write("""
-use crate::Ranged;
+use crate::generic::Custom;
 """)
     FoldModuleVisitor(f, type_info).visit(mod)
 
