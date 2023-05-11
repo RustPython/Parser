@@ -5,7 +5,19 @@ use crate::generic::Custom;
 pub trait Fold<U> {
     type TargetU;
     type Error;
+
     fn map_user(&mut self, user: U) -> Result<Self::TargetU, Self::Error>;
+    #[cfg(feature = "more-attributes")]
+    fn map_user_cfg(&mut self, user: U) -> Result<Self::TargetU, Self::Error> {
+        self.map_user(user)
+    }
+    #[cfg(not(feature = "more-attributes"))]
+    fn map_user_cfg(
+        &mut self,
+        _user: U,
+    ) -> Result<std::marker::PhantomData<Self::TargetU>, Self::Error> {
+        Ok(std::marker::PhantomData)
+    }
 
     fn fold<X: Foldable<U, Self::TargetU>>(&mut self, node: X) -> Result<X::Mapped, Self::Error> {
         node.fold(self)
@@ -73,23 +85,12 @@ pub trait Fold<U> {
     fn fold_pattern(&mut self, node: Pattern<U>) -> Result<Pattern<Self::TargetU>, Self::Error> {
         fold_pattern(self, node)
     }
-    fn fold_type_ignore(&mut self, node: TypeIgnore) -> Result<TypeIgnore, Self::Error> {
+    fn fold_type_ignore(
+        &mut self,
+        node: TypeIgnore<U>,
+    ) -> Result<TypeIgnore<Self::TargetU>, Self::Error> {
         fold_type_ignore(self, node)
     }
-}
-fn fold_attributed<U, F: Fold<U> + ?Sized, T, MT>(
-    folder: &mut F,
-    node: Attributed<T, U>,
-    f: impl FnOnce(&mut F, T) -> Result<MT, F::Error>,
-) -> Result<Attributed<MT, F::TargetU>, F::Error>
-where
-    T: Ranged,
-{
-    let node = folder.map_attributed(node)?;
-    Ok(Attributed {
-        custom: node.custom,
-        node: f(folder, node.node)?,
-    })
 }
 impl<T, U> Foldable<T, U> for Mod<T> {
     type Mapped = Mod<U>;
@@ -106,31 +107,55 @@ pub fn fold_mod<U, F: Fold<U> + ?Sized>(
 ) -> Result<Mod<F::TargetU>, F::Error> {
     match node {
         Mod::Module(ModModule {
-            range,
             body,
             type_ignores,
-        }) => Ok(Mod::Module(ModModule {
-            body: Foldable::fold(body, folder)?,
-            type_ignores: Foldable::fold(type_ignores, folder)?,
-            range,
-        })),
-        Mod::Interactive(ModInteractive { range, body }) => Ok(Mod::Interactive(ModInteractive {
-            body: Foldable::fold(body, folder)?,
-            range,
-        })),
-        Mod::Expression(ModExpression { range, body }) => Ok(Mod::Expression(ModExpression {
-            body: Foldable::fold(body, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            #[cfg(not(feature = "more-attributes"))]
+            let custom = std::marker::PhantomData;
+            #[cfg(feature = "more-attributes")]
+            let custom = folder.map_user(custom)?;
+            Ok(Mod::Module(ModModule {
+                body: Foldable::fold(body, folder)?,
+                type_ignores: Foldable::fold(type_ignores, folder)?,
+                custom,
+            }))
+        }
+        Mod::Interactive(ModInteractive { body, custom }) => {
+            #[cfg(not(feature = "more-attributes"))]
+            let custom = std::marker::PhantomData;
+            #[cfg(feature = "more-attributes")]
+            let custom = folder.map_user(custom)?;
+            Ok(Mod::Interactive(ModInteractive {
+                body: Foldable::fold(body, folder)?,
+                custom,
+            }))
+        }
+        Mod::Expression(ModExpression { body, custom }) => {
+            #[cfg(not(feature = "more-attributes"))]
+            let custom = std::marker::PhantomData;
+            #[cfg(feature = "more-attributes")]
+            let custom = folder.map_user(custom)?;
+            Ok(Mod::Expression(ModExpression {
+                body: Foldable::fold(body, folder)?,
+                custom,
+            }))
+        }
         Mod::FunctionType(ModFunctionType {
-            range,
             argtypes,
             returns,
-        }) => Ok(Mod::FunctionType(ModFunctionType {
-            argtypes: Foldable::fold(argtypes, folder)?,
-            returns: Foldable::fold(returns, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            #[cfg(not(feature = "more-attributes"))]
+            let custom = std::marker::PhantomData;
+            #[cfg(feature = "more-attributes")]
+            let custom = folder.map_user(custom)?;
+            Ok(Mod::FunctionType(ModFunctionType {
+                argtypes: Foldable::fold(argtypes, folder)?,
+                returns: Foldable::fold(returns, folder)?,
+                custom,
+            }))
+        }
     }
 }
 impl<T, U> Foldable<T, U> for Stmt<T> {
@@ -146,249 +171,330 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Stmt<U>,
 ) -> Result<Stmt<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| match node {
+    match node {
         Stmt::FunctionDef(StmtFunctionDef {
-            range,
             name,
             args,
             body,
             decorator_list,
             returns,
             type_comment,
-        }) => Ok(Stmt::FunctionDef(StmtFunctionDef {
-            name: Foldable::fold(name, folder)?,
-            args: Foldable::fold(args, folder)?,
-            body: Foldable::fold(body, folder)?,
-            decorator_list: Foldable::fold(decorator_list, folder)?,
-            returns: Foldable::fold(returns, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::FunctionDef(StmtFunctionDef {
+                name: Foldable::fold(name, folder)?,
+                args: Foldable::fold(args, folder)?,
+                body: Foldable::fold(body, folder)?,
+                decorator_list: Foldable::fold(decorator_list, folder)?,
+                returns: Foldable::fold(returns, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::AsyncFunctionDef(StmtAsyncFunctionDef {
-            range,
             name,
             args,
             body,
             decorator_list,
             returns,
             type_comment,
-        }) => Ok(Stmt::AsyncFunctionDef(StmtAsyncFunctionDef {
-            name: Foldable::fold(name, folder)?,
-            args: Foldable::fold(args, folder)?,
-            body: Foldable::fold(body, folder)?,
-            decorator_list: Foldable::fold(decorator_list, folder)?,
-            returns: Foldable::fold(returns, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::AsyncFunctionDef(StmtAsyncFunctionDef {
+                name: Foldable::fold(name, folder)?,
+                args: Foldable::fold(args, folder)?,
+                body: Foldable::fold(body, folder)?,
+                decorator_list: Foldable::fold(decorator_list, folder)?,
+                returns: Foldable::fold(returns, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::ClassDef(StmtClassDef {
-            range,
             name,
             bases,
             keywords,
             body,
             decorator_list,
-        }) => Ok(Stmt::ClassDef(StmtClassDef {
-            name: Foldable::fold(name, folder)?,
-            bases: Foldable::fold(bases, folder)?,
-            keywords: Foldable::fold(keywords, folder)?,
-            body: Foldable::fold(body, folder)?,
-            decorator_list: Foldable::fold(decorator_list, folder)?,
-            range,
-        })),
-        Stmt::Return(StmtReturn { range, value }) => Ok(Stmt::Return(StmtReturn {
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
-        Stmt::Delete(StmtDelete { range, targets }) => Ok(Stmt::Delete(StmtDelete {
-            targets: Foldable::fold(targets, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::ClassDef(StmtClassDef {
+                name: Foldable::fold(name, folder)?,
+                bases: Foldable::fold(bases, folder)?,
+                keywords: Foldable::fold(keywords, folder)?,
+                body: Foldable::fold(body, folder)?,
+                decorator_list: Foldable::fold(decorator_list, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Return(StmtReturn { value, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Return(StmtReturn {
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Delete(StmtDelete { targets, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Delete(StmtDelete {
+                targets: Foldable::fold(targets, folder)?,
+                custom,
+            }))
+        }
         Stmt::Assign(StmtAssign {
-            range,
             targets,
             value,
             type_comment,
-        }) => Ok(Stmt::Assign(StmtAssign {
-            targets: Foldable::fold(targets, folder)?,
-            value: Foldable::fold(value, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Assign(StmtAssign {
+                targets: Foldable::fold(targets, folder)?,
+                value: Foldable::fold(value, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::AugAssign(StmtAugAssign {
-            range,
             target,
             op,
             value,
-        }) => Ok(Stmt::AugAssign(StmtAugAssign {
-            target: Foldable::fold(target, folder)?,
-            op: Foldable::fold(op, folder)?,
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::AugAssign(StmtAugAssign {
+                target: Foldable::fold(target, folder)?,
+                op: Foldable::fold(op, folder)?,
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
         Stmt::AnnAssign(StmtAnnAssign {
-            range,
             target,
             annotation,
             value,
             simple,
-        }) => Ok(Stmt::AnnAssign(StmtAnnAssign {
-            target: Foldable::fold(target, folder)?,
-            annotation: Foldable::fold(annotation, folder)?,
-            value: Foldable::fold(value, folder)?,
-            simple: Foldable::fold(simple, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::AnnAssign(StmtAnnAssign {
+                target: Foldable::fold(target, folder)?,
+                annotation: Foldable::fold(annotation, folder)?,
+                value: Foldable::fold(value, folder)?,
+                simple: Foldable::fold(simple, folder)?,
+                custom,
+            }))
+        }
         Stmt::For(StmtFor {
-            range,
             target,
             iter,
             body,
             orelse,
             type_comment,
-        }) => Ok(Stmt::For(StmtFor {
-            target: Foldable::fold(target, folder)?,
-            iter: Foldable::fold(iter, folder)?,
-            body: Foldable::fold(body, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::For(StmtFor {
+                target: Foldable::fold(target, folder)?,
+                iter: Foldable::fold(iter, folder)?,
+                body: Foldable::fold(body, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::AsyncFor(StmtAsyncFor {
-            range,
             target,
             iter,
             body,
             orelse,
             type_comment,
-        }) => Ok(Stmt::AsyncFor(StmtAsyncFor {
-            target: Foldable::fold(target, folder)?,
-            iter: Foldable::fold(iter, folder)?,
-            body: Foldable::fold(body, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::AsyncFor(StmtAsyncFor {
+                target: Foldable::fold(target, folder)?,
+                iter: Foldable::fold(iter, folder)?,
+                body: Foldable::fold(body, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::While(StmtWhile {
-            range,
             test,
             body,
             orelse,
-        }) => Ok(Stmt::While(StmtWhile {
-            test: Foldable::fold(test, folder)?,
-            body: Foldable::fold(body, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::While(StmtWhile {
+                test: Foldable::fold(test, folder)?,
+                body: Foldable::fold(body, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                custom,
+            }))
+        }
         Stmt::If(StmtIf {
-            range,
             test,
             body,
             orelse,
-        }) => Ok(Stmt::If(StmtIf {
-            test: Foldable::fold(test, folder)?,
-            body: Foldable::fold(body, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::If(StmtIf {
+                test: Foldable::fold(test, folder)?,
+                body: Foldable::fold(body, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                custom,
+            }))
+        }
         Stmt::With(StmtWith {
-            range,
             items,
             body,
             type_comment,
-        }) => Ok(Stmt::With(StmtWith {
-            items: Foldable::fold(items, folder)?,
-            body: Foldable::fold(body, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::With(StmtWith {
+                items: Foldable::fold(items, folder)?,
+                body: Foldable::fold(body, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::AsyncWith(StmtAsyncWith {
-            range,
             items,
             body,
             type_comment,
-        }) => Ok(Stmt::AsyncWith(StmtAsyncWith {
-            items: Foldable::fold(items, folder)?,
-            body: Foldable::fold(body, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::AsyncWith(StmtAsyncWith {
+                items: Foldable::fold(items, folder)?,
+                body: Foldable::fold(body, folder)?,
+                type_comment: Foldable::fold(type_comment, folder)?,
+                custom,
+            }))
+        }
         Stmt::Match(StmtMatch {
-            range,
             subject,
             cases,
-        }) => Ok(Stmt::Match(StmtMatch {
-            subject: Foldable::fold(subject, folder)?,
-            cases: Foldable::fold(cases, folder)?,
-            range,
-        })),
-        Stmt::Raise(StmtRaise { range, exc, cause }) => Ok(Stmt::Raise(StmtRaise {
-            exc: Foldable::fold(exc, folder)?,
-            cause: Foldable::fold(cause, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Match(StmtMatch {
+                subject: Foldable::fold(subject, folder)?,
+                cases: Foldable::fold(cases, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Raise(StmtRaise { exc, cause, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Raise(StmtRaise {
+                exc: Foldable::fold(exc, folder)?,
+                cause: Foldable::fold(cause, folder)?,
+                custom,
+            }))
+        }
         Stmt::Try(StmtTry {
-            range,
             body,
             handlers,
             orelse,
             finalbody,
-        }) => Ok(Stmt::Try(StmtTry {
-            body: Foldable::fold(body, folder)?,
-            handlers: Foldable::fold(handlers, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            finalbody: Foldable::fold(finalbody, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Try(StmtTry {
+                body: Foldable::fold(body, folder)?,
+                handlers: Foldable::fold(handlers, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                finalbody: Foldable::fold(finalbody, folder)?,
+                custom,
+            }))
+        }
         Stmt::TryStar(StmtTryStar {
-            range,
             body,
             handlers,
             orelse,
             finalbody,
-        }) => Ok(Stmt::TryStar(StmtTryStar {
-            body: Foldable::fold(body, folder)?,
-            handlers: Foldable::fold(handlers, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            finalbody: Foldable::fold(finalbody, folder)?,
-            range,
-        })),
-        Stmt::Assert(StmtAssert { range, test, msg }) => Ok(Stmt::Assert(StmtAssert {
-            test: Foldable::fold(test, folder)?,
-            msg: Foldable::fold(msg, folder)?,
-            range,
-        })),
-        Stmt::Import(StmtImport { range, names }) => Ok(Stmt::Import(StmtImport {
-            names: Foldable::fold(names, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::TryStar(StmtTryStar {
+                body: Foldable::fold(body, folder)?,
+                handlers: Foldable::fold(handlers, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                finalbody: Foldable::fold(finalbody, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Assert(StmtAssert { test, msg, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Assert(StmtAssert {
+                test: Foldable::fold(test, folder)?,
+                msg: Foldable::fold(msg, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Import(StmtImport { names, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Import(StmtImport {
+                names: Foldable::fold(names, folder)?,
+                custom,
+            }))
+        }
         Stmt::ImportFrom(StmtImportFrom {
-            range,
             module,
             names,
             level,
-        }) => Ok(Stmt::ImportFrom(StmtImportFrom {
-            module: Foldable::fold(module, folder)?,
-            names: Foldable::fold(names, folder)?,
-            level: Foldable::fold(level, folder)?,
-            range,
-        })),
-        Stmt::Global(StmtGlobal { range, names }) => Ok(Stmt::Global(StmtGlobal {
-            names: Foldable::fold(names, folder)?,
-            range,
-        })),
-        Stmt::Nonlocal(StmtNonlocal { range, names }) => Ok(Stmt::Nonlocal(StmtNonlocal {
-            names: Foldable::fold(names, folder)?,
-            range,
-        })),
-        Stmt::Expr(StmtExpr { range, value }) => Ok(Stmt::Expr(StmtExpr {
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
-        Stmt::Pass(StmtPass { range }) => Ok(Stmt::Pass(StmtPass { range })),
-        Stmt::Break(StmtBreak { range }) => Ok(Stmt::Break(StmtBreak { range })),
-        Stmt::Continue(StmtContinue { range }) => Ok(Stmt::Continue(StmtContinue { range })),
-    })
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::ImportFrom(StmtImportFrom {
+                module: Foldable::fold(module, folder)?,
+                names: Foldable::fold(names, folder)?,
+                level: Foldable::fold(level, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Global(StmtGlobal { names, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Global(StmtGlobal {
+                names: Foldable::fold(names, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Nonlocal(StmtNonlocal { names, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Nonlocal(StmtNonlocal {
+                names: Foldable::fold(names, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Expr(StmtExpr { value, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Expr(StmtExpr {
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
+        Stmt::Pass(StmtPass { custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Pass(StmtPass { custom }))
+        }
+        Stmt::Break(StmtBreak { custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Break(StmtBreak { custom }))
+        }
+        Stmt::Continue(StmtContinue { custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Stmt::Continue(StmtContinue { custom }))
+        }
+    }
 }
 impl<T, U> Foldable<T, U> for Expr<T> {
     type Mapped = Expr<U>;
@@ -403,212 +509,301 @@ pub fn fold_expr<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Expr<U>,
 ) -> Result<Expr<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| match node {
-        Expr::BoolOp(ExprBoolOp { range, op, values }) => Ok(Expr::BoolOp(ExprBoolOp {
-            op: Foldable::fold(op, folder)?,
-            values: Foldable::fold(values, folder)?,
-            range,
-        })),
+    match node {
+        Expr::BoolOp(ExprBoolOp { op, values, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::BoolOp(ExprBoolOp {
+                op: Foldable::fold(op, folder)?,
+                values: Foldable::fold(values, folder)?,
+                custom,
+            }))
+        }
         Expr::NamedExpr(ExprNamedExpr {
-            range,
             target,
             value,
-        }) => Ok(Expr::NamedExpr(ExprNamedExpr {
-            target: Foldable::fold(target, folder)?,
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::NamedExpr(ExprNamedExpr {
+                target: Foldable::fold(target, folder)?,
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
         Expr::BinOp(ExprBinOp {
-            range,
             left,
             op,
             right,
-        }) => Ok(Expr::BinOp(ExprBinOp {
-            left: Foldable::fold(left, folder)?,
-            op: Foldable::fold(op, folder)?,
-            right: Foldable::fold(right, folder)?,
-            range,
-        })),
-        Expr::UnaryOp(ExprUnaryOp { range, op, operand }) => Ok(Expr::UnaryOp(ExprUnaryOp {
-            op: Foldable::fold(op, folder)?,
-            operand: Foldable::fold(operand, folder)?,
-            range,
-        })),
-        Expr::Lambda(ExprLambda { range, args, body }) => Ok(Expr::Lambda(ExprLambda {
-            args: Foldable::fold(args, folder)?,
-            body: Foldable::fold(body, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::BinOp(ExprBinOp {
+                left: Foldable::fold(left, folder)?,
+                op: Foldable::fold(op, folder)?,
+                right: Foldable::fold(right, folder)?,
+                custom,
+            }))
+        }
+        Expr::UnaryOp(ExprUnaryOp {
+            op,
+            operand,
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::UnaryOp(ExprUnaryOp {
+                op: Foldable::fold(op, folder)?,
+                operand: Foldable::fold(operand, folder)?,
+                custom,
+            }))
+        }
+        Expr::Lambda(ExprLambda { args, body, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Lambda(ExprLambda {
+                args: Foldable::fold(args, folder)?,
+                body: Foldable::fold(body, folder)?,
+                custom,
+            }))
+        }
         Expr::IfExp(ExprIfExp {
-            range,
             test,
             body,
             orelse,
-        }) => Ok(Expr::IfExp(ExprIfExp {
-            test: Foldable::fold(test, folder)?,
-            body: Foldable::fold(body, folder)?,
-            orelse: Foldable::fold(orelse, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::IfExp(ExprIfExp {
+                test: Foldable::fold(test, folder)?,
+                body: Foldable::fold(body, folder)?,
+                orelse: Foldable::fold(orelse, folder)?,
+                custom,
+            }))
+        }
         Expr::Dict(ExprDict {
-            range,
             keys,
             values,
-        }) => Ok(Expr::Dict(ExprDict {
-            keys: Foldable::fold(keys, folder)?,
-            values: Foldable::fold(values, folder)?,
-            range,
-        })),
-        Expr::Set(ExprSet { range, elts }) => Ok(Expr::Set(ExprSet {
-            elts: Foldable::fold(elts, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Dict(ExprDict {
+                keys: Foldable::fold(keys, folder)?,
+                values: Foldable::fold(values, folder)?,
+                custom,
+            }))
+        }
+        Expr::Set(ExprSet { elts, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Set(ExprSet {
+                elts: Foldable::fold(elts, folder)?,
+                custom,
+            }))
+        }
         Expr::ListComp(ExprListComp {
-            range,
             elt,
             generators,
-        }) => Ok(Expr::ListComp(ExprListComp {
-            elt: Foldable::fold(elt, folder)?,
-            generators: Foldable::fold(generators, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::ListComp(ExprListComp {
+                elt: Foldable::fold(elt, folder)?,
+                generators: Foldable::fold(generators, folder)?,
+                custom,
+            }))
+        }
         Expr::SetComp(ExprSetComp {
-            range,
             elt,
             generators,
-        }) => Ok(Expr::SetComp(ExprSetComp {
-            elt: Foldable::fold(elt, folder)?,
-            generators: Foldable::fold(generators, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::SetComp(ExprSetComp {
+                elt: Foldable::fold(elt, folder)?,
+                generators: Foldable::fold(generators, folder)?,
+                custom,
+            }))
+        }
         Expr::DictComp(ExprDictComp {
-            range,
             key,
             value,
             generators,
-        }) => Ok(Expr::DictComp(ExprDictComp {
-            key: Foldable::fold(key, folder)?,
-            value: Foldable::fold(value, folder)?,
-            generators: Foldable::fold(generators, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::DictComp(ExprDictComp {
+                key: Foldable::fold(key, folder)?,
+                value: Foldable::fold(value, folder)?,
+                generators: Foldable::fold(generators, folder)?,
+                custom,
+            }))
+        }
         Expr::GeneratorExp(ExprGeneratorExp {
-            range,
             elt,
             generators,
-        }) => Ok(Expr::GeneratorExp(ExprGeneratorExp {
-            elt: Foldable::fold(elt, folder)?,
-            generators: Foldable::fold(generators, folder)?,
-            range,
-        })),
-        Expr::Await(ExprAwait { range, value }) => Ok(Expr::Await(ExprAwait {
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
-        Expr::Yield(ExprYield { range, value }) => Ok(Expr::Yield(ExprYield {
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
-        Expr::YieldFrom(ExprYieldFrom { range, value }) => Ok(Expr::YieldFrom(ExprYieldFrom {
-            value: Foldable::fold(value, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::GeneratorExp(ExprGeneratorExp {
+                elt: Foldable::fold(elt, folder)?,
+                generators: Foldable::fold(generators, folder)?,
+                custom,
+            }))
+        }
+        Expr::Await(ExprAwait { value, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Await(ExprAwait {
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
+        Expr::Yield(ExprYield { value, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Yield(ExprYield {
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
+        Expr::YieldFrom(ExprYieldFrom { value, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::YieldFrom(ExprYieldFrom {
+                value: Foldable::fold(value, folder)?,
+                custom,
+            }))
+        }
         Expr::Compare(ExprCompare {
-            range,
             left,
             ops,
             comparators,
-        }) => Ok(Expr::Compare(ExprCompare {
-            left: Foldable::fold(left, folder)?,
-            ops: Foldable::fold(ops, folder)?,
-            comparators: Foldable::fold(comparators, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Compare(ExprCompare {
+                left: Foldable::fold(left, folder)?,
+                ops: Foldable::fold(ops, folder)?,
+                comparators: Foldable::fold(comparators, folder)?,
+                custom,
+            }))
+        }
         Expr::Call(ExprCall {
-            range,
             func,
             args,
             keywords,
-        }) => Ok(Expr::Call(ExprCall {
-            func: Foldable::fold(func, folder)?,
-            args: Foldable::fold(args, folder)?,
-            keywords: Foldable::fold(keywords, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Call(ExprCall {
+                func: Foldable::fold(func, folder)?,
+                args: Foldable::fold(args, folder)?,
+                keywords: Foldable::fold(keywords, folder)?,
+                custom,
+            }))
+        }
         Expr::FormattedValue(ExprFormattedValue {
-            range,
             value,
             conversion,
             format_spec,
-        }) => Ok(Expr::FormattedValue(ExprFormattedValue {
-            value: Foldable::fold(value, folder)?,
-            conversion: Foldable::fold(conversion, folder)?,
-            format_spec: Foldable::fold(format_spec, folder)?,
-            range,
-        })),
-        Expr::JoinedStr(ExprJoinedStr { range, values }) => Ok(Expr::JoinedStr(ExprJoinedStr {
-            values: Foldable::fold(values, folder)?,
-            range,
-        })),
-        Expr::Constant(ExprConstant { range, value, kind }) => Ok(Expr::Constant(ExprConstant {
-            value: Foldable::fold(value, folder)?,
-            kind: Foldable::fold(kind, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::FormattedValue(ExprFormattedValue {
+                value: Foldable::fold(value, folder)?,
+                conversion: Foldable::fold(conversion, folder)?,
+                format_spec: Foldable::fold(format_spec, folder)?,
+                custom,
+            }))
+        }
+        Expr::JoinedStr(ExprJoinedStr { values, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::JoinedStr(ExprJoinedStr {
+                values: Foldable::fold(values, folder)?,
+                custom,
+            }))
+        }
+        Expr::Constant(ExprConstant {
+            value,
+            kind,
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Constant(ExprConstant {
+                value: Foldable::fold(value, folder)?,
+                kind: Foldable::fold(kind, folder)?,
+                custom,
+            }))
+        }
         Expr::Attribute(ExprAttribute {
-            range,
             value,
             attr,
             ctx,
-        }) => Ok(Expr::Attribute(ExprAttribute {
-            value: Foldable::fold(value, folder)?,
-            attr: Foldable::fold(attr, folder)?,
-            ctx: Foldable::fold(ctx, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Attribute(ExprAttribute {
+                value: Foldable::fold(value, folder)?,
+                attr: Foldable::fold(attr, folder)?,
+                ctx: Foldable::fold(ctx, folder)?,
+                custom,
+            }))
+        }
         Expr::Subscript(ExprSubscript {
-            range,
             value,
             slice,
             ctx,
-        }) => Ok(Expr::Subscript(ExprSubscript {
-            value: Foldable::fold(value, folder)?,
-            slice: Foldable::fold(slice, folder)?,
-            ctx: Foldable::fold(ctx, folder)?,
-            range,
-        })),
-        Expr::Starred(ExprStarred { range, value, ctx }) => Ok(Expr::Starred(ExprStarred {
-            value: Foldable::fold(value, folder)?,
-            ctx: Foldable::fold(ctx, folder)?,
-            range,
-        })),
-        Expr::Name(ExprName { range, id, ctx }) => Ok(Expr::Name(ExprName {
-            id: Foldable::fold(id, folder)?,
-            ctx: Foldable::fold(ctx, folder)?,
-            range,
-        })),
-        Expr::List(ExprList { range, elts, ctx }) => Ok(Expr::List(ExprList {
-            elts: Foldable::fold(elts, folder)?,
-            ctx: Foldable::fold(ctx, folder)?,
-            range,
-        })),
-        Expr::Tuple(ExprTuple { range, elts, ctx }) => Ok(Expr::Tuple(ExprTuple {
-            elts: Foldable::fold(elts, folder)?,
-            ctx: Foldable::fold(ctx, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Subscript(ExprSubscript {
+                value: Foldable::fold(value, folder)?,
+                slice: Foldable::fold(slice, folder)?,
+                ctx: Foldable::fold(ctx, folder)?,
+                custom,
+            }))
+        }
+        Expr::Starred(ExprStarred { value, ctx, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Starred(ExprStarred {
+                value: Foldable::fold(value, folder)?,
+                ctx: Foldable::fold(ctx, folder)?,
+                custom,
+            }))
+        }
+        Expr::Name(ExprName { id, ctx, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Name(ExprName {
+                id: Foldable::fold(id, folder)?,
+                ctx: Foldable::fold(ctx, folder)?,
+                custom,
+            }))
+        }
+        Expr::List(ExprList { elts, ctx, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::List(ExprList {
+                elts: Foldable::fold(elts, folder)?,
+                ctx: Foldable::fold(ctx, folder)?,
+                custom,
+            }))
+        }
+        Expr::Tuple(ExprTuple { elts, ctx, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Tuple(ExprTuple {
+                elts: Foldable::fold(elts, folder)?,
+                ctx: Foldable::fold(ctx, folder)?,
+                custom,
+            }))
+        }
         Expr::Slice(ExprSlice {
-            range,
             lower,
             upper,
             step,
-        }) => Ok(Expr::Slice(ExprSlice {
-            lower: Foldable::fold(lower, folder)?,
-            upper: Foldable::fold(upper, folder)?,
-            step: Foldable::fold(step, folder)?,
-            range,
-        })),
-    })
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Expr::Slice(ExprSlice {
+                lower: Foldable::fold(lower, folder)?,
+                upper: Foldable::fold(upper, folder)?,
+                step: Foldable::fold(step, folder)?,
+                custom,
+            }))
+        }
+    }
 }
 impl<T, U> Foldable<T, U> for ExprContext {
     type Mapped = ExprContext;
@@ -623,11 +818,7 @@ pub fn fold_expr_context<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: ExprContext,
 ) -> Result<ExprContext, F::Error> {
-    match node {
-        ExprContext::Load {} => Ok(ExprContext::Load {}),
-        ExprContext::Store {} => Ok(ExprContext::Store {}),
-        ExprContext::Del {} => Ok(ExprContext::Del {}),
-    }
+    Ok(node)
 }
 impl<T, U> Foldable<T, U> for Boolop {
     type Mapped = Boolop;
@@ -642,10 +833,7 @@ pub fn fold_boolop<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Boolop,
 ) -> Result<Boolop, F::Error> {
-    match node {
-        Boolop::And {} => Ok(Boolop::And {}),
-        Boolop::Or {} => Ok(Boolop::Or {}),
-    }
+    Ok(node)
 }
 impl<T, U> Foldable<T, U> for Operator {
     type Mapped = Operator;
@@ -660,21 +848,7 @@ pub fn fold_operator<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Operator,
 ) -> Result<Operator, F::Error> {
-    match node {
-        Operator::Add {} => Ok(Operator::Add {}),
-        Operator::Sub {} => Ok(Operator::Sub {}),
-        Operator::Mult {} => Ok(Operator::Mult {}),
-        Operator::MatMult {} => Ok(Operator::MatMult {}),
-        Operator::Div {} => Ok(Operator::Div {}),
-        Operator::Mod {} => Ok(Operator::Mod {}),
-        Operator::Pow {} => Ok(Operator::Pow {}),
-        Operator::LShift {} => Ok(Operator::LShift {}),
-        Operator::RShift {} => Ok(Operator::RShift {}),
-        Operator::BitOr {} => Ok(Operator::BitOr {}),
-        Operator::BitXor {} => Ok(Operator::BitXor {}),
-        Operator::BitAnd {} => Ok(Operator::BitAnd {}),
-        Operator::FloorDiv {} => Ok(Operator::FloorDiv {}),
-    }
+    Ok(node)
 }
 impl<T, U> Foldable<T, U> for Unaryop {
     type Mapped = Unaryop;
@@ -689,12 +863,7 @@ pub fn fold_unaryop<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Unaryop,
 ) -> Result<Unaryop, F::Error> {
-    match node {
-        Unaryop::Invert {} => Ok(Unaryop::Invert {}),
-        Unaryop::Not {} => Ok(Unaryop::Not {}),
-        Unaryop::UAdd {} => Ok(Unaryop::UAdd {}),
-        Unaryop::USub {} => Ok(Unaryop::USub {}),
-    }
+    Ok(node)
 }
 impl<T, U> Foldable<T, U> for Cmpop {
     type Mapped = Cmpop;
@@ -709,18 +878,7 @@ pub fn fold_cmpop<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Cmpop,
 ) -> Result<Cmpop, F::Error> {
-    match node {
-        Cmpop::Eq {} => Ok(Cmpop::Eq {}),
-        Cmpop::NotEq {} => Ok(Cmpop::NotEq {}),
-        Cmpop::Lt {} => Ok(Cmpop::Lt {}),
-        Cmpop::LtE {} => Ok(Cmpop::LtE {}),
-        Cmpop::Gt {} => Ok(Cmpop::Gt {}),
-        Cmpop::GtE {} => Ok(Cmpop::GtE {}),
-        Cmpop::Is {} => Ok(Cmpop::Is {}),
-        Cmpop::IsNot {} => Ok(Cmpop::IsNot {}),
-        Cmpop::In {} => Ok(Cmpop::In {}),
-        Cmpop::NotIn {} => Ok(Cmpop::NotIn {}),
-    }
+    Ok(node)
 }
 impl<T, U> Foldable<T, U> for Comprehension<T> {
     type Mapped = Comprehension<U>;
@@ -736,18 +894,22 @@ pub fn fold_comprehension<U, F: Fold<U> + ?Sized>(
     node: Comprehension<U>,
 ) -> Result<Comprehension<F::TargetU>, F::Error> {
     let Comprehension {
-        range,
         target,
         iter,
         ifs,
         is_async,
+        custom,
     } = node;
+    #[cfg(not(feature = "more-attributes"))]
+    let custom = std::marker::PhantomData;
+    #[cfg(feature = "more-attributes")]
+    let custom = folder.map_user(custom)?;
     Ok(Comprehension {
         target: Foldable::fold(target, folder)?,
         iter: Foldable::fold(iter, folder)?,
         ifs: Foldable::fold(ifs, folder)?,
         is_async: Foldable::fold(is_async, folder)?,
-        range,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for Excepthandler<T> {
@@ -763,19 +925,22 @@ pub fn fold_excepthandler<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Excepthandler<U>,
 ) -> Result<Excepthandler<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| match node {
+    match node {
         Excepthandler::ExceptHandler(ExcepthandlerExceptHandler {
-            range,
             type_,
             name,
             body,
-        }) => Ok(Excepthandler::ExceptHandler(ExcepthandlerExceptHandler {
-            type_: Foldable::fold(type_, folder)?,
-            name: Foldable::fold(name, folder)?,
-            body: Foldable::fold(body, folder)?,
-            range,
-        })),
-    })
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Excepthandler::ExceptHandler(ExcepthandlerExceptHandler {
+                type_: Foldable::fold(type_, folder)?,
+                name: Foldable::fold(name, folder)?,
+                body: Foldable::fold(body, folder)?,
+                custom,
+            }))
+        }
+    }
 }
 impl<T, U> Foldable<T, U> for Arguments<T> {
     type Mapped = Arguments<U>;
@@ -791,7 +956,6 @@ pub fn fold_arguments<U, F: Fold<U> + ?Sized>(
     node: Arguments<U>,
 ) -> Result<Arguments<F::TargetU>, F::Error> {
     let Arguments {
-        range,
         posonlyargs,
         args,
         vararg,
@@ -799,7 +963,12 @@ pub fn fold_arguments<U, F: Fold<U> + ?Sized>(
         kw_defaults,
         kwarg,
         defaults,
+        custom,
     } = node;
+    #[cfg(not(feature = "more-attributes"))]
+    let custom = std::marker::PhantomData;
+    #[cfg(feature = "more-attributes")]
+    let custom = folder.map_user(custom)?;
     Ok(Arguments {
         posonlyargs: Foldable::fold(posonlyargs, folder)?,
         args: Foldable::fold(args, folder)?,
@@ -808,7 +977,7 @@ pub fn fold_arguments<U, F: Fold<U> + ?Sized>(
         kw_defaults: Foldable::fold(kw_defaults, folder)?,
         kwarg: Foldable::fold(kwarg, folder)?,
         defaults: Foldable::fold(defaults, folder)?,
-        range,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for Arg<T> {
@@ -824,19 +993,18 @@ pub fn fold_arg<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Arg<U>,
 ) -> Result<Arg<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| {
-        let ArgData {
-            range,
-            arg,
-            annotation,
-            type_comment,
-        } = node;
-        Ok(ArgData {
-            arg: Foldable::fold(arg, folder)?,
-            annotation: Foldable::fold(annotation, folder)?,
-            type_comment: Foldable::fold(type_comment, folder)?,
-            range,
-        })
+    let Arg {
+        arg,
+        annotation,
+        type_comment,
+        custom,
+    } = node;
+    let custom = folder.map_user(custom)?;
+    Ok(Arg {
+        arg: Foldable::fold(arg, folder)?,
+        annotation: Foldable::fold(annotation, folder)?,
+        type_comment: Foldable::fold(type_comment, folder)?,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for Keyword<T> {
@@ -852,13 +1020,12 @@ pub fn fold_keyword<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Keyword<U>,
 ) -> Result<Keyword<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| {
-        let KeywordData { range, arg, value } = node;
-        Ok(KeywordData {
-            arg: Foldable::fold(arg, folder)?,
-            value: Foldable::fold(value, folder)?,
-            range,
-        })
+    let Keyword { arg, value, custom } = node;
+    let custom = folder.map_user(custom)?;
+    Ok(Keyword {
+        arg: Foldable::fold(arg, folder)?,
+        value: Foldable::fold(value, folder)?,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for Alias<T> {
@@ -874,17 +1041,16 @@ pub fn fold_alias<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Alias<U>,
 ) -> Result<Alias<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| {
-        let AliasData {
-            range,
-            name,
-            asname,
-        } = node;
-        Ok(AliasData {
-            name: Foldable::fold(name, folder)?,
-            asname: Foldable::fold(asname, folder)?,
-            range,
-        })
+    let Alias {
+        name,
+        asname,
+        custom,
+    } = node;
+    let custom = folder.map_user(custom)?;
+    Ok(Alias {
+        name: Foldable::fold(name, folder)?,
+        asname: Foldable::fold(asname, folder)?,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for Withitem<T> {
@@ -901,14 +1067,18 @@ pub fn fold_withitem<U, F: Fold<U> + ?Sized>(
     node: Withitem<U>,
 ) -> Result<Withitem<F::TargetU>, F::Error> {
     let Withitem {
-        range,
         context_expr,
         optional_vars,
+        custom,
     } = node;
+    #[cfg(not(feature = "more-attributes"))]
+    let custom = std::marker::PhantomData;
+    #[cfg(feature = "more-attributes")]
+    let custom = folder.map_user(custom)?;
     Ok(Withitem {
         context_expr: Foldable::fold(context_expr, folder)?,
         optional_vars: Foldable::fold(optional_vars, folder)?,
-        range,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for MatchCase<T> {
@@ -925,16 +1095,20 @@ pub fn fold_match_case<U, F: Fold<U> + ?Sized>(
     node: MatchCase<U>,
 ) -> Result<MatchCase<F::TargetU>, F::Error> {
     let MatchCase {
-        range,
         pattern,
         guard,
         body,
+        custom,
     } = node;
+    #[cfg(not(feature = "more-attributes"))]
+    let custom = std::marker::PhantomData;
+    #[cfg(feature = "more-attributes")]
+    let custom = folder.map_user(custom)?;
     Ok(MatchCase {
         pattern: Foldable::fold(pattern, folder)?,
         guard: Foldable::fold(guard, folder)?,
         body: Foldable::fold(body, folder)?,
-        range,
+        custom,
     })
 }
 impl<T, U> Foldable<T, U> for Pattern<T> {
@@ -950,74 +1124,88 @@ pub fn fold_pattern<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: Pattern<U>,
 ) -> Result<Pattern<F::TargetU>, F::Error> {
-    fold_attributed(folder, node, |folder, node| match node {
-        Pattern::MatchValue(PatternMatchValue { range, value }) => {
+    match node {
+        Pattern::MatchValue(PatternMatchValue { value, custom }) => {
+            let custom = folder.map_user(custom)?;
             Ok(Pattern::MatchValue(PatternMatchValue {
                 value: Foldable::fold(value, folder)?,
-                range,
+                custom,
             }))
         }
-        Pattern::MatchSingleton(PatternMatchSingleton { range, value }) => {
+        Pattern::MatchSingleton(PatternMatchSingleton { value, custom }) => {
+            let custom = folder.map_user(custom)?;
             Ok(Pattern::MatchSingleton(PatternMatchSingleton {
                 value: Foldable::fold(value, folder)?,
-                range,
+                custom,
             }))
         }
-        Pattern::MatchSequence(PatternMatchSequence { range, patterns }) => {
+        Pattern::MatchSequence(PatternMatchSequence { patterns, custom }) => {
+            let custom = folder.map_user(custom)?;
             Ok(Pattern::MatchSequence(PatternMatchSequence {
                 patterns: Foldable::fold(patterns, folder)?,
-                range,
+                custom,
             }))
         }
         Pattern::MatchMapping(PatternMatchMapping {
-            range,
             keys,
             patterns,
             rest,
-        }) => Ok(Pattern::MatchMapping(PatternMatchMapping {
-            keys: Foldable::fold(keys, folder)?,
-            patterns: Foldable::fold(patterns, folder)?,
-            rest: Foldable::fold(rest, folder)?,
-            range,
-        })),
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Pattern::MatchMapping(PatternMatchMapping {
+                keys: Foldable::fold(keys, folder)?,
+                patterns: Foldable::fold(patterns, folder)?,
+                rest: Foldable::fold(rest, folder)?,
+                custom,
+            }))
+        }
         Pattern::MatchClass(PatternMatchClass {
-            range,
             cls,
             patterns,
             kwd_attrs,
             kwd_patterns,
-        }) => Ok(Pattern::MatchClass(PatternMatchClass {
-            cls: Foldable::fold(cls, folder)?,
-            patterns: Foldable::fold(patterns, folder)?,
-            kwd_attrs: Foldable::fold(kwd_attrs, folder)?,
-            kwd_patterns: Foldable::fold(kwd_patterns, folder)?,
-            range,
-        })),
-        Pattern::MatchStar(PatternMatchStar { range, name }) => {
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Pattern::MatchClass(PatternMatchClass {
+                cls: Foldable::fold(cls, folder)?,
+                patterns: Foldable::fold(patterns, folder)?,
+                kwd_attrs: Foldable::fold(kwd_attrs, folder)?,
+                kwd_patterns: Foldable::fold(kwd_patterns, folder)?,
+                custom,
+            }))
+        }
+        Pattern::MatchStar(PatternMatchStar { name, custom }) => {
+            let custom = folder.map_user(custom)?;
             Ok(Pattern::MatchStar(PatternMatchStar {
                 name: Foldable::fold(name, folder)?,
-                range,
+                custom,
             }))
         }
         Pattern::MatchAs(PatternMatchAs {
-            range,
             pattern,
             name,
-        }) => Ok(Pattern::MatchAs(PatternMatchAs {
-            pattern: Foldable::fold(pattern, folder)?,
-            name: Foldable::fold(name, folder)?,
-            range,
-        })),
-        Pattern::MatchOr(PatternMatchOr { range, patterns }) => {
-            Ok(Pattern::MatchOr(PatternMatchOr {
-                patterns: Foldable::fold(patterns, folder)?,
-                range,
+            custom,
+        }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Pattern::MatchAs(PatternMatchAs {
+                pattern: Foldable::fold(pattern, folder)?,
+                name: Foldable::fold(name, folder)?,
+                custom,
             }))
         }
-    })
+        Pattern::MatchOr(PatternMatchOr { patterns, custom }) => {
+            let custom = folder.map_user(custom)?;
+            Ok(Pattern::MatchOr(PatternMatchOr {
+                patterns: Foldable::fold(patterns, folder)?,
+                custom,
+            }))
+        }
+    }
 }
-impl<T, U> Foldable<T, U> for TypeIgnore {
-    type Mapped = TypeIgnore;
+impl<T, U> Foldable<T, U> for TypeIgnore<T> {
+    type Mapped = TypeIgnore<U>;
     fn fold<F: Fold<T, TargetU = U> + ?Sized>(
         self,
         folder: &mut F,
@@ -1027,14 +1215,22 @@ impl<T, U> Foldable<T, U> for TypeIgnore {
 }
 pub fn fold_type_ignore<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
-    node: TypeIgnore,
-) -> Result<TypeIgnore, F::Error> {
+    node: TypeIgnore<U>,
+) -> Result<TypeIgnore<F::TargetU>, F::Error> {
     match node {
-        TypeIgnore::TypeIgnore(TypeIgnoreTypeIgnore { range, lineno, tag }) => {
+        TypeIgnore::TypeIgnore(TypeIgnoreTypeIgnore {
+            lineno,
+            tag,
+            custom,
+        }) => {
+            #[cfg(not(feature = "more-attributes"))]
+            let custom = std::marker::PhantomData;
+            #[cfg(feature = "more-attributes")]
+            let custom = folder.map_user(custom)?;
             Ok(TypeIgnore::TypeIgnore(TypeIgnoreTypeIgnore {
                 lineno: Foldable::fold(lineno, folder)?,
                 tag: Foldable::fold(tag, folder)?,
-                range,
+                custom,
             }))
         }
     }

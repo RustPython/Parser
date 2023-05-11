@@ -5,11 +5,11 @@ pub trait Located {
     fn range(&self) -> SourceRange;
 
     fn location(&self) -> SourceLocation {
-        self.range().start()
+        self.range().start
     }
 
-    fn end_location(&self) -> SourceLocation {
-        self.range().end()
+    fn end_location(&self) -> Option<SourceLocation> {
+        self.range().end
     }
 }
 
