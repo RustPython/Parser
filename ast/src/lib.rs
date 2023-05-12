@@ -5,14 +5,10 @@ pub mod generic {
     #![allow(clippy::derive_partial_eq_without_eq)]
     pub use crate::builtin::*;
 
-    pub trait Custom<U> {
-        fn custom(self) -> U;
-    }
-
     include!("gen/generic.rs");
 }
+mod impls;
 pub mod ranged;
-// mod impls;  // TODO: temp disable
 #[cfg(feature = "location")]
 mod source_locator;
 #[cfg(feature = "unparse")]

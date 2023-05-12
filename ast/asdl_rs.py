@@ -217,7 +217,7 @@ class FindUserDataTypesVisitor(asdl.VisitorBase):
             if len(sum.types) > 1:
                 info.boxed = True
             if sum.attributes:
-                # attributes means located, which has the `custom: U` field
+                # attributes means located, which has the `range: R` field
                 info.has_user_data = True
                 info.has_attributes = True
 
@@ -227,7 +227,7 @@ class FindUserDataTypesVisitor(asdl.VisitorBase):
     def visitProduct(self, product, name):
         info = self.type_info[name]
         if product.attributes:
-            # attributes means located, which has the `custom: U` field
+            # attributes means located, which has the `range: R` field
             info.has_user_data = True
             info.has_attributes = True
         info.has_expr = product_has_expr(product)
@@ -276,14 +276,14 @@ class StructVisitor(EmitVisitor):
     def emit_attrs(self, depth):
         self.emit("#[derive(Clone, Debug, PartialEq)]", depth)
 
-    def emit_custom(self, has_attributes, depth):
+    def emit_range(self, has_attributes, depth):
         if has_attributes:
-            self.emit("pub custom: U,", depth + 1)
+            self.emit("pub range: R,", depth + 1)
         else:
             self.emit('#[cfg(feature = "more-attributes")]', depth + 1)
-            self.emit("pub custom: U,", depth + 1)
+            self.emit("pub range: R,", depth + 1)
             self.emit('#[cfg(not(feature = "more-attributes"))]', depth + 1)
-            self.emit("pub custom: std::marker::PhantomData<U>,", depth + 1)
+            self.emit("pub range: std::marker::PhantomData<R>,", depth + 1)
 
     def simple_sum(self, sum, name, depth):
         rust_name = rust_type_name(name)
@@ -306,7 +306,7 @@ class StructVisitor(EmitVisitor):
 
         self.emit_attrs(depth)
         self.emit("#[derive(is_macro::Is)]", depth)
-        self.emit(f"pub enum {rust_name}<U> {{", depth)
+        self.emit(f"pub enum {rust_name}<R = TextRange> {{", depth)
         needs_escape = any(rust_field_name(t.name) in RUST_KEYWORDS for t in sum.types)
         for t in sum.types:
             if needs_escape:
@@ -314,28 +314,28 @@ class StructVisitor(EmitVisitor):
                     f'#[is(name = "{rust_field_name(t.name)}_{rust_name.lower()}")]',
                     depth + 1,
                 )
-            self.emit(f"{t.name}({rust_name}{t.name}<U>),", depth + 1)
+            self.emit(f"{t.name}({rust_name}{t.name}<R>),", depth + 1)
         self.emit("}", depth)
         self.emit("", depth)
 
     def sum_subtype_struct(self, sum_type_info, t, rust_name, depth):
         self.emit_attrs(depth)
         payload_name = f"{rust_name}{t.name}"
-        self.emit(f"pub struct {payload_name}<U> {{", depth)
+        self.emit(f"pub struct {payload_name}<R = TextRange> {{", depth)
         for f in t.fields:
             self.visit(f, sum_type_info, "pub ", depth + 1, t.name)
 
         assert sum_type_info.has_attributes == self.type_info[t.name].no_cfg(
             self.type_info
         )
-        self.emit_custom(sum_type_info.has_attributes, depth)
+        self.emit_range(sum_type_info.has_attributes, depth)
 
         self.emit("}", depth)
         self.emit(
             textwrap.dedent(
                 f"""
-                impl<U> From<{payload_name}<U>> for {rust_name}<U> {{
-                    fn from(payload: {payload_name}<U>) -> Self {{
+                impl<R> From<{payload_name}<R>> for {rust_name}<R> {{
+                    fn from(payload: {payload_name}<R>) -> Self {{
                         {rust_name}::{t.name}(payload)
                     }}
                 }}
@@ -344,14 +344,6 @@ class StructVisitor(EmitVisitor):
             depth,
         )
 
-        if not sum_type_info.has_attributes:
-            self.emit('#[cfg(feature = "more-attributes")]', depth)
-        self.emit(f"impl<U> Custom<U> for {payload_name}<U> {{", depth)
-        self.emit("#[inline]", depth + 1)
-        self.emit("fn custom(self) -> U {", depth + 1)
-        self.emit("self.custom", depth + 2)
-        self.emit("}", depth + 1)
-        self.emit("}", depth)
         self.emit("", depth)
 
     def visitConstructor(self, cons, parent, depth):
@@ -367,7 +359,7 @@ class StructVisitor(EmitVisitor):
         typ = rust_type_name(field.type)
         field_type = self.type_info.get(field.type)
         if field_type and not field_type.is_simple:
-            typ = f"{typ}<U>"
+            typ = f"{typ}<R>"
         # don't box if we're doing Vec<T>, but do box if we're doing Vec<Option<Box<T>>>
         if (
             field_type
@@ -395,19 +387,11 @@ class StructVisitor(EmitVisitor):
         product_name = rust_type_name(name)
         self.emit_attrs(depth)
 
-        self.emit(f"pub struct {product_name}<U> {{", depth)
+        self.emit(f"pub struct {product_name}<R> {{", depth)
         for f in product.fields:
             self.visit(f, type_info, "pub ", depth + 1)
         assert bool(product.attributes) == type_info.no_cfg(self.type_info)
-        self.emit_custom(product.attributes, depth + 1)
-        self.emit("}", depth)
-
-        self.emit('#[cfg(feature = "more-attributes")]', depth)
-        self.emit(f"impl<T> Custom<U> for {product_name}<U> {{", depth)
-        self.emit("#[inline]", depth + 1)
-        self.emit("fn custom(&self) -> U {", depth + 1)
-        self.emit("self.custom", depth + 2)
-        self.emit("}", depth + 1)
+        self.emit_range(product.attributes, depth + 1)
         self.emit("}", depth)
         self.emit("", depth)
 
@@ -499,7 +483,7 @@ class FoldImplVisitor(EmitVisitor):
 
             map_user_suffix = "" if type_info.has_attributes else "_cfg"
             self.emit(
-                f"let custom = folder.map_user{map_user_suffix}(custom)?;", depth + 3
+                f"let range = folder.map_user{map_user_suffix}(range)?;", depth + 3
             )
 
             self.gen_construction(
@@ -535,7 +519,7 @@ class FoldImplVisitor(EmitVisitor):
         self.emit(f"let {struct_name} {{ {fields_pattern[1]} }} = node;", depth + 1)
 
         map_user_suffix = "" if has_attributes else "_cfg"
-        self.emit(f"let custom = folder.map_user{map_user_suffix}(custom)?;", depth + 3)
+        self.emit(f"let range = folder.map_user{map_user_suffix}(range)?;", depth + 3)
 
         self.gen_construction(struct_name, product.fields, "", depth + 1)
 
@@ -548,7 +532,7 @@ class FoldImplVisitor(EmitVisitor):
         body = ",".join(rust_field(f.name) for f in fields)
         if body:
             body += ","
-        body += "custom"
+        body += "range"
 
         return header, body, footer
 
@@ -557,7 +541,7 @@ class FoldImplVisitor(EmitVisitor):
         for field in fields:
             name = rust_field(field.name)
             self.emit(f"{name}: Foldable::fold({name}, folder)?,", depth + 1)
-        self.emit("custom,", depth + 1)
+        self.emit("range,", depth + 1)
 
         self.emit(f"}}{footer})", depth)
 
@@ -586,7 +570,7 @@ class VisitorTraitDefVisitor(StructVisitor):
             return rust_type_name(name)
 
     def visitModule(self, mod, depth):
-        self.emit("pub trait Visitor<U=()> {", depth)
+        self.emit("pub trait Visitor<R=crate::text_size::TextRange> {", depth)
 
         for dfn in mod.dfns:
             self.visit(dfn, depth + 1)
@@ -598,8 +582,9 @@ class VisitorTraitDefVisitor(StructVisitor):
     def emit_visitor(self, nodename, depth, has_node=True):
         type_info = self.type_info[nodename]
         node_type = type_info.rust_sum_name
+        generic, = self.apply_generics(nodename, "R")
         self.emit(
-            f"fn visit_{type_info.sum_name}(&mut self, node: {node_type}) {{", depth
+            f"fn visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{", depth
         )
         if has_node:
             self.emit(f"self.generic_visit_{type_info.sum_name}(node)", depth + 1)
@@ -612,8 +597,9 @@ class VisitorTraitDefVisitor(StructVisitor):
             node_type = type_info.rust_sum_name
         else:
             node_type = "()"
+        generic, = self.apply_generics(nodename, "R")
         self.emit(
-            f"fn generic_visit_{type_info.sum_name}(&mut self, node: {node_type}) {{",
+            f"fn generic_visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{",
             depth,
         )
 
@@ -939,6 +925,54 @@ class TraitImplVisitor(EmitVisitor):
             return f"Node::ast_from_object(_vm, get_node_field(_vm, &_object, {name}, {json.dumps(typename)})?)?"
 
 
+
+class RangedDefVisitor(EmitVisitor):
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitSum(self, sum, name, depth):
+        info = self.type_info[name]
+
+        # if info.is_simple:
+        #     return
+
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "more-attributes")]', 0)
+
+        self.emit(
+            f"""
+                impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
+                    fn range(&self) -> TextRange {{
+                        self.range
+                    }}
+                }}
+                """, 0)
+
+    def visitProduct(self, product, name, depth):
+        info = self.type_info[name]
+
+        # if info.is_simple:
+        #     return
+
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "more-attributes")]', 0)
+
+        self.emit(
+            f"""
+                    impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
+                        fn range(&self) -> TextRange {{
+                            self.range
+                        }}
+                    }}
+                    """, 0)
+
+        for f in product.fields:
+            self.visit(f, info, "pub ", depth + 1)
+
 class ChainOfVisitors:
     def __init__(self, *visitors):
         self.visitors = visitors
@@ -950,11 +984,11 @@ class ChainOfVisitors:
 
 
 def write_ast_def(mod, type_info, f):
+    f.write("use crate::text_size::TextRange;")
     StructVisitor(f, type_info).visit(mod)
 
 
 def write_fold_def(mod, type_info, f):
-    f.write("use crate::generic::Custom;")
     FoldModuleVisitor(f, type_info).visit(mod)
 
 
@@ -963,47 +997,39 @@ def write_visitor_def(mod, type_info, f):
 
 
 def write_ranged_def(mod, type_info, f):
-    for info in type_info.values():
-        if not info.is_simple:
-            if info.no_cfg:
-                f.write('#[cfg(feature = "more-attributes")]')
-            f.write(
-                f"""
-            impl Ranged for {info.rust_sum_name} {{
-                fn range(&self) -> TextRange {{
-                    self.custom
-                }}
-            }}
-            """
-            )
-            generics = "::<TextRange>"
-        else:
-            generics = ""
-        f.write(
-            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};\n"
-        )
+    RangedDefVisitor(f, type_info).visit(mod)
+# def write_ranged_def(mod, type_info, f):
+#     import pprint
+#     for info in type_info.values():
+#         pprint.pp(info.__dict__)
+#         if not info.is_simple and not info.product:
+#             if not info.no_cfg(type_info):
+#                 f.write('#[cfg(feature = "more-attributes")]')
+#             f.write(
+#                 f"""
+#             impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
+#                 fn range(&self) -> TextRange {{
+#                     self.range
+#                 }}
+#             }}
+#             """
+#             )
 
 
 def write_located_def(mod, type_info, f):
     for info in type_info.values():
         if not info.is_simple:
-            if info.no_cfg:
+            if not info.no_cfg(type_info):
                 f.write('#[cfg(feature = "more-attributes")]')
             f.write(
                 f"""
-            impl Located for {info.rust_sum_name} {{
+            impl Located for crate::generic::{info.rust_sum_name}::<SourceRange> {{
                 fn range(&self) -> SourceRange {{
-                    self.custom
+                    self.range
                 }}
             }}
             """
             )
-            generics = "::<SourceRange>"
-        else:
-            generics = ""
-        f.write(
-            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};\n"
-        )
 
 
 def write_ast_mod(mod, type_info, f):

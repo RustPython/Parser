@@ -21,34 +21,31 @@ impl<U> crate::fold::Fold<U> for ConstantOptimizer {
     }
     fn fold_expr(&mut self, node: crate::Expr<U>) -> Result<crate::Expr<U>, Self::Error> {
         match node.node {
-            crate::ExprKind::Tuple(crate::ExprTuple { elts, ctx, range }) => {
+            crate::Expr::Tuple(crate::ExprTuple { elts, ctx, range }) => {
                 let elts = elts
                     .into_iter()
                     .map(|x| self.fold_expr(x))
                     .collect::<Result<Vec<_>, _>>()?;
                 let expr = if elts
                     .iter()
-                    .all(|e| matches!(e.node, crate::ExprKind::Constant { .. }))
+                    .all(|e| matches!(e.node, crate::Expr::Constant { .. }))
                 {
                     let tuple = elts
                         .into_iter()
                         .map(|e| match e.node {
-                            crate::ExprKind::Constant(crate::ExprConstant { value, .. }) => value,
+                            crate::Expr::Constant(crate::ExprConstant { value, .. }) => value,
                             _ => unreachable!(),
                         })
                         .collect();
-                    crate::ExprKind::Constant(crate::ExprConstant {
+                    crate::Expr::Constant(crate::ExprConstant {
                         value: Constant::Tuple(tuple),
                         kind: None,
                         range,
                     })
                 } else {
-                    crate::ExprKind::Tuple(crate::ExprTuple { elts, ctx, range })
+                    crate::Expr::Tuple(crate::ExprTuple { elts, ctx, range })
                 };
-                Ok(crate::Expr {
-                    node: expr,
-                    custom: node.custom,
-                })
+                Ok(expr)
             }
             _ => crate::fold::fold_expr(self, node),
         }
@@ -58,6 +55,7 @@ impl<U> crate::fold::Fold<U> for ConstantOptimizer {
 #[cfg(test)]
 mod tests {
     use num_bigint::BigInt;
+    use rustpython_parser_core::text_size::TextRange;
 
     #[cfg(feature = "constant-optimization")]
     #[test]
@@ -67,93 +65,65 @@ mod tests {
         let range = TextRange::default();
         #[allow(clippy::let_unit_value)]
         let custom = ();
-        let ast = Attributed {
-            custom,
-            node: ExprTuple {
-                ctx: ExprContext::Load,
-                elts: vec![
-                    Attributed {
-                        custom,
-                        node: ExprConstant {
-                            value: BigInt::from(1).into(),
+        let ast = ExprTuple {
+            ctx: ExprContext::Load,
+            elts: vec![
+                ExprConstant {
+                    value: BigInt::from(1).into(),
+                    kind: None,
+                    range,
+                },
+                ExprConstant {
+                    value: BigInt::from(2).into(),
+                    kind: None,
+                    range,
+                },
+                ExprTuple {
+                    ctx: ExprContext::Load,
+                    elts: vec![
+                        ExprConstant {
+                            value: BigInt::from(3).into(),
                             kind: None,
                             range,
                         }
                         .into(),
-                    },
-                    Attributed {
-                        custom,
-                        node: ExprConstant {
-                            value: BigInt::from(2).into(),
+                        ExprConstant {
+                            value: BigInt::from(4).into(),
                             kind: None,
                             range,
                         }
                         .into(),
-                    },
-                    Attributed {
-                        custom,
-                        node: ExprTuple {
-                            ctx: ExprContext::Load,
-                            elts: vec![
-                                Attributed {
-                                    custom,
-                                    node: ExprConstant {
-                                        value: BigInt::from(3).into(),
-                                        kind: None,
-                                        range,
-                                    }
-                                    .into(),
-                                },
-                                Attributed {
-                                    custom,
-                                    node: ExprConstant {
-                                        value: BigInt::from(4).into(),
-                                        kind: None,
-                                        range,
-                                    }
-                                    .into(),
-                                },
-                                Attributed {
-                                    custom,
-                                    node: ExprConstant {
-                                        value: BigInt::from(5).into(),
-                                        kind: None,
-                                        range,
-                                    }
-                                    .into(),
-                                },
-                            ],
+                        ExprConstant {
+                            value: BigInt::from(5).into(),
+                            kind: None,
                             range,
                         }
                         .into(),
-                    },
-                ],
-                range,
-            }
-            .into(),
+                    ],
+                    range,
+                },
+            ],
+            range,
         };
         let new_ast = ConstantOptimizer::new()
             .fold_expr(ast)
             .unwrap_or_else(|e| match e {});
         assert_eq!(
             new_ast,
-            Attributed {
-                custom,
-                node: ExprConstant {
-                    value: Constant::Tuple(vec![
-                        BigInt::from(1).into(),
-                        BigInt::from(2).into(),
-                        Constant::Tuple(vec![
-                            BigInt::from(3).into(),
-                            BigInt::from(4).into(),
-                            BigInt::from(5).into(),
-                        ])
-                    ]),
-                    kind: None,
-                    range,
-                }
-                .into(),
+            ExprConstant {
+                value: Constant::Tuple(vec![
+                    BigInt::from(1).into(),
+                    BigInt::from(2).into(),
+                    Constant::Tuple(vec![
+                        BigInt::from(3).into(),
+                        BigInt::from(4).into(),
+                        BigInt::from(5).into(),
+                    ])
+                ]),
+                kind: None,
+                range,
             }
+            .into(),
         );
     }
 }

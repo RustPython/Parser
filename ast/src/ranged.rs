@@ -1,4 +1,3 @@
-#![allow(clippy::derive_partial_eq_without_eq)]
 use crate::text_size::{TextRange, TextSize};
 
 pub trait Ranged {
