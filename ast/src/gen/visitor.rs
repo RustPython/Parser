@@ -6,7 +6,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         self.generic_visit_stmt(node)
     }
     fn generic_visit_stmt(&mut self, node: Stmt<R>) {
-        match node.node {
+        match node {
             Stmt::FunctionDef(data) => self.visit_stmt_FunctionDef(data),
             Stmt::AsyncFunctionDef(data) => self.visit_stmt_AsyncFunctionDef(data),
             Stmt::ClassDef(data) => self.visit_stmt_ClassDef(data),
@@ -345,7 +345,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         self.generic_visit_expr(node)
     }
     fn generic_visit_expr(&mut self, node: Expr<R>) {
-        match node.node {
+        match node {
             Expr::BoolOp(data) => self.visit_expr_BoolOp(data),
             Expr::NamedExpr(data) => self.visit_expr_NamedExpr(data),
             Expr::BinOp(data) => self.visit_expr_BinOp(data),
@@ -689,7 +689,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         self.generic_visit_excepthandler(node)
     }
     fn generic_visit_excepthandler(&mut self, node: Excepthandler<R>) {
-        match node.node {
+        match node {
             Excepthandler::ExceptHandler(data) => self.visit_excepthandler_ExceptHandler(data),
         }
     }
@@ -732,7 +732,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         self.generic_visit_pattern(node)
     }
     fn generic_visit_pattern(&mut self, node: Pattern<R>) {
-        match node.node {
+        match node {
             Pattern::MatchValue(data) => self.visit_pattern_MatchValue(data),
             Pattern::MatchSingleton(data) => self.visit_pattern_MatchSingleton(data),
             Pattern::MatchSequence(data) => self.visit_pattern_MatchSequence(data),

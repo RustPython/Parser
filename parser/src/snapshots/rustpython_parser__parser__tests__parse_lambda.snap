@@ -3,86 +3,65 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: Lambda(
-                        ExprLambda {
-                            args: Arguments {
-                                posonlyargs: [],
-                                args: [
-                                    Attributed {
-                                        custom: (),
-                                        node: ArgData {
-                                            arg: Identifier(
-                                                "x",
-                                            ),
-                                            annotation: None,
-                                            type_comment: None,
-                                            range: 7..8,
-                                        },
-                                    },
-                                    Attributed {
-                                        custom: (),
-                                        node: ArgData {
-                                            arg: Identifier(
-                                                "y",
-                                            ),
-                                            annotation: None,
-                                            type_comment: None,
-                                            range: 10..11,
-                                        },
-                                    },
-                                ],
-                                vararg: None,
-                                kwonlyargs: [],
-                                kw_defaults: [],
-                                kwarg: None,
-                                defaults: [],
-                                range: 7..11,
-                            },
-                            body: Attributed {
-                                custom: (),
-                                node: BinOp(
-                                    ExprBinOp {
-                                        left: Attributed {
-                                            custom: (),
-                                            node: Name(
-                                                ExprName {
-                                                    id: Identifier(
-                                                        "x",
-                                                    ),
-                                                    ctx: Load,
-                                                    range: 13..14,
-                                                },
-                                            ),
-                                        },
-                                        op: Mult,
-                                        right: Attributed {
-                                            custom: (),
-                                            node: Name(
-                                                ExprName {
-                                                    id: Identifier(
-                                                        "y",
-                                                    ),
-                                                    ctx: Load,
-                                                    range: 17..18,
-                                                },
-                                            ),
-                                        },
-                                        range: 13..18,
-                                    },
+    Expr(
+        StmtExpr {
+            value: Lambda(
+                ExprLambda {
+                    args: Arguments {
+                        posonlyargs: [],
+                        args: [
+                            Arg {
+                                arg: Identifier(
+                                    "x",
                                 ),
+                                annotation: None,
+                                type_comment: None,
+                                range: 7..8,
                             },
-                            range: 0..18,
+                            Arg {
+                                arg: Identifier(
+                                    "y",
+                                ),
+                                annotation: None,
+                                type_comment: None,
+                                range: 10..11,
+                            },
+                        ],
+                        vararg: None,
+                        kwonlyargs: [],
+                        kw_defaults: [],
+                        kwarg: None,
+                        defaults: [],
+                        range: PhantomData<ruff_text_size::range::TextRange>,
+                    },
+                    body: BinOp(
+                        ExprBinOp {
+                            left: Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "x",
+                                    ),
+                                    ctx: Load,
+                                    range: 13..14,
+                                },
+                            ),
+                            op: Mult,
+                            right: Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "y",
+                                    ),
+                                    ctx: Load,
+                                    range: 17..18,
+                                },
+                            ),
+                            range: 13..18,
                         },
                     ),
+                    range: 0..18,
                 },
-                range: 0..18,
-            },
-        ),
-    },
+            ),
+            range: 0..18,
+        },
+    ),
 ]

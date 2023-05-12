@@ -3,113 +3,86 @@ source: parser/src/context.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Assign(
-            StmtAssign {
-                targets: [
-                    Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "x",
-                                ),
-                                ctx: Store,
-                                range: 0..1,
-                            },
+    Assign(
+        StmtAssign {
+            targets: [
+                Name(
+                    ExprName {
+                        id: Identifier(
+                            "x",
                         ),
+                        ctx: Store,
+                        range: 0..1,
                     },
-                ],
-                value: Attributed {
-                    custom: (),
-                    node: SetComp(
-                        ExprSetComp {
-                            elt: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "y",
-                                        ),
-                                        ctx: Load,
-                                        range: 5..6,
-                                    },
-                                ),
-                            },
-                            generators: [
-                                Comprehension {
-                                    target: Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "y",
-                                                ),
-                                                ctx: Store,
-                                                range: 11..12,
-                                            },
-                                        ),
-                                    },
-                                    iter: Attributed {
-                                        custom: (),
-                                        node: Tuple(
-                                            ExprTuple {
-                                                elts: [
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    1,
-                                                                ),
-                                                                kind: None,
-                                                                range: 17..18,
-                                                            },
-                                                        ),
-                                                    },
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    2,
-                                                                ),
-                                                                kind: None,
-                                                                range: 20..21,
-                                                            },
-                                                        ),
-                                                    },
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    3,
-                                                                ),
-                                                                kind: None,
-                                                                range: 23..24,
-                                                            },
-                                                        ),
-                                                    },
-                                                ],
-                                                ctx: Load,
-                                                range: 16..25,
-                                            },
-                                        ),
-                                    },
-                                    ifs: [],
-                                    is_async: false,
-                                    range: 7..25,
-                                },
-                            ],
-                            range: 4..26,
+                ),
+            ],
+            value: SetComp(
+                ExprSetComp {
+                    elt: Name(
+                        ExprName {
+                            id: Identifier(
+                                "y",
+                            ),
+                            ctx: Load,
+                            range: 5..6,
                         },
                     ),
+                    generators: [
+                        Comprehension {
+                            target: Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "y",
+                                    ),
+                                    ctx: Store,
+                                    range: 11..12,
+                                },
+                            ),
+                            iter: Tuple(
+                                ExprTuple {
+                                    elts: [
+                                        Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    1,
+                                                ),
+                                                kind: None,
+                                                range: 17..18,
+                                            },
+                                        ),
+                                        Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    2,
+                                                ),
+                                                kind: None,
+                                                range: 20..21,
+                                            },
+                                        ),
+                                        Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    3,
+                                                ),
+                                                kind: None,
+                                                range: 23..24,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                    range: 16..25,
+                                },
+                            ),
+                            ifs: [],
+                            is_async: false,
+                            range: PhantomData<ruff_text_size::range::TextRange>,
+                        },
+                    ],
+                    range: 4..26,
                 },
-                type_comment: None,
-                range: 0..26,
-            },
-        ),
-    },
+            ),
+            type_comment: None,
+            range: 0..26,
+        },
+    ),
 ]

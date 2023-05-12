@@ -3,75 +3,57 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Constant(
-            ExprConstant {
-                value: Str(
-                    "user=",
-                ),
-                kind: None,
-                range: 0..14,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Constant(
-            ExprConstant {
-                value: Str(
-                    "",
-                ),
-                kind: None,
-                range: 0..14,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: FormattedValue(
-            ExprFormattedValue {
-                value: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "user",
-                            ),
-                            ctx: Load,
-                            range: 3..7,
-                        },
+    Constant(
+        ExprConstant {
+            value: Str(
+                "user=",
+            ),
+            kind: None,
+            range: 0..14,
+        },
+    ),
+    Constant(
+        ExprConstant {
+            value: Str(
+                "",
+            ),
+            kind: None,
+            range: 0..14,
+        },
+    ),
+    FormattedValue(
+        ExprFormattedValue {
+            value: Name(
+                ExprName {
+                    id: Identifier(
+                        "user",
                     ),
+                    ctx: Load,
+                    range: 3..7,
                 },
-                conversion: Int(
-                    0,
-                ),
-                format_spec: Some(
-                    Attributed {
-                        custom: (),
-                        node: JoinedStr(
-                            ExprJoinedStr {
-                                values: [
-                                    Attributed {
-                                        custom: (),
-                                        node: Constant(
-                                            ExprConstant {
-                                                value: Str(
-                                                    ">10",
-                                                ),
-                                                kind: None,
-                                                range: 0..14,
-                                            },
-                                        ),
-                                    },
-                                ],
-                                range: 0..14,
-                            },
-                        ),
+            ),
+            conversion: Int(
+                0,
+            ),
+            format_spec: Some(
+                JoinedStr(
+                    ExprJoinedStr {
+                        values: [
+                            Constant(
+                                ExprConstant {
+                                    value: Str(
+                                        ">10",
+                                    ),
+                                    kind: None,
+                                    range: 0..14,
+                                },
+                            ),
+                        ],
+                        range: 0..14,
                     },
                 ),
-                range: 0..14,
-            },
-        ),
-    },
+            ),
+            range: 0..14,
+        },
+    ),
 ]

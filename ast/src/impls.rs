@@ -1,6 +1,5 @@
-use crate::ranged::Ranged;
 use crate::text_size::TextRange;
-use crate::{Constant, Excepthandler, Expr, Pattern, Stmt};
+use crate::{Constant, Excepthandler, Expr, Pattern, Ranged, Stmt};
 
 impl<R> Expr<R> {
     /// Returns a short name for the node suitable for use in error messages.
@@ -41,10 +40,7 @@ impl<R> Expr<R> {
             Expr::Starred { .. } => "starred",
             Expr::Slice { .. } => "slice",
             Expr::JoinedStr(crate::ExprJoinedStr { values, .. }) => {
-                if values
-                    .iter()
-                    .any(|e| matches!(e.node, Expr::JoinedStr { .. }))
-                {
+                if values.iter().any(|e| e.is_joined_str_expr()) {
                     "f-string expression"
                 } else {
                     "literal"

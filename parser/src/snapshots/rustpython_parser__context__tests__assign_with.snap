@@ -3,54 +3,42 @@ source: parser/src/context.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: With(
-            StmtWith {
-                items: [
-                    Withitem {
-                        context_expr: Attributed {
-                            custom: (),
-                            node: Constant(
-                                ExprConstant {
-                                    value: Int(
-                                        1,
-                                    ),
-                                    kind: None,
-                                    range: 5..6,
-                                },
+    With(
+        StmtWith {
+            items: [
+                Withitem {
+                    context_expr: Constant(
+                        ExprConstant {
+                            value: Int(
+                                1,
                             ),
+                            kind: None,
+                            range: 5..6,
                         },
-                        optional_vars: Some(
-                            Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "x",
-                                        ),
-                                        ctx: Store,
-                                        range: 10..11,
-                                    },
+                    ),
+                    optional_vars: Some(
+                        Name(
+                            ExprName {
+                                id: Identifier(
+                                    "x",
                                 ),
+                                ctx: Store,
+                                range: 10..11,
                             },
                         ),
-                        range: 5..11,
+                    ),
+                    range: PhantomData<ruff_text_size::range::TextRange>,
+                },
+            ],
+            body: [
+                Pass(
+                    StmtPass {
+                        range: 13..17,
                     },
-                ],
-                body: [
-                    Attributed {
-                        custom: (),
-                        node: Pass(
-                            StmtPass {
-                                range: 13..17,
-                            },
-                        ),
-                    },
-                ],
-                type_comment: None,
-                range: 0..17,
-            },
-        ),
-    },
+                ),
+            ],
+            type_comment: None,
+            range: 0..17,
+        },
+    ),
 ]

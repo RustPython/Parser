@@ -4,43 +4,34 @@ expression: parse_ast
 ---
 Ok(
     [
-        Attributed {
-            custom: (),
-            node: Expr(
-                StmtExpr {
-                    value: Attributed {
-                        custom: (),
-                        node: Lambda(
-                            ExprLambda {
-                                args: Arguments {
-                                    posonlyargs: [],
-                                    args: [],
-                                    vararg: None,
-                                    kwonlyargs: [],
-                                    kw_defaults: [],
-                                    kwarg: None,
-                                    defaults: [],
-                                    range: 0..9,
-                                },
-                                body: Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                1,
-                                            ),
-                                            kind: None,
-                                            range: 8..9,
-                                        },
-                                    ),
-                                },
-                                range: 0..9,
+        Expr(
+            StmtExpr {
+                value: Lambda(
+                    ExprLambda {
+                        args: Arguments {
+                            posonlyargs: [],
+                            args: [],
+                            vararg: None,
+                            kwonlyargs: [],
+                            kw_defaults: [],
+                            kwarg: None,
+                            defaults: [],
+                            range: PhantomData<ruff_text_size::range::TextRange>,
+                        },
+                        body: Constant(
+                            ExprConstant {
+                                value: Int(
+                                    1,
+                                ),
+                                kind: None,
+                                range: 8..9,
                             },
                         ),
+                        range: 0..9,
                     },
-                    range: 0..9,
-                },
-            ),
-        },
+                ),
+                range: 0..9,
+            },
+        ),
     ],
 )

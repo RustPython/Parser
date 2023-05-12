@@ -3,95 +3,71 @@ source: parser/src/context.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Assign(
-            StmtAssign {
-                targets: [
-                    Attributed {
-                        custom: (),
-                        node: Subscript(
-                            ExprSubscript {
-                                value: Attributed {
-                                    custom: (),
-                                    node: Name(
-                                        ExprName {
-                                            id: Identifier(
-                                                "x",
-                                            ),
-                                            ctx: Load,
-                                            range: 0..1,
-                                        },
-                                    ),
-                                },
-                                slice: Attributed {
-                                    custom: (),
-                                    node: Name(
-                                        ExprName {
-                                            id: Identifier(
-                                                "y",
-                                            ),
-                                            ctx: Load,
-                                            range: 2..3,
-                                        },
-                                    ),
-                                },
-                                ctx: Store,
-                                range: 0..4,
+    Assign(
+        StmtAssign {
+            targets: [
+                Subscript(
+                    ExprSubscript {
+                        value: Name(
+                            ExprName {
+                                id: Identifier(
+                                    "x",
+                                ),
+                                ctx: Load,
+                                range: 0..1,
                             },
                         ),
+                        slice: Name(
+                            ExprName {
+                                id: Identifier(
+                                    "y",
+                                ),
+                                ctx: Load,
+                                range: 2..3,
+                            },
+                        ),
+                        ctx: Store,
+                        range: 0..4,
                     },
-                ],
-                value: Attributed {
-                    custom: (),
-                    node: Tuple(
-                        ExprTuple {
-                            elts: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                1,
-                                            ),
-                                            kind: None,
-                                            range: 8..9,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                2,
-                                            ),
-                                            kind: None,
-                                            range: 11..12,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                3,
-                                            ),
-                                            kind: None,
-                                            range: 14..15,
-                                        },
-                                    ),
-                                },
-                            ],
-                            ctx: Load,
-                            range: 7..16,
-                        },
-                    ),
+                ),
+            ],
+            value: Tuple(
+                ExprTuple {
+                    elts: [
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    1,
+                                ),
+                                kind: None,
+                                range: 8..9,
+                            },
+                        ),
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    2,
+                                ),
+                                kind: None,
+                                range: 11..12,
+                            },
+                        ),
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    3,
+                                ),
+                                kind: None,
+                                range: 14..15,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
+                    range: 7..16,
                 },
-                type_comment: None,
-                range: 0..16,
-            },
-        ),
-    },
+            ),
+            type_comment: None,
+            range: 0..16,
+        },
+    ),
 ]

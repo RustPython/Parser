@@ -3,71 +3,53 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: Call(
-                        ExprCall {
-                            func: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "my_func",
-                                        ),
-                                        ctx: Load,
-                                        range: 0..7,
-                                    },
-                                ),
-                            },
-                            args: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Str(
-                                                "positional",
-                                            ),
-                                            kind: None,
-                                            range: 8..20,
-                                        },
-                                    ),
-                                },
-                            ],
-                            keywords: [
-                                Attributed {
-                                    custom: (),
-                                    node: KeywordData {
-                                        arg: Some(
-                                            Identifier(
-                                                "keyword",
-                                            ),
-                                        ),
-                                        value: Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Int(
-                                                        2,
-                                                    ),
-                                                    kind: None,
-                                                    range: 30..31,
-                                                },
-                                            ),
-                                        },
-                                        range: 22..31,
-                                    },
-                                },
-                            ],
-                            range: 0..32,
+    Expr(
+        StmtExpr {
+            value: Call(
+                ExprCall {
+                    func: Name(
+                        ExprName {
+                            id: Identifier(
+                                "my_func",
+                            ),
+                            ctx: Load,
+                            range: 0..7,
                         },
                     ),
+                    args: [
+                        Constant(
+                            ExprConstant {
+                                value: Str(
+                                    "positional",
+                                ),
+                                kind: None,
+                                range: 8..20,
+                            },
+                        ),
+                    ],
+                    keywords: [
+                        Keyword {
+                            arg: Some(
+                                Identifier(
+                                    "keyword",
+                                ),
+                            ),
+                            value: Constant(
+                                ExprConstant {
+                                    value: Int(
+                                        2,
+                                    ),
+                                    kind: None,
+                                    range: 30..31,
+                                },
+                            ),
+                            range: 22..31,
+                        },
+                    ],
+                    range: 0..32,
                 },
-                range: 0..32,
-            },
-        ),
-    },
+            ),
+            range: 0..32,
+        },
+    ),
 ]

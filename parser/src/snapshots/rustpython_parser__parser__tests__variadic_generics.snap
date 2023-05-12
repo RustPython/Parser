@@ -3,125 +3,95 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: FunctionDef(
-            StmtFunctionDef {
-                name: Identifier(
-                    "args_to_tuple",
-                ),
-                args: Arguments {
-                    posonlyargs: [],
-                    args: [],
-                    vararg: Some(
-                        Attributed {
-                            custom: (),
-                            node: ArgData {
-                                arg: Identifier(
-                                    "args",
-                                ),
-                                annotation: Some(
-                                    Attributed {
-                                        custom: (),
-                                        node: Starred(
-                                            ExprStarred {
-                                                value: Attributed {
-                                                    custom: (),
-                                                    node: Name(
-                                                        ExprName {
-                                                            id: Identifier(
-                                                                "Ts",
-                                                            ),
-                                                            ctx: Load,
-                                                            range: 27..29,
-                                                        },
-                                                    ),
-                                                },
-                                                ctx: Load,
-                                                range: 26..29,
-                                            },
-                                        ),
-                                    },
-                                ),
-                                type_comment: None,
-                                range: 20..29,
-                            },
-                        },
-                    ),
-                    kwonlyargs: [],
-                    kw_defaults: [],
-                    kwarg: None,
-                    defaults: [],
-                    range: 19..29,
-                },
-                body: [
-                    Attributed {
-                        custom: (),
-                        node: Expr(
-                            StmtExpr {
-                                value: Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Ellipsis,
-                                            kind: None,
-                                            range: 46..49,
+    FunctionDef(
+        StmtFunctionDef {
+            name: Identifier(
+                "args_to_tuple",
+            ),
+            args: Arguments {
+                posonlyargs: [],
+                args: [],
+                vararg: Some(
+                    Arg {
+                        arg: Identifier(
+                            "args",
+                        ),
+                        annotation: Some(
+                            Starred(
+                                ExprStarred {
+                                    value: Name(
+                                        ExprName {
+                                            id: Identifier(
+                                                "Ts",
+                                            ),
+                                            ctx: Load,
+                                            range: 27..29,
                                         },
                                     ),
+                                    ctx: Load,
+                                    range: 26..29,
                                 },
+                            ),
+                        ),
+                        type_comment: None,
+                        range: 20..29,
+                    },
+                ),
+                kwonlyargs: [],
+                kw_defaults: [],
+                kwarg: None,
+                defaults: [],
+                range: PhantomData<ruff_text_size::range::TextRange>,
+            },
+            body: [
+                Expr(
+                    StmtExpr {
+                        value: Constant(
+                            ExprConstant {
+                                value: Ellipsis,
+                                kind: None,
                                 range: 46..49,
                             },
                         ),
-                    },
-                ],
-                decorator_list: [],
-                returns: Some(
-                    Attributed {
-                        custom: (),
-                        node: Subscript(
-                            ExprSubscript {
-                                value: Attributed {
-                                    custom: (),
-                                    node: Name(
-                                        ExprName {
-                                            id: Identifier(
-                                                "Tuple",
-                                            ),
-                                            ctx: Load,
-                                            range: 34..39,
-                                        },
-                                    ),
-                                },
-                                slice: Attributed {
-                                    custom: (),
-                                    node: Starred(
-                                        ExprStarred {
-                                            value: Attributed {
-                                                custom: (),
-                                                node: Name(
-                                                    ExprName {
-                                                        id: Identifier(
-                                                            "Ts",
-                                                        ),
-                                                        ctx: Load,
-                                                        range: 41..43,
-                                                    },
-                                                ),
-                                            },
-                                            ctx: Load,
-                                            range: 40..43,
-                                        },
-                                    ),
-                                },
-                                ctx: Load,
-                                range: 34..44,
-                            },
-                        ),
+                        range: 46..49,
                     },
                 ),
-                type_comment: None,
-                range: 1..49,
-            },
-        ),
-    },
+            ],
+            decorator_list: [],
+            returns: Some(
+                Subscript(
+                    ExprSubscript {
+                        value: Name(
+                            ExprName {
+                                id: Identifier(
+                                    "Tuple",
+                                ),
+                                ctx: Load,
+                                range: 34..39,
+                            },
+                        ),
+                        slice: Starred(
+                            ExprStarred {
+                                value: Name(
+                                    ExprName {
+                                        id: Identifier(
+                                            "Ts",
+                                        ),
+                                        ctx: Load,
+                                        range: 41..43,
+                                    },
+                                ),
+                                ctx: Load,
+                                range: 40..43,
+                            },
+                        ),
+                        ctx: Load,
+                        range: 34..44,
+                    },
+                ),
+            ),
+            type_comment: None,
+            range: 1..49,
+        },
+    ),
 ]

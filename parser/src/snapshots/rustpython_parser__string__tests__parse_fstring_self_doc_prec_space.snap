@@ -3,52 +3,40 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Constant(
-            ExprConstant {
-                value: Str(
-                    "x   =",
-                ),
-                kind: None,
-                range: 0..10,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Constant(
-            ExprConstant {
-                value: Str(
-                    "",
-                ),
-                kind: None,
-                range: 0..10,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: FormattedValue(
-            ExprFormattedValue {
-                value: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "x",
-                            ),
-                            ctx: Load,
-                            range: 3..4,
-                        },
+    Constant(
+        ExprConstant {
+            value: Str(
+                "x   =",
+            ),
+            kind: None,
+            range: 0..10,
+        },
+    ),
+    Constant(
+        ExprConstant {
+            value: Str(
+                "",
+            ),
+            kind: None,
+            range: 0..10,
+        },
+    ),
+    FormattedValue(
+        ExprFormattedValue {
+            value: Name(
+                ExprName {
+                    id: Identifier(
+                        "x",
                     ),
+                    ctx: Load,
+                    range: 3..4,
                 },
-                conversion: Int(
-                    114,
-                ),
-                format_spec: None,
-                range: 0..10,
-            },
-        ),
-    },
+            ),
+            conversion: Int(
+                114,
+            ),
+            format_spec: None,
+            range: 0..10,
+        },
+    ),
 ]

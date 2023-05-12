@@ -2,80 +2,62 @@
 source: parser/src/parser.rs
 expression: parse_ast
 ---
-Attributed {
-    custom: (),
-    node: Dict(
-        ExprDict {
-            keys: [
-                Some(
-                    Attributed {
-                        custom: (),
-                        node: Constant(
-                            ExprConstant {
-                                value: Str(
-                                    "a",
-                                ),
-                                kind: None,
-                                range: 1..4,
-                            },
+Dict(
+    ExprDict {
+        keys: [
+            Some(
+                Constant(
+                    ExprConstant {
+                        value: Str(
+                            "a",
                         ),
+                        kind: None,
+                        range: 1..4,
                     },
                 ),
-                None,
-                Some(
-                    Attributed {
-                        custom: (),
-                        node: Constant(
-                            ExprConstant {
-                                value: Str(
-                                    "d",
-                                ),
-                                kind: None,
-                                range: 16..19,
-                            },
+            ),
+            None,
+            Some(
+                Constant(
+                    ExprConstant {
+                        value: Str(
+                            "d",
                         ),
+                        kind: None,
+                        range: 16..19,
                     },
                 ),
-            ],
-            values: [
-                Attributed {
-                    custom: (),
-                    node: Constant(
-                        ExprConstant {
-                            value: Str(
-                                "b",
-                            ),
-                            kind: None,
-                            range: 6..9,
-                        },
+            ),
+        ],
+        values: [
+            Constant(
+                ExprConstant {
+                    value: Str(
+                        "b",
                     ),
+                    kind: None,
+                    range: 6..9,
                 },
-                Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "c",
-                            ),
-                            ctx: Load,
-                            range: 13..14,
-                        },
+            ),
+            Name(
+                ExprName {
+                    id: Identifier(
+                        "c",
                     ),
+                    ctx: Load,
+                    range: 13..14,
                 },
-                Attributed {
-                    custom: (),
-                    node: Constant(
-                        ExprConstant {
-                            value: Str(
-                                "e",
-                            ),
-                            kind: None,
-                            range: 21..24,
-                        },
+            ),
+            Constant(
+                ExprConstant {
+                    value: Str(
+                        "e",
                     ),
+                    kind: None,
+                    range: 21..24,
                 },
-            ],
-            range: 0..25,
-        },
-    ),
-}
+            ),
+        ],
+        range: 0..25,
+    },
+)

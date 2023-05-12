@@ -5,7 +5,7 @@
 // we have to do the parsing here, manually.
 use crate::text_size::TextRange;
 use crate::{
-    ast::{self, Constant, Expr, ExprKind, Int},
+    ast::{self, Constant, Expr, Int},
     lexer::{LexicalError, LexicalErrorType},
     parser::{parse_expression_starts_at, LalrpopError, ParseError, ParseErrorType},
     token::{StringKind, Tok},
@@ -68,8 +68,8 @@ impl<'a> StringParser<'a> {
     }
 
     #[inline]
-    fn expr(&self, node: ExprKind) -> Expr {
-        Expr::new(node)
+    fn expr(&self, node: Expr) -> Expr {
+        node
     }
 
     fn range(&self) -> TextRange {
@@ -631,8 +631,8 @@ pub(crate) fn parse_strings(
         let mut content: Vec<u8> = vec![];
         for (start, (source, kind, triple_quoted), end) in values {
             for value in parse_string(&source, kind, triple_quoted, start, end)? {
-                match value.into_node() {
-                    ExprKind::Constant(ast::ExprConstant {
+                match value {
+                    Expr::Constant(ast::ExprConstant {
                         value: Constant::Bytes(value),
                         ..
                     }) => content.extend(value),
@@ -640,19 +640,20 @@ pub(crate) fn parse_strings(
                 }
             }
         }
-        return Ok(Expr::new(ast::ExprConstant {
+        return Ok(ast::ExprConstant {
             value: Constant::Bytes(content),
             kind: None,
             range: TextRange::new(initial_start, last_end),
-        }));
+        }
+        .into());
     }
 
     if !has_fstring {
         let mut content: Vec<String> = vec![];
         for (start, (source, kind, triple_quoted), end) in values {
             for value in parse_string(&source, kind, triple_quoted, start, end)? {
-                match value.into_node() {
-                    ExprKind::Constant(ast::ExprConstant {
+                match value {
+                    Expr::Constant(ast::ExprConstant {
                         value: Constant::Str(value),
                         ..
                     }) => content.push(value),
@@ -660,11 +661,12 @@ pub(crate) fn parse_strings(
                 }
             }
         }
-        return Ok(Expr::new(ast::ExprConstant {
+        return Ok(ast::ExprConstant {
             value: Constant::Str(content.join("")),
             kind: initial_kind,
             range: TextRange::new(initial_start, last_end),
-        }));
+        }
+        .into());
     }
 
     // De-duplicate adjacent constants.
@@ -672,7 +674,7 @@ pub(crate) fn parse_strings(
     let mut current: Vec<String> = vec![];
 
     let take_current = |current: &mut Vec<String>| -> Expr {
-        Expr::new(ast::ExprConstant {
+        Expr::Constant(ast::ExprConstant {
             value: Constant::Str(current.drain(..).join("")),
             kind: initial_kind.clone(),
             range: TextRange::new(initial_start, last_end),
@@ -681,14 +683,14 @@ pub(crate) fn parse_strings(
 
     for (start, (source, kind, triple_quoted), end) in values {
         for value in parse_string(&source, kind, triple_quoted, start, end)? {
-            match value.node {
-                ExprKind::FormattedValue { .. } => {
+            match value {
+                Expr::FormattedValue { .. } => {
                     if !current.is_empty() {
                         deduped.push(take_current(&mut current));
                     }
                     deduped.push(value)
                 }
-                ExprKind::Constant(ast::ExprConstant {
+                Expr::Constant(ast::ExprConstant {
                     value: Constant::Str(value),
                     ..
                 }) => current.push(value),
@@ -700,7 +702,7 @@ pub(crate) fn parse_strings(
         deduped.push(take_current(&mut current));
     }
 
-    Ok(Expr::new(ast::ExprJoinedStr {
+    Ok(Expr::JoinedStr(ast::ExprJoinedStr {
         values: deduped,
         range: TextRange::new(initial_start, last_end),
     }))

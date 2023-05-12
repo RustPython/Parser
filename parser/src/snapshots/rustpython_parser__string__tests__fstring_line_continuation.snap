@@ -3,58 +3,43 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: JoinedStr(
-                        ExprJoinedStr {
-                            values: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Str(
-                                                "\\\n",
-                                            ),
-                                            kind: None,
-                                            range: 0..9,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: FormattedValue(
-                                        ExprFormattedValue {
-                                            value: Attributed {
-                                                custom: (),
-                                                node: Name(
-                                                    ExprName {
-                                                        id: Identifier(
-                                                            "x",
-                                                        ),
-                                                        ctx: Load,
-                                                        range: 6..7,
-                                                    },
-                                                ),
-                                            },
-                                            conversion: Int(
-                                                0,
-                                            ),
-                                            format_spec: None,
-                                            range: 0..9,
-                                        },
-                                    ),
-                                },
-                            ],
-                            range: 0..9,
-                        },
-                    ),
+    Expr(
+        StmtExpr {
+            value: JoinedStr(
+                ExprJoinedStr {
+                    values: [
+                        Constant(
+                            ExprConstant {
+                                value: Str(
+                                    "\\\n",
+                                ),
+                                kind: None,
+                                range: 0..9,
+                            },
+                        ),
+                        FormattedValue(
+                            ExprFormattedValue {
+                                value: Name(
+                                    ExprName {
+                                        id: Identifier(
+                                            "x",
+                                        ),
+                                        ctx: Load,
+                                        range: 6..7,
+                                    },
+                                ),
+                                conversion: Int(
+                                    0,
+                                ),
+                                format_spec: None,
+                                range: 0..9,
+                            },
+                        ),
+                    ],
+                    range: 0..9,
                 },
-                range: 0..9,
-            },
-        ),
-    },
+            ),
+            range: 0..9,
+        },
+    ),
 ]

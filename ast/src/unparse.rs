@@ -71,7 +71,7 @@ impl<'a> Unparser<'a> {
                 ret
             }};
         }
-        match &ast.node {
+        match &ast {
             Expr::BoolOp(crate::ExprBoolOp {
                 op,
                 values,
@@ -330,13 +330,13 @@ impl<'a> Unparser<'a> {
                     }
                     for kw in keywords {
                         self.p_delim(&mut first, ", ")?;
-                        if let Some(arg) = &kw.node.arg {
+                        if let Some(arg) = &kw.arg {
                             self.p_id(arg)?;
                             self.p("=")?;
                         } else {
                             self.p("**")?;
                         }
-                        self.unparse_expr(&kw.node.value, precedence::TEST)?;
+                        self.unparse_expr(&kw.value, precedence::TEST)?;
                     }
                 }
                 self.p(")")?;
@@ -376,7 +376,7 @@ impl<'a> Unparser<'a> {
                 let period = if let Expr::Constant(crate::ExprConstant {
                     value: Constant::Int(_),
                     ..
-                }) = &value.node
+                }) = value.as_ref()
                 {
                     " ."
                 } else {
@@ -388,10 +388,10 @@ impl<'a> Unparser<'a> {
             Expr::Subscript(crate::ExprSubscript { value, slice, .. }) => {
                 self.unparse_expr(value, precedence::ATOM)?;
                 let mut lvl = precedence::TUPLE;
-                if let Expr::Tuple(crate::ExprTuple { elts, .. }) = &slice.node {
+                if let Expr::Tuple(crate::ExprTuple { elts, .. }) = slice.as_ref() {
                     if elts
                         .iter()
-                        .any(|expr| matches!(expr.node, Expr::Starred { .. }))
+                        .any(|expr| expr.is_starred_expr())
                     {
                         lvl += 1
                     }
@@ -487,8 +487,8 @@ impl<'a> Unparser<'a> {
         Ok(())
     }
     fn unparse_arg<U>(&mut self, arg: &Arg<U>) -> fmt::Result {
-        self.p_id(&arg.node.arg)?;
-        if let Some(ann) = &arg.node.annotation {
+        self.p_id(&arg.arg)?;
+        if let Some(ann) = &arg.annotation {
             write!(self, ": {}", **ann)?;
         }
         Ok(())
@@ -554,7 +554,7 @@ impl<'a> Unparser<'a> {
     }
 
     fn unparse_fstring_elem<U>(&mut self, expr: &Expr<U>, is_spec: bool) -> fmt::Result {
-        match &expr.node {
+        match &expr {
             Expr::Constant(crate::ExprConstant { value, .. }) => {
                 if let Constant::Str(s) = value {
                     self.unparse_fstring_str(s)

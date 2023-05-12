@@ -3,614 +3,458 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Match(
-            StmtMatch {
-                subject: Attributed {
-                    custom: (),
-                    node: Dict(
-                        ExprDict {
-                            keys: [
-                                Some(
-                                    Attributed {
-                                        custom: (),
-                                        node: Constant(
-                                            ExprConstant {
-                                                value: Str(
-                                                    "test",
-                                                ),
-                                                kind: None,
-                                                range: 8..14,
-                                            },
-                                        ),
-                                    },
-                                ),
-                            ],
-                            values: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                1,
-                                            ),
-                                            kind: None,
-                                            range: 16..17,
-                                        },
+    Match(
+        StmtMatch {
+            subject: Dict(
+                ExprDict {
+                    keys: [
+                        Some(
+                            Constant(
+                                ExprConstant {
+                                    value: Str(
+                                        "test",
                                     ),
-                                },
-                            ],
-                            range: 7..18,
-                        },
-                    ),
-                },
-                cases: [
-                    MatchCase {
-                        pattern: Attributed {
-                            custom: (),
-                            node: MatchMapping(
-                                PatternMatchMapping {
-                                    keys: [],
-                                    patterns: [],
-                                    rest: Some(
-                                        Identifier(
-                                            "rest",
-                                        ),
-                                    ),
-                                    range: 29..52,
+                                    kind: None,
+                                    range: 8..14,
                                 },
                             ),
+                        ),
+                    ],
+                    values: [
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    1,
+                                ),
+                                kind: None,
+                                range: 16..17,
+                            },
+                        ),
+                    ],
+                    range: 7..18,
+                },
+            ),
+            cases: [
+                MatchCase {
+                    pattern: MatchMapping(
+                        PatternMatchMapping {
+                            keys: [],
+                            patterns: [],
+                            rest: Some(
+                                Identifier(
+                                    "rest",
+                                ),
+                            ),
+                            range: 29..52,
                         },
-                        guard: None,
-                        body: [
-                            Attributed {
-                                custom: (),
-                                node: Expr(
-                                    StmtExpr {
-                                        value: Attributed {
-                                            custom: (),
-                                            node: Call(
-                                                ExprCall {
-                                                    func: Attributed {
-                                                        custom: (),
-                                                        node: Name(
-                                                            ExprName {
-                                                                id: Identifier(
-                                                                    "print",
-                                                                ),
-                                                                ctx: Load,
-                                                                range: 62..67,
-                                                            },
-                                                        ),
-                                                    },
-                                                    args: [
-                                                        Attributed {
-                                                            custom: (),
-                                                            node: Name(
-                                                                ExprName {
-                                                                    id: Identifier(
-                                                                        "rest",
-                                                                    ),
-                                                                    ctx: Load,
-                                                                    range: 68..72,
-                                                                },
-                                                            ),
-                                                        },
-                                                    ],
-                                                    keywords: [],
-                                                    range: 62..73,
+                    ),
+                    guard: None,
+                    body: [
+                        Expr(
+                            StmtExpr {
+                                value: Call(
+                                    ExprCall {
+                                        func: Name(
+                                            ExprName {
+                                                id: Identifier(
+                                                    "print",
+                                                ),
+                                                ctx: Load,
+                                                range: 62..67,
+                                            },
+                                        ),
+                                        args: [
+                                            Name(
+                                                ExprName {
+                                                    id: Identifier(
+                                                        "rest",
+                                                    ),
+                                                    ctx: Load,
+                                                    range: 68..72,
                                                 },
                                             ),
-                                        },
+                                        ],
+                                        keywords: [],
                                         range: 62..73,
                                     },
                                 ),
+                                range: 62..73,
                             },
-                        ],
-                        range: 24..74,
-                    },
-                ],
-                range: 1..73,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Match(
-            StmtMatch {
-                subject: Attributed {
-                    custom: (),
-                    node: Dict(
-                        ExprDict {
+                        ),
+                    ],
+                    range: PhantomData<ruff_text_size::range::TextRange>,
+                },
+            ],
+            range: 1..73,
+        },
+    ),
+    Match(
+        StmtMatch {
+            subject: Dict(
+                ExprDict {
+                    keys: [
+                        Some(
+                            Constant(
+                                ExprConstant {
+                                    value: Str(
+                                        "label",
+                                    ),
+                                    kind: None,
+                                    range: 81..88,
+                                },
+                            ),
+                        ),
+                    ],
+                    values: [
+                        Constant(
+                            ExprConstant {
+                                value: Str(
+                                    "test",
+                                ),
+                                kind: None,
+                                range: 90..96,
+                            },
+                        ),
+                    ],
+                    range: 80..97,
+                },
+            ),
+            cases: [
+                MatchCase {
+                    pattern: MatchMapping(
+                        PatternMatchMapping {
                             keys: [
-                                Some(
-                                    Attributed {
-                                        custom: (),
-                                        node: Constant(
-                                            ExprConstant {
-                                                value: Str(
-                                                    "label",
-                                                ),
-                                                kind: None,
-                                                range: 81..88,
-                                            },
+                                Constant(
+                                    ExprConstant {
+                                        value: Str(
+                                            "label",
                                         ),
+                                        kind: None,
+                                        range: 118..125,
                                     },
                                 ),
                             ],
-                            values: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Str(
-                                                "test",
-                                            ),
-                                            kind: None,
-                                            range: 90..96,
-                                        },
-                                    ),
-                                },
-                            ],
-                            range: 80..97,
-                        },
-                    ),
-                },
-                cases: [
-                    MatchCase {
-                        pattern: Attributed {
-                            custom: (),
-                            node: MatchMapping(
-                                PatternMatchMapping {
-                                    keys: [
-                                        Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Str(
-                                                        "label",
-                                                    ),
-                                                    kind: None,
-                                                    range: 118..125,
-                                                },
-                                            ),
-                                        },
-                                    ],
-                                    patterns: [
-                                        Attributed {
-                                            custom: (),
-                                            node: MatchAs(
-                                                PatternMatchAs {
-                                                    pattern: Some(
-                                                        Attributed {
-                                                            custom: (),
-                                                            node: MatchOr(
-                                                                PatternMatchOr {
-                                                                    patterns: [
-                                                                        Attributed {
-                                                                            custom: (),
-                                                                            node: MatchClass(
-                                                                                PatternMatchClass {
-                                                                                    cls: Attributed {
-                                                                                        custom: (),
-                                                                                        node: Name(
-                                                                                            ExprName {
-                                                                                                id: Identifier(
-                                                                                                    "str",
-                                                                                                ),
-                                                                                                ctx: Load,
-                                                                                                range: 127..130,
-                                                                                            },
-                                                                                        ),
-                                                                                    },
-                                                                                    patterns: [],
-                                                                                    kwd_attrs: [],
-                                                                                    kwd_patterns: [],
-                                                                                    range: 127..132,
-                                                                                },
-                                                                            ),
-                                                                        },
-                                                                        Attributed {
-                                                                            custom: (),
-                                                                            node: MatchSingleton(
-                                                                                PatternMatchSingleton {
-                                                                                    value: None,
-                                                                                    range: 135..139,
-                                                                                },
-                                                                            ),
-                                                                        },
-                                                                    ],
-                                                                    range: 127..139,
-                                                                },
-                                                            ),
-                                                        },
-                                                    ),
-                                                    name: Some(
-                                                        Identifier(
-                                                            "label",
-                                                        ),
-                                                    ),
-                                                    range: 127..148,
-                                                },
-                                            ),
-                                        },
-                                    ],
-                                    rest: None,
-                                    range: 108..155,
-                                },
-                            ),
-                        },
-                        guard: None,
-                        body: [
-                            Attributed {
-                                custom: (),
-                                node: Expr(
-                                    StmtExpr {
-                                        value: Attributed {
-                                            custom: (),
-                                            node: Call(
-                                                ExprCall {
-                                                    func: Attributed {
-                                                        custom: (),
-                                                        node: Name(
-                                                            ExprName {
-                                                                id: Identifier(
-                                                                    "print",
+                            patterns: [
+                                MatchAs(
+                                    PatternMatchAs {
+                                        pattern: Some(
+                                            MatchOr(
+                                                PatternMatchOr {
+                                                    patterns: [
+                                                        MatchClass(
+                                                            PatternMatchClass {
+                                                                cls: Name(
+                                                                    ExprName {
+                                                                        id: Identifier(
+                                                                            "str",
+                                                                        ),
+                                                                        ctx: Load,
+                                                                        range: 127..130,
+                                                                    },
                                                                 ),
-                                                                ctx: Load,
-                                                                range: 165..170,
+                                                                patterns: [],
+                                                                kwd_attrs: [],
+                                                                kwd_patterns: [],
+                                                                range: 127..132,
                                                             },
                                                         ),
-                                                    },
-                                                    args: [
-                                                        Attributed {
-                                                            custom: (),
-                                                            node: Name(
-                                                                ExprName {
-                                                                    id: Identifier(
-                                                                        "label",
-                                                                    ),
-                                                                    ctx: Load,
-                                                                    range: 171..176,
-                                                                },
-                                                            ),
-                                                        },
+                                                        MatchSingleton(
+                                                            PatternMatchSingleton {
+                                                                value: None,
+                                                                range: 135..139,
+                                                            },
+                                                        ),
                                                     ],
-                                                    keywords: [],
-                                                    range: 165..177,
+                                                    range: 127..139,
                                                 },
                                             ),
-                                        },
+                                        ),
+                                        name: Some(
+                                            Identifier(
+                                                "label",
+                                            ),
+                                        ),
+                                        range: 127..148,
+                                    },
+                                ),
+                            ],
+                            rest: None,
+                            range: 108..155,
+                        },
+                    ),
+                    guard: None,
+                    body: [
+                        Expr(
+                            StmtExpr {
+                                value: Call(
+                                    ExprCall {
+                                        func: Name(
+                                            ExprName {
+                                                id: Identifier(
+                                                    "print",
+                                                ),
+                                                ctx: Load,
+                                                range: 165..170,
+                                            },
+                                        ),
+                                        args: [
+                                            Name(
+                                                ExprName {
+                                                    id: Identifier(
+                                                        "label",
+                                                    ),
+                                                    ctx: Load,
+                                                    range: 171..176,
+                                                },
+                                            ),
+                                        ],
+                                        keywords: [],
                                         range: 165..177,
                                     },
                                 ),
+                                range: 165..177,
                             },
-                        ],
-                        range: 103..178,
-                    },
-                ],
-                range: 74..177,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Match(
-            StmtMatch {
-                subject: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "x",
-                            ),
-                            ctx: Load,
-                            range: 184..185,
-                        },
-                    ),
+                        ),
+                    ],
+                    range: PhantomData<ruff_text_size::range::TextRange>,
                 },
-                cases: [
-                    MatchCase {
-                        pattern: Attributed {
-                            custom: (),
-                            node: MatchSequence(
-                                PatternMatchSequence {
-                                    patterns: [
-                                        Attributed {
-                                            custom: (),
-                                            node: MatchValue(
-                                                PatternMatchValue {
-                                                    value: Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    0,
-                                                                ),
-                                                                kind: None,
-                                                                range: 197..198,
-                                                            },
-                                                        ),
-                                                    },
-                                                    range: 197..198,
-                                                },
-                                            ),
-                                        },
-                                        Attributed {
-                                            custom: (),
-                                            node: MatchValue(
-                                                PatternMatchValue {
-                                                    value: Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    1,
-                                                                ),
-                                                                kind: None,
-                                                                range: 200..201,
-                                                            },
-                                                        ),
-                                                    },
-                                                    range: 200..201,
-                                                },
-                                            ),
-                                        },
-                                    ],
-                                    range: 196..203,
-                                },
-                            ),
-                        },
-                        guard: None,
-                        body: [
-                            Attributed {
-                                custom: (),
-                                node: Assign(
-                                    StmtAssign {
-                                        targets: [
-                                            Attributed {
-                                                custom: (),
-                                                node: Name(
-                                                    ExprName {
-                                                        id: Identifier(
-                                                            "y",
-                                                        ),
-                                                        ctx: Store,
-                                                        range: 213..214,
-                                                    },
+            ],
+            range: 74..177,
+        },
+    ),
+    Match(
+        StmtMatch {
+            subject: Name(
+                ExprName {
+                    id: Identifier(
+                        "x",
+                    ),
+                    ctx: Load,
+                    range: 184..185,
+                },
+            ),
+            cases: [
+                MatchCase {
+                    pattern: MatchSequence(
+                        PatternMatchSequence {
+                            patterns: [
+                                MatchValue(
+                                    PatternMatchValue {
+                                        value: Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    0,
                                                 ),
+                                                kind: None,
+                                                range: 197..198,
                                             },
-                                        ],
-                                        value: Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Int(
-                                                        0,
-                                                    ),
-                                                    kind: None,
-                                                    range: 217..218,
-                                                },
-                                            ),
-                                        },
-                                        type_comment: None,
-                                        range: 213..218,
+                                        ),
+                                        range: 197..198,
                                     },
                                 ),
-                            },
-                        ],
-                        range: 191..219,
-                    },
-                ],
-                range: 178..218,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Match(
-            StmtMatch {
-                subject: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "x",
-                            ),
-                            ctx: Load,
-                            range: 225..226,
-                        },
-                    ),
-                },
-                cases: [
-                    MatchCase {
-                        pattern: Attributed {
-                            custom: (),
-                            node: MatchSequence(
-                                PatternMatchSequence {
-                                    patterns: [
-                                        Attributed {
-                                            custom: (),
-                                            node: MatchValue(
-                                                PatternMatchValue {
-                                                    value: Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    0,
-                                                                ),
-                                                                kind: None,
-                                                                range: 238..239,
-                                                            },
-                                                        ),
-                                                    },
-                                                    range: 238..239,
-                                                },
-                                            ),
-                                        },
-                                        Attributed {
-                                            custom: (),
-                                            node: MatchValue(
-                                                PatternMatchValue {
-                                                    value: Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    1,
-                                                                ),
-                                                                kind: None,
-                                                                range: 241..242,
-                                                            },
-                                                        ),
-                                                    },
-                                                    range: 241..242,
-                                                },
-                                            ),
-                                        },
-                                    ],
-                                    range: 237..244,
-                                },
-                            ),
-                        },
-                        guard: None,
-                        body: [
-                            Attributed {
-                                custom: (),
-                                node: Assign(
-                                    StmtAssign {
-                                        targets: [
-                                            Attributed {
-                                                custom: (),
-                                                node: Name(
-                                                    ExprName {
-                                                        id: Identifier(
-                                                            "y",
-                                                        ),
-                                                        ctx: Store,
-                                                        range: 254..255,
-                                                    },
+                                MatchValue(
+                                    PatternMatchValue {
+                                        value: Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    1,
                                                 ),
+                                                kind: None,
+                                                range: 200..201,
                                             },
-                                        ],
-                                        value: Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Int(
-                                                        0,
-                                                    ),
-                                                    kind: None,
-                                                    range: 258..259,
-                                                },
-                                            ),
-                                        },
-                                        type_comment: None,
-                                        range: 254..259,
+                                        ),
+                                        range: 200..201,
                                     },
                                 ),
-                            },
-                        ],
-                        range: 232..260,
-                    },
-                ],
-                range: 219..259,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Match(
-            StmtMatch {
-                subject: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "x",
-                            ),
-                            ctx: Load,
-                            range: 266..267,
+                            ],
+                            range: 196..203,
                         },
                     ),
-                },
-                cases: [
-                    MatchCase {
-                        pattern: Attributed {
-                            custom: (),
-                            node: MatchSequence(
-                                PatternMatchSequence {
-                                    patterns: [
-                                        Attributed {
-                                            custom: (),
-                                            node: MatchValue(
-                                                PatternMatchValue {
-                                                    value: Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Int(
-                                                                    0,
-                                                                ),
-                                                                kind: None,
-                                                                range: 279..280,
-                                                            },
-                                                        ),
-                                                    },
-                                                    range: 279..280,
-                                                },
+                    guard: None,
+                    body: [
+                        Assign(
+                            StmtAssign {
+                                targets: [
+                                    Name(
+                                        ExprName {
+                                            id: Identifier(
+                                                "y",
                                             ),
+                                            ctx: Store,
+                                            range: 213..214,
                                         },
-                                    ],
-                                    range: 278..282,
-                                },
-                            ),
-                        },
-                        guard: None,
-                        body: [
-                            Attributed {
-                                custom: (),
-                                node: Assign(
-                                    StmtAssign {
-                                        targets: [
-                                            Attributed {
-                                                custom: (),
-                                                node: Name(
-                                                    ExprName {
-                                                        id: Identifier(
-                                                            "y",
-                                                        ),
-                                                        ctx: Store,
-                                                        range: 292..293,
-                                                    },
-                                                ),
-                                            },
-                                        ],
-                                        value: Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Int(
-                                                        0,
-                                                    ),
-                                                    kind: None,
-                                                    range: 296..297,
-                                                },
-                                            ),
-                                        },
-                                        type_comment: None,
-                                        range: 292..297,
+                                    ),
+                                ],
+                                value: Constant(
+                                    ExprConstant {
+                                        value: Int(
+                                            0,
+                                        ),
+                                        kind: None,
+                                        range: 217..218,
                                     },
                                 ),
+                                type_comment: None,
+                                range: 213..218,
                             },
-                        ],
-                        range: 273..298,
-                    },
-                ],
-                range: 260..297,
-            },
-        ),
-    },
+                        ),
+                    ],
+                    range: PhantomData<ruff_text_size::range::TextRange>,
+                },
+            ],
+            range: 178..218,
+        },
+    ),
+    Match(
+        StmtMatch {
+            subject: Name(
+                ExprName {
+                    id: Identifier(
+                        "x",
+                    ),
+                    ctx: Load,
+                    range: 225..226,
+                },
+            ),
+            cases: [
+                MatchCase {
+                    pattern: MatchSequence(
+                        PatternMatchSequence {
+                            patterns: [
+                                MatchValue(
+                                    PatternMatchValue {
+                                        value: Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    0,
+                                                ),
+                                                kind: None,
+                                                range: 238..239,
+                                            },
+                                        ),
+                                        range: 238..239,
+                                    },
+                                ),
+                                MatchValue(
+                                    PatternMatchValue {
+                                        value: Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    1,
+                                                ),
+                                                kind: None,
+                                                range: 241..242,
+                                            },
+                                        ),
+                                        range: 241..242,
+                                    },
+                                ),
+                            ],
+                            range: 237..244,
+                        },
+                    ),
+                    guard: None,
+                    body: [
+                        Assign(
+                            StmtAssign {
+                                targets: [
+                                    Name(
+                                        ExprName {
+                                            id: Identifier(
+                                                "y",
+                                            ),
+                                            ctx: Store,
+                                            range: 254..255,
+                                        },
+                                    ),
+                                ],
+                                value: Constant(
+                                    ExprConstant {
+                                        value: Int(
+                                            0,
+                                        ),
+                                        kind: None,
+                                        range: 258..259,
+                                    },
+                                ),
+                                type_comment: None,
+                                range: 254..259,
+                            },
+                        ),
+                    ],
+                    range: PhantomData<ruff_text_size::range::TextRange>,
+                },
+            ],
+            range: 219..259,
+        },
+    ),
+    Match(
+        StmtMatch {
+            subject: Name(
+                ExprName {
+                    id: Identifier(
+                        "x",
+                    ),
+                    ctx: Load,
+                    range: 266..267,
+                },
+            ),
+            cases: [
+                MatchCase {
+                    pattern: MatchSequence(
+                        PatternMatchSequence {
+                            patterns: [
+                                MatchValue(
+                                    PatternMatchValue {
+                                        value: Constant(
+                                            ExprConstant {
+                                                value: Int(
+                                                    0,
+                                                ),
+                                                kind: None,
+                                                range: 279..280,
+                                            },
+                                        ),
+                                        range: 279..280,
+                                    },
+                                ),
+                            ],
+                            range: 278..282,
+                        },
+                    ),
+                    guard: None,
+                    body: [
+                        Assign(
+                            StmtAssign {
+                                targets: [
+                                    Name(
+                                        ExprName {
+                                            id: Identifier(
+                                                "y",
+                                            ),
+                                            ctx: Store,
+                                            range: 292..293,
+                                        },
+                                    ),
+                                ],
+                                value: Constant(
+                                    ExprConstant {
+                                        value: Int(
+                                            0,
+                                        ),
+                                        kind: None,
+                                        range: 296..297,
+                                    },
+                                ),
+                                type_comment: None,
+                                range: 292..297,
+                            },
+                        ),
+                    ],
+                    range: PhantomData<ruff_text_size::range::TextRange>,
+                },
+            ],
+            range: 260..297,
+        },
+    ),
 ]

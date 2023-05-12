@@ -3,24 +3,18 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: Constant(
-                        ExprConstant {
-                            value: Str(
-                                "\u{88}",
-                            ),
-                            kind: None,
-                            range: 0..9,
-                        },
+    Expr(
+        StmtExpr {
+            value: Constant(
+                ExprConstant {
+                    value: Str(
+                        "\u{88}",
                     ),
+                    kind: None,
+                    range: 0..9,
                 },
-                range: 0..9,
-            },
-        ),
-    },
+            ),
+            range: 0..9,
+        },
+    ),
 ]

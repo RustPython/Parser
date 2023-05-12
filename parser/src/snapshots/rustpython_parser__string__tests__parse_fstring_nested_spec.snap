@@ -3,63 +3,48 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: FormattedValue(
-            ExprFormattedValue {
-                value: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "foo",
-                            ),
-                            ctx: Load,
-                            range: 3..6,
-                        },
+    FormattedValue(
+        ExprFormattedValue {
+            value: Name(
+                ExprName {
+                    id: Identifier(
+                        "foo",
                     ),
+                    ctx: Load,
+                    range: 3..6,
                 },
-                conversion: Int(
-                    0,
-                ),
-                format_spec: Some(
-                    Attributed {
-                        custom: (),
-                        node: JoinedStr(
-                            ExprJoinedStr {
-                                values: [
-                                    Attributed {
-                                        custom: (),
-                                        node: FormattedValue(
-                                            ExprFormattedValue {
-                                                value: Attributed {
-                                                    custom: (),
-                                                    node: Name(
-                                                        ExprName {
-                                                            id: Identifier(
-                                                                "spec",
-                                                            ),
-                                                            ctx: Load,
-                                                            range: 8..12,
-                                                        },
-                                                    ),
-                                                },
-                                                conversion: Int(
-                                                    0,
-                                                ),
-                                                format_spec: None,
-                                                range: 0..15,
-                                            },
-                                        ),
-                                    },
-                                ],
-                                range: 0..15,
-                            },
-                        ),
+            ),
+            conversion: Int(
+                0,
+            ),
+            format_spec: Some(
+                JoinedStr(
+                    ExprJoinedStr {
+                        values: [
+                            FormattedValue(
+                                ExprFormattedValue {
+                                    value: Name(
+                                        ExprName {
+                                            id: Identifier(
+                                                "spec",
+                                            ),
+                                            ctx: Load,
+                                            range: 8..12,
+                                        },
+                                    ),
+                                    conversion: Int(
+                                        0,
+                                    ),
+                                    format_spec: None,
+                                    range: 0..15,
+                                },
+                            ),
+                        ],
+                        range: 0..15,
                     },
                 ),
-                range: 0..15,
-            },
-        ),
-    },
+            ),
+            range: 0..15,
+        },
+    ),
 ]

@@ -2,181 +2,139 @@
 source: parser/src/parser.rs
 expression: parse_ast
 ---
-Attributed {
-    custom: (),
-    node: ListComp(
-        ExprListComp {
-            elt: Attributed {
-                custom: (),
-                node: Name(
-                    ExprName {
-                        id: Identifier(
-                            "x",
-                        ),
-                        ctx: Load,
-                        range: 1..2,
+ListComp(
+    ExprListComp {
+        elt: Name(
+            ExprName {
+                id: Identifier(
+                    "x",
+                ),
+                ctx: Load,
+                range: 1..2,
+            },
+        ),
+        generators: [
+            Comprehension {
+                target: Tuple(
+                    ExprTuple {
+                        elts: [
+                            Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "y",
+                                    ),
+                                    ctx: Store,
+                                    range: 7..8,
+                                },
+                            ),
+                            Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "y2",
+                                    ),
+                                    ctx: Store,
+                                    range: 10..12,
+                                },
+                            ),
+                        ],
+                        ctx: Store,
+                        range: 7..12,
                     },
                 ),
+                iter: Name(
+                    ExprName {
+                        id: Identifier(
+                            "z",
+                        ),
+                        ctx: Load,
+                        range: 16..17,
+                    },
+                ),
+                ifs: [],
+                is_async: false,
+                range: PhantomData<ruff_text_size::range::TextRange>,
             },
-            generators: [
-                Comprehension {
-                    target: Attributed {
-                        custom: (),
-                        node: Tuple(
-                            ExprTuple {
-                                elts: [
-                                    Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "y",
-                                                ),
-                                                ctx: Store,
-                                                range: 7..8,
-                                            },
-                                        ),
-                                    },
-                                    Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "y2",
-                                                ),
-                                                ctx: Store,
-                                                range: 10..12,
-                                            },
-                                        ),
-                                    },
-                                ],
-                                ctx: Store,
-                                range: 7..12,
-                            },
+            Comprehension {
+                target: Name(
+                    ExprName {
+                        id: Identifier(
+                            "a",
                         ),
+                        ctx: Store,
+                        range: 22..23,
                     },
-                    iter: Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "z",
-                                ),
-                                ctx: Load,
-                                range: 16..17,
-                            },
+                ),
+                iter: Name(
+                    ExprName {
+                        id: Identifier(
+                            "b",
                         ),
+                        ctx: Load,
+                        range: 27..28,
                     },
-                    ifs: [],
-                    is_async: false,
-                    range: 3..17,
-                },
-                Comprehension {
-                    target: Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "a",
-                                ),
-                                ctx: Store,
-                                range: 22..23,
-                            },
-                        ),
-                    },
-                    iter: Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "b",
-                                ),
-                                ctx: Load,
-                                range: 27..28,
-                            },
-                        ),
-                    },
-                    ifs: [
-                        Attributed {
-                            custom: (),
-                            node: Compare(
-                                ExprCompare {
-                                    left: Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "a",
-                                                ),
-                                                ctx: Load,
-                                                range: 32..33,
-                                            },
-                                        ),
-                                    },
-                                    ops: [
-                                        Lt,
-                                    ],
-                                    comparators: [
-                                        Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Int(
-                                                        5,
-                                                    ),
-                                                    kind: None,
-                                                    range: 36..37,
-                                                },
-                                            ),
-                                        },
-                                    ],
-                                    range: 32..37,
+                ),
+                ifs: [
+                    Compare(
+                        ExprCompare {
+                            left: Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "a",
+                                    ),
+                                    ctx: Load,
+                                    range: 32..33,
                                 },
                             ),
-                        },
-                        Attributed {
-                            custom: (),
-                            node: Compare(
-                                ExprCompare {
-                                    left: Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "a",
-                                                ),
-                                                ctx: Load,
-                                                range: 41..42,
-                                            },
+                            ops: [
+                                Lt,
+                            ],
+                            comparators: [
+                                Constant(
+                                    ExprConstant {
+                                        value: Int(
+                                            5,
                                         ),
+                                        kind: None,
+                                        range: 36..37,
                                     },
-                                    ops: [
-                                        Gt,
-                                    ],
-                                    comparators: [
-                                        Attributed {
-                                            custom: (),
-                                            node: Constant(
-                                                ExprConstant {
-                                                    value: Int(
-                                                        10,
-                                                    ),
-                                                    kind: None,
-                                                    range: 45..47,
-                                                },
-                                            ),
-                                        },
-                                    ],
-                                    range: 41..47,
+                                ),
+                            ],
+                            range: 32..37,
+                        },
+                    ),
+                    Compare(
+                        ExprCompare {
+                            left: Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "a",
+                                    ),
+                                    ctx: Load,
+                                    range: 41..42,
                                 },
                             ),
+                            ops: [
+                                Gt,
+                            ],
+                            comparators: [
+                                Constant(
+                                    ExprConstant {
+                                        value: Int(
+                                            10,
+                                        ),
+                                        kind: None,
+                                        range: 45..47,
+                                    },
+                                ),
+                            ],
+                            range: 41..47,
                         },
-                    ],
-                    is_async: false,
-                    range: 18..47,
-                },
-            ],
-            range: 0..48,
-        },
-    ),
-}
+                    ),
+                ],
+                is_async: false,
+                range: PhantomData<ruff_text_size::range::TextRange>,
+            },
+        ],
+        range: 0..48,
+    },
+)

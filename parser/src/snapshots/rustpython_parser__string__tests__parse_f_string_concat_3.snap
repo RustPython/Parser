@@ -3,58 +3,43 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: JoinedStr(
-                        ExprJoinedStr {
-                            values: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Str(
-                                                "Hello world",
-                                            ),
-                                            kind: None,
-                                            range: 0..22,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: FormattedValue(
-                                        ExprFormattedValue {
-                                            value: Attributed {
-                                                custom: (),
-                                                node: Constant(
-                                                    ExprConstant {
-                                                        value: Str(
-                                                            "!",
-                                                        ),
-                                                        kind: None,
-                                                        range: 17..20,
-                                                    },
-                                                ),
-                                            },
-                                            conversion: Int(
-                                                0,
-                                            ),
-                                            format_spec: None,
-                                            range: 9..22,
-                                        },
-                                    ),
-                                },
-                            ],
-                            range: 0..22,
-                        },
-                    ),
+    Expr(
+        StmtExpr {
+            value: JoinedStr(
+                ExprJoinedStr {
+                    values: [
+                        Constant(
+                            ExprConstant {
+                                value: Str(
+                                    "Hello world",
+                                ),
+                                kind: None,
+                                range: 0..22,
+                            },
+                        ),
+                        FormattedValue(
+                            ExprFormattedValue {
+                                value: Constant(
+                                    ExprConstant {
+                                        value: Str(
+                                            "!",
+                                        ),
+                                        kind: None,
+                                        range: 17..20,
+                                    },
+                                ),
+                                conversion: Int(
+                                    0,
+                                ),
+                                format_spec: None,
+                                range: 9..22,
+                            },
+                        ),
+                    ],
+                    range: 0..22,
                 },
-                range: 0..22,
-            },
-        ),
-    },
+            ),
+            range: 0..22,
+        },
+    ),
 ]

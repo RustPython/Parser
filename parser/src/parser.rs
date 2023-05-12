@@ -318,6 +318,20 @@ impl ParseErrorType {
     }
 }
 
+#[cfg(feature = "more-attributes")]
+#[inline(always)]
+pub(super) fn range_or_phantom<T: Into<crate::text_size::TextRange>>(
+    range: T,
+) -> crate::text_size::TextRange {
+    range.into()
+}
+
+#[cfg(not(feature = "more-attributes"))]
+#[inline(always)]
+pub(super) fn range_or_phantom<T, R>(_: T) -> std::marker::PhantomData<R> {
+    std::marker::PhantomData::<R>
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

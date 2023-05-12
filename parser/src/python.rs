@@ -1,11 +1,11 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: 8a3fbd9c7ec6b7da4f0fc78dee12593317d7407da92a4ff54c0c398bf36bee6e
+// sha3: 66396fb90bec55aae5a20216846cc3a01d7e611d2b96a5a07e58b7cde5caeab3
 use crate::{
-    ast::ranged::{self as ast, Ranged},
+    ast::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,
-    string::parse_strings,
+    string::parse_strings, parser::range_or_phantom,
     token::{self, StringKind},
     text_size::TextSize,
 };
@@ -22,11 +22,11 @@ extern crate alloc;
 mod __parse__Top {
 
     use crate::{
-    ast::ranged::{self as ast, Ranged},
+    ast::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,
-    string::parse_strings,
+    string::parse_strings, parser::range_or_phantom,
     token::{self, StringKind},
     text_size::TextSize,
 };
@@ -103,49 +103,48 @@ mod __parse__Top {
         Variant59(ast::Operator),
         Variant60(ArgumentList),
         Variant61(ast::Stmt),
-        Variant62(ast::PatternKind),
-        Variant63(Vec<(Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)>),
-        Variant64(Vec<ast::Pattern>),
-        Variant65(Vec<ast::Comprehension>),
-        Variant66(core::option::Option<Vec<ast::Comprehension>>),
-        Variant67(ast::Cmpop),
-        Variant68(ast::Constant),
-        Variant69((Option<Box<ast::Expr>>, ast::Expr)),
-        Variant70((ast::Expr, ast::Expr)),
-        Variant71(Vec<(Option<Box<ast::Expr>>, ast::Expr)>),
-        Variant72(core::option::Option<Vec<(Option<Box<ast::Expr>>, ast::Expr)>>),
-        Variant73(ast::Identifier),
-        Variant74(ast::Excepthandler),
-        Variant75(alloc::vec::Vec<ast::Excepthandler>),
-        Variant76(ast::Suite),
-        Variant77(alloc::vec::Vec<ast::Suite>),
-        Variant78(core::option::Option<(Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)>),
-        Variant79(ast::Alias),
-        Variant80(Vec<ast::Alias>),
-        Variant81(ast::Int),
-        Variant82(alloc::vec::Vec<ast::Int>),
-        Variant83((Option<ast::Int>, Option<ast::Identifier>)),
-        Variant84(Option<Box<ast::Arg>>),
-        Variant85(ast::MatchCase),
-        Variant86(alloc::vec::Vec<ast::MatchCase>),
-        Variant87((ast::Identifier, ast::Pattern)),
-        Variant88((ast::Expr, ast::Pattern)),
-        Variant89(Vec<ast::Identifier>),
-        Variant90(Vec<(ast::Identifier, ast::Pattern)>),
-        Variant91(Vec<(ast::Expr, ast::Pattern)>),
-        Variant92(Vec<(ast::Arg, Option<ast::Expr>)>),
-        Variant93((ast::Arg, Option<ast::Expr>)),
-        Variant94((Vec<(ast::Arg, Option<ast::Expr>)>, Vec<(ast::Arg, Option<ast::Expr>)>)),
-        Variant95((Option<Box<ast::Arg>>, Vec<ast::Arg>, Vec<ast::Expr>, Option<Box<ast::Arg>>)),
-        Variant96(core::option::Option<ast::Pattern>),
-        Variant97(ast::Comprehension),
-        Variant98(alloc::vec::Vec<ast::Comprehension>),
-        Variant99(Option<ast::Expr>),
-        Variant100(core::option::Option<Option<ast::Expr>>),
-        Variant101(ast::Arg),
-        Variant102(core::option::Option<ast::Arg>),
-        Variant103(ast::Mod),
-        Variant104(ast::Unaryop),
+        Variant62(Vec<(Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)>),
+        Variant63(Vec<ast::Pattern>),
+        Variant64(Vec<ast::Comprehension>),
+        Variant65(core::option::Option<Vec<ast::Comprehension>>),
+        Variant66(ast::Cmpop),
+        Variant67(ast::Constant),
+        Variant68((Option<Box<ast::Expr>>, ast::Expr)),
+        Variant69((ast::Expr, ast::Expr)),
+        Variant70(Vec<(Option<Box<ast::Expr>>, ast::Expr)>),
+        Variant71(core::option::Option<Vec<(Option<Box<ast::Expr>>, ast::Expr)>>),
+        Variant72(ast::Identifier),
+        Variant73(ast::Excepthandler),
+        Variant74(alloc::vec::Vec<ast::Excepthandler>),
+        Variant75(ast::Suite),
+        Variant76(alloc::vec::Vec<ast::Suite>),
+        Variant77(core::option::Option<(Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)>),
+        Variant78(ast::Alias),
+        Variant79(Vec<ast::Alias>),
+        Variant80(ast::Int),
+        Variant81(alloc::vec::Vec<ast::Int>),
+        Variant82((Option<ast::Int>, Option<ast::Identifier>)),
+        Variant83(Option<Box<ast::Arg>>),
+        Variant84(ast::MatchCase),
+        Variant85(alloc::vec::Vec<ast::MatchCase>),
+        Variant86((ast::Identifier, ast::Pattern)),
+        Variant87((ast::Expr, ast::Pattern)),
+        Variant88(Vec<ast::Identifier>),
+        Variant89(Vec<(ast::Identifier, ast::Pattern)>),
+        Variant90(Vec<(ast::Expr, ast::Pattern)>),
+        Variant91(Vec<(ast::Arg, Option<ast::Expr>)>),
+        Variant92((ast::Arg, Option<ast::Expr>)),
+        Variant93((Vec<(ast::Arg, Option<ast::Expr>)>, Vec<(ast::Arg, Option<ast::Expr>)>)),
+        Variant94((Option<Box<ast::Arg>>, Vec<ast::Arg>, Vec<ast::Expr>, Option<Box<ast::Arg>>)),
+        Variant95(core::option::Option<ast::Pattern>),
+        Variant96(ast::Comprehension),
+        Variant97(alloc::vec::Vec<ast::Comprehension>),
+        Variant98(Option<ast::Expr>),
+        Variant99(core::option::Option<Option<ast::Expr>>),
+        Variant100(ast::Arg),
+        Variant101(core::option::Option<ast::Arg>),
+        Variant102(ast::Mod),
+        Variant103(ast::Unaryop),
     }
     const __ACTION: &[i16] = &[
         // State 0
@@ -13759,9 +13758,9 @@ mod __parse__Top {
             76 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>) = ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1202);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13776,7 +13775,7 @@ mod __parse__Top {
             77 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>) = ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1203);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -13792,10 +13791,10 @@ mod __parse__Top {
             78 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>) = ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1204);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13810,7 +13809,7 @@ mod __parse__Top {
             79 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>) = ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1205);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
@@ -13827,7 +13826,7 @@ mod __parse__Top {
             80 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>) = ",", "*", StarTypedParameter => ActionFn(1206);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13857,7 +13856,7 @@ mod __parse__Top {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>) = ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1208);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13887,9 +13886,9 @@ mod __parse__Top {
             84 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>)? = ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1226);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13904,7 +13903,7 @@ mod __parse__Top {
             85 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>)? = ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1227);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -13920,10 +13919,10 @@ mod __parse__Top {
             86 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>)? = ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1228);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13938,7 +13937,7 @@ mod __parse__Top {
             87 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>)? = ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1229);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
@@ -13955,7 +13954,7 @@ mod __parse__Top {
             88 => {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>)? = ",", "*", StarTypedParameter => ActionFn(1230);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -13985,7 +13984,7 @@ mod __parse__Top {
                 // ("," ParameterListStarArgs<TypedParameter, StarTypedParameter>)? = ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1232);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14018,9 +14017,9 @@ mod __parse__Top {
             93 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>) = ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1262);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14035,7 +14034,7 @@ mod __parse__Top {
             94 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>) = ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1263);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -14051,10 +14050,10 @@ mod __parse__Top {
             95 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>) = ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1264);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14069,7 +14068,7 @@ mod __parse__Top {
             96 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>) = ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1265);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
@@ -14086,7 +14085,7 @@ mod __parse__Top {
             97 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>) = ",", "*", UntypedParameter => ActionFn(1266);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14116,7 +14115,7 @@ mod __parse__Top {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>) = ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1268);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14146,9 +14145,9 @@ mod __parse__Top {
             101 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>)? = ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1286);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14163,7 +14162,7 @@ mod __parse__Top {
             102 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>)? = ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1287);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -14179,10 +14178,10 @@ mod __parse__Top {
             103 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>)? = ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1288);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14197,7 +14196,7 @@ mod __parse__Top {
             104 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>)? = ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1289);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
@@ -14214,7 +14213,7 @@ mod __parse__Top {
             105 => {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>)? = ",", "*", UntypedParameter => ActionFn(1290);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14244,7 +14243,7 @@ mod __parse__Top {
                 // ("," ParameterListStarArgs<UntypedParameter, UntypedParameter>)? = ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1292);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant28(__symbols);
-                let __sym2 = __pop_Variant101(__symbols);
+                let __sym2 = __pop_Variant100(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -14701,7 +14700,7 @@ mod __parse__Top {
             239 => {
                 // AsPattern = OrPattern, "as", Identifier => ActionFn(917);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant73(__symbols);
+                let __sym2 = __pop_Variant72(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant40(__symbols);
                 let __start = __sym0.0;
@@ -16139,7 +16138,7 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant40(__nt), __end));
                 (1, 203)
             }
             573 => {
@@ -16458,12 +16457,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1638);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1638::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -16477,13 +16476,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1639);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1639::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -16497,14 +16496,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1640);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1640::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -16518,15 +16517,15 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1641);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1641::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -16540,15 +16539,15 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1642);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1642::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -16562,16 +16561,16 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1643);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1643::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -16585,11 +16584,11 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1644);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1644::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -16603,12 +16602,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1645);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1645::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -16622,13 +16621,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1646);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1646::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -16642,14 +16641,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1647);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1647::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -16663,14 +16662,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1648);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1648::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -16684,7 +16683,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1649);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -16692,7 +16691,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1649::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -16706,13 +16705,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1650);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1650::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -16726,14 +16725,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1651);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1651::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -16747,15 +16746,15 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1652);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1652::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -16769,16 +16768,16 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1653);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1653::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -16792,16 +16791,16 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1654);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1654::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -16815,17 +16814,17 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1655);
                 assert!(__symbols.len() >= 12);
                 let __sym11 = __pop_Variant0(__symbols);
-                let __sym10 = __pop_Variant84(__symbols);
+                let __sym10 = __pop_Variant83(__symbols);
                 let __sym9 = __pop_Variant0(__symbols);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym11.2;
                 let __nt = match super::__action1655::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10, __sym11) {
@@ -16839,12 +16838,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1656);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1656::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -16858,13 +16857,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1657);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1657::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -16878,14 +16877,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1658);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1658::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -16899,7 +16898,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1659);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -16907,7 +16906,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1659::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -16921,7 +16920,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1660);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -16929,7 +16928,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1660::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -16943,7 +16942,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1661);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
@@ -16952,7 +16951,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1661::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -16966,10 +16965,10 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter, "," => ActionFn(1662);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1662::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -16983,11 +16982,11 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, "," => ActionFn(1663);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1663::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17001,12 +17000,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter, "," => ActionFn(1664);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1664::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17020,13 +17019,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter, "," => ActionFn(1665);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1665::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17040,13 +17039,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, "," => ActionFn(1666);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1666::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17060,14 +17059,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, "," => ActionFn(1667);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1667::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17083,7 +17082,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1668::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -17100,7 +17099,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1669::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -17118,7 +17117,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1670::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17137,7 +17136,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1671::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17156,7 +17155,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1672::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17176,7 +17175,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1673::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17191,10 +17190,10 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1674::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17209,11 +17208,11 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1675::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17228,12 +17227,12 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1676::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17248,13 +17247,13 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1677::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17269,13 +17268,13 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1678::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17290,14 +17289,14 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1679::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -17314,7 +17313,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1680::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -17332,7 +17331,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1681::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17351,7 +17350,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1682::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17371,7 +17370,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1683::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17391,7 +17390,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1684::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17412,7 +17411,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1685::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17426,7 +17425,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, "," => ActionFn(1686);
                 assert!(__symbols.len() >= 2);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
                 let __nt = match super::__action1686::<>(__sym0, __sym1) {
@@ -17441,7 +17440,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1687::<>(__sym0, __sym1, __sym2) {
@@ -17457,7 +17456,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1688::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -17474,7 +17473,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1689::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -17491,7 +17490,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1690::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -17509,7 +17508,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1691::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17522,12 +17521,12 @@ mod __parse__Top {
             728 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1692);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1692::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17540,13 +17539,13 @@ mod __parse__Top {
             729 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1693);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1693::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17559,14 +17558,14 @@ mod __parse__Top {
             730 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1694);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1694::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17579,15 +17578,15 @@ mod __parse__Top {
             731 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1695);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1695::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17600,15 +17599,15 @@ mod __parse__Top {
             732 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1696);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1696::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17621,16 +17620,16 @@ mod __parse__Top {
             733 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1697);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1697::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -17643,11 +17642,11 @@ mod __parse__Top {
             734 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1698);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1698::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -17660,12 +17659,12 @@ mod __parse__Top {
             735 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1699);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1699::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17678,13 +17677,13 @@ mod __parse__Top {
             736 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1700);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1700::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17697,14 +17696,14 @@ mod __parse__Top {
             737 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1701);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1701::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17717,14 +17716,14 @@ mod __parse__Top {
             738 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1702);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1702::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17737,7 +17736,7 @@ mod __parse__Top {
             739 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ",", KwargParameter<TypedParameter> => ActionFn(1703);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -17745,7 +17744,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1703::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17758,13 +17757,13 @@ mod __parse__Top {
             740 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1704);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1704::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17777,14 +17776,14 @@ mod __parse__Top {
             741 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1705);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1705::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17797,15 +17796,15 @@ mod __parse__Top {
             742 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1706);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1706::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17818,16 +17817,16 @@ mod __parse__Top {
             743 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1707);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1707::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -17840,16 +17839,16 @@ mod __parse__Top {
             744 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1708);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1708::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -17862,17 +17861,17 @@ mod __parse__Top {
             745 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1709);
                 assert!(__symbols.len() >= 11);
-                let __sym10 = __pop_Variant84(__symbols);
+                let __sym10 = __pop_Variant83(__symbols);
                 let __sym9 = __pop_Variant0(__symbols);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1709::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -17885,12 +17884,12 @@ mod __parse__Top {
             746 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1710);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1710::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -17903,13 +17902,13 @@ mod __parse__Top {
             747 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1711);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1711::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -17922,14 +17921,14 @@ mod __parse__Top {
             748 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1712);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1712::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -17942,7 +17941,7 @@ mod __parse__Top {
             749 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1713);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -17950,7 +17949,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1713::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17963,7 +17962,7 @@ mod __parse__Top {
             750 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1714);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -17971,7 +17970,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1714::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -17984,7 +17983,7 @@ mod __parse__Top {
             751 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1715);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
@@ -17993,7 +17992,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1715::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -18006,10 +18005,10 @@ mod __parse__Top {
             752 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter => ActionFn(1716);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1716::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18022,11 +18021,11 @@ mod __parse__Top {
             753 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter => ActionFn(1717);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1717::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18039,12 +18038,12 @@ mod __parse__Top {
             754 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter => ActionFn(1718);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1718::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18057,13 +18056,13 @@ mod __parse__Top {
             755 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter => ActionFn(1719);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1719::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18076,13 +18075,13 @@ mod __parse__Top {
             756 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter => ActionFn(1720);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1720::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18095,14 +18094,14 @@ mod __parse__Top {
             757 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter => ActionFn(1721);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1721::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -18117,7 +18116,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1722::<>(__sym0, __sym1, __sym2) {
@@ -18133,7 +18132,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1723::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18150,7 +18149,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1724::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18168,7 +18167,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1725::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18186,7 +18185,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1726::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18205,7 +18204,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1727::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18219,10 +18218,10 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1728);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1728::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18236,11 +18235,11 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1729);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1729::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18254,12 +18253,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1730);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1730::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18273,13 +18272,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1731);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1731::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -18293,13 +18292,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1732);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1732::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -18313,14 +18312,14 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1733);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1733::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -18336,7 +18335,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1734::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18353,7 +18352,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1735::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18371,7 +18370,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1736::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18390,7 +18389,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1737::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18409,7 +18408,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1738::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18429,7 +18428,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1739::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -18441,7 +18440,7 @@ mod __parse__Top {
             }
             776 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter> => ActionFn(1740);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym0.2;
                 let __nt = match super::__action1740::<>(__sym0) {
@@ -18455,7 +18454,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+ => ActionFn(1741);
                 assert!(__symbols.len() >= 2);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
                 let __nt = match super::__action1741::<>(__sym0, __sym1) {
@@ -18470,7 +18469,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1742::<>(__sym0, __sym1, __sym2) {
@@ -18486,7 +18485,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1743::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18502,7 +18501,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1744::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18519,7 +18518,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1745::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18533,9 +18532,9 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", KwargParameter<TypedParameter>, "," => ActionFn(1746);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1746::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18549,10 +18548,10 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1747);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1747::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18566,11 +18565,11 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", KwargParameter<TypedParameter>, "," => ActionFn(1748);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1748::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18584,12 +18583,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", KwargParameter<TypedParameter>, "," => ActionFn(1749);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1749::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18603,12 +18602,12 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1750);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1750::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18622,13 +18621,13 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1751);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1751::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -18641,9 +18640,9 @@ mod __parse__Top {
             788 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", KwargParameter<TypedParameter> => ActionFn(1752);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1752::<>(__sym0, __sym1, __sym2) {
@@ -18656,10 +18655,10 @@ mod __parse__Top {
             789 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1753);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1753::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -18672,11 +18671,11 @@ mod __parse__Top {
             790 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ",", KwargParameter<TypedParameter> => ActionFn(1754);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1754::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -18689,12 +18688,12 @@ mod __parse__Top {
             791 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ",", KwargParameter<TypedParameter> => ActionFn(1755);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1755::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18707,12 +18706,12 @@ mod __parse__Top {
             792 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1756);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1756::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -18725,13 +18724,13 @@ mod __parse__Top {
             793 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+, ",", "/", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1757);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1757::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -18745,9 +18744,9 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ",", KwargParameter<TypedParameter>, "," => ActionFn(1210);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
@@ -18762,7 +18761,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", ",", KwargParameter<TypedParameter>, "," => ActionFn(1211);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -18778,10 +18777,10 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1212);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
@@ -18796,7 +18795,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter>, "," => ActionFn(1213);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -18813,7 +18812,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, "," => ActionFn(1214);
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
@@ -18843,7 +18842,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
@@ -18872,9 +18871,9 @@ mod __parse__Top {
             802 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1218);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
@@ -18888,7 +18887,7 @@ mod __parse__Top {
             803 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", ",", KwargParameter<TypedParameter> => ActionFn(1219);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -18903,10 +18902,10 @@ mod __parse__Top {
             804 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1220);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
@@ -18920,7 +18919,7 @@ mod __parse__Top {
             805 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1221);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -18936,7 +18935,7 @@ mod __parse__Top {
             806 => {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter => ActionFn(1222);
                 assert!(__symbols.len() >= 2);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
@@ -18963,7 +18962,7 @@ mod __parse__Top {
                 // ParameterList<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1224);
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
@@ -18998,12 +18997,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1758);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1758::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19017,13 +19016,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1759);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1759::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19037,14 +19036,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1760);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1760::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19058,15 +19057,15 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1761);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1761::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19080,15 +19079,15 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1762);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1762::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19102,16 +19101,16 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1763);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1763::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -19125,11 +19124,11 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1764);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1764::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -19143,12 +19142,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1765);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1765::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19162,13 +19161,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1766);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1766::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19182,14 +19181,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1767);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1767::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19203,14 +19202,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1768);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1768::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19224,7 +19223,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1769);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -19232,7 +19231,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1769::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19246,13 +19245,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1770);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1770::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19266,14 +19265,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1771);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1771::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19287,15 +19286,15 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1772);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1772::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19309,16 +19308,16 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1773);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1773::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -19332,16 +19331,16 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1774);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1774::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -19355,17 +19354,17 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1775);
                 assert!(__symbols.len() >= 12);
                 let __sym11 = __pop_Variant0(__symbols);
-                let __sym10 = __pop_Variant84(__symbols);
+                let __sym10 = __pop_Variant83(__symbols);
                 let __sym9 = __pop_Variant0(__symbols);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym11.2;
                 let __nt = match super::__action1775::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10, __sym11) {
@@ -19379,12 +19378,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1776);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1776::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19398,13 +19397,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1777);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1777::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19418,14 +19417,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1778);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1778::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19439,7 +19438,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1779);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -19447,7 +19446,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1779::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19461,7 +19460,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1780);
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -19469,7 +19468,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1780::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19483,7 +19482,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1781);
                 assert!(__symbols.len() >= 11);
                 let __sym10 = __pop_Variant0(__symbols);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
@@ -19492,7 +19491,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1781::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -19506,10 +19505,10 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter, "," => ActionFn(1782);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1782::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -19523,11 +19522,11 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, "," => ActionFn(1783);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1783::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -19541,12 +19540,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter, "," => ActionFn(1784);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1784::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19560,13 +19559,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter, "," => ActionFn(1785);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1785::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19580,13 +19579,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, "," => ActionFn(1786);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1786::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19600,14 +19599,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, "," => ActionFn(1787);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1787::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19623,7 +19622,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1788::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -19640,7 +19639,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1789::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -19658,7 +19657,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1790::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -19677,7 +19676,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1791::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19696,7 +19695,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1792::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19716,7 +19715,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1793::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19731,10 +19730,10 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1794::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -19749,11 +19748,11 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1795::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19768,12 +19767,12 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1796::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19788,13 +19787,13 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1797::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19809,13 +19808,13 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1798::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19830,14 +19829,14 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 10);
                 let __sym9 = __pop_Variant0(__symbols);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1799::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -19854,7 +19853,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1800::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -19872,7 +19871,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1801::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -19891,7 +19890,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1802::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -19911,7 +19910,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1803::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19931,7 +19930,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1804::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -19952,7 +19951,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1805::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -19966,7 +19965,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, "," => ActionFn(1806);
                 assert!(__symbols.len() >= 2);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
                 let __nt = match super::__action1806::<>(__sym0, __sym1) {
@@ -19981,7 +19980,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1807::<>(__sym0, __sym1, __sym2) {
@@ -19997,7 +19996,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1808::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -20014,7 +20013,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1809::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20031,7 +20030,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1810::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20049,7 +20048,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1811::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20062,12 +20061,12 @@ mod __parse__Top {
             866 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1812);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1812::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20080,13 +20079,13 @@ mod __parse__Top {
             867 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1813);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1813::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20099,14 +20098,14 @@ mod __parse__Top {
             868 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1814);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1814::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20119,15 +20118,15 @@ mod __parse__Top {
             869 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1815);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1815::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20140,15 +20139,15 @@ mod __parse__Top {
             870 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1816);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1816::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20161,16 +20160,16 @@ mod __parse__Top {
             871 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1817);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1817::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -20183,11 +20182,11 @@ mod __parse__Top {
             872 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1818);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1818::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20200,12 +20199,12 @@ mod __parse__Top {
             873 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1819);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1819::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20218,13 +20217,13 @@ mod __parse__Top {
             874 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1820);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1820::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20237,14 +20236,14 @@ mod __parse__Top {
             875 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1821);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1821::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20257,14 +20256,14 @@ mod __parse__Top {
             876 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1822);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1822::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20277,7 +20276,7 @@ mod __parse__Top {
             877 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ",", KwargParameter<UntypedParameter> => ActionFn(1823);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -20285,7 +20284,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1823::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20298,13 +20297,13 @@ mod __parse__Top {
             878 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1824);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1824::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20317,14 +20316,14 @@ mod __parse__Top {
             879 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1825);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1825::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20337,15 +20336,15 @@ mod __parse__Top {
             880 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1826);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1826::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20358,16 +20357,16 @@ mod __parse__Top {
             881 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1827);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1827::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -20380,16 +20379,16 @@ mod __parse__Top {
             882 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1828);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1828::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -20402,17 +20401,17 @@ mod __parse__Top {
             883 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1829);
                 assert!(__symbols.len() >= 11);
-                let __sym10 = __pop_Variant84(__symbols);
+                let __sym10 = __pop_Variant83(__symbols);
                 let __sym9 = __pop_Variant0(__symbols);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym10.2;
                 let __nt = match super::__action1829::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9, __sym10) {
@@ -20425,12 +20424,12 @@ mod __parse__Top {
             884 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1830);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1830::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20443,13 +20442,13 @@ mod __parse__Top {
             885 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1831);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1831::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20462,14 +20461,14 @@ mod __parse__Top {
             886 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1832);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant84(__symbols);
+                let __sym7 = __pop_Variant83(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant28(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1832::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20482,7 +20481,7 @@ mod __parse__Top {
             887 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1833);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -20490,7 +20489,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1833::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20503,7 +20502,7 @@ mod __parse__Top {
             888 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1834);
                 assert!(__symbols.len() >= 9);
-                let __sym8 = __pop_Variant84(__symbols);
+                let __sym8 = __pop_Variant83(__symbols);
                 let __sym7 = __pop_Variant0(__symbols);
                 let __sym6 = __pop_Variant28(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
@@ -20511,7 +20510,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1834::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20524,7 +20523,7 @@ mod __parse__Top {
             889 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1835);
                 assert!(__symbols.len() >= 10);
-                let __sym9 = __pop_Variant84(__symbols);
+                let __sym9 = __pop_Variant83(__symbols);
                 let __sym8 = __pop_Variant0(__symbols);
                 let __sym7 = __pop_Variant28(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
@@ -20533,7 +20532,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym9.2;
                 let __nt = match super::__action1835::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8, __sym9) {
@@ -20546,10 +20545,10 @@ mod __parse__Top {
             890 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter => ActionFn(1836);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1836::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -20562,11 +20561,11 @@ mod __parse__Top {
             891 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter => ActionFn(1837);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1837::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20579,12 +20578,12 @@ mod __parse__Top {
             892 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter => ActionFn(1838);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1838::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20597,13 +20596,13 @@ mod __parse__Top {
             893 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter => ActionFn(1839);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1839::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20616,13 +20615,13 @@ mod __parse__Top {
             894 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter => ActionFn(1840);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1840::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20635,14 +20634,14 @@ mod __parse__Top {
             895 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter => ActionFn(1841);
                 assert!(__symbols.len() >= 8);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1841::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20657,7 +20656,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1842::<>(__sym0, __sym1, __sym2) {
@@ -20673,7 +20672,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1843::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -20690,7 +20689,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1844::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20708,7 +20707,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1845::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20726,7 +20725,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1846::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20745,7 +20744,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1847::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20759,10 +20758,10 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1848);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant28(__symbols);
-                let __sym3 = __pop_Variant101(__symbols);
+                let __sym3 = __pop_Variant100(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1848::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20776,11 +20775,11 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1849);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant28(__symbols);
-                let __sym4 = __pop_Variant101(__symbols);
+                let __sym4 = __pop_Variant100(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1849::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20794,12 +20793,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1850);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant28(__symbols);
-                let __sym5 = __pop_Variant101(__symbols);
+                let __sym5 = __pop_Variant100(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1850::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20813,13 +20812,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1851);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1851::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20833,13 +20832,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1852);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant28(__symbols);
-                let __sym6 = __pop_Variant101(__symbols);
+                let __sym6 = __pop_Variant100(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1852::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20853,14 +20852,14 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1853);
                 assert!(__symbols.len() >= 9);
                 let __sym8 = __pop_Variant28(__symbols);
-                let __sym7 = __pop_Variant101(__symbols);
+                let __sym7 = __pop_Variant100(__symbols);
                 let __sym6 = __pop_Variant0(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym8.2;
                 let __nt = match super::__action1853::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8) {
@@ -20876,7 +20875,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1854::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -20893,7 +20892,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1855::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -20911,7 +20910,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1856::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -20930,7 +20929,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1857::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20949,7 +20948,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1858::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -20969,7 +20968,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1859::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -20981,7 +20980,7 @@ mod __parse__Top {
             }
             914 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter> => ActionFn(1860);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym0.2;
                 let __nt = match super::__action1860::<>(__sym0) {
@@ -20995,7 +20994,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1861);
                 assert!(__symbols.len() >= 2);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
                 let __nt = match super::__action1861::<>(__sym0, __sym1) {
@@ -21010,7 +21009,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1862::<>(__sym0, __sym1, __sym2) {
@@ -21026,7 +21025,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1863::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -21042,7 +21041,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1864::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -21059,7 +21058,7 @@ mod __parse__Top {
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1865::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -21073,9 +21072,9 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1866);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1866::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -21089,10 +21088,10 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1867);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1867::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -21106,11 +21105,11 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1868);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1868::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -21124,12 +21123,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1869);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1869::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -21143,12 +21142,12 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1870);
                 assert!(__symbols.len() >= 7);
                 let __sym6 = __pop_Variant0(__symbols);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1870::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -21162,13 +21161,13 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1871);
                 assert!(__symbols.len() >= 8);
                 let __sym7 = __pop_Variant0(__symbols);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym7.2;
                 let __nt = match super::__action1871::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7) {
@@ -21181,9 +21180,9 @@ mod __parse__Top {
             926 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", KwargParameter<UntypedParameter> => ActionFn(1872);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
                 let __nt = match super::__action1872::<>(__sym0, __sym1, __sym2) {
@@ -21196,10 +21195,10 @@ mod __parse__Top {
             927 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1873);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
                 let __nt = match super::__action1873::<>(__sym0, __sym1, __sym2, __sym3) {
@@ -21212,11 +21211,11 @@ mod __parse__Top {
             928 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ",", KwargParameter<UntypedParameter> => ActionFn(1874);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
                 let __nt = match super::__action1874::<>(__sym0, __sym1, __sym2, __sym3, __sym4) {
@@ -21229,12 +21228,12 @@ mod __parse__Top {
             929 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ",", KwargParameter<UntypedParameter> => ActionFn(1875);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1875::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -21247,12 +21246,12 @@ mod __parse__Top {
             930 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1876);
                 assert!(__symbols.len() >= 6);
-                let __sym5 = __pop_Variant84(__symbols);
+                let __sym5 = __pop_Variant83(__symbols);
                 let __sym4 = __pop_Variant0(__symbols);
                 let __sym3 = __pop_Variant28(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
                 let __nt = match super::__action1876::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5) {
@@ -21265,13 +21264,13 @@ mod __parse__Top {
             931 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+, ",", "/", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1877);
                 assert!(__symbols.len() >= 7);
-                let __sym6 = __pop_Variant84(__symbols);
+                let __sym6 = __pop_Variant83(__symbols);
                 let __sym5 = __pop_Variant0(__symbols);
                 let __sym4 = __pop_Variant28(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
-                let __sym0 = __pop_Variant93(__symbols);
+                let __sym0 = __pop_Variant92(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym6.2;
                 let __nt = match super::__action1877::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6) {
@@ -21285,9 +21284,9 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1270);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
@@ -21302,7 +21301,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", ",", KwargParameter<UntypedParameter>, "," => ActionFn(1271);
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant0(__symbols);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -21318,10 +21317,10 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1272);
                 assert!(__symbols.len() >= 6);
                 let __sym5 = __pop_Variant0(__symbols);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym5.2;
@@ -21336,7 +21335,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter>, "," => ActionFn(1273);
                 assert!(__symbols.len() >= 5);
                 let __sym4 = __pop_Variant0(__symbols);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -21353,7 +21352,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter, "," => ActionFn(1274);
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
@@ -21383,7 +21382,7 @@ mod __parse__Top {
                 assert!(__symbols.len() >= 4);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
@@ -21412,9 +21411,9 @@ mod __parse__Top {
             940 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1278);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
@@ -21428,7 +21427,7 @@ mod __parse__Top {
             941 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", ",", KwargParameter<UntypedParameter> => ActionFn(1279);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -21443,10 +21442,10 @@ mod __parse__Top {
             942 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1280);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
@@ -21460,7 +21459,7 @@ mod __parse__Top {
             943 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1281);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -21476,7 +21475,7 @@ mod __parse__Top {
             944 => {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter => ActionFn(1282);
                 assert!(__symbols.len() >= 2);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
@@ -21503,7 +21502,7 @@ mod __parse__Top {
                 // ParameterList<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1284);
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
@@ -21543,9 +21542,9 @@ mod __parse__Top {
             952 => {
                 // ParameterListStarArgs<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ",", KwargParameter<TypedParameter> => ActionFn(1194);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
@@ -21553,13 +21552,13 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (4, 243)
             }
             953 => {
                 // ParameterListStarArgs<TypedParameter, StarTypedParameter> = "*", ",", KwargParameter<TypedParameter> => ActionFn(1195);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -21568,16 +21567,16 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (3, 243)
             }
             954 => {
                 // ParameterListStarArgs<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1196);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
@@ -21585,13 +21584,13 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (5, 243)
             }
             955 => {
                 // ParameterListStarArgs<TypedParameter, StarTypedParameter> = "*", ("," ParameterDef<TypedParameter>)+, ",", KwargParameter<TypedParameter> => ActionFn(1197);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -21601,13 +21600,13 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (4, 243)
             }
             956 => {
                 // ParameterListStarArgs<TypedParameter, StarTypedParameter> = "*", StarTypedParameter => ActionFn(1198);
                 assert!(__symbols.len() >= 2);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
@@ -21615,7 +21614,7 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (2, 243)
             }
             957 => {
@@ -21627,14 +21626,14 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (1, 243)
             }
             958 => {
                 // ParameterListStarArgs<TypedParameter, StarTypedParameter> = "*", StarTypedParameter, ("," ParameterDef<TypedParameter>)+ => ActionFn(1200);
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
@@ -21642,7 +21641,7 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (3, 243)
             }
             959 => {
@@ -21656,15 +21655,15 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (2, 243)
             }
             960 => {
                 // ParameterListStarArgs<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ",", KwargParameter<UntypedParameter> => ActionFn(1254);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym3.2;
@@ -21672,13 +21671,13 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (4, 244)
             }
             961 => {
                 // ParameterListStarArgs<UntypedParameter, UntypedParameter> = "*", ",", KwargParameter<UntypedParameter> => ActionFn(1255);
                 assert!(__symbols.len() >= 3);
-                let __sym2 = __pop_Variant84(__symbols);
+                let __sym2 = __pop_Variant83(__symbols);
                 let __sym1 = __pop_Variant0(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
@@ -21687,16 +21686,16 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (3, 244)
             }
             962 => {
                 // ParameterListStarArgs<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1256);
                 assert!(__symbols.len() >= 5);
-                let __sym4 = __pop_Variant84(__symbols);
+                let __sym4 = __pop_Variant83(__symbols);
                 let __sym3 = __pop_Variant0(__symbols);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym4.2;
@@ -21704,13 +21703,13 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (5, 244)
             }
             963 => {
                 // ParameterListStarArgs<UntypedParameter, UntypedParameter> = "*", ("," ParameterDef<UntypedParameter>)+, ",", KwargParameter<UntypedParameter> => ActionFn(1257);
                 assert!(__symbols.len() >= 4);
-                let __sym3 = __pop_Variant84(__symbols);
+                let __sym3 = __pop_Variant83(__symbols);
                 let __sym2 = __pop_Variant0(__symbols);
                 let __sym1 = __pop_Variant28(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
@@ -21720,13 +21719,13 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (4, 244)
             }
             964 => {
                 // ParameterListStarArgs<UntypedParameter, UntypedParameter> = "*", UntypedParameter => ActionFn(1258);
                 assert!(__symbols.len() >= 2);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym1.2;
@@ -21734,7 +21733,7 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (2, 244)
             }
             965 => {
@@ -21746,14 +21745,14 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (1, 244)
             }
             966 => {
                 // ParameterListStarArgs<UntypedParameter, UntypedParameter> = "*", UntypedParameter, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1260);
                 assert!(__symbols.len() >= 3);
                 let __sym2 = __pop_Variant28(__symbols);
-                let __sym1 = __pop_Variant101(__symbols);
+                let __sym1 = __pop_Variant100(__symbols);
                 let __sym0 = __pop_Variant0(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym2.2;
@@ -21761,7 +21760,7 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (3, 244)
             }
             967 => {
@@ -21775,7 +21774,7 @@ mod __parse__Top {
                     Ok(v) => v,
                     Err(e) => return Some(Err(e)),
                 };
-                __symbols.push((__start, __Symbol::Variant95(__nt), __end));
+                __symbols.push((__start, __Symbol::Variant94(__nt), __end));
                 (2, 244)
             }
             968 => {
@@ -22316,7 +22315,7 @@ mod __parse__Top {
             }
             1139 => {
                 // __Top = Top => ActionFn(0);
-                let __sym0 = __pop_Variant103(__symbols);
+                let __sym0 = __pop_Variant102(__symbols);
                 let __start = __sym0.0;
                 let __end = __sym0.2;
                 let __nt = super::__action0::<>(__sym0);
@@ -22345,33 +22344,33 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant95<
+    fn __pop_Variant94<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (Option<Box<ast::Arg>>, Vec<ast::Arg>, Vec<ast::Expr>, Option<Box<ast::Arg>>), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant95(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant94(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant69<
+    fn __pop_Variant68<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (Option<Box<ast::Expr>>, ast::Expr), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant69(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant68(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant83<
+    fn __pop_Variant82<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (Option<ast::Int>, Option<ast::Identifier>), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant83(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant82(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22405,23 +22404,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant94<
+    fn __pop_Variant93<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (Vec<(ast::Arg, Option<ast::Expr>)>, Vec<(ast::Arg, Option<ast::Expr>)>), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant94(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant93(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant93<
+    fn __pop_Variant92<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (ast::Arg, Option<ast::Expr>), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant93(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant92(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22435,23 +22434,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant70<
+    fn __pop_Variant69<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (ast::Expr, ast::Expr), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant70(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant69(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant88<
+    fn __pop_Variant87<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (ast::Expr, ast::Pattern), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant88(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant87(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22465,13 +22464,13 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant87<
+    fn __pop_Variant86<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, (ast::Identifier, ast::Pattern), TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant87(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant86(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22635,23 +22634,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant84<
+    fn __pop_Variant83<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Option<Box<ast::Arg>>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant84(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant83(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant99<
+    fn __pop_Variant98<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Option<ast::Expr>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant99(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant98(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22675,40 +22674,30 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant63<
+    fn __pop_Variant62<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Vec<(Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant63(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant62(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant71<
+    fn __pop_Variant70<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Vec<(Option<Box<ast::Expr>>, ast::Expr)>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant71(__v), __r)) => (__l, __v, __r),
-            _ => __symbol_type_mismatch()
-        }
-    }
-    fn __pop_Variant92<
-    >(
-        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
-    ) -> (TextSize, Vec<(ast::Arg, Option<ast::Expr>)>, TextSize)
-     {
-        match __symbols.pop() {
-            Some((__l, __Symbol::Variant92(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant70(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
     fn __pop_Variant91<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
-    ) -> (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize)
+    ) -> (TextSize, Vec<(ast::Arg, Option<ast::Expr>)>, TextSize)
      {
         match __symbols.pop() {
             Some((__l, __Symbol::Variant91(__v), __r)) => (__l, __v, __r),
@@ -22718,30 +22707,40 @@ mod __parse__Top {
     fn __pop_Variant90<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
-    ) -> (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize)
+    ) -> (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize)
      {
         match __symbols.pop() {
             Some((__l, __Symbol::Variant90(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant80<
+    fn __pop_Variant89<
+    >(
+        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
+    ) -> (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize)
+     {
+        match __symbols.pop() {
+            Some((__l, __Symbol::Variant89(__v), __r)) => (__l, __v, __r),
+            _ => __symbol_type_mismatch()
+        }
+    }
+    fn __pop_Variant79<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Vec<ast::Alias>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant80(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant79(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant65<
+    fn __pop_Variant64<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Vec<ast::Comprehension>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant65(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant64(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22755,23 +22754,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant89<
+    fn __pop_Variant88<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Vec<ast::Identifier>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant89(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant88(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant64<
+    fn __pop_Variant63<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, Vec<ast::Pattern>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant64(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant63(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22915,23 +22914,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant98<
+    fn __pop_Variant97<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, alloc::vec::Vec<ast::Comprehension>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant98(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant97(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant75<
+    fn __pop_Variant74<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, alloc::vec::Vec<ast::Excepthandler>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant75(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant74(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22945,23 +22944,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant82<
+    fn __pop_Variant81<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, alloc::vec::Vec<ast::Int>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant82(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant81(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant86<
+    fn __pop_Variant85<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, alloc::vec::Vec<ast::MatchCase>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant86(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant85(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -22975,13 +22974,13 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant77<
+    fn __pop_Variant76<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, alloc::vec::Vec<ast::Suite>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant77(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant76(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23005,23 +23004,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant79<
+    fn __pop_Variant78<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Alias, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant79(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant78(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant101<
+    fn __pop_Variant100<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Arg, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant101(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant100(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23035,43 +23034,43 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant67<
+    fn __pop_Variant66<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Cmpop, TextSize)
+     {
+        match __symbols.pop() {
+            Some((__l, __Symbol::Variant66(__v), __r)) => (__l, __v, __r),
+            _ => __symbol_type_mismatch()
+        }
+    }
+    fn __pop_Variant96<
+    >(
+        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
+    ) -> (TextSize, ast::Comprehension, TextSize)
+     {
+        match __symbols.pop() {
+            Some((__l, __Symbol::Variant96(__v), __r)) => (__l, __v, __r),
+            _ => __symbol_type_mismatch()
+        }
+    }
+    fn __pop_Variant67<
+    >(
+        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
+    ) -> (TextSize, ast::Constant, TextSize)
      {
         match __symbols.pop() {
             Some((__l, __Symbol::Variant67(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant97<
-    >(
-        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
-    ) -> (TextSize, ast::Comprehension, TextSize)
-     {
-        match __symbols.pop() {
-            Some((__l, __Symbol::Variant97(__v), __r)) => (__l, __v, __r),
-            _ => __symbol_type_mismatch()
-        }
-    }
-    fn __pop_Variant68<
-    >(
-        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
-    ) -> (TextSize, ast::Constant, TextSize)
-     {
-        match __symbols.pop() {
-            Some((__l, __Symbol::Variant68(__v), __r)) => (__l, __v, __r),
-            _ => __symbol_type_mismatch()
-        }
-    }
-    fn __pop_Variant74<
+    fn __pop_Variant73<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Excepthandler, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant74(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant73(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23085,43 +23084,43 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant73<
+    fn __pop_Variant72<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Identifier, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant73(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant72(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant81<
+    fn __pop_Variant80<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Int, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant81(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant80(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant85<
+    fn __pop_Variant84<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::MatchCase, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant85(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant84(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant103<
+    fn __pop_Variant102<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Mod, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant103(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant102(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23145,16 +23144,6 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant62<
-    >(
-        __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
-    ) -> (TextSize, ast::PatternKind, TextSize)
-     {
-        match __symbols.pop() {
-            Some((__l, __Symbol::Variant62(__v), __r)) => (__l, __v, __r),
-            _ => __symbol_type_mismatch()
-        }
-    }
     fn __pop_Variant61<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
@@ -23165,23 +23154,23 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant76<
+    fn __pop_Variant75<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Suite, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant76(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant75(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant104<
+    fn __pop_Variant103<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, ast::Unaryop, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant104(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant103(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23195,13 +23184,13 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant78<
+    fn __pop_Variant77<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, core::option::Option<(Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant78(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant77(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23265,33 +23254,33 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant100<
+    fn __pop_Variant99<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, core::option::Option<Option<ast::Expr>>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant100(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant99(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant72<
+    fn __pop_Variant71<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, core::option::Option<Vec<(Option<Box<ast::Expr>>, ast::Expr)>>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant72(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant71(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant66<
+    fn __pop_Variant65<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, core::option::Option<Vec<ast::Comprehension>>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant66(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant65(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23315,13 +23304,13 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant102<
+    fn __pop_Variant101<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, core::option::Option<ast::Arg>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant102(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant101(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23345,13 +23334,13 @@ mod __parse__Top {
             _ => __symbol_type_mismatch()
         }
     }
-    fn __pop_Variant96<
+    fn __pop_Variant95<
     >(
         __symbols: &mut alloc::vec::Vec<(TextSize,__Symbol<>,TextSize)>
     ) -> (TextSize, core::option::Option<ast::Pattern>, TextSize)
      {
         match __symbols.pop() {
-            Some((__l, __Symbol::Variant96(__v), __r)) => (__l, __v, __r),
+            Some((__l, __Symbol::Variant95(__v), __r)) => (__l, __v, __r),
             _ => __symbol_type_mismatch()
         }
     }
@@ -23693,7 +23682,7 @@ mod __parse__Top {
     {
         // ("," DictElement) = ",", DictElement => ActionFn(422);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant69(__symbols);
+        let __sym1 = __pop_Variant68(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -23739,7 +23728,7 @@ mod __parse__Top {
     {
         // ("," DictElement)+ = ",", DictElement => ActionFn(696);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant69(__symbols);
+        let __sym1 = __pop_Variant68(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -23756,7 +23745,7 @@ mod __parse__Top {
     {
         // ("," DictElement)+ = ("," DictElement)+, ",", DictElement => ActionFn(697);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant69(__symbols);
+        let __sym2 = __pop_Variant68(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant14(__symbols);
         let __start = __sym0.0;
@@ -23855,7 +23844,7 @@ mod __parse__Top {
     {
         // ("," Identifier) = ",", Identifier => ActionFn(375);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -23901,7 +23890,7 @@ mod __parse__Top {
     {
         // ("," Identifier)+ = ",", Identifier => ActionFn(704);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -23918,7 +23907,7 @@ mod __parse__Top {
     {
         // ("," Identifier)+ = ("," Identifier)+, ",", Identifier => ActionFn(705);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant18(__symbols);
         let __start = __sym0.0;
@@ -23936,9 +23925,9 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<DottedName>) = ",", DottedName, "as", Identifier => ActionFn(1132);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -23955,7 +23944,7 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<DottedName>) = ",", DottedName => ActionFn(1133);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24001,9 +23990,9 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<DottedName>)+ = ",", DottedName, "as", Identifier => ActionFn(1136);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -24020,7 +24009,7 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<DottedName>)+ = ",", DottedName => ActionFn(1137);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24037,9 +24026,9 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<DottedName>)+ = ("," ImportAsAlias<DottedName>)+, ",", DottedName, "as", Identifier => ActionFn(1138);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant73(__symbols);
+        let __sym4 = __pop_Variant72(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant20(__symbols);
         let __start = __sym0.0;
@@ -24057,7 +24046,7 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<DottedName>)+ = ("," ImportAsAlias<DottedName>)+, ",", DottedName => ActionFn(1139);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant20(__symbols);
         let __start = __sym0.0;
@@ -24075,9 +24064,9 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<Identifier>) = ",", Identifier, "as", Identifier => ActionFn(1144);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -24094,7 +24083,7 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<Identifier>) = ",", Identifier => ActionFn(1145);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24140,9 +24129,9 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<Identifier>)+ = ",", Identifier, "as", Identifier => ActionFn(1148);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -24159,7 +24148,7 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<Identifier>)+ = ",", Identifier => ActionFn(1149);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24176,9 +24165,9 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<Identifier>)+ = ("," ImportAsAlias<Identifier>)+, ",", Identifier, "as", Identifier => ActionFn(1150);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant73(__symbols);
+        let __sym4 = __pop_Variant72(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant20(__symbols);
         let __start = __sym0.0;
@@ -24196,7 +24185,7 @@ mod __parse__Top {
     {
         // ("," ImportAsAlias<Identifier>)+ = ("," ImportAsAlias<Identifier>)+, ",", Identifier => ActionFn(1151);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant20(__symbols);
         let __start = __sym0.0;
@@ -24214,7 +24203,7 @@ mod __parse__Top {
     {
         // ("," KwargParameter<TypedParameter>) = ",", KwargParameter<TypedParameter> => ActionFn(402);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant84(__symbols);
+        let __sym1 = __pop_Variant83(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24231,7 +24220,7 @@ mod __parse__Top {
     {
         // ("," KwargParameter<TypedParameter>)? = ",", KwargParameter<TypedParameter> => ActionFn(1156);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant84(__symbols);
+        let __sym1 = __pop_Variant83(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24262,7 +24251,7 @@ mod __parse__Top {
     {
         // ("," KwargParameter<UntypedParameter>) = ",", KwargParameter<UntypedParameter> => ActionFn(410);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant84(__symbols);
+        let __sym1 = __pop_Variant83(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24279,7 +24268,7 @@ mod __parse__Top {
     {
         // ("," KwargParameter<UntypedParameter>)? = ",", KwargParameter<UntypedParameter> => ActionFn(1161);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant84(__symbols);
+        let __sym1 = __pop_Variant83(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24310,7 +24299,7 @@ mod __parse__Top {
     {
         // ("," MatchKeywordEntry) = ",", MatchKeywordEntry => ActionFn(392);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant87(__symbols);
+        let __sym1 = __pop_Variant86(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24356,7 +24345,7 @@ mod __parse__Top {
     {
         // ("," MatchKeywordEntry)+ = ",", MatchKeywordEntry => ActionFn(1166);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant87(__symbols);
+        let __sym1 = __pop_Variant86(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24373,7 +24362,7 @@ mod __parse__Top {
     {
         // ("," MatchKeywordEntry)+ = ("," MatchKeywordEntry)+, ",", MatchKeywordEntry => ActionFn(1167);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant24(__symbols);
         let __start = __sym0.0;
@@ -24391,7 +24380,7 @@ mod __parse__Top {
     {
         // ("," MatchMappingEntry) = ",", MatchMappingEntry => ActionFn(389);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24437,7 +24426,7 @@ mod __parse__Top {
     {
         // ("," MatchMappingEntry)+ = ",", MatchMappingEntry => ActionFn(1170);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24454,7 +24443,7 @@ mod __parse__Top {
     {
         // ("," MatchMappingEntry)+ = ("," MatchMappingEntry)+, ",", MatchMappingEntry => ActionFn(1171);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant88(__symbols);
+        let __sym2 = __pop_Variant87(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant26(__symbols);
         let __start = __sym0.0;
@@ -24472,7 +24461,7 @@ mod __parse__Top {
     {
         // ("," ParameterDef<TypedParameter>) = ",", ParameterDef<TypedParameter> => ActionFn(472);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant93(__symbols);
+        let __sym1 = __pop_Variant92(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24518,7 +24507,7 @@ mod __parse__Top {
     {
         // ("," ParameterDef<TypedParameter>)+ = ",", ParameterDef<TypedParameter> => ActionFn(1174);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant93(__symbols);
+        let __sym1 = __pop_Variant92(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24535,7 +24524,7 @@ mod __parse__Top {
     {
         // ("," ParameterDef<TypedParameter>)+ = ("," ParameterDef<TypedParameter>)+, ",", ParameterDef<TypedParameter> => ActionFn(1175);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant93(__symbols);
+        let __sym2 = __pop_Variant92(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant28(__symbols);
         let __start = __sym0.0;
@@ -24553,7 +24542,7 @@ mod __parse__Top {
     {
         // ("," ParameterDef<UntypedParameter>) = ",", ParameterDef<UntypedParameter> => ActionFn(462);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant93(__symbols);
+        let __sym1 = __pop_Variant92(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24599,7 +24588,7 @@ mod __parse__Top {
     {
         // ("," ParameterDef<UntypedParameter>)+ = ",", ParameterDef<UntypedParameter> => ActionFn(1184);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant93(__symbols);
+        let __sym1 = __pop_Variant92(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -24616,7 +24605,7 @@ mod __parse__Top {
     {
         // ("," ParameterDef<UntypedParameter>)+ = ("," ParameterDef<UntypedParameter>)+, ",", ParameterDef<UntypedParameter> => ActionFn(1185);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant93(__symbols);
+        let __sym2 = __pop_Variant92(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant28(__symbols);
         let __start = __sym0.0;
@@ -25146,7 +25135,7 @@ mod __parse__Top {
     {
         // ("." Identifier) = ".", Identifier => ActionFn(319);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -25163,7 +25152,7 @@ mod __parse__Top {
     {
         // ("." Identifier)+ = ".", Identifier => ActionFn(1342);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -25180,7 +25169,7 @@ mod __parse__Top {
     {
         // ("." Identifier)+ = ("." Identifier)+, ".", Identifier => ActionFn(1343);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant18(__symbols);
         let __start = __sym0.0;
@@ -25503,7 +25492,7 @@ mod __parse__Top {
     {
         // ("as" Identifier) = "as", Identifier => ActionFn(369);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -25520,7 +25509,7 @@ mod __parse__Top {
     {
         // ("as" Identifier)? = "as", Identifier => ActionFn(903);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -25551,7 +25540,7 @@ mod __parse__Top {
     {
         // ("else" ":" Suite) = "else", ":", Suite => ActionFn(293);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -25569,7 +25558,7 @@ mod __parse__Top {
     {
         // ("else" ":" Suite)? = "else", ":", Suite => ActionFn(1362);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -25601,7 +25590,7 @@ mod __parse__Top {
     {
         // ("finally" ":" Suite) = "finally", ":", Suite => ActionFn(286);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -25619,7 +25608,7 @@ mod __parse__Top {
     {
         // ("finally" ":" Suite)? = "finally", ":", Suite => ActionFn(1375);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -26133,7 +26122,7 @@ mod __parse__Top {
     {
         // (@L "elif" NamedExpressionTest ":" Suite) = "elif", NamedExpressionTest, ":", Suite => ActionFn(908);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -26181,7 +26170,7 @@ mod __parse__Top {
     {
         // (@L "elif" NamedExpressionTest ":" Suite)+ = "elif", NamedExpressionTest, ":", Suite => ActionFn(1454);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -26200,7 +26189,7 @@ mod __parse__Top {
     {
         // (@L "elif" NamedExpressionTest ":" Suite)+ = (@L "elif" NamedExpressionTest ":" Suite)+, "elif", NamedExpressionTest, ":", Suite => ActionFn(1455);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant76(__symbols);
+        let __sym4 = __pop_Variant75(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -26268,7 +26257,7 @@ mod __parse__Top {
         // (CompOp Expression<"all">) = CompOp, Expression<"all"> => ActionFn(513);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant9(__symbols);
-        let __sym0 = __pop_Variant67(__symbols);
+        let __sym0 = __pop_Variant66(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action513::<>(__sym0, __sym1);
@@ -26285,7 +26274,7 @@ mod __parse__Top {
         // (CompOp Expression<"all">)+ = CompOp, Expression<"all"> => ActionFn(1462);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant9(__symbols);
-        let __sym0 = __pop_Variant67(__symbols);
+        let __sym0 = __pop_Variant66(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1462::<>(__sym0, __sym1);
@@ -26302,7 +26291,7 @@ mod __parse__Top {
         // (CompOp Expression<"all">)+ = (CompOp Expression<"all">)+, CompOp, Expression<"all"> => ActionFn(1463);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
-        let __sym1 = __pop_Variant67(__symbols);
+        let __sym1 = __pop_Variant66(__symbols);
         let __sym0 = __pop_Variant53(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
@@ -26407,7 +26396,7 @@ mod __parse__Top {
     {
         // (Test<"all"> "as" Identifier) = Test<"all">, "as", Identifier => ActionFn(281);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
@@ -26839,7 +26828,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Atom<"all"> = Constant => ActionFn(920);
-        let __sym0 = __pop_Variant68(__symbols);
+        let __sym0 = __pop_Variant67(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action920::<>(__sym0);
@@ -26854,7 +26843,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Atom<"all"> = Identifier => ActionFn(921);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action921::<>(__sym0);
@@ -26906,7 +26895,7 @@ mod __parse__Top {
         // Atom<"all"> = "[", TestOrStarNamedExpr, CompFor, "]" => ActionFn(923);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -27036,7 +27025,7 @@ mod __parse__Top {
         // Atom<"all"> = "(", NamedExpressionTest, CompFor, ")" => ActionFn(931);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -27055,7 +27044,7 @@ mod __parse__Top {
         // Atom<"all"> = "{", DictLiteralValues, "}" => ActionFn(1514);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant71(__symbols);
+        let __sym1 = __pop_Variant70(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
@@ -27090,8 +27079,8 @@ mod __parse__Top {
         // Atom<"all"> = "{", DictEntry, CompFor, "}" => ActionFn(934);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
-        let __sym1 = __pop_Variant70(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
+        let __sym1 = __pop_Variant69(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -27127,7 +27116,7 @@ mod __parse__Top {
         // Atom<"all"> = "{", NamedExpressionTest, CompFor, "}" => ActionFn(936);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -27204,7 +27193,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Atom<"no-withitems"> = Constant => ActionFn(942);
-        let __sym0 = __pop_Variant68(__symbols);
+        let __sym0 = __pop_Variant67(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action942::<>(__sym0);
@@ -27219,7 +27208,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Atom<"no-withitems"> = Identifier => ActionFn(943);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action943::<>(__sym0);
@@ -27271,7 +27260,7 @@ mod __parse__Top {
         // Atom<"no-withitems"> = "[", TestOrStarNamedExpr, CompFor, "]" => ActionFn(945);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -27325,7 +27314,7 @@ mod __parse__Top {
         // Atom<"no-withitems"> = "(", NamedExpressionTest, CompFor, ")" => ActionFn(951);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -27344,7 +27333,7 @@ mod __parse__Top {
         // Atom<"no-withitems"> = "{", DictLiteralValues, "}" => ActionFn(1516);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant71(__symbols);
+        let __sym1 = __pop_Variant70(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
@@ -27379,8 +27368,8 @@ mod __parse__Top {
         // Atom<"no-withitems"> = "{", DictEntry, CompFor, "}" => ActionFn(954);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
-        let __sym1 = __pop_Variant70(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
+        let __sym1 = __pop_Variant69(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -27416,7 +27405,7 @@ mod __parse__Top {
         // Atom<"no-withitems"> = "{", NamedExpressionTest, CompFor, "}" => ActionFn(956);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant65(__symbols);
+        let __sym2 = __pop_Variant64(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -27547,7 +27536,7 @@ mod __parse__Top {
     {
         // AtomExpr2<"all"> = AtomExpr2<"all">, ".", Identifier => ActionFn(963);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
@@ -27618,7 +27607,7 @@ mod __parse__Top {
     {
         // AtomExpr2<"no-withitems"> = AtomExpr2<"all">, ".", Identifier => ActionFn(966);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
@@ -27894,11 +27883,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // CapturePattern = Identifier => ActionFn(969);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action969::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 136)
     }
     pub(crate) fn __reduce341<
@@ -27910,12 +27899,12 @@ mod __parse__Top {
     {
         // ClassDef = "class", Identifier, "(", ArgumentList, ")", ":", Suite => ActionFn(1502);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant60(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym6.2;
@@ -27932,12 +27921,12 @@ mod __parse__Top {
     {
         // ClassDef = Decorator+, "class", Identifier, "(", ArgumentList, ")", ":", Suite => ActionFn(1503);
         assert!(__symbols.len() >= 8);
-        let __sym7 = __pop_Variant76(__symbols);
+        let __sym7 = __pop_Variant75(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant60(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant10(__symbols);
         let __start = __sym0.0;
@@ -27955,9 +27944,9 @@ mod __parse__Top {
     {
         // ClassDef = "class", Identifier, ":", Suite => ActionFn(1504);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -27974,9 +27963,9 @@ mod __parse__Top {
     {
         // ClassDef = Decorator+, "class", Identifier, ":", Suite => ActionFn(1505);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant76(__symbols);
+        let __sym4 = __pop_Variant75(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant10(__symbols);
         let __start = __sym0.0;
@@ -27996,7 +27985,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28004,7 +27993,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1594::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 138)
     }
     pub(crate) fn __reduce346<
@@ -28018,7 +28007,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 8);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28027,7 +28016,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1595::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 138)
     }
     pub(crate) fn __reduce347<
@@ -28042,7 +28031,7 @@ mod __parse__Top {
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant24(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28050,7 +28039,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1596::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 138)
     }
     pub(crate) fn __reduce348<
@@ -28065,7 +28054,7 @@ mod __parse__Top {
         let __sym8 = __pop_Variant0(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant24(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28074,7 +28063,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym8.2;
         let __nt = super::__action1597::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (9, 138)
     }
     pub(crate) fn __reduce349<
@@ -28087,7 +28076,7 @@ mod __parse__Top {
         // ClassPattern = MatchName, "(", Pattern, ",", MatchKeywordEntry, ")" => ActionFn(1598);
         assert!(__symbols.len() >= 6);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28095,7 +28084,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1598::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 138)
     }
     pub(crate) fn __reduce350<
@@ -28108,7 +28097,7 @@ mod __parse__Top {
         // ClassPattern = MatchName, "(", Pattern, ("," Pattern)+, ",", MatchKeywordEntry, ")" => ActionFn(1599);
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28117,7 +28106,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1599::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 138)
     }
     pub(crate) fn __reduce351<
@@ -28131,7 +28120,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant24(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28139,7 +28128,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1600::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 138)
     }
     pub(crate) fn __reduce352<
@@ -28153,7 +28142,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 8);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant24(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28162,7 +28151,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1601::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 138)
     }
     pub(crate) fn __reduce353<
@@ -28182,7 +28171,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1602::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce354<
@@ -28203,7 +28192,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1603::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 138)
     }
     pub(crate) fn __reduce355<
@@ -28222,7 +28211,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1604::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 138)
     }
     pub(crate) fn __reduce356<
@@ -28242,7 +28231,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1605::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce357<
@@ -28256,13 +28245,13 @@ mod __parse__Top {
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1562::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce358<
@@ -28277,13 +28266,13 @@ mod __parse__Top {
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant24(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1563::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 138)
     }
     pub(crate) fn __reduce359<
@@ -28296,13 +28285,13 @@ mod __parse__Top {
         // ClassPattern = MatchName, "(", MatchKeywordEntry, ")" => ActionFn(1564);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1564::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 138)
     }
     pub(crate) fn __reduce360<
@@ -28316,13 +28305,13 @@ mod __parse__Top {
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant24(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1565::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce361<
@@ -28340,7 +28329,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action978::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (3, 138)
     }
     pub(crate) fn __reduce362<
@@ -28354,7 +28343,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28362,7 +28351,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1606::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 138)
     }
     pub(crate) fn __reduce363<
@@ -28376,7 +28365,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 8);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28385,7 +28374,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1607::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 138)
     }
     pub(crate) fn __reduce364<
@@ -28400,7 +28389,7 @@ mod __parse__Top {
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant24(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28408,7 +28397,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1608::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 138)
     }
     pub(crate) fn __reduce365<
@@ -28423,7 +28412,7 @@ mod __parse__Top {
         let __sym8 = __pop_Variant0(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant24(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28432,7 +28421,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym8.2;
         let __nt = super::__action1609::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7, __sym8);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (9, 138)
     }
     pub(crate) fn __reduce366<
@@ -28445,7 +28434,7 @@ mod __parse__Top {
         // ClassPattern = MatchNameOrAttr, "(", Pattern, ",", MatchKeywordEntry, ")" => ActionFn(1610);
         assert!(__symbols.len() >= 6);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28453,7 +28442,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1610::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 138)
     }
     pub(crate) fn __reduce367<
@@ -28466,7 +28455,7 @@ mod __parse__Top {
         // ClassPattern = MatchNameOrAttr, "(", Pattern, ("," Pattern)+, ",", MatchKeywordEntry, ")" => ActionFn(1611);
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28475,7 +28464,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1611::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 138)
     }
     pub(crate) fn __reduce368<
@@ -28489,7 +28478,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant24(__symbols);
-        let __sym4 = __pop_Variant87(__symbols);
+        let __sym4 = __pop_Variant86(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -28497,7 +28486,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1612::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 138)
     }
     pub(crate) fn __reduce369<
@@ -28511,7 +28500,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 8);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant24(__symbols);
-        let __sym5 = __pop_Variant87(__symbols);
+        let __sym5 = __pop_Variant86(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant32(__symbols);
         let __sym2 = __pop_Variant40(__symbols);
@@ -28520,7 +28509,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1613::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 138)
     }
     pub(crate) fn __reduce370<
@@ -28540,7 +28529,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1614::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce371<
@@ -28561,7 +28550,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1615::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 138)
     }
     pub(crate) fn __reduce372<
@@ -28580,7 +28569,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1616::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 138)
     }
     pub(crate) fn __reduce373<
@@ -28600,7 +28589,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1617::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce374<
@@ -28614,13 +28603,13 @@ mod __parse__Top {
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1570::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce375<
@@ -28635,13 +28624,13 @@ mod __parse__Top {
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant24(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1571::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 138)
     }
     pub(crate) fn __reduce376<
@@ -28654,13 +28643,13 @@ mod __parse__Top {
         // ClassPattern = MatchNameOrAttr, "(", MatchKeywordEntry, ")" => ActionFn(1572);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1572::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 138)
     }
     pub(crate) fn __reduce377<
@@ -28674,13 +28663,13 @@ mod __parse__Top {
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant24(__symbols);
-        let __sym2 = __pop_Variant87(__symbols);
+        let __sym2 = __pop_Variant86(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1573::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 138)
     }
     pub(crate) fn __reduce378<
@@ -28698,7 +28687,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action985::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (3, 138)
     }
     pub(crate) fn __reduce379<
@@ -28709,7 +28698,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = LiteralPattern => ActionFn(90);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action90::<>(__sym0);
@@ -28724,7 +28713,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = CapturePattern => ActionFn(91);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action91::<>(__sym0);
@@ -28739,7 +28728,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = StarPattern => ActionFn(92);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action92::<>(__sym0);
@@ -28754,7 +28743,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = ValuePattern => ActionFn(93);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action93::<>(__sym0);
@@ -28769,7 +28758,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = SequencePattern => ActionFn(94);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action94::<>(__sym0);
@@ -28784,7 +28773,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = MappingPattern => ActionFn(95);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action95::<>(__sym0);
@@ -28799,7 +28788,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ClosedPattern = ClassPattern => ActionFn(96);
-        let __sym0 = __pop_Variant62(__symbols);
+        let __sym0 = __pop_Variant40(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action96::<>(__sym0);
@@ -28818,7 +28807,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1476::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
         (1, 140)
     }
     pub(crate) fn __reduce387<
@@ -28832,7 +28821,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action1477::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
         (0, 140)
     }
     pub(crate) fn __reduce388<
@@ -28849,7 +28838,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1478::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
         (2, 140)
     }
     pub(crate) fn __reduce389<
@@ -28864,7 +28853,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1479::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
         (1, 140)
     }
     pub(crate) fn __reduce390<
@@ -28879,7 +28868,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1484::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
         (1, 141)
     }
     pub(crate) fn __reduce391<
@@ -28893,7 +28882,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action1485::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
         (0, 141)
     }
     pub(crate) fn __reduce392<
@@ -28910,7 +28899,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1486::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
         (2, 141)
     }
     pub(crate) fn __reduce393<
@@ -28925,7 +28914,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1487::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
         (1, 141)
     }
     pub(crate) fn __reduce394<
@@ -28936,11 +28925,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // CompFor = SingleForComprehension+ => ActionFn(205);
-        let __sym0 = __pop_Variant98(__symbols);
+        let __sym0 = __pop_Variant97(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action205::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant65(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
         (1, 142)
     }
     pub(crate) fn __reduce395<
@@ -28951,11 +28940,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // CompFor? = CompFor => ActionFn(218);
-        let __sym0 = __pop_Variant65(__symbols);
+        let __sym0 = __pop_Variant64(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action218::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant65(__nt), __end));
         (1, 143)
     }
     pub(crate) fn __reduce396<
@@ -28969,7 +28958,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action219::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant65(__nt), __end));
         (0, 143)
     }
     pub(crate) fn __reduce397<
@@ -28984,7 +28973,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action167::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce398<
@@ -28999,7 +28988,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action168::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce399<
@@ -29014,7 +29003,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action169::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce400<
@@ -29029,7 +29018,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action170::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce401<
@@ -29044,7 +29033,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action171::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce402<
@@ -29059,7 +29048,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action172::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce403<
@@ -29074,7 +29063,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action173::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce404<
@@ -29091,7 +29080,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action174::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (2, 144)
     }
     pub(crate) fn __reduce405<
@@ -29106,7 +29095,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action175::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (1, 144)
     }
     pub(crate) fn __reduce406<
@@ -29123,7 +29112,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action176::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant66(__nt), __end));
         (2, 144)
     }
     pub(crate) fn __reduce407<
@@ -29400,7 +29389,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action214::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant68(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
         (1, 151)
     }
     pub(crate) fn __reduce425<
@@ -29415,7 +29404,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action215::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant68(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
         (1, 151)
     }
     pub(crate) fn __reduce426<
@@ -29430,7 +29419,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action216::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant68(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant67(__nt), __end));
         (1, 151)
     }
     pub(crate) fn __reduce427<
@@ -29441,7 +29430,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ConstantAtom = Constant => ActionFn(988);
-        let __sym0 = __pop_Variant68(__symbols);
+        let __sym0 = __pop_Variant67(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action988::<>(__sym0);
@@ -29584,11 +29573,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // DictElement = DictEntry => ActionFn(196);
-        let __sym0 = __pop_Variant70(__symbols);
+        let __sym0 = __pop_Variant69(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action196::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant69(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant68(__nt), __end));
         (1, 158)
     }
     pub(crate) fn __reduce437<
@@ -29605,7 +29594,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action197::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant69(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant68(__nt), __end));
         (2, 158)
     }
     pub(crate) fn __reduce438<
@@ -29623,7 +29612,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action195::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant69(__nt), __end));
         (3, 159)
     }
     pub(crate) fn __reduce439<
@@ -29636,11 +29625,11 @@ mod __parse__Top {
         // DictLiteralValues = DictElement, "," => ActionFn(1526);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant69(__symbols);
+        let __sym0 = __pop_Variant68(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1526::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
         (2, 160)
     }
     pub(crate) fn __reduce440<
@@ -29654,11 +29643,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant14(__symbols);
-        let __sym0 = __pop_Variant69(__symbols);
+        let __sym0 = __pop_Variant68(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1527::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
         (3, 160)
     }
     pub(crate) fn __reduce441<
@@ -29669,11 +29658,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // DictLiteralValues = DictElement => ActionFn(1528);
-        let __sym0 = __pop_Variant69(__symbols);
+        let __sym0 = __pop_Variant68(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1528::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
         (1, 160)
     }
     pub(crate) fn __reduce442<
@@ -29686,11 +29675,11 @@ mod __parse__Top {
         // DictLiteralValues = DictElement, ("," DictElement)+ => ActionFn(1529);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant14(__symbols);
-        let __sym0 = __pop_Variant69(__symbols);
+        let __sym0 = __pop_Variant68(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1529::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
         (2, 160)
     }
     pub(crate) fn __reduce443<
@@ -29701,11 +29690,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // DictLiteralValues? = DictLiteralValues => ActionFn(563);
-        let __sym0 = __pop_Variant71(__symbols);
+        let __sym0 = __pop_Variant70(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action563::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant72(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
         (1, 161)
     }
     pub(crate) fn __reduce444<
@@ -29719,7 +29708,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action564::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant72(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
         (0, 161)
     }
     pub(crate) fn __reduce445<
@@ -29734,7 +29723,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action64::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant72(__nt), __end));
         (1, 162)
     }
     pub(crate) fn __reduce446<
@@ -29751,7 +29740,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action65::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant72(__nt), __end));
         (2, 162)
     }
     pub(crate) fn __reduce447<
@@ -29763,14 +29752,14 @@ mod __parse__Top {
     {
         // ExceptClause = "except", Test<"all">, ":", Suite => ActionFn(1882);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1882::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
         (4, 163)
     }
     pub(crate) fn __reduce448<
@@ -29782,13 +29771,13 @@ mod __parse__Top {
     {
         // ExceptClause = "except", ":", Suite => ActionFn(1883);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1883::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
         (3, 163)
     }
     pub(crate) fn __reduce449<
@@ -29800,16 +29789,16 @@ mod __parse__Top {
     {
         // ExceptClause = "except", Test<"all">, "as", Identifier, ":", Suite => ActionFn(1470);
         assert!(__symbols.len() >= 6);
-        let __sym5 = __pop_Variant76(__symbols);
+        let __sym5 = __pop_Variant75(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1470::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
         (6, 163)
     }
     pub(crate) fn __reduce450<
@@ -29820,11 +29809,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ExceptClause+ = ExceptClause => ActionFn(287);
-        let __sym0 = __pop_Variant74(__symbols);
+        let __sym0 = __pop_Variant73(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action287::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
         (1, 164)
     }
     pub(crate) fn __reduce451<
@@ -29836,12 +29825,12 @@ mod __parse__Top {
     {
         // ExceptClause+ = ExceptClause+, ExceptClause => ActionFn(288);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant74(__symbols);
-        let __sym0 = __pop_Variant75(__symbols);
+        let __sym1 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant74(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action288::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
         (2, 164)
     }
     pub(crate) fn __reduce452<
@@ -29853,7 +29842,7 @@ mod __parse__Top {
     {
         // ExceptStarClause = "except", "*", Test<"all">, ":", Suite => ActionFn(994);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant76(__symbols);
+        let __sym4 = __pop_Variant75(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -29861,7 +29850,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action994::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
         (5, 165)
     }
     pub(crate) fn __reduce453<
@@ -29873,9 +29862,9 @@ mod __parse__Top {
     {
         // ExceptStarClause = "except", "*", Test<"all">, "as", Identifier, ":", Suite => ActionFn(1471);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant73(__symbols);
+        let __sym4 = __pop_Variant72(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -29883,7 +29872,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1471::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
         (7, 165)
     }
     pub(crate) fn __reduce454<
@@ -29894,11 +29883,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ExceptStarClause+ = ExceptStarClause => ActionFn(282);
-        let __sym0 = __pop_Variant74(__symbols);
+        let __sym0 = __pop_Variant73(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action282::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
         (1, 166)
     }
     pub(crate) fn __reduce455<
@@ -29910,12 +29899,12 @@ mod __parse__Top {
     {
         // ExceptStarClause+ = ExceptStarClause+, ExceptStarClause => ActionFn(283);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant74(__symbols);
-        let __sym0 = __pop_Variant75(__symbols);
+        let __sym1 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant74(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action283::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant74(__nt), __end));
         (2, 166)
     }
     pub(crate) fn __reduce456<
@@ -30208,7 +30197,7 @@ mod __parse__Top {
         // Factor<"all"> = UnaryOp, Factor<"all"> => ActionFn(1001);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant9(__symbols);
-        let __sym0 = __pop_Variant104(__symbols);
+        let __sym0 = __pop_Variant103(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1001::<>(__sym0, __sym1);
@@ -30240,7 +30229,7 @@ mod __parse__Top {
         // Factor<"no-withitems"> = UnaryOp, Factor<"all"> => ActionFn(1002);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant9(__symbols);
-        let __sym0 = __pop_Variant104(__symbols);
+        let __sym0 = __pop_Variant103(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1002::<>(__sym0, __sym1);
@@ -30270,11 +30259,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // FileLine = Statement => ActionFn(5);
-        let __sym0 = __pop_Variant76(__symbols);
+        let __sym0 = __pop_Variant75(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action5::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (1, 176)
     }
     pub(crate) fn __reduce478<
@@ -30289,7 +30278,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action6::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (1, 176)
     }
     pub(crate) fn __reduce479<
@@ -30303,7 +30292,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action349::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
         (0, 177)
     }
     pub(crate) fn __reduce480<
@@ -30314,11 +30303,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // FileLine* = FileLine+ => ActionFn(350);
-        let __sym0 = __pop_Variant77(__symbols);
+        let __sym0 = __pop_Variant76(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action350::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
         (1, 177)
     }
     pub(crate) fn __reduce481<
@@ -30329,11 +30318,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // FileLine+ = FileLine => ActionFn(358);
-        let __sym0 = __pop_Variant76(__symbols);
+        let __sym0 = __pop_Variant75(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action358::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
         (1, 178)
     }
     pub(crate) fn __reduce482<
@@ -30345,12 +30334,12 @@ mod __parse__Top {
     {
         // FileLine+ = FileLine+, FileLine => ActionFn(359);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant76(__symbols);
-        let __sym0 = __pop_Variant77(__symbols);
+        let __sym1 = __pop_Variant75(__symbols);
+        let __sym0 = __pop_Variant76(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action359::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
         (2, 178)
     }
     pub(crate) fn __reduce483<
@@ -30454,10 +30443,10 @@ mod __parse__Top {
     {
         // ForStatement = "async", "for", ExpressionList, "in", GenericList<TestOrStarExpr>, ":", Suite, "else", ":", Suite => ActionFn(1894);
         assert!(__symbols.len() >= 10);
-        let __sym9 = __pop_Variant76(__symbols);
+        let __sym9 = __pop_Variant75(__symbols);
         let __sym8 = __pop_Variant0(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant9(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
@@ -30479,7 +30468,7 @@ mod __parse__Top {
     {
         // ForStatement = "async", "for", ExpressionList, "in", GenericList<TestOrStarExpr>, ":", Suite => ActionFn(1895);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant9(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
@@ -30501,10 +30490,10 @@ mod __parse__Top {
     {
         // ForStatement = "for", ExpressionList, "in", GenericList<TestOrStarExpr>, ":", Suite, "else", ":", Suite => ActionFn(1896);
         assert!(__symbols.len() >= 9);
-        let __sym8 = __pop_Variant76(__symbols);
+        let __sym8 = __pop_Variant75(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant76(__symbols);
+        let __sym5 = __pop_Variant75(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant9(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
@@ -30525,7 +30514,7 @@ mod __parse__Top {
     {
         // ForStatement = "for", ExpressionList, "in", GenericList<TestOrStarExpr>, ":", Suite => ActionFn(1897);
         assert!(__symbols.len() >= 6);
-        let __sym5 = __pop_Variant76(__symbols);
+        let __sym5 = __pop_Variant75(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant9(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
@@ -30546,12 +30535,12 @@ mod __parse__Top {
     {
         // FuncDef = "async", "def", Identifier, Parameters, "->", Test<"all">, ":", Suite => ActionFn(1506);
         assert!(__symbols.len() >= 8);
-        let __sym7 = __pop_Variant76(__symbols);
+        let __sym7 = __pop_Variant75(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant9(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant55(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -30569,12 +30558,12 @@ mod __parse__Top {
     {
         // FuncDef = Decorator+, "async", "def", Identifier, Parameters, "->", Test<"all">, ":", Suite => ActionFn(1507);
         assert!(__symbols.len() >= 9);
-        let __sym8 = __pop_Variant76(__symbols);
+        let __sym8 = __pop_Variant75(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant9(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant55(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant10(__symbols);
@@ -30593,10 +30582,10 @@ mod __parse__Top {
     {
         // FuncDef = "async", "def", Identifier, Parameters, ":", Suite => ActionFn(1508);
         assert!(__symbols.len() >= 6);
-        let __sym5 = __pop_Variant76(__symbols);
+        let __sym5 = __pop_Variant75(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant55(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -30614,10 +30603,10 @@ mod __parse__Top {
     {
         // FuncDef = Decorator+, "async", "def", Identifier, Parameters, ":", Suite => ActionFn(1509);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant55(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant10(__symbols);
@@ -30636,12 +30625,12 @@ mod __parse__Top {
     {
         // FuncDef = "def", Identifier, Parameters, "->", Test<"all">, ":", Suite => ActionFn(1510);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant9(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant55(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym6.2;
@@ -30658,12 +30647,12 @@ mod __parse__Top {
     {
         // FuncDef = Decorator+, "def", Identifier, Parameters, "->", Test<"all">, ":", Suite => ActionFn(1511);
         assert!(__symbols.len() >= 8);
-        let __sym7 = __pop_Variant76(__symbols);
+        let __sym7 = __pop_Variant75(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant9(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant55(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant10(__symbols);
         let __start = __sym0.0;
@@ -30681,10 +30670,10 @@ mod __parse__Top {
     {
         // FuncDef = "def", Identifier, Parameters, ":", Suite => ActionFn(1512);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant76(__symbols);
+        let __sym4 = __pop_Variant75(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant55(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
@@ -30701,10 +30690,10 @@ mod __parse__Top {
     {
         // FuncDef = Decorator+, "def", Identifier, Parameters, ":", Suite => ActionFn(1513);
         assert!(__symbols.len() >= 6);
-        let __sym5 = __pop_Variant76(__symbols);
+        let __sym5 = __pop_Variant75(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant55(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant10(__symbols);
         let __start = __sym0.0;
@@ -30722,7 +30711,7 @@ mod __parse__Top {
     {
         // FunctionArgument = NamedExpressionTest, CompFor => ActionFn(1496);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant65(__symbols);
+        let __sym1 = __pop_Variant64(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -30756,7 +30745,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1012::<>(__sym0, __sym1, __sym2);
@@ -30809,7 +30798,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action436::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant78(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
         (1, 183)
     }
     pub(crate) fn __reduce507<
@@ -30823,7 +30812,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action437::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant78(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
         (0, 183)
     }
     pub(crate) fn __reduce508<
@@ -30969,7 +30958,7 @@ mod __parse__Top {
     {
         // GlobalStatement = "global", Identifier => ActionFn(1538);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -30987,7 +30976,7 @@ mod __parse__Top {
         // GlobalStatement = "global", Identifier, ("," Identifier)+ => ActionFn(1539);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant18(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
@@ -31024,7 +31013,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action217::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant73(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant72(__nt), __end));
         (1, 188)
     }
     pub(crate) fn __reduce520<
@@ -31036,10 +31025,10 @@ mod __parse__Top {
     {
         // IfStatement = "if", NamedExpressionTest, ":", Suite, "else", ":", Suite => ActionFn(1456);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -31058,11 +31047,11 @@ mod __parse__Top {
     {
         // IfStatement = "if", NamedExpressionTest, ":", Suite, (@L "elif" NamedExpressionTest ":" Suite)+, "else", ":", Suite => ActionFn(1457);
         assert!(__symbols.len() >= 8);
-        let __sym7 = __pop_Variant76(__symbols);
+        let __sym7 = __pop_Variant75(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant49(__symbols);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -31081,7 +31070,7 @@ mod __parse__Top {
     {
         // IfStatement = "if", NamedExpressionTest, ":", Suite => ActionFn(1458);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -31101,7 +31090,7 @@ mod __parse__Top {
         // IfStatement = "if", NamedExpressionTest, ":", Suite, (@L "elif" NamedExpressionTest ":" Suite)+ => ActionFn(1459);
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant49(__symbols);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -31120,13 +31109,13 @@ mod __parse__Top {
     {
         // ImportAsAlias<DottedName> = DottedName, "as", Identifier => ActionFn(1021);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1021::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant78(__nt), __end));
         (3, 190)
     }
     pub(crate) fn __reduce525<
@@ -31137,11 +31126,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportAsAlias<DottedName> = DottedName => ActionFn(1022);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1022::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant78(__nt), __end));
         (1, 190)
     }
     pub(crate) fn __reduce526<
@@ -31153,13 +31142,13 @@ mod __parse__Top {
     {
         // ImportAsAlias<Identifier> = Identifier, "as", Identifier => ActionFn(1023);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1023::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant78(__nt), __end));
         (3, 191)
     }
     pub(crate) fn __reduce527<
@@ -31170,11 +31159,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportAsAlias<Identifier> = Identifier => ActionFn(1024);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1024::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant78(__nt), __end));
         (1, 191)
     }
     pub(crate) fn __reduce528<
@@ -31186,13 +31175,13 @@ mod __parse__Top {
     {
         // ImportAsNames = Identifier, "as", Identifier => ActionFn(1546);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1546::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (3, 192)
     }
     pub(crate) fn __reduce529<
@@ -31205,13 +31194,13 @@ mod __parse__Top {
         // ImportAsNames = Identifier, "as", Identifier, ("," ImportAsAlias<Identifier>)+ => ActionFn(1547);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant20(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1547::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (4, 192)
     }
     pub(crate) fn __reduce530<
@@ -31222,11 +31211,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportAsNames = Identifier => ActionFn(1548);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1548::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (1, 192)
     }
     pub(crate) fn __reduce531<
@@ -31239,11 +31228,11 @@ mod __parse__Top {
         // ImportAsNames = Identifier, ("," ImportAsAlias<Identifier>)+ => ActionFn(1549);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant20(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1549::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (2, 192)
     }
     pub(crate) fn __reduce532<
@@ -31257,14 +31246,14 @@ mod __parse__Top {
         assert!(__symbols.len() >= 6);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1550::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (6, 192)
     }
     pub(crate) fn __reduce533<
@@ -31279,14 +31268,14 @@ mod __parse__Top {
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant20(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1551::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (7, 192)
     }
     pub(crate) fn __reduce534<
@@ -31300,12 +31289,12 @@ mod __parse__Top {
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1552::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (4, 192)
     }
     pub(crate) fn __reduce535<
@@ -31320,12 +31309,12 @@ mod __parse__Top {
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant20(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1553::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (5, 192)
     }
     pub(crate) fn __reduce536<
@@ -31338,14 +31327,14 @@ mod __parse__Top {
         // ImportAsNames = "(", Identifier, "as", Identifier, ")" => ActionFn(1554);
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1554::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (5, 192)
     }
     pub(crate) fn __reduce537<
@@ -31359,14 +31348,14 @@ mod __parse__Top {
         assert!(__symbols.len() >= 6);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant20(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1555::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (6, 192)
     }
     pub(crate) fn __reduce538<
@@ -31379,12 +31368,12 @@ mod __parse__Top {
         // ImportAsNames = "(", Identifier, ")" => ActionFn(1556);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1556::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (3, 192)
     }
     pub(crate) fn __reduce539<
@@ -31398,12 +31387,12 @@ mod __parse__Top {
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant20(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1557::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (4, 192)
     }
     pub(crate) fn __reduce540<
@@ -31418,7 +31407,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1028::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (1, 192)
     }
     pub(crate) fn __reduce541<
@@ -31433,7 +31422,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action59::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant81(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
         (1, 193)
     }
     pub(crate) fn __reduce542<
@@ -31448,7 +31437,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action60::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant81(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
         (1, 193)
     }
     pub(crate) fn __reduce543<
@@ -31462,7 +31451,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action326::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant81(__nt), __end));
         (0, 194)
     }
     pub(crate) fn __reduce544<
@@ -31473,11 +31462,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportDots* = ImportDots+ => ActionFn(327);
-        let __sym0 = __pop_Variant82(__symbols);
+        let __sym0 = __pop_Variant81(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action327::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant81(__nt), __end));
         (1, 194)
     }
     pub(crate) fn __reduce545<
@@ -31488,11 +31477,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportDots+ = ImportDots => ActionFn(324);
-        let __sym0 = __pop_Variant81(__symbols);
+        let __sym0 = __pop_Variant80(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action324::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant81(__nt), __end));
         (1, 195)
     }
     pub(crate) fn __reduce546<
@@ -31504,12 +31493,12 @@ mod __parse__Top {
     {
         // ImportDots+ = ImportDots+, ImportDots => ActionFn(325);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant81(__symbols);
-        let __sym0 = __pop_Variant82(__symbols);
+        let __sym1 = __pop_Variant80(__symbols);
+        let __sym0 = __pop_Variant81(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action325::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant81(__nt), __end));
         (2, 195)
     }
     pub(crate) fn __reduce547<
@@ -31520,11 +31509,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportFromLocation = DottedName => ActionFn(1520);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1520::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
         (1, 196)
     }
     pub(crate) fn __reduce548<
@@ -31536,12 +31525,12 @@ mod __parse__Top {
     {
         // ImportFromLocation = ImportDots+, DottedName => ActionFn(1521);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
-        let __sym0 = __pop_Variant82(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
+        let __sym0 = __pop_Variant81(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1521::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
         (2, 196)
     }
     pub(crate) fn __reduce549<
@@ -31552,11 +31541,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ImportFromLocation = ImportDots+ => ActionFn(58);
-        let __sym0 = __pop_Variant82(__symbols);
+        let __sym0 = __pop_Variant81(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action58::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant82(__nt), __end));
         (1, 196)
     }
     pub(crate) fn __reduce550<
@@ -31568,9 +31557,9 @@ mod __parse__Top {
     {
         // ImportStatement = "import", DottedName, "as", Identifier => ActionFn(1542);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -31588,9 +31577,9 @@ mod __parse__Top {
         // ImportStatement = "import", DottedName, "as", Identifier, ("," ImportAsAlias<DottedName>)+ => ActionFn(1543);
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant20(__symbols);
-        let __sym3 = __pop_Variant73(__symbols);
+        let __sym3 = __pop_Variant72(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
@@ -31607,7 +31596,7 @@ mod __parse__Top {
     {
         // ImportStatement = "import", DottedName => ActionFn(1544);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -31625,7 +31614,7 @@ mod __parse__Top {
         // ImportStatement = "import", DottedName, ("," ImportAsAlias<DottedName>)+ => ActionFn(1545);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant20(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
@@ -31642,9 +31631,9 @@ mod __parse__Top {
     {
         // ImportStatement = "from", ImportFromLocation, "import", ImportAsNames => ActionFn(1030);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant80(__symbols);
+        let __sym3 = __pop_Variant79(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant83(__symbols);
+        let __sym1 = __pop_Variant82(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
@@ -31661,12 +31650,12 @@ mod __parse__Top {
     {
         // KwargParameter<TypedParameter> = "**", TypedParameter => ActionFn(1910);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant101(__symbols);
+        let __sym1 = __pop_Variant100(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1910::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant84(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
         (2, 198)
     }
     pub(crate) fn __reduce556<
@@ -31681,7 +31670,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1911::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant84(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
         (1, 198)
     }
     pub(crate) fn __reduce557<
@@ -31693,12 +31682,12 @@ mod __parse__Top {
     {
         // KwargParameter<UntypedParameter> = "**", UntypedParameter => ActionFn(1252);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant101(__symbols);
+        let __sym1 = __pop_Variant100(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1252::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant84(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
         (2, 199)
     }
     pub(crate) fn __reduce558<
@@ -31713,7 +31702,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1253::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant84(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant83(__nt), __end));
         (1, 199)
     }
     pub(crate) fn __reduce561<
@@ -31824,7 +31813,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1032::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 203)
     }
     pub(crate) fn __reduce568<
@@ -31839,7 +31828,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1033::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 203)
     }
     pub(crate) fn __reduce569<
@@ -31854,7 +31843,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1034::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 203)
     }
     pub(crate) fn __reduce570<
@@ -31869,7 +31858,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1035::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 203)
     }
     pub(crate) fn __reduce571<
@@ -31884,7 +31873,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1036::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 203)
     }
     pub(crate) fn __reduce573<
@@ -31991,7 +31980,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1042::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (2, 205)
     }
     pub(crate) fn __reduce581<
@@ -32005,12 +31994,12 @@ mod __parse__Top {
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1574::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 205)
     }
     pub(crate) fn __reduce582<
@@ -32025,12 +32014,12 @@ mod __parse__Top {
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant26(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1575::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 205)
     }
     pub(crate) fn __reduce583<
@@ -32043,12 +32032,12 @@ mod __parse__Top {
         // MappingPattern = "{", MatchMappingEntry, "}" => ActionFn(1576);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1576::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (3, 205)
     }
     pub(crate) fn __reduce584<
@@ -32062,12 +32051,12 @@ mod __parse__Top {
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant26(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1577::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 205)
     }
     pub(crate) fn __reduce585<
@@ -32081,13 +32070,13 @@ mod __parse__Top {
         assert!(__symbols.len() >= 5);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1045::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 205)
     }
     pub(crate) fn __reduce586<
@@ -32100,13 +32089,13 @@ mod __parse__Top {
         // MappingPattern = "{", "**", Identifier, "}" => ActionFn(1046);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1046::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 205)
     }
     pub(crate) fn __reduce587<
@@ -32120,15 +32109,15 @@ mod __parse__Top {
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant73(__symbols);
+        let __sym4 = __pop_Variant72(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1578::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 205)
     }
     pub(crate) fn __reduce588<
@@ -32142,16 +32131,16 @@ mod __parse__Top {
         assert!(__symbols.len() >= 8);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant73(__symbols);
+        let __sym5 = __pop_Variant72(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant26(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym7.2;
         let __nt = super::__action1579::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6, __sym7);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (8, 205)
     }
     pub(crate) fn __reduce589<
@@ -32164,15 +32153,15 @@ mod __parse__Top {
         // MappingPattern = "{", MatchMappingEntry, ",", "**", Identifier, "}" => ActionFn(1580);
         assert!(__symbols.len() >= 6);
         let __sym5 = __pop_Variant0(__symbols);
-        let __sym4 = __pop_Variant73(__symbols);
+        let __sym4 = __pop_Variant72(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1580::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 205)
     }
     pub(crate) fn __reduce590<
@@ -32185,16 +32174,16 @@ mod __parse__Top {
         // MappingPattern = "{", MatchMappingEntry, ("," MatchMappingEntry)+, ",", "**", Identifier, "}" => ActionFn(1581);
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant73(__symbols);
+        let __sym5 = __pop_Variant72(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant26(__symbols);
-        let __sym1 = __pop_Variant88(__symbols);
+        let __sym1 = __pop_Variant87(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym6.2;
         let __nt = super::__action1581::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5, __sym6);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (7, 205)
     }
     pub(crate) fn __reduce591<
@@ -32206,7 +32195,7 @@ mod __parse__Top {
     {
         // MatchCase = "case", Patterns, Guard, ":", Suite => ActionFn(1465);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant76(__symbols);
+        let __sym4 = __pop_Variant75(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant40(__symbols);
@@ -32214,7 +32203,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1465::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant85(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant84(__nt), __end));
         (5, 206)
     }
     pub(crate) fn __reduce592<
@@ -32226,14 +32215,14 @@ mod __parse__Top {
     {
         // MatchCase = "case", Patterns, ":", Suite => ActionFn(1466);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant40(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1466::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant85(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant84(__nt), __end));
         (4, 206)
     }
     pub(crate) fn __reduce593<
@@ -32244,11 +32233,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // MatchCase+ = MatchCase => ActionFn(311);
-        let __sym0 = __pop_Variant85(__symbols);
+        let __sym0 = __pop_Variant84(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action311::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant86(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant85(__nt), __end));
         (1, 207)
     }
     pub(crate) fn __reduce594<
@@ -32260,12 +32249,12 @@ mod __parse__Top {
     {
         // MatchCase+ = MatchCase+, MatchCase => ActionFn(312);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant85(__symbols);
-        let __sym0 = __pop_Variant86(__symbols);
+        let __sym1 = __pop_Variant84(__symbols);
+        let __sym0 = __pop_Variant85(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action312::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant86(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant85(__nt), __end));
         (2, 207)
     }
     pub(crate) fn __reduce595<
@@ -32279,11 +32268,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant40(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action129::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant87(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant86(__nt), __end));
         (3, 208)
     }
     pub(crate) fn __reduce596<
@@ -32301,7 +32290,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action124::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant88(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant87(__nt), __end));
         (3, 209)
     }
     pub(crate) fn __reduce597<
@@ -32312,7 +32301,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // MatchName = Identifier => ActionFn(1050);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1050::<>(__sym0);
@@ -32328,7 +32317,7 @@ mod __parse__Top {
     {
         // MatchNameOrAttr = MatchName, ".", Identifier => ActionFn(1051);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
@@ -32346,7 +32335,7 @@ mod __parse__Top {
     {
         // MatchNameOrAttr = MatchNameOrAttr, ".", Identifier => ActionFn(1052);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
@@ -32365,7 +32354,7 @@ mod __parse__Top {
         // MatchStatement = "match", TestOrStarNamedExpr, ":", "\n", Indent, MatchCase+, Dedent => ActionFn(1053);
         assert!(__symbols.len() >= 7);
         let __sym6 = __pop_Variant0(__symbols);
-        let __sym5 = __pop_Variant86(__symbols);
+        let __sym5 = __pop_Variant85(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
@@ -32387,7 +32376,7 @@ mod __parse__Top {
         // MatchStatement = "match", TestOrStarNamedExpr, ",", ":", "\n", Indent, MatchCase+, Dedent => ActionFn(1054);
         assert!(__symbols.len() >= 8);
         let __sym7 = __pop_Variant0(__symbols);
-        let __sym6 = __pop_Variant86(__symbols);
+        let __sym6 = __pop_Variant85(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
@@ -32410,7 +32399,7 @@ mod __parse__Top {
         // MatchStatement = "match", TestOrStarNamedExpr, ",", TestOrStarNamedExpr, ",", ":", "\n", Indent, MatchCase+, Dedent => ActionFn(1630);
         assert!(__symbols.len() >= 10);
         let __sym9 = __pop_Variant0(__symbols);
-        let __sym8 = __pop_Variant86(__symbols);
+        let __sym8 = __pop_Variant85(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
@@ -32435,7 +32424,7 @@ mod __parse__Top {
         // MatchStatement = "match", TestOrStarNamedExpr, ",", TestOrStarNamedExpr, ("," TestOrStarNamedExpr)+, ",", ":", "\n", Indent, MatchCase+, Dedent => ActionFn(1631);
         assert!(__symbols.len() >= 11);
         let __sym10 = __pop_Variant0(__symbols);
-        let __sym9 = __pop_Variant86(__symbols);
+        let __sym9 = __pop_Variant85(__symbols);
         let __sym8 = __pop_Variant0(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
@@ -32461,7 +32450,7 @@ mod __parse__Top {
         // MatchStatement = "match", TestOrStarNamedExpr, ",", TestOrStarNamedExpr, ":", "\n", Indent, MatchCase+, Dedent => ActionFn(1632);
         assert!(__symbols.len() >= 9);
         let __sym8 = __pop_Variant0(__symbols);
-        let __sym7 = __pop_Variant86(__symbols);
+        let __sym7 = __pop_Variant85(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
@@ -32485,7 +32474,7 @@ mod __parse__Top {
         // MatchStatement = "match", TestOrStarNamedExpr, ",", TestOrStarNamedExpr, ("," TestOrStarNamedExpr)+, ":", "\n", Indent, MatchCase+, Dedent => ActionFn(1633);
         assert!(__symbols.len() >= 10);
         let __sym9 = __pop_Variant0(__symbols);
-        let __sym8 = __pop_Variant86(__symbols);
+        let __sym8 = __pop_Variant85(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
         let __sym6 = __pop_Variant0(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
@@ -32586,7 +32575,7 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1057::<>(__sym0, __sym1, __sym2);
@@ -32662,7 +32651,7 @@ mod __parse__Top {
     {
         // NonlocalStatement = "nonlocal", Identifier => ActionFn(1540);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -32680,7 +32669,7 @@ mod __parse__Top {
         // NonlocalStatement = "nonlocal", Identifier, ("," Identifier)+ => ActionFn(1541);
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant18(__symbols);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
@@ -32760,11 +32749,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<DictElement> = DictElement => ActionFn(698);
-        let __sym0 = __pop_Variant69(__symbols);
+        let __sym0 = __pop_Variant68(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action698::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
         (1, 220)
     }
     pub(crate) fn __reduce623<
@@ -32777,11 +32766,11 @@ mod __parse__Top {
         // OneOrMore<DictElement> = DictElement, ("," DictElement)+ => ActionFn(699);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant14(__symbols);
-        let __sym0 = __pop_Variant69(__symbols);
+        let __sym0 = __pop_Variant68(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action699::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant71(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant70(__nt), __end));
         (2, 220)
     }
     pub(crate) fn __reduce624<
@@ -32824,11 +32813,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<Identifier> = Identifier => ActionFn(706);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action706::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant89(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant88(__nt), __end));
         (1, 222)
     }
     pub(crate) fn __reduce627<
@@ -32841,11 +32830,11 @@ mod __parse__Top {
         // OneOrMore<Identifier> = Identifier, ("," Identifier)+ => ActionFn(707);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant18(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action707::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant89(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant88(__nt), __end));
         (2, 222)
     }
     pub(crate) fn __reduce628<
@@ -32857,13 +32846,13 @@ mod __parse__Top {
     {
         // OneOrMore<ImportAsAlias<DottedName>> = DottedName, "as", Identifier => ActionFn(1140);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1140::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (3, 223)
     }
     pub(crate) fn __reduce629<
@@ -32876,13 +32865,13 @@ mod __parse__Top {
         // OneOrMore<ImportAsAlias<DottedName>> = DottedName, "as", Identifier, ("," ImportAsAlias<DottedName>)+ => ActionFn(1141);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant20(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1141::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (4, 223)
     }
     pub(crate) fn __reduce630<
@@ -32893,11 +32882,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<ImportAsAlias<DottedName>> = DottedName => ActionFn(1142);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1142::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (1, 223)
     }
     pub(crate) fn __reduce631<
@@ -32910,11 +32899,11 @@ mod __parse__Top {
         // OneOrMore<ImportAsAlias<DottedName>> = DottedName, ("," ImportAsAlias<DottedName>)+ => ActionFn(1143);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant20(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1143::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (2, 223)
     }
     pub(crate) fn __reduce632<
@@ -32926,13 +32915,13 @@ mod __parse__Top {
     {
         // OneOrMore<ImportAsAlias<Identifier>> = Identifier, "as", Identifier => ActionFn(1152);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1152::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (3, 224)
     }
     pub(crate) fn __reduce633<
@@ -32945,13 +32934,13 @@ mod __parse__Top {
         // OneOrMore<ImportAsAlias<Identifier>> = Identifier, "as", Identifier, ("," ImportAsAlias<Identifier>)+ => ActionFn(1153);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant20(__symbols);
-        let __sym2 = __pop_Variant73(__symbols);
+        let __sym2 = __pop_Variant72(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1153::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (4, 224)
     }
     pub(crate) fn __reduce634<
@@ -32962,11 +32951,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<ImportAsAlias<Identifier>> = Identifier => ActionFn(1154);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1154::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (1, 224)
     }
     pub(crate) fn __reduce635<
@@ -32979,11 +32968,11 @@ mod __parse__Top {
         // OneOrMore<ImportAsAlias<Identifier>> = Identifier, ("," ImportAsAlias<Identifier>)+ => ActionFn(1155);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant20(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1155::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant80(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant79(__nt), __end));
         (2, 224)
     }
     pub(crate) fn __reduce636<
@@ -32994,11 +32983,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<MatchKeywordEntry> = MatchKeywordEntry => ActionFn(1168);
-        let __sym0 = __pop_Variant87(__symbols);
+        let __sym0 = __pop_Variant86(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1168::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant90(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant89(__nt), __end));
         (1, 225)
     }
     pub(crate) fn __reduce637<
@@ -33011,11 +33000,11 @@ mod __parse__Top {
         // OneOrMore<MatchKeywordEntry> = MatchKeywordEntry, ("," MatchKeywordEntry)+ => ActionFn(1169);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant24(__symbols);
-        let __sym0 = __pop_Variant87(__symbols);
+        let __sym0 = __pop_Variant86(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1169::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant90(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant89(__nt), __end));
         (2, 225)
     }
     pub(crate) fn __reduce638<
@@ -33026,11 +33015,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<MatchMappingEntry> = MatchMappingEntry => ActionFn(1172);
-        let __sym0 = __pop_Variant88(__symbols);
+        let __sym0 = __pop_Variant87(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1172::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant91(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant90(__nt), __end));
         (1, 226)
     }
     pub(crate) fn __reduce639<
@@ -33043,11 +33032,11 @@ mod __parse__Top {
         // OneOrMore<MatchMappingEntry> = MatchMappingEntry, ("," MatchMappingEntry)+ => ActionFn(1173);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant26(__symbols);
-        let __sym0 = __pop_Variant88(__symbols);
+        let __sym0 = __pop_Variant87(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1173::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant91(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant90(__nt), __end));
         (2, 226)
     }
     pub(crate) fn __reduce640<
@@ -33058,11 +33047,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<ParameterDef<TypedParameter>> = ParameterDef<TypedParameter> => ActionFn(1176);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1176::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant91(__nt), __end));
         (1, 227)
     }
     pub(crate) fn __reduce641<
@@ -33075,11 +33064,11 @@ mod __parse__Top {
         // OneOrMore<ParameterDef<TypedParameter>> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+ => ActionFn(1177);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1177::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant91(__nt), __end));
         (2, 227)
     }
     pub(crate) fn __reduce642<
@@ -33090,11 +33079,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // OneOrMore<ParameterDef<UntypedParameter>> = ParameterDef<UntypedParameter> => ActionFn(1186);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1186::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant91(__nt), __end));
         (1, 228)
     }
     pub(crate) fn __reduce643<
@@ -33107,11 +33096,11 @@ mod __parse__Top {
         // OneOrMore<ParameterDef<UntypedParameter>> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1187);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1187::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant91(__nt), __end));
         (2, 228)
     }
     pub(crate) fn __reduce644<
@@ -33126,7 +33115,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1314::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
         (1, 229)
     }
     pub(crate) fn __reduce645<
@@ -33143,7 +33132,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1315::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant64(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant63(__nt), __end));
         (2, 229)
     }
     pub(crate) fn __reduce646<
@@ -33346,11 +33335,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ParameterDef<TypedParameter> = TypedParameter => ActionFn(473);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action473::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
         (1, 236)
     }
     pub(crate) fn __reduce659<
@@ -33364,11 +33353,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action474::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
         (3, 236)
     }
     pub(crate) fn __reduce660<
@@ -33379,11 +33368,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ParameterDef<UntypedParameter> = UntypedParameter => ActionFn(463);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action463::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
         (1, 237)
     }
     pub(crate) fn __reduce661<
@@ -33397,11 +33386,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action464::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant92(__nt), __end));
         (3, 237)
     }
     pub(crate) fn __reduce662<
@@ -33412,11 +33401,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ParameterDefs<TypedParameter> = ParameterDef<TypedParameter> => ActionFn(1582);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1582::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (1, 238)
     }
     pub(crate) fn __reduce663<
@@ -33429,11 +33418,11 @@ mod __parse__Top {
         // ParameterDefs<TypedParameter> = ParameterDef<TypedParameter>, ("," ParameterDef<TypedParameter>)+ => ActionFn(1583);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1583::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (2, 238)
     }
     pub(crate) fn __reduce664<
@@ -33447,11 +33436,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1584::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (3, 238)
     }
     pub(crate) fn __reduce665<
@@ -33466,11 +33455,11 @@ mod __parse__Top {
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1585::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (4, 238)
     }
     pub(crate) fn __reduce666<
@@ -33485,11 +33474,11 @@ mod __parse__Top {
         let __sym3 = __pop_Variant28(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1586::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (4, 238)
     }
     pub(crate) fn __reduce667<
@@ -33505,11 +33494,11 @@ mod __parse__Top {
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1587::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (5, 238)
     }
     pub(crate) fn __reduce668<
@@ -33520,11 +33509,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ParameterDefs<UntypedParameter> = ParameterDef<UntypedParameter> => ActionFn(1588);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1588::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (1, 239)
     }
     pub(crate) fn __reduce669<
@@ -33537,11 +33526,11 @@ mod __parse__Top {
         // ParameterDefs<UntypedParameter> = ParameterDef<UntypedParameter>, ("," ParameterDef<UntypedParameter>)+ => ActionFn(1589);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1589::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (2, 239)
     }
     pub(crate) fn __reduce670<
@@ -33555,11 +33544,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1590::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (3, 239)
     }
     pub(crate) fn __reduce671<
@@ -33574,11 +33563,11 @@ mod __parse__Top {
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1591::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (4, 239)
     }
     pub(crate) fn __reduce672<
@@ -33593,11 +33582,11 @@ mod __parse__Top {
         let __sym3 = __pop_Variant28(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1592::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (4, 239)
     }
     pub(crate) fn __reduce673<
@@ -33613,11 +33602,11 @@ mod __parse__Top {
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant28(__symbols);
-        let __sym0 = __pop_Variant93(__symbols);
+        let __sym0 = __pop_Variant92(__symbols);
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1593::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant94(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant93(__nt), __end));
         (5, 239)
     }
     pub(crate) fn __reduce810<
@@ -33630,7 +33619,7 @@ mod __parse__Top {
         // ParameterList<TypedParameter, StarTypedParameter> = KwargParameter<TypedParameter>, "," => ActionFn(1070);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant84(__symbols);
+        let __sym0 = __pop_Variant83(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1070::<>(__sym0, __sym1);
@@ -33645,7 +33634,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ParameterList<TypedParameter, StarTypedParameter> = KwargParameter<TypedParameter> => ActionFn(1071);
-        let __sym0 = __pop_Variant84(__symbols);
+        let __sym0 = __pop_Variant83(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1071::<>(__sym0);
@@ -33662,7 +33651,7 @@ mod __parse__Top {
         // ParameterList<UntypedParameter, UntypedParameter> = KwargParameter<UntypedParameter>, "," => ActionFn(1078);
         assert!(__symbols.len() >= 2);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant84(__symbols);
+        let __sym0 = __pop_Variant83(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1078::<>(__sym0, __sym1);
@@ -33677,7 +33666,7 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // ParameterList<UntypedParameter, UntypedParameter> = KwargParameter<UntypedParameter> => ActionFn(1079);
-        let __sym0 = __pop_Variant84(__symbols);
+        let __sym0 = __pop_Variant83(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1079::<>(__sym0);
@@ -33770,7 +33759,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action382::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant96(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant95(__nt), __end));
         (1, 248)
     }
     pub(crate) fn __reduce974<
@@ -33784,7 +33773,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action383::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant96(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant95(__nt), __end));
         (0, 248)
     }
     pub(crate) fn __reduce975<
@@ -33972,7 +33961,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action1518::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (0, 252)
     }
     pub(crate) fn __reduce986<
@@ -33983,11 +33972,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Program = FileLine+ => ActionFn(1519);
-        let __sym0 = __pop_Variant77(__symbols);
+        let __sym0 = __pop_Variant76(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1519::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (1, 252)
     }
     pub(crate) fn __reduce987<
@@ -34056,7 +34045,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1091::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (3, 254)
     }
     pub(crate) fn __reduce991<
@@ -34073,7 +34062,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1092::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (2, 254)
     }
     pub(crate) fn __reduce992<
@@ -34093,7 +34082,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1488::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 254)
     }
     pub(crate) fn __reduce993<
@@ -34112,7 +34101,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1489::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 254)
     }
     pub(crate) fn __reduce994<
@@ -34133,7 +34122,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1490::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (6, 254)
     }
     pub(crate) fn __reduce995<
@@ -34153,7 +34142,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1491::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (5, 254)
     }
     pub(crate) fn __reduce996<
@@ -34171,7 +34160,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1492::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (3, 254)
     }
     pub(crate) fn __reduce997<
@@ -34188,7 +34177,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1493::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (2, 254)
     }
     pub(crate) fn __reduce998<
@@ -34207,7 +34196,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1494::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (4, 254)
     }
     pub(crate) fn __reduce999<
@@ -34225,7 +34214,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1495::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (3, 254)
     }
     pub(crate) fn __reduce1000<
@@ -34406,7 +34395,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1352::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (3, 259)
     }
     pub(crate) fn __reduce1011<
@@ -34425,7 +34414,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1353::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (4, 259)
     }
     pub(crate) fn __reduce1012<
@@ -34442,7 +34431,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1354::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (2, 259)
     }
     pub(crate) fn __reduce1013<
@@ -34460,7 +34449,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1355::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (3, 259)
     }
     pub(crate) fn __reduce1014<
@@ -34480,7 +34469,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1498::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant97(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant96(__nt), __end));
         (5, 260)
     }
     pub(crate) fn __reduce1015<
@@ -34501,7 +34490,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym5.2;
         let __nt = super::__action1499::<>(__sym0, __sym1, __sym2, __sym3, __sym4, __sym5);
-        __symbols.push((__start, __Symbol::Variant97(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant96(__nt), __end));
         (6, 260)
     }
     pub(crate) fn __reduce1016<
@@ -34520,7 +34509,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action1500::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant97(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant96(__nt), __end));
         (4, 260)
     }
     pub(crate) fn __reduce1017<
@@ -34540,7 +34529,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym4.2;
         let __nt = super::__action1501::<>(__sym0, __sym1, __sym2, __sym3, __sym4);
-        __symbols.push((__start, __Symbol::Variant97(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant96(__nt), __end));
         (5, 260)
     }
     pub(crate) fn __reduce1018<
@@ -34551,11 +34540,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // SingleForComprehension+ = SingleForComprehension => ActionFn(225);
-        let __sym0 = __pop_Variant97(__symbols);
+        let __sym0 = __pop_Variant96(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action225::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant98(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant97(__nt), __end));
         (1, 261)
     }
     pub(crate) fn __reduce1019<
@@ -34567,12 +34556,12 @@ mod __parse__Top {
     {
         // SingleForComprehension+ = SingleForComprehension+, SingleForComprehension => ActionFn(226);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant97(__symbols);
-        let __sym0 = __pop_Variant98(__symbols);
+        let __sym1 = __pop_Variant96(__symbols);
+        let __sym0 = __pop_Variant97(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action226::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant98(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant97(__nt), __end));
         (2, 261)
     }
     pub(crate) fn __reduce1020<
@@ -34589,7 +34578,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1884::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant99(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant98(__nt), __end));
         (2, 262)
     }
     pub(crate) fn __reduce1021<
@@ -34604,7 +34593,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1885::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant99(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant98(__nt), __end));
         (1, 262)
     }
     pub(crate) fn __reduce1022<
@@ -34615,11 +34604,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // SliceOp? = SliceOp => ActionFn(233);
-        let __sym0 = __pop_Variant99(__symbols);
+        let __sym0 = __pop_Variant98(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action233::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant99(__nt), __end));
         (1, 263)
     }
     pub(crate) fn __reduce1023<
@@ -34633,7 +34622,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action234::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant99(__nt), __end));
         (0, 263)
     }
     pub(crate) fn __reduce1024<
@@ -34782,12 +34771,12 @@ mod __parse__Top {
     {
         // StarPattern = "*", Identifier => ActionFn(1101);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant73(__symbols);
+        let __sym1 = __pop_Variant72(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1101::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (2, 266)
     }
     pub(crate) fn __reduce1034<
@@ -34801,11 +34790,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1348::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
         (3, 267)
     }
     pub(crate) fn __reduce1035<
@@ -34816,11 +34805,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // StarTypedParameter = Identifier => ActionFn(1349);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1349::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
         (1, 267)
     }
     pub(crate) fn __reduce1036<
@@ -34831,11 +34820,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // StarTypedParameter? = StarTypedParameter => ActionFn(475);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action475::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
         (1, 268)
     }
     pub(crate) fn __reduce1037<
@@ -34849,7 +34838,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action476::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
         (0, 268)
     }
     pub(crate) fn __reduce1038<
@@ -34860,11 +34849,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Statement = SimpleStatement => ActionFn(9);
-        let __sym0 = __pop_Variant76(__symbols);
+        let __sym0 = __pop_Variant75(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action9::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (1, 269)
     }
     pub(crate) fn __reduce1039<
@@ -34879,7 +34868,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action10::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (1, 269)
     }
     pub(crate) fn __reduce1040<
@@ -34890,11 +34879,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Statement+ = Statement => ActionFn(347);
-        let __sym0 = __pop_Variant76(__symbols);
+        let __sym0 = __pop_Variant75(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action347::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
         (1, 270)
     }
     pub(crate) fn __reduce1041<
@@ -34906,12 +34895,12 @@ mod __parse__Top {
     {
         // Statement+ = Statement+, Statement => ActionFn(348);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant76(__symbols);
-        let __sym0 = __pop_Variant77(__symbols);
+        let __sym1 = __pop_Variant75(__symbols);
+        let __sym0 = __pop_Variant76(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action348::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant77(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
         (2, 270)
     }
     pub(crate) fn __reduce1042<
@@ -34938,7 +34927,7 @@ mod __parse__Top {
     {
         // Subscript = Test<"all">, ":", Test<"all">, SliceOp => ActionFn(1886);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant99(__symbols);
+        let __sym3 = __pop_Variant98(__symbols);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
@@ -34957,7 +34946,7 @@ mod __parse__Top {
     {
         // Subscript = Test<"all">, ":", SliceOp => ActionFn(1887);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant99(__symbols);
+        let __sym2 = __pop_Variant98(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant9(__symbols);
         let __start = __sym0.0;
@@ -34975,7 +34964,7 @@ mod __parse__Top {
     {
         // Subscript = ":", Test<"all">, SliceOp => ActionFn(1888);
         assert!(__symbols.len() >= 3);
-        let __sym2 = __pop_Variant99(__symbols);
+        let __sym2 = __pop_Variant98(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -34993,7 +34982,7 @@ mod __parse__Top {
     {
         // Subscript = ":", SliceOp => ActionFn(1889);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant99(__symbols);
+        let __sym1 = __pop_Variant98(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
@@ -35143,11 +35132,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // Suite = SimpleStatement => ActionFn(7);
-        let __sym0 = __pop_Variant76(__symbols);
+        let __sym0 = __pop_Variant75(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action7::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (1, 273)
     }
     pub(crate) fn __reduce1056<
@@ -35160,13 +35149,13 @@ mod __parse__Top {
         // Suite = "\n", Indent, Statement+, Dedent => ActionFn(8);
         assert!(__symbols.len() >= 4);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant77(__symbols);
+        let __sym2 = __pop_Variant76(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym3.2;
         let __nt = super::__action8::<>(__sym0, __sym1, __sym2, __sym3);
-        __symbols.push((__start, __Symbol::Variant76(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant75(__nt), __end));
         (4, 273)
     }
     pub(crate) fn __reduce1057<
@@ -35522,12 +35511,12 @@ mod __parse__Top {
     {
         // Top = StartModule, Program => ActionFn(1110);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant76(__symbols);
+        let __sym1 = __pop_Variant75(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1110::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
         (2, 285)
     }
     pub(crate) fn __reduce1080<
@@ -35539,12 +35528,12 @@ mod __parse__Top {
     {
         // Top = StartInteractive, Program => ActionFn(1111);
         assert!(__symbols.len() >= 2);
-        let __sym1 = __pop_Variant76(__symbols);
+        let __sym1 = __pop_Variant75(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1111::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
         (2, 285)
     }
     pub(crate) fn __reduce1081<
@@ -35561,7 +35550,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym1.2;
         let __nt = super::__action1901::<>(__sym0, __sym1);
-        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
         (2, 285)
     }
     pub(crate) fn __reduce1082<
@@ -35579,7 +35568,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1902::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
         (3, 285)
     }
     pub(crate) fn __reduce1083<
@@ -35591,14 +35580,14 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptClause+, "else", ":", Suite, "finally", ":", Suite => ActionFn(1377);
         assert!(__symbols.len() >= 10);
-        let __sym9 = __pop_Variant76(__symbols);
+        let __sym9 = __pop_Variant75(__symbols);
         let __sym8 = __pop_Variant0(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35616,11 +35605,11 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptClause+, "else", ":", Suite => ActionFn(1378);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35638,11 +35627,11 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptClause+, "finally", ":", Suite => ActionFn(1379);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35660,8 +35649,8 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptClause+ => ActionFn(1380);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35679,14 +35668,14 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptStarClause+, "else", ":", Suite, "finally", ":", Suite => ActionFn(1381);
         assert!(__symbols.len() >= 10);
-        let __sym9 = __pop_Variant76(__symbols);
+        let __sym9 = __pop_Variant75(__symbols);
         let __sym8 = __pop_Variant0(__symbols);
         let __sym7 = __pop_Variant0(__symbols);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35704,11 +35693,11 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptStarClause+, "else", ":", Suite => ActionFn(1382);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35726,11 +35715,11 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptStarClause+, "finally", ":", Suite => ActionFn(1383);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35748,8 +35737,8 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, ExceptStarClause+ => ActionFn(1384);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant75(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant74(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35767,10 +35756,10 @@ mod __parse__Top {
     {
         // TryStatement = "try", ":", Suite, "finally", ":", Suite => ActionFn(1376);
         assert!(__symbols.len() >= 6);
-        let __sym5 = __pop_Variant76(__symbols);
+        let __sym5 = __pop_Variant75(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
-        let __sym2 = __pop_Variant76(__symbols);
+        let __sym2 = __pop_Variant75(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
         let __start = __sym0.0;
@@ -35790,11 +35779,11 @@ mod __parse__Top {
         assert!(__symbols.len() >= 3);
         let __sym2 = __pop_Variant9(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym2.2;
         let __nt = super::__action1345::<>(__sym0, __sym1, __sym2);
-        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
         (3, 287)
     }
     pub(crate) fn __reduce1093<
@@ -35805,11 +35794,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // TypedParameter = Identifier => ActionFn(1346);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1346::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
         (1, 287)
     }
     pub(crate) fn __reduce1094<
@@ -35820,11 +35809,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // TypedParameter? = TypedParameter => ActionFn(477);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action477::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
         (1, 288)
     }
     pub(crate) fn __reduce1095<
@@ -35838,7 +35827,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action478::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
         (0, 288)
     }
     pub(crate) fn __reduce1096<
@@ -35853,7 +35842,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action186::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant104(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
         (1, 289)
     }
     pub(crate) fn __reduce1097<
@@ -35868,7 +35857,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action187::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant104(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
         (1, 289)
     }
     pub(crate) fn __reduce1098<
@@ -35883,7 +35872,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action188::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant104(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant103(__nt), __end));
         (1, 289)
     }
     pub(crate) fn __reduce1099<
@@ -35894,11 +35883,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // UntypedParameter = Identifier => ActionFn(1117);
-        let __sym0 = __pop_Variant73(__symbols);
+        let __sym0 = __pop_Variant72(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1117::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant100(__nt), __end));
         (1, 290)
     }
     pub(crate) fn __reduce1100<
@@ -35909,11 +35898,11 @@ mod __parse__Top {
     ) -> (usize, usize)
     {
         // UntypedParameter? = UntypedParameter => ActionFn(465);
-        let __sym0 = __pop_Variant101(__symbols);
+        let __sym0 = __pop_Variant100(__symbols);
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action465::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
         (1, 291)
     }
     pub(crate) fn __reduce1101<
@@ -35927,7 +35916,7 @@ mod __parse__Top {
         let __start = __lookahead_start.cloned().or_else(|| __symbols.last().map(|s| s.2.clone())).unwrap_or_default();
         let __end = __start.clone();
         let __nt = super::__action466::<>(&__start, &__end);
-        __symbols.push((__start, __Symbol::Variant102(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant101(__nt), __end));
         (0, 291)
     }
     pub(crate) fn __reduce1102<
@@ -35942,7 +35931,7 @@ mod __parse__Top {
         let __start = __sym0.0;
         let __end = __sym0.2;
         let __nt = super::__action1118::<>(__sym0);
-        __symbols.push((__start, __Symbol::Variant62(__nt), __end));
+        __symbols.push((__start, __Symbol::Variant40(__nt), __end));
         (1, 292)
     }
     pub(crate) fn __reduce1103<
@@ -35954,10 +35943,10 @@ mod __parse__Top {
     {
         // WhileStatement = "while", NamedExpressionTest, ":", Suite, "else", ":", Suite => ActionFn(1373);
         assert!(__symbols.len() >= 7);
-        let __sym6 = __pop_Variant76(__symbols);
+        let __sym6 = __pop_Variant75(__symbols);
         let __sym5 = __pop_Variant0(__symbols);
         let __sym4 = __pop_Variant0(__symbols);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -35976,7 +35965,7 @@ mod __parse__Top {
     {
         // WhileStatement = "while", NamedExpressionTest, ":", Suite => ActionFn(1374);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant9(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -36467,7 +36456,7 @@ mod __parse__Top {
     {
         // WithStatement = "async", "with", WithItems, ":", Suite => ActionFn(1126);
         assert!(__symbols.len() >= 5);
-        let __sym4 = __pop_Variant76(__symbols);
+        let __sym4 = __pop_Variant75(__symbols);
         let __sym3 = __pop_Variant0(__symbols);
         let __sym2 = __pop_Variant46(__symbols);
         let __sym1 = __pop_Variant0(__symbols);
@@ -36487,7 +36476,7 @@ mod __parse__Top {
     {
         // WithStatement = "with", WithItems, ":", Suite => ActionFn(1127);
         assert!(__symbols.len() >= 4);
-        let __sym3 = __pop_Variant76(__symbols);
+        let __sym3 = __pop_Variant75(__symbols);
         let __sym2 = __pop_Variant0(__symbols);
         let __sym1 = __pop_Variant46(__symbols);
         let __sym0 = __pop_Variant0(__symbols);
@@ -36634,7 +36623,7 @@ fn __action1<
     (_, end, _): (TextSize, TextSize, TextSize),
 ) -> ast::Mod
 {
-    ast::ModModule { body, type_ignores: vec![], range: (start..end).into() }.into()
+    ast::ModModule { body, type_ignores: vec![], range: range_or_phantom(start..end) }.into()
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -36646,7 +36635,7 @@ fn __action2<
     (_, end, _): (TextSize, TextSize, TextSize),
 ) -> ast::Mod
 {
-    ast::ModInteractive { body, range: (start..end).into() }.into()
+    ast::ModInteractive { body, range: range_or_phantom(start..end) }.into()
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -36659,7 +36648,7 @@ fn __action3<
     (_, end, _): (TextSize, TextSize, TextSize),
 ) -> ast::Mod
 {
-    ast::ModExpression { body: Box::new(body), range: (start..end).into() }.into()
+    ast::ModExpression { body: Box::new(body), range: range_or_phantom(start..end) }.into()
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -36827,9 +36816,7 @@ fn __action20<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
-            ast::StmtKind::Pass(ast::StmtPass { range: (location..end_location).into() }),
-        )
+        ast::Stmt::Pass(ast::StmtPass { range: (location..end_location).into() })
     }
 }
 
@@ -36843,7 +36830,7 @@ fn __action21<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Delete(
             ast::StmtDelete { targets: targets.into_iter().map(|expr| set_context(expr, ast::ExprContext::Del)).collect(), range: (location..end_location).into()  }
         )
     }
@@ -36861,7 +36848,7 @@ fn __action22<
     {
         // Just an expression, no assignment:
         if suffix.is_empty() {
-            ast::Stmt::new(
+            ast::Stmt::Expr(
                 ast::StmtExpr { value: Box::new(expression), range: (location..end_location).into() }
             )
         } else {
@@ -36874,7 +36861,7 @@ fn __action22<
 
             let value = Box::new(values.into_iter().next().unwrap());
 
-            ast::Stmt::new(
+            ast::Stmt::Assign(
                 ast::StmtAssign { targets, value, type_comment: None, range: (location..end_location).into() }
             )
         }
@@ -36892,7 +36879,7 @@ fn __action23<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::AugAssign(
             ast::StmtAugAssign {
                 target: Box::new(set_context(target, ast::ExprContext::Store)),
                 op,
@@ -36915,8 +36902,8 @@ fn __action24<
 ) -> ast::Stmt
 {
     {
-        let simple = matches!(target.node, ast::ExprKind::Name { .. });
-        ast::Stmt::new(
+        let simple = target.is_name_expr();
+        ast::Stmt::AnnAssign(
             ast::StmtAnnAssign {
                 target: Box::new(set_context(target, ast::ExprContext::Store)),
                 annotation: Box::new(annotation),
@@ -37145,9 +37132,8 @@ fn __action48<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
-            ast::StmtKind::Break(ast::StmtBreak { range: (location..end_location).into() }),
-        )
+
+        ast::Stmt::Break(ast::StmtBreak { range: (location..end_location).into() })
     }
 }
 
@@ -37160,9 +37146,7 @@ fn __action49<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
-            ast::StmtKind::Continue(ast::StmtContinue { range: (location..end_location).into() }),
-        )
+        ast::Stmt::Continue(ast::StmtContinue { range: (location..end_location).into() })
     }
 }
 
@@ -37176,7 +37160,7 @@ fn __action50<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Return(
             ast::StmtReturn { value: value.map(Box::new), range: (location..end_location).into() }
         )
     }
@@ -37191,7 +37175,7 @@ fn __action51<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Expr(
             ast::StmtExpr { value: Box::new(expression), range: (location..end_location).into() }
         )
     }
@@ -37215,7 +37199,7 @@ fn __action53<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Raise(
             ast::StmtRaise { exc: None, cause: None, range: (location..end_location).into() }
         )
     }
@@ -37232,7 +37216,7 @@ fn __action54<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Raise(
             ast::StmtRaise { exc: Some(Box::new(t)), cause: c.map(|x| Box::new(x.1)), range: (location..end_location).into() }
         )
     }
@@ -37248,7 +37232,7 @@ fn __action55<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Import(
             ast::StmtImport { names, range: (location..end_location).into() }
         )
     }
@@ -37267,7 +37251,7 @@ fn __action56<
 {
     {
         let (level, module) = source;
-        ast::Stmt::new(
+        ast::Stmt::ImportFrom(
             ast::StmtImportFrom {
                 level,
                 module,
@@ -37354,7 +37338,7 @@ fn __action63<
 {
     {
         // Star import all
-        vec![ast::Alias::new(ast::AliasData { name: ast::Identifier::new("*"), asname: None, range: (location..end_location).into() })]
+        vec![ast::Alias { name: ast::Identifier::new("*"), asname: None, range: (location..end_location).into() }]
     }
 }
 
@@ -37394,7 +37378,7 @@ fn __action66<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Global(
             ast::StmtGlobal { names, range: (location..end_location).into() }
         )
     }
@@ -37410,7 +37394,7 @@ fn __action67<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Nonlocal(
             ast::StmtNonlocal { names, range: (location..end_location).into() }
         )
     }
@@ -37427,7 +37411,7 @@ fn __action68<
 ) -> ast::Stmt
 {
     {
-        ast::Stmt::new(
+        ast::Stmt::Assert(
             ast::StmtAssert {
                 test: Box::new(test),
                 msg: msg.map(|e| Box::new(e.1)),
@@ -37530,7 +37514,7 @@ fn __action77<
             .last()
             .unwrap()
             .end();
-        ast::Stmt::new(
+        ast::Stmt::Match(
             ast::StmtMatch {
                 subject: Box::new(subject),
                 cases,
@@ -37562,7 +37546,7 @@ fn __action78<
             .last()
             .unwrap()
             .end();
-        ast::Stmt::new(
+        ast::Stmt::Match(
             ast::StmtMatch {
                 subject: Box::new(subject),
                 cases,
@@ -37598,9 +37582,9 @@ fn __action79<
             .end();
         let mut subjects = subjects;
         subjects.insert(0, subject);
-        ast::Stmt::new(
+        ast::Stmt::Match(
             ast::StmtMatch {
-                subject: Box::new(ast::Expr::new(
+                subject: Box::new(ast::Expr::Tuple(
                     ast::ExprTuple {
                         elts: subjects,
                         ctx: ast::ExprContext::Load,
@@ -37631,7 +37615,7 @@ fn __action80<
             pattern,
             guard: guard.map(Box::new),
             body,
-            range: (start..end).into()
+            range: range_or_phantom(start..end)
         }
     }
 }
@@ -37657,7 +37641,7 @@ fn __action82<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
+    ast::Pattern::MatchSequence(
         ast::PatternMatchSequence {
             patterns: vec![pattern],
             range: (location..end_location).into()
@@ -37679,7 +37663,7 @@ fn __action83<
     {
         let mut patterns = patterns;
         patterns.insert(0, pattern);
-        ast::Pattern::new(
+        ast::Pattern::MatchSequence(
             ast::PatternMatchSequence {
                 patterns,
                 range: (location..end_location).into()
@@ -37732,7 +37716,7 @@ fn __action87<
                 location,
             })?
         } else {
-            Ok(ast::Pattern::new(
+            Ok(ast::Pattern::MatchAs(
                 ast::PatternMatchAs {
                    pattern: Some(Box::new(pattern)),
                    name: Some(name),
@@ -37764,7 +37748,7 @@ fn __action89<
     {
         let mut patterns = patterns;
         patterns.insert(0, pattern);
-        ast::Pattern::new(
+        ast::Pattern::MatchOr(
             ast::PatternMatchOr { patterns, range: (location..end_location).into() }
         )
     }
@@ -37773,78 +37757,64 @@ fn __action89<
 #[allow(clippy::too_many_arguments)]
 fn __action90<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
 fn __action91<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
 fn __action92<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
 fn __action93<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
 fn __action94<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
 fn __action95<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
 fn __action96<
 >(
-    (_, node, _): (TextSize, ast::PatternKind, TextSize),
+    (_, node, _): (TextSize, ast::Pattern, TextSize),
 ) -> ast::Pattern
 {
-    ast::Pattern::new(
-        node,
-    )
+    node
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -37855,9 +37825,9 @@ fn __action97<
     (_, pattern, _): (TextSize, ast::Pattern, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
-    pattern.node
+    pattern
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -37867,7 +37837,7 @@ fn __action98<
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchSequence {
         patterns: vec![],
@@ -37885,7 +37855,7 @@ fn __action99<
     (_, patterns, _): (TextSize, Vec<ast::Pattern>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         let mut patterns = patterns;
@@ -37905,7 +37875,7 @@ fn __action100<
     (_, patterns, _): (TextSize, Vec<ast::Pattern>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchSequence {
         patterns,
@@ -37920,7 +37890,7 @@ fn __action101<
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, name, _): (TextSize, ast::Identifier, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchStar {
         name: if name.as_str() == "_" { None } else { Some(name) },
@@ -37936,7 +37906,7 @@ fn __action102<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Constant(
         ast::ExprConstant { value, kind: None, range: (location..end_location).into() }
     )
 }
@@ -37959,7 +37929,7 @@ fn __action104<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::UnaryOp(
         ast::ExprUnaryOp {
             op: ast::Unaryop::USub,
             operand: Box::new(operand),
@@ -37978,7 +37948,7 @@ fn __action105<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp {
             left: Box::new(left),
             op,
@@ -37994,7 +37964,7 @@ fn __action106<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchSingleton {
         value: ast::Constant::None,
@@ -38008,7 +37978,7 @@ fn __action107<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchSingleton {
         value: true.into(),
@@ -38022,7 +37992,7 @@ fn __action108<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchSingleton {
         value: false.into(),
@@ -38036,7 +38006,7 @@ fn __action109<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, value, _): (TextSize, ast::Expr, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchValue {
         value: Box::new(value),
@@ -38050,7 +38020,7 @@ fn __action110<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, value, _): (TextSize, ast::Expr, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchValue {
         value: Box::new(value),
@@ -38064,7 +38034,7 @@ fn __action111<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, s, _): (TextSize, alloc::vec::Vec<(TextSize, (String, StringKind, bool), TextSize)>, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> Result<ast::PatternKind,__lalrpop_util::ParseError<TextSize,token::Tok,LexicalError>>
+) -> Result<ast::Pattern,__lalrpop_util::ParseError<TextSize,token::Tok,LexicalError>>
 {
     Ok(ast::PatternMatchValue {
         value: Box::new(parse_strings(s)?),
@@ -38078,7 +38048,7 @@ fn __action112<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, name, _): (TextSize, ast::Identifier, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchAs {
         pattern: None,
@@ -38095,7 +38065,7 @@ fn __action113<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Name(
         ast::ExprName { id: name, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
     )
 }
@@ -38110,7 +38080,7 @@ fn __action114<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Attribute(
         ast::ExprAttribute {
             value: Box::new(name),
             attr,
@@ -38130,7 +38100,7 @@ fn __action115<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Attribute(
         ast::ExprAttribute {
             value: Box::new(e),
             attr,
@@ -38146,7 +38116,7 @@ fn __action116<
     (_, location, _): (TextSize, TextSize, TextSize),
     (_, e, _): (TextSize, ast::Expr, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     ast::PatternMatchValue {
        value: Box::new(e),
@@ -38189,7 +38159,7 @@ fn __action120<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Constant(
         ast::ExprConstant {
             value: ast::Constant::None,
             kind: None,
@@ -38206,7 +38176,7 @@ fn __action121<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Constant(
         ast::ExprConstant {
             value: true.into(),
             kind: None,
@@ -38223,7 +38193,7 @@ fn __action122<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Constant(
         ast::ExprConstant {
             value: false.into(),
             kind: None,
@@ -38260,7 +38230,7 @@ fn __action125<
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         return ast::PatternMatchMapping {
@@ -38281,7 +38251,7 @@ fn __action126<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         let (keys, patterns) = e
@@ -38306,7 +38276,7 @@ fn __action127<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         return ast::PatternMatchMapping {
@@ -38330,7 +38300,7 @@ fn __action128<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         let (keys, patterns) = e
@@ -38368,7 +38338,7 @@ fn __action130<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         let (kwd_attrs, kwd_patterns) = kwds
@@ -38394,7 +38364,7 @@ fn __action131<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         ast::PatternMatchClass {
@@ -38417,7 +38387,7 @@ fn __action132<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
          let (kwd_attrs, kwd_patterns) = kwds
@@ -38441,7 +38411,7 @@ fn __action133<
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         ast::PatternMatchClass {
@@ -38466,7 +38436,7 @@ fn __action134<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         let (kwd_attrs, kwd_patterns) = kwds
@@ -38492,7 +38462,7 @@ fn __action135<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         ast::PatternMatchClass {
@@ -38515,7 +38485,7 @@ fn __action136<
     (_, _, _): (TextSize, core::option::Option<token::Tok>, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
          let (kwd_attrs, kwd_patterns) = kwds
@@ -38539,7 +38509,7 @@ fn __action137<
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, _, _): (TextSize, token::Tok, TextSize),
     (_, end_location, _): (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     {
         ast::PatternMatchClass {
@@ -38575,13 +38545,13 @@ fn __action138<
             .end();
         // handle elif:
         for i in s2.into_iter().rev() {
-            let x = ast::Stmt::new(
+            let x = ast::Stmt::If(
                 ast::StmtIf { test: Box::new(i.2), body: i.4, orelse: last, range: (i.0..end_location).into() }
             );
             last = vec![x];
         }
 
-        ast::Stmt::new(
+        ast::Stmt::If(
             ast::StmtIf { test: Box::new(test), body, orelse: last, range: (location..end_location).into() }
         )
     }
@@ -38605,7 +38575,7 @@ fn __action139<
             .or_else(|| body.last())
             .unwrap()
             .end();
-        ast::Stmt::new(
+        ast::Stmt::While(
             ast::StmtWhile {
                 test: Box::new(test),
                 body,
@@ -38640,12 +38610,11 @@ fn __action140<
         let target = Box::new(set_context(target, ast::ExprContext::Store));
         let iter = Box::new(iter);
         let type_comment = None;
-        let node: ast::StmtKind = if is_async.is_some() {
-            ast::StmtAsyncFor { target, iter, body, orelse, type_comment, range: (location..end_location).into() }.into()
+        if is_async.is_some() {
+            ast::Stmt::AsyncFor(ast::StmtAsyncFor { target, iter, body, orelse, type_comment, range: (location..end_location).into() })
         } else {
-            ast::StmtFor { target, iter, body, orelse, type_comment, range: (location..end_location).into() }.into()
-        };
-        ast::Stmt::new(node)
+            ast::Stmt::For(ast::StmtFor { target, iter, body, orelse, type_comment, range: (location..end_location).into() })
+        }
     }
 }
 
@@ -38671,7 +38640,7 @@ fn __action141<
             .or_else(|| orelse.last().map(|last| last.end()))
             .or_else(|| handlers.last().map(|last| last.end()))
             .unwrap();
-        ast::Stmt::new(
+        ast::Stmt::Try(
             ast::StmtTry {
                 body,
                 handlers,
@@ -38705,7 +38674,7 @@ fn __action142<
             .map(|last| last.end())
             .or_else(|| handlers.last().map(|last| last.end()))
             .unwrap();
-        ast::Stmt::new(
+        ast::Stmt::TryStar(
             ast::StmtTryStar {
                 body,
                 handlers,
@@ -38732,7 +38701,7 @@ fn __action143<
         let orelse = vec![];
         let finalbody = finally.2;
         let end_location = finalbody.last().unwrap().end();
-        ast::Stmt::new(
+        ast::Stmt::Try(
             ast::StmtTry {
                 body,
                 handlers,
@@ -38757,7 +38726,7 @@ fn __action144<
 {
     {
         let end_location = body.last().unwrap().end();
-        ast::Excepthandler::new(
+        ast::Excepthandler::ExceptHandler(
             ast::ExcepthandlerExceptHandler {
                 type_: Some(Box::new(typ)),
                 name: None,
@@ -38781,7 +38750,7 @@ fn __action145<
 {
     {
         let end_location = body.last().unwrap().end();
-        ast::Excepthandler::new(
+        ast::Excepthandler::ExceptHandler(
             ast::ExcepthandlerExceptHandler {
                 type_: Some(Box::new(x.0)),
                 name: Some(x.2),
@@ -38804,7 +38773,7 @@ fn __action146<
 {
     {
         let end_location = body.last().unwrap().end();
-        ast::Excepthandler::new(
+        ast::Excepthandler::ExceptHandler(
             ast::ExcepthandlerExceptHandler {
                 type_: typ.map(Box::new),
                 name: None,
@@ -38827,7 +38796,7 @@ fn __action147<
 {
     {
         let end_location = body.last().unwrap().end();
-        ast::Excepthandler::new(
+        ast::Excepthandler::ExceptHandler(
             ast::ExcepthandlerExceptHandler {
                 type_: Some(Box::new(x.0)),
                 name: Some(x.2),
@@ -38852,12 +38821,11 @@ fn __action148<
     {
         let end_location = body.last().unwrap().end();
         let type_comment = None;
-        let node: ast::StmtKind = if is_async.is_some() {
+        if is_async.is_some() {
             ast::StmtAsyncWith { items, body, type_comment, range: (location..end_location).into() }.into()
         } else {
             ast::StmtWith { items, body, type_comment, range: (location..end_location).into() }.into()
-        };
-        ast::Stmt::new(node)
+        }
     }
 }
 
@@ -38919,7 +38887,7 @@ fn __action153<
 ) -> Vec<ast::Withitem>
 {
     {
-        all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: (location..end_location).into() }).collect()
+        all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: range_or_phantom(location..end_location) }).collect()
     }
 }
 
@@ -38942,12 +38910,11 @@ fn __action154<
         let returns = r.map(|x| Box::new(x.1));
         let end_location = body.last().unwrap().end();
         let type_comment = None;
-        let node: ast::StmtKind = if is_async.is_some() {
+        if is_async.is_some() {
             ast::StmtAsyncFunctionDef { name, args, body, decorator_list, returns, type_comment, range: (location..end_location).into() }.into()
         } else {
             ast::StmtFunctionDef { name, args, body, decorator_list, returns, type_comment, range: (location..end_location).into() }.into()
-        };
-        ast::Stmt::new(node)
+        }
     }
 }
 
@@ -38971,7 +38938,7 @@ fn __action155<
                 kw_defaults: vec![],
                 kwarg: None,
                 defaults: vec![],
-                range: (location..end_location).into()
+                range: range_or_phantom(location..end_location)
             })
         )?;
 
@@ -38987,9 +38954,7 @@ fn __action156<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Arg
 {
-    ast::Arg::new(
-        ast::ArgData { arg, annotation: None, type_comment: None, range: (location..end_location).into() },
-    )
+    ast::Arg { arg, annotation: None, type_comment: None, range: (location..end_location).into() }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -39003,7 +38968,7 @@ fn __action157<
 {
     {
         let annotation = a.map(|x| Box::new(x.1));
-        ast::Arg::new(ast::ArgData { arg, annotation, type_comment: None, range: (location..end_location).into() })
+        ast::Arg { arg, annotation, type_comment: None, range: (location..end_location).into() }
     }
 }
 
@@ -39018,7 +38983,7 @@ fn __action158<
 {
     {
         let annotation = a.map(|x| Box::new(x.1));
-        ast::Arg::new(ast::ArgData { arg, annotation, type_comment: None, range: (location..end_location).into() })
+        ast::Arg { arg, annotation, type_comment: None, range: (location..end_location).into() }
     }
 }
 
@@ -39040,7 +39005,7 @@ fn __action159<
             None => (vec![], vec![]),
         };
         let end_location = body.last().unwrap().end();
-        ast::Stmt::new(
+        ast::Stmt::ClassDef(
             ast::StmtClassDef {
                 name,
                 bases,
@@ -39076,7 +39041,7 @@ fn __action161<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Yield(
         ast::ExprYield { value: value.map(Box::new), range: (location..end_location).into() }
     )
 }
@@ -39091,7 +39056,7 @@ fn __action162<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::YieldFrom(
         ast::ExprYieldFrom { value: Box::new(e), range: (location..end_location).into() }
     )
 }
@@ -39125,9 +39090,9 @@ fn __action165<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::NamedExpr(
             ast::ExprNamedExpr {
-                target: Box::new(ast::Expr::new(
+                target: Box::new(ast::Expr::Name(
                     ast::ExprName { id, ctx: ast::ExprContext::Store, range: (location..end_location).into() },
                 )),
                 range: (location..value.end()).into(),
@@ -39159,12 +39124,12 @@ fn __action166<
                     kw_defaults: vec![],
                     kwarg: None,
                     defaults: vec![],
-                    range: (location..end_location).into()
+                    range: range_or_phantom(location..end_location)
                 }
             }
         ))?;
 
-        Ok(ast::Expr::new(
+        Ok(ast::Expr::Lambda(
             ast::ExprLambda {
                 args: Box::new(p),
                 body: Box::new(body),
@@ -39393,7 +39358,7 @@ fn __action189<
                 dims.push(x.1)
             }
 
-            ast::Expr::new(
+            ast::Expr::Tuple(
                 ast::ExprTuple { elts: dims, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
             )
         }
@@ -39424,7 +39389,7 @@ fn __action191<
         let lower = e1.map(Box::new);
         let upper = e2.map(Box::new);
         let step = e3.flatten().map(Box::new);
-        ast::Expr::new(
+        ast::Expr::Slice(
             ast::ExprSlice { lower, upper, step, range: (location..end_location).into() }
         )
     }
@@ -39556,7 +39521,7 @@ fn __action204<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Starred(
         ast::ExprStarred { value: Box::new(e), ctx: ast::ExprContext::Load, range: (location..end_location).into() },
     )
 }
@@ -39590,7 +39555,7 @@ fn __action206<
             iter,
             ifs,
             is_async,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         }
     }
 }
@@ -39637,7 +39602,7 @@ fn __action210<
 {
     {
         let expr = match c {
-            Some(c) => ast::Expr::new(
+            Some(c) => ast::Expr::GeneratorExp(
                 ast::ExprGeneratorExp {
                     elt: Box::new(e),
                     generators: c,
@@ -39673,7 +39638,7 @@ fn __action212<
 ) -> (Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::Expr)
 {
     {
-        let expr = ast::Expr::new(
+        let expr = ast::Expr::Starred(
             ast::ExprStarred { value: Box::new(e), ctx: ast::ExprContext::Load, range: (location..end_location).into() },
         );
         (None, expr)
@@ -39792,7 +39757,7 @@ fn __action223<
     {
         let mut values = vec![e1];
         values.extend(e2.into_iter().map(|e| e.1));
-        ast::Expr::new(
+        ast::Expr::BoolOp(
             ast::ExprBoolOp { op: ast::Boolop::Or, values, range: (location..end_location).into() }
         )
     }
@@ -39839,7 +39804,7 @@ fn __action227<
         if elts.len() == 1 && trailing_comma.is_none() {
             elts.into_iter().next().unwrap()
         } else {
-            ast::Expr::new(
+            ast::Expr::Tuple(
                 ast::ExprTuple { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
             )
         }
@@ -39873,7 +39838,7 @@ fn __action229<
         if elts.len() == 1 && trailing_comma.is_none() {
             elts.into_iter().next().unwrap()
         } else {
-            ast::Expr::new(
+            ast::Expr::Tuple(
                 ast::ExprTuple { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
             )
         }
@@ -39890,7 +39855,7 @@ fn __action230<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op: ast::Operator::BitOr, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -40009,7 +39974,7 @@ fn __action240<
             kwarg,
             defaults,
             kw_defaults,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         })
     }
 }
@@ -40041,7 +40006,7 @@ fn __action241<
             kwarg,
             defaults,
             kw_defaults,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         })
     }
 }
@@ -40065,7 +40030,7 @@ fn __action242<
             kwarg,
             defaults: vec![],
             kw_defaults,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         }
     }
 }
@@ -40088,7 +40053,7 @@ fn __action243<
             kwarg,
             defaults: vec![],
             kw_defaults: vec![],
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         }
     }
 }
@@ -40233,7 +40198,7 @@ fn __action256<
             kwarg,
             defaults,
             kw_defaults,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         })
     }
 }
@@ -40265,7 +40230,7 @@ fn __action257<
             kwarg,
             defaults,
             kw_defaults,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         })
     }
 }
@@ -40289,7 +40254,7 @@ fn __action258<
             kwarg,
             defaults: vec![],
             kw_defaults,
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         }
     }
 }
@@ -40312,7 +40277,7 @@ fn __action259<
             kwarg,
             defaults: vec![],
             kw_defaults: vec![],
-            range: (location..end_location).into()
+            range: range_or_phantom(location..end_location)
         }
     }
 }
@@ -40406,7 +40371,7 @@ fn __action268<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Withitem
 {
-    ast::Withitem { context_expr, optional_vars: None, range: (location..end_location).into() }
+    ast::Withitem { context_expr, optional_vars: None, range: range_or_phantom(location..end_location) }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -40421,7 +40386,7 @@ fn __action269<
 {
     {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: (location..end_location).into() }
+        ast::Withitem { context_expr, optional_vars, range: range_or_phantom(location..end_location) }
     }
 }
 
@@ -40462,7 +40427,7 @@ fn __action273<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Withitem
 {
-    ast::Withitem { context_expr, optional_vars: None, range: (location..end_location).into() }
+    ast::Withitem { context_expr, optional_vars: None, range: range_or_phantom(location..end_location) }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -40477,7 +40442,7 @@ fn __action274<
 {
     {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: (location..end_location).into() }
+        ast::Withitem { context_expr, optional_vars, range: range_or_phantom(location..end_location) }
     }
 }
 
@@ -40493,7 +40458,7 @@ fn __action275<
 {
     {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: (location..end_location).into() }
+        ast::Withitem { context_expr, optional_vars, range: range_or_phantom(location..end_location) }
     }
 }
 
@@ -40995,7 +40960,7 @@ fn __action323<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Alias
 {
-    ast::Alias::new(ast::AliasData { name, asname: a.map(|a| a.1), range: (location..end_location).into() })
+    ast::Alias { name, asname: a.map(|a| a.1), range: (location..end_location).into() }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -41059,7 +41024,7 @@ fn __action329<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Alias
 {
-    ast::Alias::new(ast::AliasData { name, asname: a.map(|a| a.1), range: (location..end_location).into() })
+    ast::Alias { name, asname: a.map(|a| a.1), range: (location..end_location).into() }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -41141,7 +41106,7 @@ fn __action337<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::IfExp(
         ast::ExprIfExp {
             test: Box::new(test),
             body: Box::new(body),
@@ -41707,7 +41672,7 @@ fn __action395<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::IfExp(
         ast::ExprIfExp {
             test: Box::new(test),
             body: Box::new(body),
@@ -42061,7 +42026,7 @@ fn __action423<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op: ast::Operator::BitXor, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -42159,7 +42124,7 @@ fn __action432<
     {
         let mut values = vec![e1];
         values.extend(e2.into_iter().map(|e| e.1));
-        ast::Expr::new(
+        ast::Expr::BoolOp(
             ast::ExprBoolOp { op: ast::Boolop::And, values, range: (location..end_location).into() }
         )
     }
@@ -42298,7 +42263,7 @@ fn __action446<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::UnaryOp(
         ast::ExprUnaryOp { operand: Box::new(e), op: ast::Unaryop::Not, range: (location..end_location).into() }
     )
 }
@@ -42370,7 +42335,7 @@ fn __action453<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op: ast::Operator::BitAnd, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -42655,7 +42620,7 @@ fn __action481<
     {
         let mut values = vec![e1];
         values.extend(e2.into_iter().map(|e| e.1));
-        ast::Expr::new(
+        ast::Expr::BoolOp(
             ast::ExprBoolOp { op: ast::Boolop::Or, values, range: (location..end_location).into() }
         )
     }
@@ -42834,7 +42799,7 @@ fn __action499<
     {
         let mut values = vec![e1];
         values.extend(e2.into_iter().map(|e| e.1));
-        ast::Expr::new(
+        ast::Expr::BoolOp(
             ast::ExprBoolOp { op: ast::Boolop::And, values, range: (location..end_location).into() }
         )
     }
@@ -42897,7 +42862,7 @@ fn __action505<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -42941,7 +42906,7 @@ fn __action509<
 {
     {
         let (ops, comparators) = comparisons.into_iter().unzip();
-        ast::Expr::new(
+        ast::Expr::Compare(
             ast::ExprCompare { left: Box::new(left), ops, comparators, range: (location..end_location).into() }
         )
     }
@@ -42995,7 +42960,7 @@ fn __action514<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(a), op, right: Box::new(b), range: (location..end_location).into() }
     )
 }
@@ -43018,7 +42983,7 @@ fn __action516<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::UnaryOp(
         ast::ExprUnaryOp { operand: Box::new(e), op: ast::Unaryop::Not, range: (location..end_location).into() }
     )
 }
@@ -43043,7 +43008,7 @@ fn __action518<
 {
     {
         let (ops, comparators) = comparisons.into_iter().unzip();
-        ast::Expr::new(
+        ast::Expr::Compare(
             ast::ExprCompare { left: Box::new(left), ops, comparators, range: (location..end_location).into() }
         )
     }
@@ -43068,7 +43033,7 @@ fn __action520<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(a), op, right: Box::new(b), range: (location..end_location).into() }
     )
 }
@@ -43091,7 +43056,7 @@ fn __action522<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::UnaryOp(
         ast::ExprUnaryOp { operand: Box::new(e), op, range: (location..end_location).into() }
     )
 }
@@ -43115,7 +43080,7 @@ fn __action524<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op: ast::Operator::BitOr, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -43139,7 +43104,7 @@ fn __action526<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op: ast::Operator::BitXor, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -43163,7 +43128,7 @@ fn __action528<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e), op: ast::Operator::Pow, right: Box::new(b), range: (location..end_location).into() }
     )
 }
@@ -43187,7 +43152,7 @@ fn __action530<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::Await(
             ast::ExprAwait { value: Box::new(atom), range: (location..end_location).into() }
         )
     }
@@ -43212,7 +43177,7 @@ fn __action532<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op: ast::Operator::BitAnd, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -43236,7 +43201,7 @@ fn __action534<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e1), op, right: Box::new(e2), range: (location..end_location).into() }
     )
 }
@@ -43271,7 +43236,7 @@ fn __action537<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::Call(
             ast::ExprCall { func: Box::new(f), args: a.args, keywords: a.keywords, range: (location..end_location).into() }
         )
     }
@@ -43288,7 +43253,7 @@ fn __action538<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Subscript(
         ast::ExprSubscript { value: Box::new(e), slice: Box::new(s), ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43303,7 +43268,7 @@ fn __action539<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Attribute(
         ast::ExprAttribute { value: Box::new(e), attr, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43326,7 +43291,7 @@ fn __action541<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Constant(
         ast::ExprConstant { value, kind: None, range: (location..end_location).into() }
     )
 }
@@ -43339,7 +43304,7 @@ fn __action542<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Name(
         ast::ExprName { id: name, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43356,7 +43321,7 @@ fn __action543<
 {
     {
         let elts = e.unwrap_or_default();
-        ast::Expr::new(
+        ast::Expr::List(
             ast::ExprList { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
         )
     }
@@ -43374,7 +43339,7 @@ fn __action544<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::ListComp(
             ast::ExprListComp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     }
@@ -43395,7 +43360,7 @@ fn __action545<
         if elts.len() == 1 && trailing_comma.is_none() {
             elts.into_iter().next().unwrap()
         } else {
-            ast::Expr::new(
+            ast::Expr::Tuple(
                 ast::ExprTuple { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
             )
         }
@@ -43417,7 +43382,7 @@ fn __action546<
 {
     {
         if left.is_none() && right.is_empty() && trailing_comma.is_none() {
-            if matches!(mid.node, ast::ExprKind::Starred { .. }) {
+            if mid.is_starred_expr() {
                 Err(LexicalError{
                     error: LexicalErrorType::OtherError("cannot use starred expression here".to_string()),
                     location: mid.start(),
@@ -43426,7 +43391,7 @@ fn __action546<
             Ok(mid)
         } else {
             let elts = left.into_iter().flatten().chain([mid]).chain(right).collect();
-            Ok(ast::Expr::new(
+            Ok(ast::Expr::Tuple(
                 ast::ExprTuple { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
             ))
         }
@@ -43442,7 +43407,7 @@ fn __action547<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Tuple(
         ast::ExprTuple { elts: Vec::new(), ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43470,7 +43435,7 @@ fn __action549<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::GeneratorExp(
             ast::ExprGeneratorExp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     }
@@ -43511,7 +43476,7 @@ fn __action551<
             .into_iter()
             .map(|(k, v)| (k.map(|x| *x), v))
             .unzip();
-        ast::Expr::new(
+        ast::Expr::Dict(
             ast::ExprDict { keys, values, range: (location..end_location).into() }
         )
     }
@@ -43529,7 +43494,7 @@ fn __action552<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::DictComp(
             ast::ExprDictComp {
                 key: Box::new(e1.0),
                 value: Box::new(e1.1),
@@ -43550,7 +43515,7 @@ fn __action553<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Set(
         ast::ExprSet { elts, range: (location..end_location).into() }
     )
 }
@@ -43567,7 +43532,7 @@ fn __action554<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::SetComp(
             ast::ExprSetComp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     }
@@ -43581,7 +43546,7 @@ fn __action555<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: true.into(), kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: true.into(), kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -43592,7 +43557,7 @@ fn __action556<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: false.into(), kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: false.into(), kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -43603,7 +43568,7 @@ fn __action557<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: ast::Constant::None, kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: ast::Constant::None, kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -43614,7 +43579,7 @@ fn __action558<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: ast::Constant::Ellipsis, kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: ast::Constant::Ellipsis, kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -43627,7 +43592,7 @@ fn __action559<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(a), op, right: Box::new(b), range: (location..end_location).into() }
     )
 }
@@ -43651,7 +43616,7 @@ fn __action561<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(a), op, right: Box::new(b), range: (location..end_location).into() }
     )
 }
@@ -43789,7 +43754,7 @@ fn __action575<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::UnaryOp(
         ast::ExprUnaryOp { operand: Box::new(e), op, range: (location..end_location).into() }
     )
 }
@@ -43813,7 +43778,7 @@ fn __action577<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::BinOp(
         ast::ExprBinOp { left: Box::new(e), op: ast::Operator::Pow, right: Box::new(b), range: (location..end_location).into() }
     )
 }
@@ -43837,7 +43802,7 @@ fn __action579<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::Await(
             ast::ExprAwait { value: Box::new(atom), range: (location..end_location).into() }
         )
     }
@@ -43873,7 +43838,7 @@ fn __action582<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::Call(
             ast::ExprCall { func: Box::new(f), args: a.args, keywords: a.keywords, range: (location..end_location).into() }
         )
     }
@@ -43890,7 +43855,7 @@ fn __action583<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Subscript(
         ast::ExprSubscript { value: Box::new(e), slice: Box::new(s), ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43905,7 +43870,7 @@ fn __action584<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Attribute(
         ast::ExprAttribute { value: Box::new(e), attr, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43928,7 +43893,7 @@ fn __action586<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Constant(
         ast::ExprConstant { value, kind: None, range: (location..end_location).into() }
     )
 }
@@ -43941,7 +43906,7 @@ fn __action587<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Name(
         ast::ExprName { id: name, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -43958,7 +43923,7 @@ fn __action588<
 {
     {
         let elts = e.unwrap_or_default();
-        ast::Expr::new(
+        ast::Expr::List(
             ast::ExprList { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() }
         )
     }
@@ -43976,7 +43941,7 @@ fn __action589<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::ListComp(
             ast::ExprListComp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     }
@@ -43997,7 +43962,7 @@ fn __action590<
 {
     {
         if left.is_none() && right.is_empty() && trailing_comma.is_none() {
-            if matches!(mid.node, ast::ExprKind::Starred { .. }) {
+            if mid.is_starred_expr() {
                 Err(LexicalError{
                     error: LexicalErrorType::OtherError("cannot use starred expression here".to_string()),
                     location: mid.start(),
@@ -44006,7 +43971,7 @@ fn __action590<
             Ok(mid)
         } else {
             let elts = left.into_iter().flatten().chain([mid]).chain(right).collect();
-            Ok(ast::Expr::new(
+            Ok(ast::Expr::Tuple(
                 ast::ExprTuple { elts, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
             ))
         }
@@ -44022,7 +43987,7 @@ fn __action591<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Tuple(
         ast::ExprTuple { elts: Vec::new(), ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     )
 }
@@ -44050,7 +44015,7 @@ fn __action593<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::GeneratorExp(
             ast::ExprGeneratorExp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     }
@@ -44091,7 +44056,7 @@ fn __action595<
             .into_iter()
             .map(|(k, v)| (k.map(|x| *x), v))
             .unzip();
-        ast::Expr::new(
+        ast::Expr::Dict(
             ast::ExprDict { keys, values, range: (location..end_location).into() }
         )
     }
@@ -44109,7 +44074,7 @@ fn __action596<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::DictComp(
             ast::ExprDictComp {
                 key: Box::new(e1.0),
                 value: Box::new(e1.1),
@@ -44130,7 +44095,7 @@ fn __action597<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(
+    ast::Expr::Set(
         ast::ExprSet { elts, range: (location..end_location).into() }
     )
 }
@@ -44147,7 +44112,7 @@ fn __action598<
 ) -> ast::Expr
 {
     {
-        ast::Expr::new(
+        ast::Expr::SetComp(
             ast::ExprSetComp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     }
@@ -44161,7 +44126,7 @@ fn __action599<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: true.into(), kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: true.into(), kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -44172,7 +44137,7 @@ fn __action600<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: false.into(), kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: false.into(), kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -44183,7 +44148,7 @@ fn __action601<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: ast::Constant::None, kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: ast::Constant::None, kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -44194,7 +44159,7 @@ fn __action602<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Expr
 {
-    ast::Expr::new(ast::ExprConstant { value: ast::Constant::Ellipsis, kind: None, range: (location..end_location).into() })
+    ast::Expr::Constant(ast::ExprConstant { value: ast::Constant::Ellipsis, kind: None, range: (location..end_location).into() })
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -44387,7 +44352,7 @@ fn __action609<
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
     __8: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __6.0;
     let __end0 = __6.2;
@@ -44419,7 +44384,7 @@ fn __action610<
     __5: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __6.0;
@@ -44451,7 +44416,7 @@ fn __action611<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -44479,7 +44444,7 @@ fn __action612<
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __4.0;
@@ -44509,7 +44474,7 @@ fn __action613<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -44537,7 +44502,7 @@ fn __action614<
     __3: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __4.0;
@@ -44569,7 +44534,7 @@ fn __action615<
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
     __8: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __6.0;
     let __end0 = __6.2;
@@ -44601,7 +44566,7 @@ fn __action616<
     __5: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __6.0;
@@ -44633,7 +44598,7 @@ fn __action617<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -44661,7 +44626,7 @@ fn __action618<
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __4.0;
@@ -44691,7 +44656,7 @@ fn __action619<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -44719,7 +44684,7 @@ fn __action620<
     __3: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __4.0;
@@ -45008,7 +44973,7 @@ fn __action633<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.0;
     let __end0 = __3.2;
@@ -45034,7 +44999,7 @@ fn __action634<
     __2: (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.2;
     let __end0 = __3.0;
@@ -45063,7 +45028,7 @@ fn __action635<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -45091,7 +45056,7 @@ fn __action636<
     __3: (TextSize, ast::Identifier, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __4.0;
@@ -45123,7 +45088,7 @@ fn __action637<
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
     __8: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __6.0;
     let __end0 = __6.2;
@@ -45155,7 +45120,7 @@ fn __action638<
     __5: (TextSize, ast::Identifier, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, TextSize, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __6.0;
@@ -48365,7 +48330,7 @@ fn __action766<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, ast::Identifier, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -48392,7 +48357,7 @@ fn __action767<
     __5: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __7.2;
     let __end0 = __7.2;
@@ -48424,7 +48389,7 @@ fn __action768<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __6.2;
     let __end0 = __6.2;
@@ -48454,7 +48419,7 @@ fn __action769<
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __5.2;
@@ -48482,7 +48447,7 @@ fn __action770<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.2;
     let __end0 = __4.2;
@@ -48510,7 +48475,7 @@ fn __action771<
     __3: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __5.2;
@@ -48538,7 +48503,7 @@ fn __action772<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.2;
     let __end0 = __4.2;
@@ -48564,7 +48529,7 @@ fn __action773<
     __1: (TextSize, ast::Expr, TextSize),
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __3.2;
@@ -48593,7 +48558,7 @@ fn __action774<
     __5: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __7.2;
     let __end0 = __7.2;
@@ -48625,7 +48590,7 @@ fn __action775<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __6.2;
     let __end0 = __6.2;
@@ -48655,7 +48620,7 @@ fn __action776<
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __5.2;
@@ -48683,7 +48648,7 @@ fn __action777<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.2;
     let __end0 = __4.2;
@@ -48711,7 +48676,7 @@ fn __action778<
     __3: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __5.2;
@@ -48739,7 +48704,7 @@ fn __action779<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.2;
     let __end0 = __4.2;
@@ -48765,7 +48730,7 @@ fn __action780<
     __1: (TextSize, ast::Expr, TextSize),
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __3.2;
@@ -49580,7 +49545,7 @@ fn __action815<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -49601,7 +49566,7 @@ fn __action816<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -49622,7 +49587,7 @@ fn __action817<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -49643,7 +49608,7 @@ fn __action818<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, ast::Expr, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -49664,7 +49629,7 @@ fn __action819<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, ast::Expr, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -49685,7 +49650,7 @@ fn __action820<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, alloc::vec::Vec<(TextSize, (String, StringKind, bool), TextSize)>, TextSize),
-) -> Result<ast::PatternKind,__lalrpop_util::ParseError<TextSize,token::Tok,LexicalError>>
+) -> Result<ast::Pattern,__lalrpop_util::ParseError<TextSize,token::Tok,LexicalError>>
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -49770,7 +49735,7 @@ fn __action824<
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.2;
     let __end0 = __2.2;
@@ -49795,7 +49760,7 @@ fn __action825<
     __2: (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.2;
     let __end0 = __4.2;
@@ -49821,7 +49786,7 @@ fn __action826<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __3.2;
@@ -49848,7 +49813,7 @@ fn __action827<
     __3: (TextSize, ast::Identifier, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __5.2;
@@ -49876,7 +49841,7 @@ fn __action828<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, ast::Identifier, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.2;
     let __end0 = __4.2;
@@ -49906,7 +49871,7 @@ fn __action829<
     __5: (TextSize, ast::Identifier, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __7.2;
     let __end0 = __7.2;
@@ -49938,7 +49903,7 @@ fn __action830<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, ast::Identifier, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __6.2;
     let __end0 = __6.2;
@@ -50814,7 +50779,7 @@ fn __action867<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __3.2;
@@ -50838,7 +50803,7 @@ fn __action868<
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.2;
     let __end0 = __2.2;
@@ -50864,7 +50829,7 @@ fn __action869<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, Vec<ast::Pattern>, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __5.2;
     let __end0 = __5.2;
@@ -50891,7 +50856,7 @@ fn __action870<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, Vec<ast::Pattern>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.2;
     let __end0 = __3.2;
@@ -51048,7 +51013,7 @@ fn __action876<
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, ast::Identifier, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.2;
     let __end0 = __2.2;
@@ -51453,7 +51418,7 @@ fn __action892<
 >(
     __0: (TextSize, TextSize, TextSize),
     __1: (TextSize, ast::Expr, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.2;
     let __end0 = __1.2;
@@ -53211,7 +53176,7 @@ fn __action968<
 fn __action969<
 >(
     __0: (TextSize, ast::Identifier, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53296,7 +53261,7 @@ fn __action972<
     __4: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53326,7 +53291,7 @@ fn __action973<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53354,7 +53319,7 @@ fn __action974<
     __2: (TextSize, Vec<ast::Pattern>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53380,7 +53345,7 @@ fn __action975<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, Vec<ast::Pattern>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53406,7 +53371,7 @@ fn __action976<
     __2: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53432,7 +53397,7 @@ fn __action977<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53456,7 +53421,7 @@ fn __action978<
     __0: (TextSize, ast::Expr, TextSize),
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53483,7 +53448,7 @@ fn __action979<
     __4: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53513,7 +53478,7 @@ fn __action980<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53541,7 +53506,7 @@ fn __action981<
     __2: (TextSize, Vec<ast::Pattern>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53567,7 +53532,7 @@ fn __action982<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, Vec<ast::Pattern>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53593,7 +53558,7 @@ fn __action983<
     __2: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53619,7 +53584,7 @@ fn __action984<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, Vec<(ast::Identifier, ast::Pattern)>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -53643,7 +53608,7 @@ fn __action985<
     __0: (TextSize, ast::Expr, TextSize),
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54714,7 +54679,7 @@ fn __action1031<
 fn __action1032<
 >(
     __0: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54733,7 +54698,7 @@ fn __action1032<
 fn __action1033<
 >(
     __0: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54752,7 +54717,7 @@ fn __action1033<
 fn __action1034<
 >(
     __0: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54771,7 +54736,7 @@ fn __action1034<
 fn __action1035<
 >(
     __0: (TextSize, ast::Expr, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54790,7 +54755,7 @@ fn __action1035<
 fn __action1036<
 >(
     __0: (TextSize, ast::Expr, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54809,7 +54774,7 @@ fn __action1036<
 fn __action1037<
 >(
     __0: (TextSize, alloc::vec::Vec<(TextSize, (String, StringKind, bool), TextSize)>, TextSize),
-) -> Result<ast::PatternKind,__lalrpop_util::ParseError<TextSize,token::Tok,LexicalError>>
+) -> Result<ast::Pattern,__lalrpop_util::ParseError<TextSize,token::Tok,LexicalError>>
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54905,7 +54870,7 @@ fn __action1042<
 >(
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54928,7 +54893,7 @@ fn __action1043<
     __1: (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize),
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54952,7 +54917,7 @@ fn __action1044<
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, Vec<(ast::Expr, ast::Pattern)>, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -54977,7 +54942,7 @@ fn __action1045<
     __2: (TextSize, ast::Identifier, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -55003,7 +54968,7 @@ fn __action1046<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, ast::Identifier, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -55031,7 +54996,7 @@ fn __action1047<
     __4: (TextSize, ast::Identifier, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -55061,7 +55026,7 @@ fn __action1048<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, ast::Identifier, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -56049,7 +56014,7 @@ fn __action1091<
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, ast::Pattern, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -56071,7 +56036,7 @@ fn __action1092<
 >(
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -56095,7 +56060,7 @@ fn __action1093<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -56120,7 +56085,7 @@ fn __action1094<
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, Vec<ast::Pattern>, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -56286,7 +56251,7 @@ fn __action1101<
 >(
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, ast::Identifier, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -56684,7 +56649,7 @@ fn __action1117<
 fn __action1118<
 >(
     __0: (TextSize, ast::Expr, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.0;
     let __end0 = __0.0;
@@ -65146,7 +65111,7 @@ fn __action1488<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, ast::Pattern, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.0;
     let __end0 = __3.2;
@@ -65170,7 +65135,7 @@ fn __action1489<
     __1: (TextSize, ast::Pattern, TextSize),
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.2;
     let __end0 = __3.0;
@@ -65197,7 +65162,7 @@ fn __action1490<
     __3: (TextSize, alloc::vec::Vec<ast::Pattern>, TextSize),
     __4: (TextSize, ast::Pattern, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.0;
     let __end0 = __4.2;
@@ -65223,7 +65188,7 @@ fn __action1491<
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, alloc::vec::Vec<ast::Pattern>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __3.0;
     let __end0 = __3.2;
@@ -65246,7 +65211,7 @@ fn __action1492<
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, ast::Pattern, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __1.2;
@@ -65266,7 +65231,7 @@ fn __action1493<
 >(
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __0.2;
     let __end0 = __1.0;
@@ -65289,7 +65254,7 @@ fn __action1494<
     __1: (TextSize, alloc::vec::Vec<ast::Pattern>, TextSize),
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __2.2;
@@ -65311,7 +65276,7 @@ fn __action1495<
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, alloc::vec::Vec<ast::Pattern>, TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __1.2;
@@ -66748,7 +66713,7 @@ fn __action1558<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -66778,7 +66743,7 @@ fn __action1559<
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __5.2;
@@ -66807,7 +66772,7 @@ fn __action1560<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -66835,7 +66800,7 @@ fn __action1561<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __5.2;
@@ -66862,7 +66827,7 @@ fn __action1562<
     __2: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -66888,7 +66853,7 @@ fn __action1563<
     __3: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -66913,7 +66878,7 @@ fn __action1564<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -66937,7 +66902,7 @@ fn __action1565<
     __2: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __3: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -66964,7 +66929,7 @@ fn __action1566<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -66994,7 +66959,7 @@ fn __action1567<
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __5.2;
@@ -67023,7 +66988,7 @@ fn __action1568<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __4.2;
@@ -67051,7 +67016,7 @@ fn __action1569<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __4.0;
     let __end0 = __5.2;
@@ -67078,7 +67043,7 @@ fn __action1570<
     __2: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67104,7 +67069,7 @@ fn __action1571<
     __3: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67129,7 +67094,7 @@ fn __action1572<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67153,7 +67118,7 @@ fn __action1573<
     __2: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __3: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67177,7 +67142,7 @@ fn __action1574<
     __1: (TextSize, (ast::Expr, ast::Pattern), TextSize),
     __2: (TextSize, token::Tok, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __1.2;
@@ -67201,7 +67166,7 @@ fn __action1575<
     __2: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Expr, ast::Pattern))>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __2.2;
@@ -67224,7 +67189,7 @@ fn __action1576<
     __0: (TextSize, token::Tok, TextSize),
     __1: (TextSize, (ast::Expr, ast::Pattern), TextSize),
     __2: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __1.2;
@@ -67246,7 +67211,7 @@ fn __action1577<
     __1: (TextSize, (ast::Expr, ast::Pattern), TextSize),
     __2: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Expr, ast::Pattern))>, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __2.2;
@@ -67272,7 +67237,7 @@ fn __action1578<
     __4: (TextSize, ast::Identifier, TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __1.2;
@@ -67302,7 +67267,7 @@ fn __action1579<
     __5: (TextSize, ast::Identifier, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __2.2;
@@ -67331,7 +67296,7 @@ fn __action1580<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, ast::Identifier, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __1.2;
@@ -67359,7 +67324,7 @@ fn __action1581<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, ast::Identifier, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __1.0;
     let __end0 = __2.2;
@@ -67644,7 +67609,7 @@ fn __action1594<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67674,7 +67639,7 @@ fn __action1595<
     __5: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67705,7 +67670,7 @@ fn __action1596<
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67737,7 +67702,7 @@ fn __action1597<
     __6: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __7: (TextSize, token::Tok, TextSize),
     __8: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67767,7 +67732,7 @@ fn __action1598<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67795,7 +67760,7 @@ fn __action1599<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67824,7 +67789,7 @@ fn __action1600<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67854,7 +67819,7 @@ fn __action1601<
     __5: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __6: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67882,7 +67847,7 @@ fn __action1602<
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67908,7 +67873,7 @@ fn __action1603<
     __3: (TextSize, alloc::vec::Vec<(token::Tok, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67933,7 +67898,7 @@ fn __action1604<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -67957,7 +67922,7 @@ fn __action1605<
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, alloc::vec::Vec<(token::Tok, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -67984,7 +67949,7 @@ fn __action1606<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -68014,7 +67979,7 @@ fn __action1607<
     __5: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -68045,7 +68010,7 @@ fn __action1608<
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -68077,7 +68042,7 @@ fn __action1609<
     __6: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __7: (TextSize, token::Tok, TextSize),
     __8: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -68107,7 +68072,7 @@ fn __action1610<
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -68135,7 +68100,7 @@ fn __action1611<
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -68164,7 +68129,7 @@ fn __action1612<
     __4: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __5: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __6: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -68194,7 +68159,7 @@ fn __action1613<
     __5: (TextSize, (ast::Identifier, ast::Pattern), TextSize),
     __6: (TextSize, alloc::vec::Vec<(token::Tok, (ast::Identifier, ast::Pattern))>, TextSize),
     __7: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -68222,7 +68187,7 @@ fn __action1614<
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, token::Tok, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -68248,7 +68213,7 @@ fn __action1615<
     __3: (TextSize, alloc::vec::Vec<(token::Tok, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
     __5: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;
@@ -68273,7 +68238,7 @@ fn __action1616<
     __1: (TextSize, token::Tok, TextSize),
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __2.2;
@@ -68297,7 +68262,7 @@ fn __action1617<
     __2: (TextSize, ast::Pattern, TextSize),
     __3: (TextSize, alloc::vec::Vec<(token::Tok, ast::Pattern)>, TextSize),
     __4: (TextSize, token::Tok, TextSize),
-) -> ast::PatternKind
+) -> ast::Pattern
 {
     let __start0 = __2.0;
     let __end0 = __3.2;

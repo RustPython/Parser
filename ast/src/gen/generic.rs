@@ -964,7 +964,7 @@ pub enum Cmpop {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Comprehension<R> {
+pub struct Comprehension<R = TextRange> {
     pub target: Expr<R>,
     pub iter: Expr<R>,
     pub ifs: Vec<Expr<R>>,
@@ -995,7 +995,7 @@ pub enum Excepthandler<R = TextRange> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Arguments<R> {
+pub struct Arguments<R = TextRange> {
     pub posonlyargs: Vec<Arg<R>>,
     pub args: Vec<Arg<R>>,
     pub vararg: Option<Box<Arg<R>>>,
@@ -1010,7 +1010,7 @@ pub struct Arguments<R> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Arg<R> {
+pub struct Arg<R = TextRange> {
     pub arg: Identifier,
     pub annotation: Option<Box<Expr<R>>>,
     pub type_comment: Option<String>,
@@ -1018,21 +1018,21 @@ pub struct Arg<R> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Keyword<R> {
+pub struct Keyword<R = TextRange> {
     pub arg: Option<Identifier>,
     pub value: Expr<R>,
     pub range: R,
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Alias<R> {
+pub struct Alias<R = TextRange> {
     pub name: Identifier,
     pub asname: Option<Identifier>,
     pub range: R,
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Withitem<R> {
+pub struct Withitem<R = TextRange> {
     pub context_expr: Expr<R>,
     pub optional_vars: Option<Box<Expr<R>>>,
     #[cfg(feature = "more-attributes")]
@@ -1042,7 +1042,7 @@ pub struct Withitem<R> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct MatchCase<R> {
+pub struct MatchCase<R = TextRange> {
     pub pattern: Pattern<R>,
     pub guard: Option<Box<Expr<R>>>,
     pub body: Vec<Stmt<R>>,

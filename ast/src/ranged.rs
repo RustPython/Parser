@@ -1,16 +1,4 @@
-use crate::text_size::{TextRange, TextSize};
-
-pub trait Ranged {
-    fn range(&self) -> TextRange;
-
-    fn start(&self) -> TextSize {
-        self.range().start()
-    }
-
-    fn end(&self) -> TextSize {
-        self.range().end()
-    }
-}
+use crate::text_size::TextRange;
 
 pub use crate::builtin::*;
 include!("gen/ranged.rs");

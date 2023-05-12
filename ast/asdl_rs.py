@@ -387,7 +387,7 @@ class StructVisitor(EmitVisitor):
         product_name = rust_type_name(name)
         self.emit_attrs(depth)
 
-        self.emit(f"pub struct {product_name}<R> {{", depth)
+        self.emit(f"pub struct {product_name}<R = TextRange> {{", depth)
         for f in product.fields:
             self.visit(f, type_info, "pub ", depth + 1)
         assert bool(product.attributes) == type_info.no_cfg(self.type_info)
@@ -657,7 +657,7 @@ class VisitorTraitDefVisitor(StructVisitor):
         self.emit_visitor(name, depth)
         self.emit_generic_visitor_signature(name, depth)
         depth += 1
-        self.emit("match node.node {", depth)
+        self.emit("match node {", depth)
         for t in sum.types:
             self.visit_match_for_type(name, enum_name, t, depth + 1)
         self.emit("}", depth)
@@ -925,7 +925,6 @@ class TraitImplVisitor(EmitVisitor):
             return f"Node::ast_from_object(_vm, get_node_field(_vm, &_object, {name}, {json.dumps(typename)})?)?"
 
 
-
 class RangedDefVisitor(EmitVisitor):
     def visitModule(self, mod):
         for dfn in mod.dfns:
@@ -937,41 +936,73 @@ class RangedDefVisitor(EmitVisitor):
     def visitSum(self, sum, name, depth):
         info = self.type_info[name]
 
-        # if info.is_simple:
-        #     return
+        if info.is_simple:
+            return
 
-        if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "more-attributes")]', 0)
-
-        self.emit(
-            f"""
-                impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
-                    fn range(&self) -> TextRange {{
-                        self.range
-                    }}
-                }}
-                """, 0)
+        for ty in sum.types:
+            info = self.type_info[ty.name]
+            self.make_ranged_impl(info)
 
     def visitProduct(self, product, name, depth):
         info = self.type_info[name]
 
-        # if info.is_simple:
-        #     return
+        self.make_ranged_impl(info)
+
+    def make_ranged_impl(self, info):
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "more-attributes")]', 0)
+
+        self.file.write(
+            f"""
+            impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
+                fn range(&self) -> TextRange {{
+                    self.range
+                }}
+            }}
+            """.strip()
+        )
+
+class LocatedDefVisitor(EmitVisitor):
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitSum(self, sum, name, depth):
+        info = self.type_info[name]
+
+        if info.is_simple:
+            return
+
+        for ty in sum.types:
+            info = self.type_info[ty.name]
+            self.make_located_impl(info)
+
+    def visitProduct(self, product, name, depth):
+        info = self.type_info[name]
+
+        self.make_located_impl(info)
+
+    def make_located_impl(self, info):
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "more-attributes")]', 0)
+
+        self.emit(f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}::<SourceRange>;", 0)
 
         if not info.no_cfg(self.type_info):
             self.emit('#[cfg(feature = "more-attributes")]', 0)
 
-        self.emit(
+        self.file.write(
             f"""
-                    impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
-                        fn range(&self) -> TextRange {{
-                            self.range
-                        }}
-                    }}
-                    """, 0)
-
-        for f in product.fields:
-            self.visit(f, info, "pub ", depth + 1)
+            impl Located for {info.rust_sum_name} {{
+                fn range(&self) -> SourceRange {{
+                    self.range
+                }}
+            }}
+            """.strip()
+        )
 
 class ChainOfVisitors:
     def __init__(self, *visitors):
@@ -997,40 +1028,12 @@ def write_visitor_def(mod, type_info, f):
 
 
 def write_ranged_def(mod, type_info, f):
+    f.write("use crate::Ranged;")
     RangedDefVisitor(f, type_info).visit(mod)
-# def write_ranged_def(mod, type_info, f):
-#     import pprint
-#     for info in type_info.values():
-#         pprint.pp(info.__dict__)
-#         if not info.is_simple and not info.product:
-#             if not info.no_cfg(type_info):
-#                 f.write('#[cfg(feature = "more-attributes")]')
-#             f.write(
-#                 f"""
-#             impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
-#                 fn range(&self) -> TextRange {{
-#                     self.range
-#                 }}
-#             }}
-#             """
-#             )
 
 
 def write_located_def(mod, type_info, f):
-    for info in type_info.values():
-        if not info.is_simple:
-            if not info.no_cfg(type_info):
-                f.write('#[cfg(feature = "more-attributes")]')
-            f.write(
-                f"""
-            impl Located for crate::generic::{info.rust_sum_name}::<SourceRange> {{
-                fn range(&self) -> SourceRange {{
-                    self.range
-                }}
-            }}
-            """
-            )
-
+    LocatedDefVisitor(f, type_info).visit(mod)
 
 def write_ast_mod(mod, type_info, f):
     f.write(

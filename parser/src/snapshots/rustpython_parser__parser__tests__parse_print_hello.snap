@@ -3,47 +3,35 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: Call(
-                        ExprCall {
-                            func: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "print",
-                                        ),
-                                        ctx: Load,
-                                        range: 0..5,
-                                    },
-                                ),
-                            },
-                            args: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Str(
-                                                "Hello world",
-                                            ),
-                                            kind: None,
-                                            range: 6..19,
-                                        },
-                                    ),
-                                },
-                            ],
-                            keywords: [],
-                            range: 0..20,
+    Expr(
+        StmtExpr {
+            value: Call(
+                ExprCall {
+                    func: Name(
+                        ExprName {
+                            id: Identifier(
+                                "print",
+                            ),
+                            ctx: Load,
+                            range: 0..5,
                         },
                     ),
+                    args: [
+                        Constant(
+                            ExprConstant {
+                                value: Str(
+                                    "Hello world",
+                                ),
+                                kind: None,
+                                range: 6..19,
+                            },
+                        ),
+                    ],
+                    keywords: [],
+                    range: 0..20,
                 },
-                range: 0..20,
-            },
-        ),
-    },
+            ),
+            range: 0..20,
+        },
+    ),
 ]

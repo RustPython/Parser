@@ -3,25 +3,19 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: FormattedValue(
-            ExprFormattedValue {
-                value: Attributed {
-                    custom: (),
-                    node: Yield(
-                        ExprYield {
-                            value: None,
-                            range: 3..8,
-                        },
-                    ),
+    FormattedValue(
+        ExprFormattedValue {
+            value: Yield(
+                ExprYield {
+                    value: None,
+                    range: 3..8,
                 },
-                conversion: Int(
-                    0,
-                ),
-                format_spec: None,
-                range: 0..10,
-            },
-        ),
-    },
+            ),
+            conversion: Int(
+                0,
+            ),
+            format_spec: None,
+            range: 0..10,
+        },
+    ),
 ]

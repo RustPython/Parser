@@ -2,54 +2,42 @@
 source: parser/src/parser.rs
 expression: parse_ast
 ---
-Attributed {
-    custom: (),
-    node: ListComp(
-        ExprListComp {
-            elt: Attributed {
-                custom: (),
-                node: Name(
+ListComp(
+    ExprListComp {
+        elt: Name(
+            ExprName {
+                id: Identifier(
+                    "x",
+                ),
+                ctx: Load,
+                range: 1..2,
+            },
+        ),
+        generators: [
+            Comprehension {
+                target: Name(
                     ExprName {
                         id: Identifier(
-                            "x",
+                            "y",
                         ),
-                        ctx: Load,
-                        range: 1..2,
+                        ctx: Store,
+                        range: 7..8,
                     },
                 ),
+                iter: Name(
+                    ExprName {
+                        id: Identifier(
+                            "z",
+                        ),
+                        ctx: Load,
+                        range: 12..13,
+                    },
+                ),
+                ifs: [],
+                is_async: false,
+                range: PhantomData<ruff_text_size::range::TextRange>,
             },
-            generators: [
-                Comprehension {
-                    target: Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "y",
-                                ),
-                                ctx: Store,
-                                range: 7..8,
-                            },
-                        ),
-                    },
-                    iter: Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "z",
-                                ),
-                                ctx: Load,
-                                range: 12..13,
-                            },
-                        ),
-                    },
-                    ifs: [],
-                    is_async: false,
-                    range: 3..13,
-                },
-            ],
-            range: 0..14,
-        },
-    ),
-}
+        ],
+        range: 0..14,
+    },
+)

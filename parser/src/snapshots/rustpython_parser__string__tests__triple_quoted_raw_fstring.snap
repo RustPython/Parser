@@ -3,46 +3,34 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: JoinedStr(
-                        ExprJoinedStr {
-                            values: [
-                                Attributed {
-                                    custom: (),
-                                    node: FormattedValue(
-                                        ExprFormattedValue {
-                                            value: Attributed {
-                                                custom: (),
-                                                node: Name(
-                                                    ExprName {
-                                                        id: Identifier(
-                                                            "x",
-                                                        ),
-                                                        ctx: Load,
-                                                        range: 6..7,
-                                                    },
-                                                ),
-                                            },
-                                            conversion: Int(
-                                                0,
-                                            ),
-                                            format_spec: None,
-                                            range: 0..11,
-                                        },
-                                    ),
-                                },
-                            ],
-                            range: 0..11,
-                        },
-                    ),
+    Expr(
+        StmtExpr {
+            value: JoinedStr(
+                ExprJoinedStr {
+                    values: [
+                        FormattedValue(
+                            ExprFormattedValue {
+                                value: Name(
+                                    ExprName {
+                                        id: Identifier(
+                                            "x",
+                                        ),
+                                        ctx: Load,
+                                        range: 6..7,
+                                    },
+                                ),
+                                conversion: Int(
+                                    0,
+                                ),
+                                format_spec: None,
+                                range: 0..11,
+                            },
+                        ),
+                    ],
+                    range: 0..11,
                 },
-                range: 0..11,
-            },
-        ),
-    },
+            ),
+            range: 0..11,
+        },
+    ),
 ]

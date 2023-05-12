@@ -3,93 +3,69 @@ source: parser/src/context.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: AugAssign(
-            StmtAugAssign {
-                target: Attributed {
-                    custom: (),
-                    node: Subscript(
-                        ExprSubscript {
-                            value: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "x",
-                                        ),
-                                        ctx: Load,
-                                        range: 0..1,
-                                    },
-                                ),
-                            },
-                            slice: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "y",
-                                        ),
-                                        ctx: Load,
-                                        range: 2..3,
-                                    },
-                                ),
-                            },
-                            ctx: Store,
-                            range: 0..4,
-                        },
-                    ),
-                },
-                op: Add,
-                value: Attributed {
-                    custom: (),
-                    node: Tuple(
-                        ExprTuple {
-                            elts: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                1,
-                                            ),
-                                            kind: None,
-                                            range: 9..10,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                2,
-                                            ),
-                                            kind: None,
-                                            range: 12..13,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                3,
-                                            ),
-                                            kind: None,
-                                            range: 15..16,
-                                        },
-                                    ),
-                                },
-                            ],
+    AugAssign(
+        StmtAugAssign {
+            target: Subscript(
+                ExprSubscript {
+                    value: Name(
+                        ExprName {
+                            id: Identifier(
+                                "x",
+                            ),
                             ctx: Load,
-                            range: 8..17,
+                            range: 0..1,
                         },
                     ),
+                    slice: Name(
+                        ExprName {
+                            id: Identifier(
+                                "y",
+                            ),
+                            ctx: Load,
+                            range: 2..3,
+                        },
+                    ),
+                    ctx: Store,
+                    range: 0..4,
                 },
-                range: 0..17,
-            },
-        ),
-    },
+            ),
+            op: Add,
+            value: Tuple(
+                ExprTuple {
+                    elts: [
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    1,
+                                ),
+                                kind: None,
+                                range: 9..10,
+                            },
+                        ),
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    2,
+                                ),
+                                kind: None,
+                                range: 12..13,
+                            },
+                        ),
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    3,
+                                ),
+                                kind: None,
+                                range: 15..16,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
+                    range: 8..17,
+                },
+            ),
+            range: 0..17,
+        },
+    ),
 ]

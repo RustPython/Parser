@@ -3,59 +3,44 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Expr(
-            StmtExpr {
-                value: Attributed {
-                    custom: (),
-                    node: Call(
-                        ExprCall {
-                            func: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "print",
-                                        ),
-                                        ctx: Load,
-                                        range: 0..5,
-                                    },
-                                ),
-                            },
-                            args: [
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Str(
-                                                "Hello world",
-                                            ),
-                                            kind: None,
-                                            range: 6..19,
-                                        },
-                                    ),
-                                },
-                                Attributed {
-                                    custom: (),
-                                    node: Constant(
-                                        ExprConstant {
-                                            value: Int(
-                                                2,
-                                            ),
-                                            kind: None,
-                                            range: 21..22,
-                                        },
-                                    ),
-                                },
-                            ],
-                            keywords: [],
-                            range: 0..23,
+    Expr(
+        StmtExpr {
+            value: Call(
+                ExprCall {
+                    func: Name(
+                        ExprName {
+                            id: Identifier(
+                                "print",
+                            ),
+                            ctx: Load,
+                            range: 0..5,
                         },
                     ),
+                    args: [
+                        Constant(
+                            ExprConstant {
+                                value: Str(
+                                    "Hello world",
+                                ),
+                                kind: None,
+                                range: 6..19,
+                            },
+                        ),
+                        Constant(
+                            ExprConstant {
+                                value: Int(
+                                    2,
+                                ),
+                                kind: None,
+                                range: 21..22,
+                            },
+                        ),
+                    ],
+                    keywords: [],
+                    range: 0..23,
                 },
-                range: 0..23,
-            },
-        ),
-    },
+            ),
+            range: 0..23,
+        },
+    ),
 ]

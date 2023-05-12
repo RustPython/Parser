@@ -2,214 +2,157 @@
 source: parser/src/parser.rs
 expression: parse_ast
 ---
-Attributed {
-    custom: (),
-    node: Call(
-        ExprCall {
-            func: Attributed {
-                custom: (),
-                node: Attribute(
-                    ExprAttribute {
-                        value: Attributed {
-                            custom: (),
-                            node: Constant(
-                                ExprConstant {
-                                    value: Str(
-                                        " ",
-                                    ),
-                                    kind: None,
-                                    range: 0..3,
-                                },
-                            ),
-                        },
-                        attr: Identifier(
-                            "join",
+Call(
+    ExprCall {
+        func: Attribute(
+            ExprAttribute {
+                value: Constant(
+                    ExprConstant {
+                        value: Str(
+                            " ",
                         ),
-                        ctx: Load,
-                        range: 0..8,
+                        kind: None,
+                        range: 0..3,
                     },
                 ),
+                attr: Identifier(
+                    "join",
+                ),
+                ctx: Load,
+                range: 0..8,
             },
-            args: [
-                Attributed {
-                    custom: (),
-                    node: GeneratorExp(
-                        ExprGeneratorExp {
-                            elt: Attributed {
-                                custom: (),
-                                node: Name(
-                                    ExprName {
-                                        id: Identifier(
-                                            "sql",
-                                        ),
-                                        ctx: Load,
-                                        range: 14..17,
-                                    },
-                                ),
-                            },
-                            generators: [
-                                Comprehension {
-                                    target: Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "sql",
-                                                ),
-                                                ctx: Store,
-                                                range: 26..29,
-                                            },
-                                        ),
-                                    },
-                                    iter: Attributed {
-                                        custom: (),
-                                        node: Tuple(
-                                            ExprTuple {
-                                                elts: [
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: IfExp(
-                                                            ExprIfExp {
-                                                                test: Attributed {
-                                                                    custom: (),
-                                                                    node: Name(
-                                                                        ExprName {
-                                                                            id: Identifier(
-                                                                                "limit",
-                                                                            ),
-                                                                            ctx: Load,
-                                                                            range: 65..70,
-                                                                        },
-                                                                    ),
-                                                                },
-                                                                body: Attributed {
-                                                                    custom: (),
-                                                                    node: BinOp(
-                                                                        ExprBinOp {
-                                                                            left: Attributed {
-                                                                                custom: (),
-                                                                                node: Constant(
-                                                                                    ExprConstant {
-                                                                                        value: Str(
-                                                                                            "LIMIT %d",
-                                                                                        ),
-                                                                                        kind: None,
-                                                                                        range: 43..53,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                            op: Mod,
-                                                                            right: Attributed {
-                                                                                custom: (),
-                                                                                node: Name(
-                                                                                    ExprName {
-                                                                                        id: Identifier(
-                                                                                            "limit",
-                                                                                        ),
-                                                                                        ctx: Load,
-                                                                                        range: 56..61,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                            range: 43..61,
-                                                                        },
-                                                                    ),
-                                                                },
-                                                                orelse: Attributed {
-                                                                    custom: (),
-                                                                    node: Constant(
-                                                                        ExprConstant {
-                                                                            value: None,
-                                                                            kind: None,
-                                                                            range: 76..80,
-                                                                        },
-                                                                    ),
-                                                                },
-                                                                range: 43..80,
-                                                            },
-                                                        ),
-                                                    },
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: IfExp(
-                                                            ExprIfExp {
-                                                                test: Attributed {
-                                                                    custom: (),
-                                                                    node: Name(
-                                                                        ExprName {
-                                                                            id: Identifier(
-                                                                                "offset",
-                                                                            ),
-                                                                            ctx: Load,
-                                                                            range: 116..122,
-                                                                        },
-                                                                    ),
-                                                                },
-                                                                body: Attributed {
-                                                                    custom: (),
-                                                                    node: BinOp(
-                                                                        ExprBinOp {
-                                                                            left: Attributed {
-                                                                                custom: (),
-                                                                                node: Constant(
-                                                                                    ExprConstant {
-                                                                                        value: Str(
-                                                                                            "OFFSET %d",
-                                                                                        ),
-                                                                                        kind: None,
-                                                                                        range: 91..102,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                            op: Mod,
-                                                                            right: Attributed {
-                                                                                custom: (),
-                                                                                node: Name(
-                                                                                    ExprName {
-                                                                                        id: Identifier(
-                                                                                            "offset",
-                                                                                        ),
-                                                                                        ctx: Load,
-                                                                                        range: 105..111,
-                                                                                    },
-                                                                                ),
-                                                                            },
-                                                                            range: 91..111,
-                                                                        },
-                                                                    ),
-                                                                },
-                                                                orelse: Attributed {
-                                                                    custom: (),
-                                                                    node: Constant(
-                                                                        ExprConstant {
-                                                                            value: None,
-                                                                            kind: None,
-                                                                            range: 128..132,
-                                                                        },
-                                                                    ),
-                                                                },
-                                                                range: 90..132,
-                                                            },
-                                                        ),
-                                                    },
-                                                ],
-                                                ctx: Load,
-                                                range: 33..139,
-                                            },
-                                        ),
-                                    },
-                                    ifs: [],
-                                    is_async: false,
-                                    range: 22..139,
-                                },
-                            ],
-                            range: 14..139,
+        ),
+        args: [
+            GeneratorExp(
+                ExprGeneratorExp {
+                    elt: Name(
+                        ExprName {
+                            id: Identifier(
+                                "sql",
+                            ),
+                            ctx: Load,
+                            range: 14..17,
                         },
                     ),
+                    generators: [
+                        Comprehension {
+                            target: Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "sql",
+                                    ),
+                                    ctx: Store,
+                                    range: 26..29,
+                                },
+                            ),
+                            iter: Tuple(
+                                ExprTuple {
+                                    elts: [
+                                        IfExp(
+                                            ExprIfExp {
+                                                test: Name(
+                                                    ExprName {
+                                                        id: Identifier(
+                                                            "limit",
+                                                        ),
+                                                        ctx: Load,
+                                                        range: 65..70,
+                                                    },
+                                                ),
+                                                body: BinOp(
+                                                    ExprBinOp {
+                                                        left: Constant(
+                                                            ExprConstant {
+                                                                value: Str(
+                                                                    "LIMIT %d",
+                                                                ),
+                                                                kind: None,
+                                                                range: 43..53,
+                                                            },
+                                                        ),
+                                                        op: Mod,
+                                                        right: Name(
+                                                            ExprName {
+                                                                id: Identifier(
+                                                                    "limit",
+                                                                ),
+                                                                ctx: Load,
+                                                                range: 56..61,
+                                                            },
+                                                        ),
+                                                        range: 43..61,
+                                                    },
+                                                ),
+                                                orelse: Constant(
+                                                    ExprConstant {
+                                                        value: None,
+                                                        kind: None,
+                                                        range: 76..80,
+                                                    },
+                                                ),
+                                                range: 43..80,
+                                            },
+                                        ),
+                                        IfExp(
+                                            ExprIfExp {
+                                                test: Name(
+                                                    ExprName {
+                                                        id: Identifier(
+                                                            "offset",
+                                                        ),
+                                                        ctx: Load,
+                                                        range: 116..122,
+                                                    },
+                                                ),
+                                                body: BinOp(
+                                                    ExprBinOp {
+                                                        left: Constant(
+                                                            ExprConstant {
+                                                                value: Str(
+                                                                    "OFFSET %d",
+                                                                ),
+                                                                kind: None,
+                                                                range: 91..102,
+                                                            },
+                                                        ),
+                                                        op: Mod,
+                                                        right: Name(
+                                                            ExprName {
+                                                                id: Identifier(
+                                                                    "offset",
+                                                                ),
+                                                                ctx: Load,
+                                                                range: 105..111,
+                                                            },
+                                                        ),
+                                                        range: 91..111,
+                                                    },
+                                                ),
+                                                orelse: Constant(
+                                                    ExprConstant {
+                                                        value: None,
+                                                        kind: None,
+                                                        range: 128..132,
+                                                    },
+                                                ),
+                                                range: 90..132,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                    range: 33..139,
+                                },
+                            ),
+                            ifs: [],
+                            is_async: false,
+                            range: PhantomData<ruff_text_size::range::TextRange>,
+                        },
+                    ],
+                    range: 14..139,
                 },
-            ],
-            keywords: [],
-            range: 0..141,
-        },
-    ),
-}
+            ),
+        ],
+        keywords: [],
+        range: 0..141,
+    },
+)

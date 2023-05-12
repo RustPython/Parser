@@ -21,7 +21,7 @@ type ParameterDef = (ast::Arg, Option<ast::Expr>);
 pub(crate) fn validate_arguments(
     arguments: ast::Arguments,
 ) -> Result<ast::Arguments, LexicalError> {
-    let mut all_args: Vec<&ast::Attributed<ast::ArgData>> = vec![];
+    let mut all_args: Vec<&ast::Arg> = vec![];
 
     all_args.extend(arguments.posonlyargs.iter());
     all_args.extend(arguments.args.iter());
@@ -118,11 +118,11 @@ pub(crate) fn parse_args(func_args: Vec<FunctionArgument>) -> Result<ArgumentLis
                     double_starred = true;
                 }
 
-                keywords.push(ast::Keyword::new(ast::KeywordData {
+                keywords.push(ast::Keyword {
                     arg: name.map(ast::Identifier::new),
                     value,
                     range: TextRange::new(start, end),
-                }));
+                });
             }
             None => {
                 // Positional arguments mustn't follow keyword arguments.
@@ -148,8 +148,8 @@ pub(crate) fn parse_args(func_args: Vec<FunctionArgument>) -> Result<ArgumentLis
 }
 
 // Check if an expression is a starred expression.
-fn is_starred(exp: &ast::Expr) -> bool {
-    matches!(exp.node, ast::ExprKind::Starred { .. })
+const fn is_starred(exp: &ast::Expr) -> bool {
+    exp.is_starred_expr()
 }
 
 #[cfg(test)]

@@ -3,64 +3,49 @@ source: parser/src/string.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: FormattedValue(
-            ExprFormattedValue {
-                value: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "a",
-                            ),
-                            ctx: Load,
-                            range: 3..4,
-                        },
+    FormattedValue(
+        ExprFormattedValue {
+            value: Name(
+                ExprName {
+                    id: Identifier(
+                        "a",
                     ),
+                    ctx: Load,
+                    range: 3..4,
                 },
-                conversion: Int(
-                    0,
-                ),
-                format_spec: None,
-                range: 0..18,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: FormattedValue(
-            ExprFormattedValue {
-                value: Attributed {
-                    custom: (),
-                    node: Name(
-                        ExprName {
-                            id: Identifier(
-                                "b",
-                            ),
-                            ctx: Load,
-                            range: 7..8,
-                        },
+            ),
+            conversion: Int(
+                0,
+            ),
+            format_spec: None,
+            range: 0..18,
+        },
+    ),
+    FormattedValue(
+        ExprFormattedValue {
+            value: Name(
+                ExprName {
+                    id: Identifier(
+                        "b",
                     ),
+                    ctx: Load,
+                    range: 7..8,
                 },
-                conversion: Int(
-                    0,
-                ),
-                format_spec: None,
-                range: 0..18,
-            },
-        ),
-    },
-    Attributed {
-        custom: (),
-        node: Constant(
-            ExprConstant {
-                value: Str(
-                    "{foo}",
-                ),
-                kind: None,
-                range: 0..18,
-            },
-        ),
-    },
+            ),
+            conversion: Int(
+                0,
+            ),
+            format_spec: None,
+            range: 0..18,
+        },
+    ),
+    Constant(
+        ExprConstant {
+            value: Str(
+                "{foo}",
+            ),
+            kind: None,
+            range: 0..18,
+        },
+    ),
 ]

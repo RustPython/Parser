@@ -4,73 +4,58 @@ expression: parse_ast
 ---
 Ok(
     [
-        Attributed {
-            custom: (),
-            node: FunctionDef(
-                StmtFunctionDef {
-                    name: Identifier(
-                        "f",
-                    ),
-                    args: Arguments {
-                        posonlyargs: [],
-                        args: [],
-                        vararg: None,
-                        kwonlyargs: [
-                            Attributed {
-                                custom: (),
-                                node: ArgData {
-                                    arg: Identifier(
-                                        "a",
-                                    ),
-                                    annotation: None,
-                                    type_comment: None,
-                                    range: 9..10,
-                                },
-                            },
-                            Attributed {
-                                custom: (),
-                                node: ArgData {
-                                    arg: Identifier(
-                                        "b",
-                                    ),
-                                    annotation: None,
-                                    type_comment: None,
-                                    range: 12..13,
-                                },
-                            },
-                            Attributed {
-                                custom: (),
-                                node: ArgData {
-                                    arg: Identifier(
-                                        "c",
-                                    ),
-                                    annotation: None,
-                                    type_comment: None,
-                                    range: 15..16,
-                                },
-                            },
-                        ],
-                        kw_defaults: [],
-                        kwarg: None,
-                        defaults: [],
-                        range: 6..16,
-                    },
-                    body: [
-                        Attributed {
-                            custom: (),
-                            node: Pass(
-                                StmtPass {
-                                    range: 19..23,
-                                },
+        FunctionDef(
+            StmtFunctionDef {
+                name: Identifier(
+                    "f",
+                ),
+                args: Arguments {
+                    posonlyargs: [],
+                    args: [],
+                    vararg: None,
+                    kwonlyargs: [
+                        Arg {
+                            arg: Identifier(
+                                "a",
                             ),
+                            annotation: None,
+                            type_comment: None,
+                            range: 9..10,
+                        },
+                        Arg {
+                            arg: Identifier(
+                                "b",
+                            ),
+                            annotation: None,
+                            type_comment: None,
+                            range: 12..13,
+                        },
+                        Arg {
+                            arg: Identifier(
+                                "c",
+                            ),
+                            annotation: None,
+                            type_comment: None,
+                            range: 15..16,
                         },
                     ],
-                    decorator_list: [],
-                    returns: None,
-                    type_comment: None,
-                    range: 0..23,
+                    kw_defaults: [],
+                    kwarg: None,
+                    defaults: [],
+                    range: PhantomData<ruff_text_size::range::TextRange>,
                 },
-            ),
-        },
+                body: [
+                    Pass(
+                        StmtPass {
+                            range: 19..23,
+                        },
+                    ),
+                ],
+                decorator_list: [],
+                returns: None,
+                type_comment: None,
+                range: 0..23,
+            },
+        ),
     ],
 )

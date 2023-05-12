@@ -3,569 +3,425 @@ source: parser/src/parser.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: TryStar(
-            StmtTryStar {
-                body: [
-                    Attributed {
-                        custom: (),
-                        node: Raise(
-                            StmtRaise {
-                                exc: Some(
-                                    Attributed {
-                                        custom: (),
-                                        node: Call(
-                                            ExprCall {
-                                                func: Attributed {
-                                                    custom: (),
-                                                    node: Name(
-                                                        ExprName {
-                                                            id: Identifier(
-                                                                "ExceptionGroup",
+    TryStar(
+        StmtTryStar {
+            body: [
+                Raise(
+                    StmtRaise {
+                        exc: Some(
+                            Call(
+                                ExprCall {
+                                    func: Name(
+                                        ExprName {
+                                            id: Identifier(
+                                                "ExceptionGroup",
+                                            ),
+                                            ctx: Load,
+                                            range: 15..29,
+                                        },
+                                    ),
+                                    args: [
+                                        Constant(
+                                            ExprConstant {
+                                                value: Str(
+                                                    "eg",
+                                                ),
+                                                kind: None,
+                                                range: 30..34,
+                                            },
+                                        ),
+                                        List(
+                                            ExprList {
+                                                elts: [
+                                                    Call(
+                                                        ExprCall {
+                                                            func: Name(
+                                                                ExprName {
+                                                                    id: Identifier(
+                                                                        "ValueError",
+                                                                    ),
+                                                                    ctx: Load,
+                                                                    range: 45..55,
+                                                                },
                                                             ),
-                                                            ctx: Load,
-                                                            range: 15..29,
+                                                            args: [
+                                                                Constant(
+                                                                    ExprConstant {
+                                                                        value: Int(
+                                                                            1,
+                                                                        ),
+                                                                        kind: None,
+                                                                        range: 56..57,
+                                                                    },
+                                                                ),
+                                                            ],
+                                                            keywords: [],
+                                                            range: 45..58,
                                                         },
                                                     ),
-                                                },
-                                                args: [
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: Constant(
-                                                            ExprConstant {
-                                                                value: Str(
-                                                                    "eg",
+                                                    Call(
+                                                        ExprCall {
+                                                            func: Name(
+                                                                ExprName {
+                                                                    id: Identifier(
+                                                                        "TypeError",
+                                                                    ),
+                                                                    ctx: Load,
+                                                                    range: 60..69,
+                                                                },
+                                                            ),
+                                                            args: [
+                                                                Constant(
+                                                                    ExprConstant {
+                                                                        value: Int(
+                                                                            2,
+                                                                        ),
+                                                                        kind: None,
+                                                                        range: 70..71,
+                                                                    },
                                                                 ),
-                                                                kind: None,
-                                                                range: 30..34,
-                                                            },
-                                                        ),
-                                                    },
-                                                    Attributed {
-                                                        custom: (),
-                                                        node: List(
-                                                            ExprList {
-                                                                elts: [
-                                                                    Attributed {
-                                                                        custom: (),
-                                                                        node: Call(
-                                                                            ExprCall {
-                                                                                func: Attributed {
-                                                                                    custom: (),
-                                                                                    node: Name(
-                                                                                        ExprName {
-                                                                                            id: Identifier(
-                                                                                                "ValueError",
-                                                                                            ),
-                                                                                            ctx: Load,
-                                                                                            range: 45..55,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                args: [
-                                                                                    Attributed {
-                                                                                        custom: (),
-                                                                                        node: Constant(
-                                                                                            ExprConstant {
-                                                                                                value: Int(
-                                                                                                    1,
-                                                                                                ),
-                                                                                                kind: None,
-                                                                                                range: 56..57,
-                                                                                            },
-                                                                                        ),
-                                                                                    },
-                                                                                ],
-                                                                                keywords: [],
-                                                                                range: 45..58,
-                                                                            },
+                                                            ],
+                                                            keywords: [],
+                                                            range: 60..72,
+                                                        },
+                                                    ),
+                                                    Call(
+                                                        ExprCall {
+                                                            func: Name(
+                                                                ExprName {
+                                                                    id: Identifier(
+                                                                        "OSError",
+                                                                    ),
+                                                                    ctx: Load,
+                                                                    range: 74..81,
+                                                                },
+                                                            ),
+                                                            args: [
+                                                                Constant(
+                                                                    ExprConstant {
+                                                                        value: Int(
+                                                                            3,
                                                                         ),
+                                                                        kind: None,
+                                                                        range: 82..83,
                                                                     },
-                                                                    Attributed {
-                                                                        custom: (),
-                                                                        node: Call(
-                                                                            ExprCall {
-                                                                                func: Attributed {
-                                                                                    custom: (),
-                                                                                    node: Name(
-                                                                                        ExprName {
-                                                                                            id: Identifier(
-                                                                                                "TypeError",
-                                                                                            ),
-                                                                                            ctx: Load,
-                                                                                            range: 60..69,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                args: [
-                                                                                    Attributed {
-                                                                                        custom: (),
-                                                                                        node: Constant(
-                                                                                            ExprConstant {
-                                                                                                value: Int(
-                                                                                                    2,
-                                                                                                ),
-                                                                                                kind: None,
-                                                                                                range: 70..71,
-                                                                                            },
-                                                                                        ),
-                                                                                    },
-                                                                                ],
-                                                                                keywords: [],
-                                                                                range: 60..72,
-                                                                            },
+                                                                ),
+                                                            ],
+                                                            keywords: [],
+                                                            range: 74..84,
+                                                        },
+                                                    ),
+                                                    Call(
+                                                        ExprCall {
+                                                            func: Name(
+                                                                ExprName {
+                                                                    id: Identifier(
+                                                                        "OSError",
+                                                                    ),
+                                                                    ctx: Load,
+                                                                    range: 86..93,
+                                                                },
+                                                            ),
+                                                            args: [
+                                                                Constant(
+                                                                    ExprConstant {
+                                                                        value: Int(
+                                                                            4,
                                                                         ),
+                                                                        kind: None,
+                                                                        range: 94..95,
                                                                     },
-                                                                    Attributed {
-                                                                        custom: (),
-                                                                        node: Call(
-                                                                            ExprCall {
-                                                                                func: Attributed {
-                                                                                    custom: (),
-                                                                                    node: Name(
-                                                                                        ExprName {
-                                                                                            id: Identifier(
-                                                                                                "OSError",
-                                                                                            ),
-                                                                                            ctx: Load,
-                                                                                            range: 74..81,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                args: [
-                                                                                    Attributed {
-                                                                                        custom: (),
-                                                                                        node: Constant(
-                                                                                            ExprConstant {
-                                                                                                value: Int(
-                                                                                                    3,
-                                                                                                ),
-                                                                                                kind: None,
-                                                                                                range: 82..83,
-                                                                                            },
-                                                                                        ),
-                                                                                    },
-                                                                                ],
-                                                                                keywords: [],
-                                                                                range: 74..84,
-                                                                            },
-                                                                        ),
-                                                                    },
-                                                                    Attributed {
-                                                                        custom: (),
-                                                                        node: Call(
-                                                                            ExprCall {
-                                                                                func: Attributed {
-                                                                                    custom: (),
-                                                                                    node: Name(
-                                                                                        ExprName {
-                                                                                            id: Identifier(
-                                                                                                "OSError",
-                                                                                            ),
-                                                                                            ctx: Load,
-                                                                                            range: 86..93,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                args: [
-                                                                                    Attributed {
-                                                                                        custom: (),
-                                                                                        node: Constant(
-                                                                                            ExprConstant {
-                                                                                                value: Int(
-                                                                                                    4,
-                                                                                                ),
-                                                                                                kind: None,
-                                                                                                range: 94..95,
-                                                                                            },
-                                                                                        ),
-                                                                                    },
-                                                                                ],
-                                                                                keywords: [],
-                                                                                range: 86..96,
-                                                                            },
-                                                                        ),
-                                                                    },
-                                                                ],
-                                                                ctx: Load,
-                                                                range: 44..97,
-                                                            },
-                                                        ),
-                                                    },
+                                                                ),
+                                                            ],
+                                                            keywords: [],
+                                                            range: 86..96,
+                                                        },
+                                                    ),
                                                 ],
-                                                keywords: [],
-                                                range: 15..98,
-                                            },
-                                        ),
-                                    },
-                                ),
-                                cause: None,
-                                range: 9..98,
-                            },
-                        ),
-                    },
-                ],
-                handlers: [
-                    Attributed {
-                        custom: (),
-                        node: ExceptHandler(
-                            ExcepthandlerExceptHandler {
-                                type_: Some(
-                                    Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "TypeError",
-                                                ),
                                                 ctx: Load,
-                                                range: 107..116,
+                                                range: 44..97,
                                             },
                                         ),
-                                    },
-                                ),
-                                name: Some(
-                                    Identifier(
-                                        "e",
+                                    ],
+                                    keywords: [],
+                                    range: 15..98,
+                                },
+                            ),
+                        ),
+                        cause: None,
+                        range: 9..98,
+                    },
+                ),
+            ],
+            handlers: [
+                ExceptHandler(
+                    ExcepthandlerExceptHandler {
+                        type_: Some(
+                            Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "TypeError",
                                     ),
-                                ),
-                                body: [
-                                    Attributed {
-                                        custom: (),
-                                        node: Expr(
-                                            StmtExpr {
-                                                value: Attributed {
-                                                    custom: (),
-                                                    node: Call(
-                                                        ExprCall {
-                                                            func: Attributed {
-                                                                custom: (),
-                                                                node: Name(
-                                                                    ExprName {
-                                                                        id: Identifier(
-                                                                            "print",
-                                                                        ),
-                                                                        ctx: Load,
-                                                                        range: 127..132,
-                                                                    },
-                                                                ),
-                                                            },
-                                                            args: [
-                                                                Attributed {
-                                                                    custom: (),
-                                                                    node: JoinedStr(
-                                                                        ExprJoinedStr {
-                                                                            values: [
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: Constant(
-                                                                                        ExprConstant {
-                                                                                            value: Str(
-                                                                                                "caught ",
-                                                                                            ),
-                                                                                            kind: None,
-                                                                                            range: 133..179,
-                                                                                        },
+                                    ctx: Load,
+                                    range: 107..116,
+                                },
+                            ),
+                        ),
+                        name: Some(
+                            Identifier(
+                                "e",
+                            ),
+                        ),
+                        body: [
+                            Expr(
+                                StmtExpr {
+                                    value: Call(
+                                        ExprCall {
+                                            func: Name(
+                                                ExprName {
+                                                    id: Identifier(
+                                                        "print",
+                                                    ),
+                                                    ctx: Load,
+                                                    range: 127..132,
+                                                },
+                                            ),
+                                            args: [
+                                                JoinedStr(
+                                                    ExprJoinedStr {
+                                                        values: [
+                                                            Constant(
+                                                                ExprConstant {
+                                                                    value: Str(
+                                                                        "caught ",
+                                                                    ),
+                                                                    kind: None,
+                                                                    range: 133..179,
+                                                                },
+                                                            ),
+                                                            FormattedValue(
+                                                                ExprFormattedValue {
+                                                                    value: Call(
+                                                                        ExprCall {
+                                                                            func: Name(
+                                                                                ExprName {
+                                                                                    id: Identifier(
+                                                                                        "type",
                                                                                     ),
+                                                                                    ctx: Load,
+                                                                                    range: 143..147,
                                                                                 },
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: FormattedValue(
-                                                                                        ExprFormattedValue {
-                                                                                            value: Attributed {
-                                                                                                custom: (),
-                                                                                                node: Call(
-                                                                                                    ExprCall {
-                                                                                                        func: Attributed {
-                                                                                                            custom: (),
-                                                                                                            node: Name(
-                                                                                                                ExprName {
-                                                                                                                    id: Identifier(
-                                                                                                                        "type",
-                                                                                                                    ),
-                                                                                                                    ctx: Load,
-                                                                                                                    range: 143..147,
-                                                                                                                },
-                                                                                                            ),
-                                                                                                        },
-                                                                                                        args: [
-                                                                                                            Attributed {
-                                                                                                                custom: (),
-                                                                                                                node: Name(
-                                                                                                                    ExprName {
-                                                                                                                        id: Identifier(
-                                                                                                                            "e",
-                                                                                                                        ),
-                                                                                                                        ctx: Load,
-                                                                                                                        range: 148..149,
-                                                                                                                    },
-                                                                                                                ),
-                                                                                                            },
-                                                                                                        ],
-                                                                                                        keywords: [],
-                                                                                                        range: 143..150,
-                                                                                                    },
-                                                                                                ),
-                                                                                            },
-                                                                                            conversion: Int(
-                                                                                                0,
-                                                                                            ),
-                                                                                            format_spec: None,
-                                                                                            range: 133..179,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: Constant(
-                                                                                        ExprConstant {
-                                                                                            value: Str(
-                                                                                                " with nested ",
-                                                                                            ),
-                                                                                            kind: None,
-                                                                                            range: 133..179,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: FormattedValue(
-                                                                                        ExprFormattedValue {
-                                                                                            value: Attributed {
-                                                                                                custom: (),
-                                                                                                node: Attribute(
-                                                                                                    ExprAttribute {
-                                                                                                        value: Attributed {
-                                                                                                            custom: (),
-                                                                                                            node: Name(
-                                                                                                                ExprName {
-                                                                                                                    id: Identifier(
-                                                                                                                        "e",
-                                                                                                                    ),
-                                                                                                                    ctx: Load,
-                                                                                                                    range: 165..166,
-                                                                                                                },
-                                                                                                            ),
-                                                                                                        },
-                                                                                                        attr: Identifier(
-                                                                                                            "exceptions",
-                                                                                                        ),
-                                                                                                        ctx: Load,
-                                                                                                        range: 165..177,
-                                                                                                    },
-                                                                                                ),
-                                                                                            },
-                                                                                            conversion: Int(
-                                                                                                0,
-                                                                                            ),
-                                                                                            format_spec: None,
-                                                                                            range: 133..179,
-                                                                                        },
-                                                                                    ),
-                                                                                },
+                                                                            ),
+                                                                            args: [
+                                                                                Name(
+                                                                                    ExprName {
+                                                                                        id: Identifier(
+                                                                                            "e",
+                                                                                        ),
+                                                                                        ctx: Load,
+                                                                                        range: 148..149,
+                                                                                    },
+                                                                                ),
                                                                             ],
-                                                                            range: 133..179,
+                                                                            keywords: [],
+                                                                            range: 143..150,
                                                                         },
                                                                     ),
+                                                                    conversion: Int(
+                                                                        0,
+                                                                    ),
+                                                                    format_spec: None,
+                                                                    range: 133..179,
                                                                 },
-                                                            ],
-                                                            keywords: [],
-                                                            range: 127..180,
-                                                        },
-                                                    ),
-                                                },
-                                                range: 127..180,
-                                            },
-                                        ),
-                                    },
-                                ],
-                                range: 99..180,
-                            },
-                        ),
-                    },
-                    Attributed {
-                        custom: (),
-                        node: ExceptHandler(
-                            ExcepthandlerExceptHandler {
-                                type_: Some(
-                                    Attributed {
-                                        custom: (),
-                                        node: Name(
-                                            ExprName {
-                                                id: Identifier(
-                                                    "OSError",
-                                                ),
-                                                ctx: Load,
-                                                range: 189..196,
-                                            },
-                                        ),
-                                    },
-                                ),
-                                name: Some(
-                                    Identifier(
-                                        "e",
-                                    ),
-                                ),
-                                body: [
-                                    Attributed {
-                                        custom: (),
-                                        node: Expr(
-                                            StmtExpr {
-                                                value: Attributed {
-                                                    custom: (),
-                                                    node: Call(
-                                                        ExprCall {
-                                                            func: Attributed {
-                                                                custom: (),
-                                                                node: Name(
-                                                                    ExprName {
-                                                                        id: Identifier(
-                                                                            "print",
-                                                                        ),
-                                                                        ctx: Load,
-                                                                        range: 207..212,
-                                                                    },
-                                                                ),
-                                                            },
-                                                            args: [
-                                                                Attributed {
-                                                                    custom: (),
-                                                                    node: JoinedStr(
-                                                                        ExprJoinedStr {
-                                                                            values: [
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: Constant(
-                                                                                        ExprConstant {
-                                                                                            value: Str(
-                                                                                                "caught ",
-                                                                                            ),
-                                                                                            kind: None,
-                                                                                            range: 213..259,
-                                                                                        },
+                                                            ),
+                                                            Constant(
+                                                                ExprConstant {
+                                                                    value: Str(
+                                                                        " with nested ",
+                                                                    ),
+                                                                    kind: None,
+                                                                    range: 133..179,
+                                                                },
+                                                            ),
+                                                            FormattedValue(
+                                                                ExprFormattedValue {
+                                                                    value: Attribute(
+                                                                        ExprAttribute {
+                                                                            value: Name(
+                                                                                ExprName {
+                                                                                    id: Identifier(
+                                                                                        "e",
                                                                                     ),
+                                                                                    ctx: Load,
+                                                                                    range: 165..166,
                                                                                 },
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: FormattedValue(
-                                                                                        ExprFormattedValue {
-                                                                                            value: Attributed {
-                                                                                                custom: (),
-                                                                                                node: Call(
-                                                                                                    ExprCall {
-                                                                                                        func: Attributed {
-                                                                                                            custom: (),
-                                                                                                            node: Name(
-                                                                                                                ExprName {
-                                                                                                                    id: Identifier(
-                                                                                                                        "type",
-                                                                                                                    ),
-                                                                                                                    ctx: Load,
-                                                                                                                    range: 223..227,
-                                                                                                                },
-                                                                                                            ),
-                                                                                                        },
-                                                                                                        args: [
-                                                                                                            Attributed {
-                                                                                                                custom: (),
-                                                                                                                node: Name(
-                                                                                                                    ExprName {
-                                                                                                                        id: Identifier(
-                                                                                                                            "e",
-                                                                                                                        ),
-                                                                                                                        ctx: Load,
-                                                                                                                        range: 228..229,
-                                                                                                                    },
-                                                                                                                ),
-                                                                                                            },
-                                                                                                        ],
-                                                                                                        keywords: [],
-                                                                                                        range: 223..230,
-                                                                                                    },
-                                                                                                ),
-                                                                                            },
-                                                                                            conversion: Int(
-                                                                                                0,
-                                                                                            ),
-                                                                                            format_spec: None,
-                                                                                            range: 213..259,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: Constant(
-                                                                                        ExprConstant {
-                                                                                            value: Str(
-                                                                                                " with nested ",
-                                                                                            ),
-                                                                                            kind: None,
-                                                                                            range: 213..259,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                                Attributed {
-                                                                                    custom: (),
-                                                                                    node: FormattedValue(
-                                                                                        ExprFormattedValue {
-                                                                                            value: Attributed {
-                                                                                                custom: (),
-                                                                                                node: Attribute(
-                                                                                                    ExprAttribute {
-                                                                                                        value: Attributed {
-                                                                                                            custom: (),
-                                                                                                            node: Name(
-                                                                                                                ExprName {
-                                                                                                                    id: Identifier(
-                                                                                                                        "e",
-                                                                                                                    ),
-                                                                                                                    ctx: Load,
-                                                                                                                    range: 245..246,
-                                                                                                                },
-                                                                                                            ),
-                                                                                                        },
-                                                                                                        attr: Identifier(
-                                                                                                            "exceptions",
-                                                                                                        ),
-                                                                                                        ctx: Load,
-                                                                                                        range: 245..257,
-                                                                                                    },
-                                                                                                ),
-                                                                                            },
-                                                                                            conversion: Int(
-                                                                                                0,
-                                                                                            ),
-                                                                                            format_spec: None,
-                                                                                            range: 213..259,
-                                                                                        },
-                                                                                    ),
-                                                                                },
-                                                                            ],
-                                                                            range: 213..259,
+                                                                            ),
+                                                                            attr: Identifier(
+                                                                                "exceptions",
+                                                                            ),
+                                                                            ctx: Load,
+                                                                            range: 165..177,
                                                                         },
                                                                     ),
+                                                                    conversion: Int(
+                                                                        0,
+                                                                    ),
+                                                                    format_spec: None,
+                                                                    range: 133..179,
                                                                 },
-                                                            ],
-                                                            keywords: [],
-                                                            range: 207..260,
-                                                        },
-                                                    ),
-                                                },
-                                                range: 207..260,
-                                            },
-                                        ),
-                                    },
-                                ],
-                                range: 181..260,
-                            },
-                        ),
+                                                            ),
+                                                        ],
+                                                        range: 133..179,
+                                                    },
+                                                ),
+                                            ],
+                                            keywords: [],
+                                            range: 127..180,
+                                        },
+                                    ),
+                                    range: 127..180,
+                                },
+                            ),
+                        ],
+                        range: 99..180,
                     },
-                ],
-                orelse: [],
-                finalbody: [],
-                range: 0..260,
-            },
-        ),
-    },
+                ),
+                ExceptHandler(
+                    ExcepthandlerExceptHandler {
+                        type_: Some(
+                            Name(
+                                ExprName {
+                                    id: Identifier(
+                                        "OSError",
+                                    ),
+                                    ctx: Load,
+                                    range: 189..196,
+                                },
+                            ),
+                        ),
+                        name: Some(
+                            Identifier(
+                                "e",
+                            ),
+                        ),
+                        body: [
+                            Expr(
+                                StmtExpr {
+                                    value: Call(
+                                        ExprCall {
+                                            func: Name(
+                                                ExprName {
+                                                    id: Identifier(
+                                                        "print",
+                                                    ),
+                                                    ctx: Load,
+                                                    range: 207..212,
+                                                },
+                                            ),
+                                            args: [
+                                                JoinedStr(
+                                                    ExprJoinedStr {
+                                                        values: [
+                                                            Constant(
+                                                                ExprConstant {
+                                                                    value: Str(
+                                                                        "caught ",
+                                                                    ),
+                                                                    kind: None,
+                                                                    range: 213..259,
+                                                                },
+                                                            ),
+                                                            FormattedValue(
+                                                                ExprFormattedValue {
+                                                                    value: Call(
+                                                                        ExprCall {
+                                                                            func: Name(
+                                                                                ExprName {
+                                                                                    id: Identifier(
+                                                                                        "type",
+                                                                                    ),
+                                                                                    ctx: Load,
+                                                                                    range: 223..227,
+                                                                                },
+                                                                            ),
+                                                                            args: [
+                                                                                Name(
+                                                                                    ExprName {
+                                                                                        id: Identifier(
+                                                                                            "e",
+                                                                                        ),
+                                                                                        ctx: Load,
+                                                                                        range: 228..229,
+                                                                                    },
+                                                                                ),
+                                                                            ],
+                                                                            keywords: [],
+                                                                            range: 223..230,
+                                                                        },
+                                                                    ),
+                                                                    conversion: Int(
+                                                                        0,
+                                                                    ),
+                                                                    format_spec: None,
+                                                                    range: 213..259,
+                                                                },
+                                                            ),
+                                                            Constant(
+                                                                ExprConstant {
+                                                                    value: Str(
+                                                                        " with nested ",
+                                                                    ),
+                                                                    kind: None,
+                                                                    range: 213..259,
+                                                                },
+                                                            ),
+                                                            FormattedValue(
+                                                                ExprFormattedValue {
+                                                                    value: Attribute(
+                                                                        ExprAttribute {
+                                                                            value: Name(
+                                                                                ExprName {
+                                                                                    id: Identifier(
+                                                                                        "e",
+                                                                                    ),
+                                                                                    ctx: Load,
+                                                                                    range: 245..246,
+                                                                                },
+                                                                            ),
+                                                                            attr: Identifier(
+                                                                                "exceptions",
+                                                                            ),
+                                                                            ctx: Load,
+                                                                            range: 245..257,
+                                                                        },
+                                                                    ),
+                                                                    conversion: Int(
+                                                                        0,
+                                                                    ),
+                                                                    format_spec: None,
+                                                                    range: 213..259,
+                                                                },
+                                                            ),
+                                                        ],
+                                                        range: 213..259,
+                                                    },
+                                                ),
+                                            ],
+                                            keywords: [],
+                                            range: 207..260,
+                                        },
+                                    ),
+                                    range: 207..260,
+                                },
+                            ),
+                        ],
+                        range: 181..260,
+                    },
+                ),
+            ],
+            orelse: [],
+            finalbody: [],
+            range: 0..260,
+        },
+    ),
 ]

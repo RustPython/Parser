@@ -3,26 +3,20 @@ source: parser/src/context.rs
 expression: parse_ast
 ---
 [
-    Attributed {
-        custom: (),
-        node: Delete(
-            StmtDelete {
-                targets: [
-                    Attributed {
-                        custom: (),
-                        node: Name(
-                            ExprName {
-                                id: Identifier(
-                                    "x",
-                                ),
-                                ctx: Del,
-                                range: 4..5,
-                            },
+    Delete(
+        StmtDelete {
+            targets: [
+                Name(
+                    ExprName {
+                        id: Identifier(
+                            "x",
                         ),
+                        ctx: Del,
+                        range: 4..5,
                     },
-                ],
-                range: 0..5,
-            },
-        ),
-    },
+                ),
+            ],
+            range: 0..5,
+        },
+    ),
 ]
