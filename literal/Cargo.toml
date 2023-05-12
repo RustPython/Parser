@@ -8,8 +8,10 @@ repository = "https://github.com/RustPython/RustPython"
 license = "MIT"
 
 [dependencies]
+bitflags = "2.2.1"
+itertools = "0.10.5"
+num-bigint = { workspace = true }
 num-traits = { workspace = true }
-
 hexf-parse = "0.2.1"
 lexical-parse-float = { version = "0.8.0", features = ["format"] }
 unic-ucd-category = "0.9"
