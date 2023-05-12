@@ -4,7 +4,7 @@ description = "RustPython parser data types."
 version = "0.2.0"
 authors = ["RustPython Team"]
 edition = "2021"
-repository = "https://github.com/RustPython/RustPython"
+repository = "https://github.com/RustPython/Parser/"
 license = "MIT"
 
 [dependencies]
