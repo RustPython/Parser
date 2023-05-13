@@ -55,7 +55,11 @@ impl<R> Expr<R> {
     }
 }
 
+#[cfg(target_arch = "x86_64")]
 const_assert_eq!(std::mem::size_of::<Expr>(), 72);
+#[cfg(target_arch = "x86_64")]
 const_assert_eq!(std::mem::size_of::<Stmt>(), 136);
+#[cfg(target_arch = "x86_64")]
 const_assert_eq!(std::mem::size_of::<Pattern>(), 96);
+#[cfg(target_arch = "x86_64")]
 const_assert_eq!(std::mem::size_of::<Excepthandler>(), 64);
