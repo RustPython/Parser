@@ -25,6 +25,18 @@ impl Ranged for crate::generic::ModFunctionType<TextRange> {
         self.range
     }
 }
+#[cfg(feature = "more-attributes")]
+impl Ranged for crate::Mod {
+    fn range(&self) -> TextRange {
+        match self {
+            Self::Module(node) => node.range(),
+            Self::Interactive(node) => node.range(),
+            Self::Expression(node) => node.range(),
+            Self::FunctionType(node) => node.range(),
+        }
+    }
+}
+
 impl Ranged for crate::generic::StmtFunctionDef<TextRange> {
     fn range(&self) -> TextRange {
         self.range
@@ -160,6 +172,40 @@ impl Ranged for crate::generic::StmtContinue<TextRange> {
         self.range
     }
 }
+impl Ranged for crate::Stmt {
+    fn range(&self) -> TextRange {
+        match self {
+            Self::FunctionDef(node) => node.range(),
+            Self::AsyncFunctionDef(node) => node.range(),
+            Self::ClassDef(node) => node.range(),
+            Self::Return(node) => node.range(),
+            Self::Delete(node) => node.range(),
+            Self::Assign(node) => node.range(),
+            Self::AugAssign(node) => node.range(),
+            Self::AnnAssign(node) => node.range(),
+            Self::For(node) => node.range(),
+            Self::AsyncFor(node) => node.range(),
+            Self::While(node) => node.range(),
+            Self::If(node) => node.range(),
+            Self::With(node) => node.range(),
+            Self::AsyncWith(node) => node.range(),
+            Self::Match(node) => node.range(),
+            Self::Raise(node) => node.range(),
+            Self::Try(node) => node.range(),
+            Self::TryStar(node) => node.range(),
+            Self::Assert(node) => node.range(),
+            Self::Import(node) => node.range(),
+            Self::ImportFrom(node) => node.range(),
+            Self::Global(node) => node.range(),
+            Self::Nonlocal(node) => node.range(),
+            Self::Expr(node) => node.range(),
+            Self::Pass(node) => node.range(),
+            Self::Break(node) => node.range(),
+            Self::Continue(node) => node.range(),
+        }
+    }
+}
+
 impl Ranged for crate::generic::ExprBoolOp<TextRange> {
     fn range(&self) -> TextRange {
         self.range
@@ -295,6 +341,40 @@ impl Ranged for crate::generic::ExprSlice<TextRange> {
         self.range
     }
 }
+impl Ranged for crate::Expr {
+    fn range(&self) -> TextRange {
+        match self {
+            Self::BoolOp(node) => node.range(),
+            Self::NamedExpr(node) => node.range(),
+            Self::BinOp(node) => node.range(),
+            Self::UnaryOp(node) => node.range(),
+            Self::Lambda(node) => node.range(),
+            Self::IfExp(node) => node.range(),
+            Self::Dict(node) => node.range(),
+            Self::Set(node) => node.range(),
+            Self::ListComp(node) => node.range(),
+            Self::SetComp(node) => node.range(),
+            Self::DictComp(node) => node.range(),
+            Self::GeneratorExp(node) => node.range(),
+            Self::Await(node) => node.range(),
+            Self::Yield(node) => node.range(),
+            Self::YieldFrom(node) => node.range(),
+            Self::Compare(node) => node.range(),
+            Self::Call(node) => node.range(),
+            Self::FormattedValue(node) => node.range(),
+            Self::JoinedStr(node) => node.range(),
+            Self::Constant(node) => node.range(),
+            Self::Attribute(node) => node.range(),
+            Self::Subscript(node) => node.range(),
+            Self::Starred(node) => node.range(),
+            Self::Name(node) => node.range(),
+            Self::List(node) => node.range(),
+            Self::Tuple(node) => node.range(),
+            Self::Slice(node) => node.range(),
+        }
+    }
+}
+
 #[cfg(feature = "more-attributes")]
 impl Ranged for crate::generic::Comprehension<TextRange> {
     fn range(&self) -> TextRange {
@@ -306,6 +386,14 @@ impl Ranged for crate::generic::ExcepthandlerExceptHandler<TextRange> {
         self.range
     }
 }
+impl Ranged for crate::Excepthandler {
+    fn range(&self) -> TextRange {
+        match self {
+            Self::ExceptHandler(node) => node.range(),
+        }
+    }
+}
+
 #[cfg(feature = "more-attributes")]
 impl Ranged for crate::generic::Arguments<TextRange> {
     fn range(&self) -> TextRange {
@@ -379,9 +467,32 @@ impl Ranged for crate::generic::PatternMatchOr<TextRange> {
         self.range
     }
 }
+impl Ranged for crate::Pattern {
+    fn range(&self) -> TextRange {
+        match self {
+            Self::MatchValue(node) => node.range(),
+            Self::MatchSingleton(node) => node.range(),
+            Self::MatchSequence(node) => node.range(),
+            Self::MatchMapping(node) => node.range(),
+            Self::MatchClass(node) => node.range(),
+            Self::MatchStar(node) => node.range(),
+            Self::MatchAs(node) => node.range(),
+            Self::MatchOr(node) => node.range(),
+        }
+    }
+}
+
 #[cfg(feature = "more-attributes")]
 impl Ranged for crate::generic::TypeIgnoreTypeIgnore<TextRange> {
     fn range(&self) -> TextRange {
         self.range
+    }
+}
+#[cfg(feature = "more-attributes")]
+impl Ranged for crate::TypeIgnore {
+    fn range(&self) -> TextRange {
+        match self {
+            Self::TypeIgnore(node) => node.range(),
+        }
     }
 }

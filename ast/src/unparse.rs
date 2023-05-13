@@ -389,10 +389,7 @@ impl<'a> Unparser<'a> {
                 self.unparse_expr(value, precedence::ATOM)?;
                 let mut lvl = precedence::TUPLE;
                 if let Expr::Tuple(crate::ExprTuple { elts, .. }) = slice.as_ref() {
-                    if elts
-                        .iter()
-                        .any(|expr| expr.is_starred_expr())
-                    {
+                    if elts.iter().any(|expr| expr.is_starred_expr()) {
                         lvl += 1
                     }
                 }

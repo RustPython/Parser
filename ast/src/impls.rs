@@ -1,5 +1,5 @@
-use crate::text_size::TextRange;
-use crate::{Constant, Excepthandler, Expr, Pattern, Ranged, Stmt};
+use crate::{Constant, Excepthandler, Expr, Pattern, Stmt};
+use static_assertions::const_assert_eq;
 
 impl<R> Expr<R> {
     /// Returns a short name for the node suitable for use in error messages.
@@ -55,93 +55,7 @@ impl<R> Expr<R> {
     }
 }
 
-impl Ranged for Expr<TextRange> {
-    fn range(&self) -> TextRange {
-        match self {
-            Expr::BoolOp(node) => node.range(),
-            Expr::NamedExpr(node) => node.range(),
-            Expr::BinOp(node) => node.range(),
-            Expr::UnaryOp(node) => node.range(),
-            Expr::Lambda(node) => node.range(),
-            Expr::IfExp(node) => node.range(),
-            Expr::Dict(node) => node.range(),
-            Expr::Set(node) => node.range(),
-            Expr::ListComp(node) => node.range(),
-            Expr::SetComp(node) => node.range(),
-            Expr::DictComp(node) => node.range(),
-            Expr::GeneratorExp(node) => node.range(),
-            Expr::Await(node) => node.range(),
-            Expr::Yield(node) => node.range(),
-            Expr::YieldFrom(node) => node.range(),
-            Expr::Compare(node) => node.range(),
-            Expr::Call(node) => node.range(),
-            Expr::FormattedValue(node) => node.range(),
-            Expr::JoinedStr(node) => node.range(),
-            Expr::Constant(node) => node.range(),
-            Expr::Attribute(node) => node.range(),
-            Expr::Subscript(node) => node.range(),
-            Expr::Starred(node) => node.range(),
-            Expr::Name(node) => node.range(),
-            Expr::List(node) => node.range(),
-            Expr::Tuple(node) => node.range(),
-            Expr::Slice(node) => node.range(),
-        }
-    }
-}
-
-impl Ranged for Stmt<TextRange> {
-    fn range(&self) -> TextRange {
-        match self {
-            Stmt::FunctionDef(stmt) => stmt.range(),
-            Stmt::AsyncFunctionDef(stmt) => stmt.range(),
-            Stmt::ClassDef(stmt) => stmt.range(),
-            Stmt::Return(stmt) => stmt.range(),
-            Stmt::Delete(stmt) => stmt.range(),
-            Stmt::Assign(stmt) => stmt.range(),
-            Stmt::AugAssign(stmt) => stmt.range(),
-            Stmt::AnnAssign(stmt) => stmt.range(),
-            Stmt::For(stmt) => stmt.range(),
-            Stmt::AsyncFor(stmt) => stmt.range(),
-            Stmt::While(stmt) => stmt.range(),
-            Stmt::If(stmt) => stmt.range(),
-            Stmt::With(stmt) => stmt.range(),
-            Stmt::AsyncWith(stmt) => stmt.range(),
-            Stmt::Match(stmt) => stmt.range(),
-            Stmt::Raise(stmt) => stmt.range(),
-            Stmt::Try(stmt) => stmt.range(),
-            Stmt::TryStar(stmt) => stmt.range(),
-            Stmt::Assert(stmt) => stmt.range(),
-            Stmt::Import(stmt) => stmt.range(),
-            Stmt::ImportFrom(stmt) => stmt.range(),
-            Stmt::Global(stmt) => stmt.range(),
-            Stmt::Nonlocal(stmt) => stmt.range(),
-            Stmt::Expr(stmt) => stmt.range(),
-            Stmt::Pass(stmt) => stmt.range(),
-            Stmt::Break(stmt) => stmt.range(),
-            Stmt::Continue(stmt) => stmt.range(),
-        }
-    }
-}
-
-impl Ranged for Pattern<TextRange> {
-    fn range(&self) -> TextRange {
-        match self {
-            Pattern::MatchValue(pattern) => pattern.range(),
-            Pattern::MatchSingleton(pattern) => pattern.range(),
-            Pattern::MatchSequence(pattern) => pattern.range(),
-            Pattern::MatchMapping(pattern) => pattern.range(),
-            Pattern::MatchClass(pattern) => pattern.range(),
-            Pattern::MatchStar(pattern) => pattern.range(),
-            Pattern::MatchAs(pattern) => pattern.range(),
-            Pattern::MatchOr(pattern) => pattern.range(),
-        }
-    }
-}
-
-impl Ranged for Excepthandler<TextRange> {
-    fn range(&self) -> TextRange {
-        match self {
-            Excepthandler::ExceptHandler(handler) => handler.range(),
-        }
-    }
-}
+const_assert_eq!(std::mem::size_of::<Expr>(), 72);
+const_assert_eq!(std::mem::size_of::<Stmt>(), 136);
+const_assert_eq!(std::mem::size_of::<Pattern>(), 96);
+const_assert_eq!(std::mem::size_of::<Excepthandler>(), 64);
