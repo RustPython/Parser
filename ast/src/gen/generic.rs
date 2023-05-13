@@ -911,20 +911,20 @@ pub enum Expr<R = TextRange> {
     Slice(ExprSlice<R>),
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+#[derive(Clone, Debug, PartialEq, is_macro::Is, Copy)]
 pub enum ExprContext {
     Load,
     Store,
     Del,
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+#[derive(Clone, Debug, PartialEq, is_macro::Is, Copy)]
 pub enum Boolop {
     And,
     Or,
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+#[derive(Clone, Debug, PartialEq, is_macro::Is, Copy)]
 pub enum Operator {
     Add,
     Sub,
@@ -941,7 +941,7 @@ pub enum Operator {
     FloorDiv,
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+#[derive(Clone, Debug, PartialEq, is_macro::Is, Copy)]
 pub enum Unaryop {
     Invert,
     Not,
@@ -949,7 +949,7 @@ pub enum Unaryop {
     USub,
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+#[derive(Clone, Debug, PartialEq, is_macro::Is, Copy)]
 pub enum Cmpop {
     Eq,
     NotEq,

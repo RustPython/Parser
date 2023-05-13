@@ -288,7 +288,7 @@ class StructVisitor(EmitVisitor):
     def simple_sum(self, sum, name, depth):
         rust_name = rust_type_name(name)
         self.emit_attrs(depth)
-        self.emit("#[derive(is_macro::Is)]", depth)
+        self.emit("#[derive(is_macro::Is, Copy)]", depth)
         self.emit(f"pub enum {rust_name} {{", depth)
         for variant in sum.types:
             self.emit(f"{variant.name},", depth + 1)
