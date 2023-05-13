@@ -280,10 +280,10 @@ class StructVisitor(EmitVisitor):
         if has_attributes:
             self.emit("pub range: R,", depth + 1)
         else:
-            self.emit('#[cfg(feature = "more-attributes")]', depth + 1)
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', depth + 1)
             self.emit("pub range: R,", depth + 1)
-            self.emit('#[cfg(not(feature = "more-attributes"))]', depth + 1)
-            self.emit("pub range: std::marker::PhantomData<R>,", depth + 1)
+            self.emit('#[cfg(not(feature = "all-nodes-with-ranges"))]', depth + 1)
+            self.emit("pub range: crate::EmptyRange<R>,", depth + 1)
 
     def simple_sum(self, sum, name, depth):
         rust_name = rust_type_name(name)
@@ -404,13 +404,13 @@ class FoldTraitDefVisitor(EmitVisitor):
         self.emit(
             """
             fn map_user(&mut self, user: U) -> Result<Self::TargetU, Self::Error>;
-            #[cfg(feature = "more-attributes")]
+            #[cfg(feature = "all-nodes-with-ranges")]
             fn map_user_cfg(&mut self, user: U) -> Result<Self::TargetU, Self::Error> {
                 self.map_user(user)
             }
-            #[cfg(not(feature = "more-attributes"))]
-            fn map_user_cfg(&mut self, _user: std::marker::PhantomData<U>) -> Result<std::marker::PhantomData<Self::TargetU>, Self::Error> {
-                Ok(std::marker::PhantomData)
+            #[cfg(not(feature = "all-nodes-with-ranges"))]
+            fn map_user_cfg(&mut self, _user: crate::EmptyRange<U>) -> Result<crate::EmptyRange<Self::TargetU>, Self::Error> {
+                Ok(crate::EmptyRange::default())
             }
             """,
             depth + 1,
@@ -947,7 +947,7 @@ class RangedDefVisitor(EmitVisitor):
             self.emit_ranged_impl(variant_info)
 
         if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "more-attributes")]', 0)
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
 
         self.emit(f"""
         impl Ranged for crate::{info.rust_sum_name} {{
@@ -966,7 +966,7 @@ class RangedDefVisitor(EmitVisitor):
 
     def emit_ranged_impl(self, info):
         if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "more-attributes")]', 0)
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
 
         self.file.write(
             f"""
@@ -1004,7 +1004,7 @@ class LocatedDefVisitor(EmitVisitor):
             self.emit_located_impl(variant_info)
 
         if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "more-attributes")]', 0)
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
 
         self.emit(f"""
         impl Located for {info.rust_sum_name} {{
@@ -1030,7 +1030,7 @@ class LocatedDefVisitor(EmitVisitor):
 
     def emit_located_impl(self, info):
         if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "more-attributes")]', 0)
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
 
         self.emit(
             f"""

@@ -12,7 +12,7 @@ edition = "2021"
 default = ["location"]
 location = ["rustpython-ast/location"]
 serde = ["dep:serde", "rustpython-parser-core/serde"]
-more-attributes = ["rustpython-ast/more-attributes"]
+all-nodes-with-ranges = ["rustpython-ast/all-nodes-with-ranges"]
 
 [build-dependencies]
 anyhow = { workspace = true }

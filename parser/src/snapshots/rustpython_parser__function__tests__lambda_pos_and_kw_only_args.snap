@@ -58,7 +58,7 @@ Ok(
                             kw_defaults: [],
                             kwarg: None,
                             defaults: [],
-                            range: PhantomData<ruff_text_size::range::TextRange>,
+                            range: (),
                         },
                         body: Constant(
                             ExprConstant {

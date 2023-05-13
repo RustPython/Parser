@@ -6,16 +6,16 @@ pub trait Fold<U> {
     type Error;
 
     fn map_user(&mut self, user: U) -> Result<Self::TargetU, Self::Error>;
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     fn map_user_cfg(&mut self, user: U) -> Result<Self::TargetU, Self::Error> {
         self.map_user(user)
     }
-    #[cfg(not(feature = "more-attributes"))]
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
     fn map_user_cfg(
         &mut self,
-        _user: std::marker::PhantomData<U>,
-    ) -> Result<std::marker::PhantomData<Self::TargetU>, Self::Error> {
-        Ok(std::marker::PhantomData)
+        _user: crate::EmptyRange<U>,
+    ) -> Result<crate::EmptyRange<Self::TargetU>, Self::Error> {
+        Ok(crate::EmptyRange::default())
     }
 
     fn fold<X: Foldable<U, Self::TargetU>>(&mut self, node: X) -> Result<X::Mapped, Self::Error> {

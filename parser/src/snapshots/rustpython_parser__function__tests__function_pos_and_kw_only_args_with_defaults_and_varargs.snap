@@ -95,7 +95,7 @@ Ok(
                     ],
                     kwarg: None,
                     defaults: [],
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
                 body: [
                     Pass(

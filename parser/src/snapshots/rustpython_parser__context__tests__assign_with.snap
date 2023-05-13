@@ -27,7 +27,7 @@ expression: parse_ast
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [

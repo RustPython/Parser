@@ -52,7 +52,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             kw_defaults: [],
                             kwarg: None,
                             defaults: [],
-                            range: PhantomData<ruff_text_size::range::TextRange>,
+                            range: (),
                         },
                         body: [
                             Pass(
@@ -107,7 +107,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                                     },
                                 ),
                             ],
-                            range: PhantomData<ruff_text_size::range::TextRange>,
+                            range: (),
                         },
                         body: [
                             Pass(

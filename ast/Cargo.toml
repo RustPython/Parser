@@ -14,7 +14,7 @@ location = ["fold", "rustpython-parser-core/location"]
 fold = []
 unparse = ["rustpython-literal"]
 visitor = []
-more-attributes = []
+all-nodes-with-ranges = []
 
 [dependencies]
 rustpython-parser-core = { workspace = true }

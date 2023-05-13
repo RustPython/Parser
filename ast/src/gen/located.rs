@@ -4,7 +4,7 @@ pub type Mod = crate::generic::Mod<SourceRange>;
 
 pub type ModModule = crate::generic::ModModule<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for ModModule {
     fn range(&self) -> SourceRange {
@@ -14,7 +14,7 @@ impl Located for ModModule {
 
 pub type ModInteractive = crate::generic::ModInteractive<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for ModInteractive {
     fn range(&self) -> SourceRange {
@@ -24,7 +24,7 @@ impl Located for ModInteractive {
 
 pub type ModExpression = crate::generic::ModExpression<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for ModExpression {
     fn range(&self) -> SourceRange {
@@ -34,7 +34,7 @@ impl Located for ModExpression {
 
 pub type ModFunctionType = crate::generic::ModFunctionType<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for ModFunctionType {
     fn range(&self) -> SourceRange {
@@ -42,7 +42,7 @@ impl Located for ModFunctionType {
     }
 }
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 impl Located for Mod {
     fn range(&self) -> SourceRange {
         match self {
@@ -570,7 +570,7 @@ pub type Cmpop = crate::generic::Cmpop;
 
 pub type Comprehension = crate::generic::Comprehension<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for Comprehension {
     fn range(&self) -> SourceRange {
@@ -598,7 +598,7 @@ impl Located for Excepthandler {
 
 pub type Arguments = crate::generic::Arguments<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for Arguments {
     fn range(&self) -> SourceRange {
@@ -632,7 +632,7 @@ impl Located for Alias {
 
 pub type Withitem = crate::generic::Withitem<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for Withitem {
     fn range(&self) -> SourceRange {
@@ -642,7 +642,7 @@ impl Located for Withitem {
 
 pub type MatchCase = crate::generic::MatchCase<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for MatchCase {
     fn range(&self) -> SourceRange {
@@ -735,7 +735,7 @@ pub type TypeIgnore = crate::generic::TypeIgnore<SourceRange>;
 
 pub type TypeIgnoreTypeIgnore = crate::generic::TypeIgnoreTypeIgnore<SourceRange>;
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 
 impl Located for TypeIgnoreTypeIgnore {
     fn range(&self) -> SourceRange {
@@ -743,7 +743,7 @@ impl Located for TypeIgnoreTypeIgnore {
     }
 }
 
-#[cfg(feature = "more-attributes")]
+#[cfg(feature = "all-nodes-with-ranges")]
 impl Located for TypeIgnore {
     fn range(&self) -> SourceRange {
         match self {

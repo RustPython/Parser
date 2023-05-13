@@ -32,7 +32,7 @@ expression: parse_ast
                         kw_defaults: [],
                         kwarg: None,
                         defaults: [],
-                        range: PhantomData<ruff_text_size::range::TextRange>,
+                        range: (),
                     },
                     body: BinOp(
                         ExprBinOp {

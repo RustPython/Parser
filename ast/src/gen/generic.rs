@@ -5,10 +5,10 @@ use crate::text_size::TextRange;
 pub struct ModModule<R = TextRange> {
     pub body: Vec<Stmt<R>>,
     pub type_ignores: Vec<TypeIgnore<R>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModModule<R>> for Mod<R> {
@@ -20,10 +20,10 @@ impl<R> From<ModModule<R>> for Mod<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModInteractive<R = TextRange> {
     pub body: Vec<Stmt<R>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModInteractive<R>> for Mod<R> {
@@ -35,10 +35,10 @@ impl<R> From<ModInteractive<R>> for Mod<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModExpression<R = TextRange> {
     pub body: Box<Expr<R>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModExpression<R>> for Mod<R> {
@@ -51,10 +51,10 @@ impl<R> From<ModExpression<R>> for Mod<R> {
 pub struct ModFunctionType<R = TextRange> {
     pub argtypes: Vec<Expr<R>>,
     pub returns: Box<Expr<R>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModFunctionType<R>> for Mod<R> {
@@ -969,10 +969,10 @@ pub struct Comprehension<R = TextRange> {
     pub iter: Expr<R>,
     pub ifs: Vec<Expr<R>>,
     pub is_async: bool,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1003,10 +1003,10 @@ pub struct Arguments<R = TextRange> {
     pub kw_defaults: Vec<Expr<R>>,
     pub kwarg: Option<Box<Arg<R>>>,
     pub defaults: Vec<Expr<R>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1035,10 +1035,10 @@ pub struct Alias<R = TextRange> {
 pub struct Withitem<R = TextRange> {
     pub context_expr: Expr<R>,
     pub optional_vars: Option<Box<Expr<R>>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1046,10 +1046,10 @@ pub struct MatchCase<R = TextRange> {
     pub pattern: Pattern<R>,
     pub guard: Option<Box<Expr<R>>>,
     pub body: Vec<Stmt<R>>,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1170,10 +1170,10 @@ pub enum Pattern<R = TextRange> {
 pub struct TypeIgnoreTypeIgnore<R = TextRange> {
     pub lineno: Int,
     pub tag: String,
-    #[cfg(feature = "more-attributes")]
+    #[cfg(feature = "all-nodes-with-ranges")]
     pub range: R,
-    #[cfg(not(feature = "more-attributes"))]
-    pub range: std::marker::PhantomData<R>,
+    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<TypeIgnoreTypeIgnore<R>> for TypeIgnore<R> {

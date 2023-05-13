@@ -64,7 +64,7 @@ GeneratorExp(
                 ),
                 ifs: [],
                 is_async: false,
-                range: PhantomData<ruff_text_size::range::TextRange>,
+                range: (),
             },
         ],
         range: 0..23,

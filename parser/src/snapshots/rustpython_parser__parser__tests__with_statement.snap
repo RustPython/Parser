@@ -17,7 +17,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -55,7 +55,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -83,7 +83,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
                 Withitem {
                     context_expr: Constant(
@@ -96,7 +96,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -134,7 +134,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
                 Withitem {
                     context_expr: Constant(
@@ -157,7 +157,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -208,7 +208,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -269,7 +269,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -295,7 +295,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -331,7 +331,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -359,7 +359,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -397,7 +397,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -425,7 +425,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -471,7 +471,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -499,7 +499,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
                 Withitem {
                     context_expr: Constant(
@@ -512,7 +512,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -567,7 +567,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -609,7 +609,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -661,7 +661,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -712,7 +712,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -773,7 +773,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -815,7 +815,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -867,7 +867,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -940,7 +940,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         },
                     ),
                     optional_vars: None,
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -1023,7 +1023,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -1061,7 +1061,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -1099,7 +1099,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -1137,7 +1137,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
                 Withitem {
                     context_expr: Constant(
@@ -1160,7 +1160,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [
@@ -1198,7 +1198,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
                 Withitem {
                     context_expr: Constant(
@@ -1221,7 +1221,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             },
                         ),
                     ),
-                    range: PhantomData<ruff_text_size::range::TextRange>,
+                    range: (),
                 },
             ],
             body: [

@@ -60,7 +60,7 @@ Ok(
                                     },
                                 ),
                             ],
-                            range: PhantomData<ruff_text_size::range::TextRange>,
+                            range: (),
                         },
                         body: Constant(
                             ExprConstant {
