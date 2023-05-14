@@ -4,13 +4,13 @@
 // See also: https://greentreesnakes.readthedocs.io/en/latest/nodes.html#keyword
 
 use crate::{
-    ast::{self as ast, Ranged, OptionalRange},
+    ast::{self as ast, Ranged},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,
     string::parse_strings,
     token::{self, StringKind},
-    text_size::TextSize,
+    text_size::TextSize, parser::optional_range
 };
 use num_bigint::BigInt;
 
@@ -20,9 +20,9 @@ grammar;
 // For each public entry point, a full parse table is generated.
 // By having only a single pub function, we reduce this to one.
 pub Top: ast::Mod = {
-    <start:@L> StartModule <body:Program> <end:@R> => ast::ModModule { body, type_ignores: vec![], range: OptionalRange::new(start, end) }.into(),
-    <start:@L> StartInteractive <body:Program> <end:@R> => ast::ModInteractive { body, range: OptionalRange::new(start, end) }.into(),
-    <start:@L> StartExpression <body:TestList> ("\n")* <end:@R> => ast::ModExpression { body: Box::new(body), range: OptionalRange::new(start, end) }.into()
+    <start:@L> StartModule <body:Program> <end:@R> => ast::ModModule { body, type_ignores: vec![], range: optional_range(start, end) }.into(),
+    <start:@L> StartInteractive <body:Program> <end:@R> => ast::ModInteractive { body, range: optional_range(start, end) }.into(),
+    <start:@L> StartExpression <body:TestList> ("\n")* <end:@R> => ast::ModExpression { body: Box::new(body), range: optional_range(start, end) }.into()
 };
 
 Program: ast::Suite = {
@@ -371,7 +371,7 @@ MatchCase: ast::MatchCase = {
             pattern,
             guard: guard.map(Box::new),
             body,
-            range: OptionalRange::new(start, end)
+            range: optional_range(start, end)
         }
     },
 }
@@ -929,15 +929,15 @@ WithItems: Vec<ast::Withitem> = {
 #[inline]
 WithItemsNoAs: Vec<ast::Withitem> = {
     <location:@L> <all:OneOrMore<Test<"all">>> <end_location:@R> => {
-        all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: OptionalRange::new(location, end_location) }).collect()
+        all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: optional_range(location, end_location) }).collect()
     },
 }
 
 WithItem<Goal>: ast::Withitem = {
-    <location:@L> <context_expr: Test<Goal>> <end_location:@R> if Goal != "as" => ast::Withitem { context_expr, optional_vars: None, range: OptionalRange::new(location, end_location) },
+    <location:@L> <context_expr: Test<Goal>> <end_location:@R> if Goal != "as" => ast::Withitem { context_expr, optional_vars: None, range: optional_range(location, end_location) },
     <location:@L> <context_expr:Test<"all">> "as" <vars:Expression<"all">> <end_location:@R> => {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: OptionalRange::new(location, end_location) }
+        ast::Withitem { context_expr, optional_vars, range: optional_range(location, end_location) }
     },
 };
 
@@ -966,7 +966,7 @@ Parameters: ast::Arguments = {
                 kw_defaults: vec![],
                 kwarg: None,
                 defaults: vec![],
-                range: OptionalRange::new(location, end_location)
+                range: optional_range(location, end_location)
             })
         )?;
 
@@ -991,7 +991,7 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
             kwarg,
             defaults,
             kw_defaults,
-            range: OptionalRange::new(location, end_location)
+            range: optional_range(location, end_location)
         })
     },
     <location:@L> <param1:ParameterDefs<ArgType>> <kw:("," KwargParameter<ArgType>)> ","? <end_location:@R> =>? {
@@ -1011,7 +1011,7 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
             kwarg,
             defaults,
             kw_defaults,
-            range: OptionalRange::new(location, end_location)
+            range: optional_range(location, end_location)
         })
     },
     <location:@L> <params:ParameterListStarArgs<ArgType, StarArgType>> ","? <end_location:@R> => {
@@ -1024,7 +1024,7 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
             kwarg,
             defaults: vec![],
             kw_defaults,
-            range: OptionalRange::new(location, end_location)
+            range: optional_range(location, end_location)
         }
     },
     <location:@L> <kwarg:KwargParameter<ArgType>> ","? <end_location:@R> => {
@@ -1036,7 +1036,7 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
             kwarg,
             defaults: vec![],
             kw_defaults: vec![],
-            range: OptionalRange::new(location, end_location)
+            range: optional_range(location, end_location)
         }
     },
 };
@@ -1194,7 +1194,7 @@ LambdaDef: ast::Expr = {
                     kw_defaults: vec![],
                     kwarg: None,
                     defaults: vec![],
-                    range: OptionalRange::new(location, end_location)
+                    range: optional_range(location, end_location)
                 }
             }
         ))?;
@@ -1564,7 +1564,7 @@ SingleForComprehension: ast::Comprehension = {
             iter,
             ifs,
             is_async,
-            range: OptionalRange::new(location, end_location)
+            range: optional_range(location, end_location)
         }
     }
 };

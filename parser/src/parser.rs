@@ -23,7 +23,9 @@ use crate::{
 use itertools::Itertools;
 use std::iter;
 
+use crate::text_size::TextRange;
 pub(super) use lalrpop_util::ParseError as LalrpopError;
+use rustpython_ast::OptionalRange;
 
 /// Parse a full Python program usually consisting of multiple lines.
 ///  
@@ -316,6 +318,11 @@ impl ParseErrorType {
                 | ParseErrorType::Lexical(LexicalErrorType::TabsAfterSpaces)
         )
     }
+}
+
+#[inline(always)]
+pub(super) fn optional_range(start: TextSize, end: TextSize) -> OptionalRange<TextRange> {
+    OptionalRange::<TextRange>::new(start, end)
 }
 
 #[cfg(test)]
