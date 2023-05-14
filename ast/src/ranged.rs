@@ -3,6 +3,7 @@ use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
 
 pub use crate::builtin::*;
+use crate::Stmt;
 
 pub trait Ranged {
     fn range(&self) -> TextRange;
@@ -15,6 +16,8 @@ pub trait Ranged {
         self.range().end()
     }
 }
+
+pub type Suite<R = TextRange> = Vec<Stmt<R>>;
 
 #[cfg(feature = "all-nodes-with-ranges")]
 pub type OptionalRange<R> = R;

@@ -13,5 +13,7 @@ pub trait Located {
     }
 }
 
+pub type Suite = Vec<Stmt>;
+
 pub use crate::builtin::*;
 include!("gen/located.rs");

@@ -16,10 +16,8 @@ mod unparse;
 
 pub use builtin::*;
 pub use generic::*;
-pub use ranged::{EmptyRange, OptionalRange, Ranged};
+pub use ranged::{EmptyRange, OptionalRange, Ranged, Suite};
 pub use rustpython_parser_core::{text_size, ConversionFlag};
-
-pub type Suite<R = TextRange> = Vec<Stmt<R>>;
 
 #[cfg(feature = "fold")]
 pub mod fold {
@@ -48,4 +46,3 @@ mod optimizer;
 
 #[cfg(feature = "constant-optimization")]
 pub use optimizer::ConstantOptimizer;
-use rustpython_parser_core::text_size::TextRange;
