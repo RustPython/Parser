@@ -258,7 +258,6 @@ class StructVisitor(EmitVisitor):
 
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
-        self.rust_type_defs = []
 
     def visitModule(self, mod):
         for dfn in mod.dfns:
@@ -359,17 +358,17 @@ class StructVisitor(EmitVisitor):
             typ = f"{typ}<R>"
         # don't box if we're doing Vec<T>, but do box if we're doing Vec<Option<Box<T>>>
         if (
-                field_type
-                and field_type.boxed
-                and (not (parent.product or field.seq) or field.opt)
+            field_type
+            and field_type.boxed
+            and (not (parent.product or field.seq) or field.opt)
         ):
             typ = f"Box<{typ}>"
         if field.opt or (
-                # When a dictionary literal contains dictionary unpacking (e.g., `{**d}`),
-                # the expression to be unpacked goes in `values` with a `None` at the corresponding
-                # position in `keys`. To handle this, the type of `keys` needs to be `Option<Vec<T>>`.
-                constructor == "Dict"
-                and field.name == "keys"
+            # When a dictionary literal contains dictionary unpacking (e.g., `{**d}`),
+            # the expression to be unpacked goes in `values` with a `None` at the corresponding
+            # position in `keys`. To handle this, the type of `keys` needs to be `Option<Vec<T>>`.
+            constructor == "Dict"
+            and field.name == "keys"
         ):
             typ = f"Option<{typ}>"
         if field.seq:
@@ -579,9 +578,10 @@ class VisitorTraitDefVisitor(StructVisitor):
     def emit_visitor(self, nodename, depth, has_node=True):
         type_info = self.type_info[nodename]
         node_type = type_info.rust_sum_name
-        generic, = self.apply_generics(nodename, "R")
+        (generic,) = self.apply_generics(nodename, "R")
         self.emit(
-            f"fn visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{", depth
+            f"fn visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{",
+            depth,
         )
         if has_node:
             self.emit(f"self.generic_visit_{type_info.sum_name}(node)", depth + 1)
@@ -594,7 +594,7 @@ class VisitorTraitDefVisitor(StructVisitor):
             node_type = type_info.rust_sum_name
         else:
             node_type = "()"
-        generic, = self.apply_generics(nodename, "R")
+        (generic,) = self.apply_generics(nodename, "R")
         self.emit(
             f"fn generic_visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{",
             depth,
@@ -940,21 +940,26 @@ class RangedDefVisitor(EmitVisitor):
 
         for ty in sum.types:
             variant_info = self.type_info[ty.name]
-            sum_match_arms += f"        Self::{variant_info.rust_name}(node) => node.range(),"
+            sum_match_arms += (
+                f"        Self::{variant_info.rust_name}(node) => node.range(),"
+            )
             self.emit_ranged_impl(variant_info)
 
         if not info.no_cfg(self.type_info):
             self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
 
-        self.emit(f"""
-        impl Ranged for crate::{info.rust_sum_name} {{
-            fn range(&self) -> TextRange {{
-                match self {{
-                    {sum_match_arms}
+        self.emit(
+            f"""
+            impl Ranged for crate::{info.rust_sum_name} {{
+                fn range(&self) -> TextRange {{
+                    match self {{
+                        {sum_match_arms}
+                    }}
                 }}
             }}
-        }}
-        """.lstrip(), 0)
+            """.lstrip(),
+            0,
+        )
 
     def visitProduct(self, product, name, depth):
         info = self.type_info[name]
@@ -996,22 +1001,27 @@ class LocatedDefVisitor(EmitVisitor):
 
         for ty in sum.types:
             variant_info = self.type_info[ty.name]
-            sum_match_arms += f"        Self::{variant_info.rust_name}(node) => node.range(),"
+            sum_match_arms += (
+                f"        Self::{variant_info.rust_name}(node) => node.range(),"
+            )
             self.emit_type_alias(variant_info)
             self.emit_located_impl(variant_info)
 
         if not info.no_cfg(self.type_info):
             self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
 
-        self.emit(f"""
-        impl Located for {info.rust_sum_name} {{
-            fn range(&self) -> SourceRange {{
-                match self {{
-                    {sum_match_arms}
+        self.emit(
+            f"""
+            impl Located for {info.rust_sum_name} {{
+                fn range(&self) -> SourceRange {{
+                    match self {{
+                        {sum_match_arms}
+                    }}
                 }}
             }}
-        }}
-        """.lstrip(), 0)
+            """.lstrip(),
+            0,
+        )
 
     def visitProduct(self, product, name, depth):
         info = self.type_info[name]
@@ -1022,7 +1032,10 @@ class LocatedDefVisitor(EmitVisitor):
     def emit_type_alias(self, info):
         generics = "" if info.is_simple else "::<SourceRange>"
 
-        self.emit(f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};", 0)
+        self.emit(
+            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};",
+            0,
+        )
         self.emit("", 0)
 
     def emit_located_impl(self, info):
@@ -1036,8 +1049,9 @@ class LocatedDefVisitor(EmitVisitor):
                     self.range
                 }}
             }}
-            """
-            , 0)
+            """,
+            0,
+        )
 
 
 class ChainOfVisitors:
@@ -1092,10 +1106,10 @@ def write_ast_mod(mod, type_info, f):
 
 
 def main(
-        input_filename,
-        ast_dir,
-        module_filename,
-        dump_module=False,
+    input_filename,
+    ast_dir,
+    module_filename,
+    dump_module=False,
 ):
     auto_gen_msg = AUTO_GEN_MESSAGE.format("/".join(Path(__file__).parts[-2:]))
     mod = asdl.parse(input_filename)
