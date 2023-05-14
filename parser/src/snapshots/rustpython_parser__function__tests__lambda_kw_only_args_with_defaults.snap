@@ -6,8 +6,10 @@ Ok(
     [
         Expr(
             StmtExpr {
+                range: 0..26,
                 value: Lambda(
                     ExprLambda {
+                        range: 0..26,
                         args: Arguments {
                             posonlyargs: [],
                             args: [],
@@ -41,20 +43,20 @@ Ok(
                             kw_defaults: [
                                 Constant(
                                     ExprConstant {
+                                        range: 15..17,
                                         value: Int(
                                             20,
                                         ),
                                         kind: None,
-                                        range: 15..17,
                                     },
                                 ),
                                 Constant(
                                     ExprConstant {
+                                        range: 21..23,
                                         value: Int(
                                             30,
                                         ),
                                         kind: None,
-                                        range: 21..23,
                                     },
                                 ),
                             ],
@@ -64,17 +66,15 @@ Ok(
                         },
                         body: Constant(
                             ExprConstant {
+                                range: 25..26,
                                 value: Int(
                                     1,
                                 ),
                                 kind: None,
-                                range: 25..26,
                             },
                         ),
-                        range: 0..26,
                     },
                 ),
-                range: 0..26,
             },
         ),
     ],

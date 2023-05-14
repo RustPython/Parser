@@ -5,15 +5,16 @@ expression: "parse_program(source, \"<test>\").unwrap()"
 [
     With(
         StmtWith {
+            range: 0..12,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 5..6,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 5..6,
                         },
                     ),
                     optional_vars: None,
@@ -28,30 +29,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 0..12,
         },
     ),
     With(
         StmtWith {
+            range: 13..30,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 18..19,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 18..19,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 23..24,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 23..24,
                             },
                         ),
                     ),
@@ -66,20 +67,20 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 13..30,
         },
     ),
     With(
         StmtWith {
+            range: 31..46,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 36..37,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 36..37,
                         },
                     ),
                     optional_vars: None,
@@ -88,11 +89,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 39..40,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 39..40,
                         },
                     ),
                     optional_vars: None,
@@ -107,30 +108,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 31..46,
         },
     ),
     With(
         StmtWith {
+            range: 47..72,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 52..53,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 52..53,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 57..58,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 57..58,
                             },
                         ),
                     ),
@@ -139,21 +140,21 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 60..61,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 60..61,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 65..66,
                                 id: Identifier(
                                     "y",
                                 ),
                                 ctx: Store,
-                                range: 65..66,
                             },
                         ),
                     ),
@@ -168,43 +169,43 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 47..72,
         },
     ),
     With(
         StmtWith {
+            range: 73..97,
             items: [
                 Withitem {
                     context_expr: IfExp(
                         ExprIfExp {
+                            range: 78..91,
                             test: Constant(
                                 ExprConstant {
+                                    range: 83..84,
                                     value: Int(
                                         1,
                                     ),
                                     kind: None,
-                                    range: 83..84,
                                 },
                             ),
                             body: Constant(
                                 ExprConstant {
+                                    range: 78..79,
                                     value: Int(
                                         0,
                                     ),
                                     kind: None,
-                                    range: 78..79,
                                 },
                             ),
                             orelse: Constant(
                                 ExprConstant {
+                                    range: 90..91,
                                     value: Int(
                                         2,
                                     ),
                                     kind: None,
-                                    range: 90..91,
                                 },
                             ),
-                            range: 78..91,
                         },
                     ),
                     optional_vars: None,
@@ -219,53 +220,53 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 73..97,
         },
     ),
     With(
         StmtWith {
+            range: 98..127,
             items: [
                 Withitem {
                     context_expr: IfExp(
                         ExprIfExp {
+                            range: 103..116,
                             test: Constant(
                                 ExprConstant {
+                                    range: 108..109,
                                     value: Int(
                                         1,
                                     ),
                                     kind: None,
-                                    range: 108..109,
                                 },
                             ),
                             body: Constant(
                                 ExprConstant {
+                                    range: 103..104,
                                     value: Int(
                                         0,
                                     ),
                                     kind: None,
-                                    range: 103..104,
                                 },
                             ),
                             orelse: Constant(
                                 ExprConstant {
+                                    range: 115..116,
                                     value: Int(
                                         2,
                                     ),
                                     kind: None,
-                                    range: 115..116,
                                 },
                             ),
-                            range: 103..116,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 120..121,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 120..121,
                             },
                         ),
                     ),
@@ -280,18 +281,18 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 98..127,
         },
     ),
     With(
         StmtWith {
+            range: 128..141,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 133..135,
                             elts: [],
                             ctx: Load,
-                            range: 133..135,
                         },
                     ),
                     optional_vars: None,
@@ -306,28 +307,28 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 128..141,
         },
     ),
     With(
         StmtWith {
+            range: 142..160,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 147..149,
                             elts: [],
                             ctx: Load,
-                            range: 147..149,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 153..154,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 153..154,
                             },
                         ),
                     ),
@@ -342,20 +343,20 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 142..160,
         },
     ),
     With(
         StmtWith {
+            range: 161..175,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 167..168,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 167..168,
                         },
                     ),
                     optional_vars: None,
@@ -370,30 +371,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 161..175,
         },
     ),
     With(
         StmtWith {
+            range: 176..195,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 182..183,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 182..183,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 188..189,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 188..189,
                             },
                         ),
                     ),
@@ -408,20 +409,20 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 176..195,
         },
     ),
     With(
         StmtWith {
+            range: 196..211,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 202..203,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 202..203,
                         },
                     ),
                     optional_vars: None,
@@ -436,38 +437,38 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 196..211,
         },
     ),
     With(
         StmtWith {
+            range: 212..232,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 217..221,
                             elts: [
                                 Constant(
                                     ExprConstant {
+                                        range: 218..219,
                                         value: Int(
                                             0,
                                         ),
                                         kind: None,
-                                        range: 218..219,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 217..221,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 225..226,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 225..226,
                             },
                         ),
                     ),
@@ -482,20 +483,20 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 212..232,
         },
     ),
     With(
         StmtWith {
+            range: 233..250,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 239..240,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 239..240,
                         },
                     ),
                     optional_vars: None,
@@ -504,11 +505,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 242..243,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 242..243,
                         },
                     ),
                     optional_vars: None,
@@ -523,47 +524,47 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 233..250,
         },
     ),
     With(
         StmtWith {
+            range: 251..273,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 256..262,
                             elts: [
                                 Constant(
                                     ExprConstant {
+                                        range: 257..258,
                                         value: Int(
                                             0,
                                         ),
                                         kind: None,
-                                        range: 257..258,
                                     },
                                 ),
                                 Constant(
                                     ExprConstant {
+                                        range: 260..261,
                                         value: Int(
                                             1,
                                         ),
                                         kind: None,
-                                        range: 260..261,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 256..262,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 266..267,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 266..267,
                             },
                         ),
                     ),
@@ -578,34 +579,34 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 251..273,
         },
     ),
     With(
         StmtWith {
+            range: 274..290,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 279..284,
                             elts: [
                                 Starred(
                                     ExprStarred {
+                                        range: 280..282,
                                         value: Name(
                                             ExprName {
+                                                range: 281..282,
                                                 id: Identifier(
                                                     "a",
                                                 ),
                                                 ctx: Load,
-                                                range: 281..282,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 280..282,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 279..284,
                         },
                     ),
                     optional_vars: None,
@@ -620,44 +621,44 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 274..290,
         },
     ),
     With(
         StmtWith {
+            range: 291..312,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 296..301,
                             elts: [
                                 Starred(
                                     ExprStarred {
+                                        range: 297..299,
                                         value: Name(
                                             ExprName {
+                                                range: 298..299,
                                                 id: Identifier(
                                                     "a",
                                                 ),
                                                 ctx: Load,
-                                                range: 298..299,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 297..299,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 296..301,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 305..306,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 305..306,
                             },
                         ),
                     ),
@@ -672,43 +673,43 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 291..312,
         },
     ),
     With(
         StmtWith {
+            range: 313..331,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 318..325,
                             elts: [
                                 Constant(
                                     ExprConstant {
+                                        range: 319..320,
                                         value: Int(
                                             0,
                                         ),
                                         kind: None,
-                                        range: 319..320,
                                     },
                                 ),
                                 Starred(
                                     ExprStarred {
+                                        range: 322..324,
                                         value: Name(
                                             ExprName {
+                                                range: 323..324,
                                                 id: Identifier(
                                                     "a",
                                                 ),
                                                 ctx: Load,
-                                                range: 323..324,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 322..324,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 318..325,
                         },
                     ),
                     optional_vars: None,
@@ -723,53 +724,53 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 313..331,
         },
     ),
     With(
         StmtWith {
+            range: 332..355,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 337..344,
                             elts: [
                                 Constant(
                                     ExprConstant {
+                                        range: 338..339,
                                         value: Int(
                                             0,
                                         ),
                                         kind: None,
-                                        range: 338..339,
                                     },
                                 ),
                                 Starred(
                                     ExprStarred {
+                                        range: 341..343,
                                         value: Name(
                                             ExprName {
+                                                range: 342..343,
                                                 id: Identifier(
                                                     "a",
                                                 ),
                                                 ctx: Load,
-                                                range: 342..343,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 341..343,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 337..344,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 348..349,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 348..349,
                             },
                         ),
                     ),
@@ -784,34 +785,34 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 332..355,
         },
     ),
     With(
         StmtWith {
+            range: 356..375,
             items: [
                 Withitem {
                     context_expr: NamedExpr(
                         ExprNamedExpr {
+                            range: 362..368,
                             target: Name(
                                 ExprName {
+                                    range: 362..363,
                                     id: Identifier(
                                         "a",
                                     ),
                                     ctx: Store,
-                                    range: 362..363,
                                 },
                             ),
                             value: Constant(
                                 ExprConstant {
+                                    range: 367..368,
                                     value: Int(
                                         0,
                                     ),
                                     kind: None,
-                                    range: 367..368,
                                 },
                             ),
-                            range: 362..368,
                         },
                     ),
                     optional_vars: None,
@@ -826,44 +827,44 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 356..375,
         },
     ),
     With(
         StmtWith {
+            range: 376..400,
             items: [
                 Withitem {
                     context_expr: NamedExpr(
                         ExprNamedExpr {
+                            range: 382..388,
                             target: Name(
                                 ExprName {
+                                    range: 382..383,
                                     id: Identifier(
                                         "a",
                                     ),
                                     ctx: Store,
-                                    range: 382..383,
                                 },
                             ),
                             value: Constant(
                                 ExprConstant {
+                                    range: 387..388,
                                     value: Int(
                                         0,
                                     ),
                                     kind: None,
-                                    range: 387..388,
                                 },
                             ),
-                            range: 382..388,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 393..394,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 393..394,
                             },
                         ),
                     ),
@@ -878,65 +879,65 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 376..400,
         },
     ),
     With(
         StmtWith {
+            range: 401..428,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 406..422,
                             elts: [
                                 NamedExpr(
                                     ExprNamedExpr {
+                                        range: 407..413,
                                         target: Name(
                                             ExprName {
+                                                range: 407..408,
                                                 id: Identifier(
                                                     "a",
                                                 ),
                                                 ctx: Store,
-                                                range: 407..408,
                                             },
                                         ),
                                         value: Constant(
                                             ExprConstant {
+                                                range: 412..413,
                                                 value: Int(
                                                     0,
                                                 ),
                                                 kind: None,
-                                                range: 412..413,
                                             },
                                         ),
-                                        range: 407..413,
                                     },
                                 ),
                                 NamedExpr(
                                     ExprNamedExpr {
+                                        range: 415..421,
                                         target: Name(
                                             ExprName {
+                                                range: 415..416,
                                                 id: Identifier(
                                                     "b",
                                                 ),
                                                 ctx: Store,
-                                                range: 415..416,
                                             },
                                         ),
                                         value: Constant(
                                             ExprConstant {
+                                                range: 420..421,
                                                 value: Int(
                                                     1,
                                                 ),
                                                 kind: None,
-                                                range: 420..421,
                                             },
                                         ),
-                                        range: 415..421,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 406..422,
                         },
                     ),
                     optional_vars: None,
@@ -951,75 +952,75 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 401..428,
         },
     ),
     With(
         StmtWith {
+            range: 429..461,
             items: [
                 Withitem {
                     context_expr: Tuple(
                         ExprTuple {
+                            range: 434..450,
                             elts: [
                                 NamedExpr(
                                     ExprNamedExpr {
+                                        range: 435..441,
                                         target: Name(
                                             ExprName {
+                                                range: 435..436,
                                                 id: Identifier(
                                                     "a",
                                                 ),
                                                 ctx: Store,
-                                                range: 435..436,
                                             },
                                         ),
                                         value: Constant(
                                             ExprConstant {
+                                                range: 440..441,
                                                 value: Int(
                                                     0,
                                                 ),
                                                 kind: None,
-                                                range: 440..441,
                                             },
                                         ),
-                                        range: 435..441,
                                     },
                                 ),
                                 NamedExpr(
                                     ExprNamedExpr {
+                                        range: 443..449,
                                         target: Name(
                                             ExprName {
+                                                range: 443..444,
                                                 id: Identifier(
                                                     "b",
                                                 ),
                                                 ctx: Store,
-                                                range: 443..444,
                                             },
                                         ),
                                         value: Constant(
                                             ExprConstant {
+                                                range: 448..449,
                                                 value: Int(
                                                     1,
                                                 ),
                                                 kind: None,
-                                                range: 448..449,
                                             },
                                         ),
-                                        range: 443..449,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 434..450,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 454..455,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 454..455,
                             },
                         ),
                     ),
@@ -1034,30 +1035,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 429..461,
         },
     ),
     With(
         StmtWith {
+            range: 462..481,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 468..469,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 468..469,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 473..474,
                                 id: Identifier(
                                     "a",
                                 ),
                                 ctx: Store,
-                                range: 473..474,
                             },
                         ),
                     ),
@@ -1072,30 +1073,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 462..481,
         },
     ),
     With(
         StmtWith {
+            range: 482..502,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 488..489,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 488..489,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 493..494,
                                 id: Identifier(
                                     "a",
                                 ),
                                 ctx: Store,
-                                range: 493..494,
                             },
                         ),
                     ),
@@ -1110,30 +1111,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 482..502,
         },
     ),
     With(
         StmtWith {
+            range: 503..530,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 509..510,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 509..510,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 514..515,
                                 id: Identifier(
                                     "a",
                                 ),
                                 ctx: Store,
-                                range: 514..515,
                             },
                         ),
                     ),
@@ -1142,21 +1143,21 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 517..518,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 517..518,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 522..523,
                                 id: Identifier(
                                     "b",
                                 ),
                                 ctx: Store,
-                                range: 522..523,
                             },
                         ),
                     ),
@@ -1171,30 +1172,30 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 503..530,
         },
     ),
     With(
         StmtWith {
+            range: 531..559,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 537..538,
                             value: Int(
                                 0,
                             ),
                             kind: None,
-                            range: 537..538,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 542..543,
                                 id: Identifier(
                                     "a",
                                 ),
                                 ctx: Store,
-                                range: 542..543,
                             },
                         ),
                     ),
@@ -1203,21 +1204,21 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 545..546,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 545..546,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 550..551,
                                 id: Identifier(
                                     "b",
                                 ),
                                 ctx: Store,
-                                range: 550..551,
                             },
                         ),
                     ),
@@ -1232,7 +1233,6 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                 ),
             ],
             type_comment: None,
-            range: 531..559,
         },
     ),
 ]

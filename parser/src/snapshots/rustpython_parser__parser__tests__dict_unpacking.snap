@@ -4,15 +4,16 @@ expression: parse_ast
 ---
 Dict(
     ExprDict {
+        range: 0..25,
         keys: [
             Some(
                 Constant(
                     ExprConstant {
+                        range: 1..4,
                         value: Str(
                             "a",
                         ),
                         kind: None,
-                        range: 1..4,
                     },
                 ),
             ),
@@ -20,11 +21,11 @@ Dict(
             Some(
                 Constant(
                     ExprConstant {
+                        range: 16..19,
                         value: Str(
                             "d",
                         ),
                         kind: None,
-                        range: 16..19,
                     },
                 ),
             ),
@@ -32,32 +33,31 @@ Dict(
         values: [
             Constant(
                 ExprConstant {
+                    range: 6..9,
                     value: Str(
                         "b",
                     ),
                     kind: None,
-                    range: 6..9,
                 },
             ),
             Name(
                 ExprName {
+                    range: 13..14,
                     id: Identifier(
                         "c",
                     ),
                     ctx: Load,
-                    range: 13..14,
                 },
             ),
             Constant(
                 ExprConstant {
+                    range: 21..24,
                     value: Str(
                         "e",
                     ),
                     kind: None,
-                    range: 21..24,
                 },
             ),
         ],
-        range: 0..25,
     },
 )

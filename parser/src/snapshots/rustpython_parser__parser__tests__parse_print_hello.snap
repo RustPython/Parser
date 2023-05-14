@@ -5,33 +5,33 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..20,
             value: Call(
                 ExprCall {
+                    range: 0..20,
                     func: Name(
                         ExprName {
+                            range: 0..5,
                             id: Identifier(
                                 "print",
                             ),
                             ctx: Load,
-                            range: 0..5,
                         },
                     ),
                     args: [
                         Constant(
                             ExprConstant {
+                                range: 6..19,
                                 value: Str(
                                     "Hello world",
                                 ),
                                 kind: None,
-                                range: 6..19,
                             },
                         ),
                     ],
                     keywords: [],
-                    range: 0..20,
                 },
             ),
-            range: 0..20,
         },
     ),
 ]

@@ -5,71 +5,71 @@ expression: parse_ast
 [
     Assign(
         StmtAssign {
+            range: 0..18,
             targets: [
                 Tuple(
                     ExprTuple {
+                        range: 0..6,
                         elts: [
                             Name(
                                 ExprName {
+                                    range: 1..2,
                                     id: Identifier(
                                         "x",
                                     ),
                                     ctx: Store,
-                                    range: 1..2,
                                 },
                             ),
                             Name(
                                 ExprName {
+                                    range: 4..5,
                                     id: Identifier(
                                         "y",
                                     ),
                                     ctx: Store,
-                                    range: 4..5,
                                 },
                             ),
                         ],
                         ctx: Store,
-                        range: 0..6,
                     },
                 ),
             ],
             value: Tuple(
                 ExprTuple {
+                    range: 9..18,
                     elts: [
                         Constant(
                             ExprConstant {
+                                range: 10..11,
                                 value: Int(
                                     1,
                                 ),
                                 kind: None,
-                                range: 10..11,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 13..14,
                                 value: Int(
                                     2,
                                 ),
                                 kind: None,
-                                range: 13..14,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 16..17,
                                 value: Int(
                                     3,
                                 ),
                                 kind: None,
-                                range: 16..17,
                             },
                         ),
                     ],
                     ctx: Load,
-                    range: 9..18,
                 },
             ),
             type_comment: None,
-            range: 0..18,
         },
     ),
 ]

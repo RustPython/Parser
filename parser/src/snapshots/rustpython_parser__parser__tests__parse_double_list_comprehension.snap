@@ -4,50 +4,51 @@ expression: parse_ast
 ---
 ListComp(
     ExprListComp {
+        range: 0..48,
         elt: Name(
             ExprName {
+                range: 1..2,
                 id: Identifier(
                     "x",
                 ),
                 ctx: Load,
-                range: 1..2,
             },
         ),
         generators: [
             Comprehension {
                 target: Tuple(
                     ExprTuple {
+                        range: 7..12,
                         elts: [
                             Name(
                                 ExprName {
+                                    range: 7..8,
                                     id: Identifier(
                                         "y",
                                     ),
                                     ctx: Store,
-                                    range: 7..8,
                                 },
                             ),
                             Name(
                                 ExprName {
+                                    range: 10..12,
                                     id: Identifier(
                                         "y2",
                                     ),
                                     ctx: Store,
-                                    range: 10..12,
                                 },
                             ),
                         ],
                         ctx: Store,
-                        range: 7..12,
                     },
                 ),
                 iter: Name(
                     ExprName {
+                        range: 16..17,
                         id: Identifier(
                             "z",
                         ),
                         ctx: Load,
-                        range: 16..17,
                     },
                 ),
                 ifs: [],
@@ -57,32 +58,33 @@ ListComp(
             Comprehension {
                 target: Name(
                     ExprName {
+                        range: 22..23,
                         id: Identifier(
                             "a",
                         ),
                         ctx: Store,
-                        range: 22..23,
                     },
                 ),
                 iter: Name(
                     ExprName {
+                        range: 27..28,
                         id: Identifier(
                             "b",
                         ),
                         ctx: Load,
-                        range: 27..28,
                     },
                 ),
                 ifs: [
                     Compare(
                         ExprCompare {
+                            range: 32..37,
                             left: Name(
                                 ExprName {
+                                    range: 32..33,
                                     id: Identifier(
                                         "a",
                                     ),
                                     ctx: Load,
-                                    range: 32..33,
                                 },
                             ),
                             ops: [
@@ -91,26 +93,26 @@ ListComp(
                             comparators: [
                                 Constant(
                                     ExprConstant {
+                                        range: 36..37,
                                         value: Int(
                                             5,
                                         ),
                                         kind: None,
-                                        range: 36..37,
                                     },
                                 ),
                             ],
-                            range: 32..37,
                         },
                     ),
                     Compare(
                         ExprCompare {
+                            range: 41..47,
                             left: Name(
                                 ExprName {
+                                    range: 41..42,
                                     id: Identifier(
                                         "a",
                                     ),
                                     ctx: Load,
-                                    range: 41..42,
                                 },
                             ),
                             ops: [
@@ -119,15 +121,14 @@ ListComp(
                             comparators: [
                                 Constant(
                                     ExprConstant {
+                                        range: 45..47,
                                         value: Int(
                                             10,
                                         ),
                                         kind: None,
-                                        range: 45..47,
                                     },
                                 ),
                             ],
-                            range: 41..47,
                         },
                     ),
                 ],
@@ -135,6 +136,5 @@ ListComp(
                 range: (),
             },
         ],
-        range: 0..48,
     },
 )

@@ -5,13 +5,14 @@ expression: parse_ast
 [
     FormattedValue(
         ExprFormattedValue {
+            range: 0..13,
             value: Name(
                 ExprName {
+                    range: 3..6,
                     id: Identifier(
                         "foo",
                     ),
                     ctx: Load,
-                    range: 3..6,
                 },
             ),
             conversion: Int(
@@ -20,22 +21,21 @@ expression: parse_ast
             format_spec: Some(
                 JoinedStr(
                     ExprJoinedStr {
+                        range: 0..13,
                         values: [
                             Constant(
                                 ExprConstant {
+                                    range: 0..13,
                                     value: Str(
                                         "spec",
                                     ),
                                     kind: None,
-                                    range: 0..13,
                                 },
                             ),
                         ],
-                        range: 0..13,
                     },
                 ),
             ),
-            range: 0..13,
         },
     ),
 ]

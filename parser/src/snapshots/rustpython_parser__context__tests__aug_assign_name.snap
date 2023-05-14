@@ -5,26 +5,26 @@ expression: parse_ast
 [
     AugAssign(
         StmtAugAssign {
+            range: 0..6,
             target: Name(
                 ExprName {
+                    range: 0..1,
                     id: Identifier(
                         "x",
                     ),
                     ctx: Store,
-                    range: 0..1,
                 },
             ),
             op: Add,
             value: Constant(
                 ExprConstant {
+                    range: 5..6,
                     value: Int(
                         1,
                     ),
                     kind: None,
-                    range: 5..6,
                 },
             ),
-            range: 0..6,
         },
     ),
 ]

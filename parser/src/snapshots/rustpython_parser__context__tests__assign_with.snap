@@ -5,25 +5,26 @@ expression: parse_ast
 [
     With(
         StmtWith {
+            range: 0..17,
             items: [
                 Withitem {
                     context_expr: Constant(
                         ExprConstant {
+                            range: 5..6,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 5..6,
                         },
                     ),
                     optional_vars: Some(
                         Name(
                             ExprName {
+                                range: 10..11,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Store,
-                                range: 10..11,
                             },
                         ),
                     ),
@@ -38,7 +39,6 @@ expression: parse_ast
                 ),
             ],
             type_comment: None,
-            range: 0..17,
         },
     ),
 ]

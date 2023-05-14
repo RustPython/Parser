@@ -6,6 +6,7 @@ Ok(
     [
         FunctionDef(
             StmtFunctionDef {
+                range: 0..23,
                 name: Identifier(
                     "f",
                 ),
@@ -54,7 +55,6 @@ Ok(
                 decorator_list: [],
                 returns: None,
                 type_comment: None,
-                range: 0..23,
             },
         ),
     ],

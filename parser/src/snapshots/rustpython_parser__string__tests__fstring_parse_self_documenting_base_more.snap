@@ -5,92 +5,92 @@ expression: parse_ast
 [
     Constant(
         ExprConstant {
+            range: 0..38,
             value: Str(
                 "mix ",
             ),
             kind: None,
-            range: 0..38,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..38,
             value: Str(
                 "user=",
             ),
             kind: None,
-            range: 0..38,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..38,
             value: Str(
                 "",
             ),
             kind: None,
-            range: 0..38,
         },
     ),
     FormattedValue(
         ExprFormattedValue {
+            range: 0..38,
             value: Name(
                 ExprName {
+                    range: 7..11,
                     id: Identifier(
                         "user",
                     ),
                     ctx: Load,
-                    range: 7..11,
                 },
             ),
             conversion: Int(
                 114,
             ),
             format_spec: None,
-            range: 0..38,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..38,
             value: Str(
                 " with text and ",
             ),
             kind: None,
-            range: 0..38,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..38,
             value: Str(
                 "second=",
             ),
             kind: None,
-            range: 0..38,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..38,
             value: Str(
                 "",
             ),
             kind: None,
-            range: 0..38,
         },
     ),
     FormattedValue(
         ExprFormattedValue {
+            range: 0..38,
             value: Name(
                 ExprName {
+                    range: 29..35,
                     id: Identifier(
                         "second",
                     ),
                     ctx: Load,
-                    range: 29..35,
                 },
             ),
             conversion: Int(
                 114,
             ),
             format_spec: None,
-            range: 0..38,
         },
     ),
 ]

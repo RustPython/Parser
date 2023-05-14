@@ -4,56 +4,57 @@ expression: parse_ast
 ---
 GeneratorExp(
     ExprGeneratorExp {
+        range: 0..26,
         elt: IfExp(
             ExprIfExp {
+                range: 1..14,
                 test: Name(
                     ExprName {
+                        range: 6..7,
                         id: Identifier(
                             "y",
                         ),
                         ctx: Load,
-                        range: 6..7,
                     },
                 ),
                 body: Name(
                     ExprName {
+                        range: 1..2,
                         id: Identifier(
                             "x",
                         ),
                         ctx: Load,
-                        range: 1..2,
                     },
                 ),
                 orelse: Name(
                     ExprName {
+                        range: 13..14,
                         id: Identifier(
                             "y",
                         ),
                         ctx: Load,
-                        range: 13..14,
                     },
                 ),
-                range: 1..14,
             },
         ),
         generators: [
             Comprehension {
                 target: Name(
                     ExprName {
+                        range: 19..20,
                         id: Identifier(
                             "y",
                         ),
                         ctx: Store,
-                        range: 19..20,
                     },
                 ),
                 iter: Name(
                     ExprName {
+                        range: 24..25,
                         id: Identifier(
                             "z",
                         ),
                         ctx: Load,
-                        range: 24..25,
                     },
                 ),
                 ifs: [],
@@ -61,6 +62,5 @@ GeneratorExp(
                 range: (),
             },
         ],
-        range: 0..26,
     },
 )

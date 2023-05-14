@@ -5,8 +5,10 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..18,
             value: Lambda(
                 ExprLambda {
+                    range: 0..18,
                     args: Arguments {
                         posonlyargs: [],
                         args: [
@@ -36,32 +38,30 @@ expression: parse_ast
                     },
                     body: BinOp(
                         ExprBinOp {
+                            range: 13..18,
                             left: Name(
                                 ExprName {
+                                    range: 13..14,
                                     id: Identifier(
                                         "x",
                                     ),
                                     ctx: Load,
-                                    range: 13..14,
                                 },
                             ),
                             op: Mult,
                             right: Name(
                                 ExprName {
+                                    range: 17..18,
                                     id: Identifier(
                                         "y",
                                     ),
                                     ctx: Load,
-                                    range: 17..18,
                                 },
                             ),
-                            range: 13..18,
                         },
                     ),
-                    range: 0..18,
                 },
             ),
-            range: 0..18,
         },
     ),
 ]

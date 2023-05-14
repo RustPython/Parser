@@ -5,8 +5,10 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..14,
             value: Constant(
                 ExprConstant {
+                    range: 0..14,
                     value: Bytes(
                         [
                             35,
@@ -17,10 +19,8 @@ expression: parse_ast
                         ],
                     ),
                     kind: None,
-                    range: 0..14,
                 },
             ),
-            range: 0..14,
         },
     ),
 ]

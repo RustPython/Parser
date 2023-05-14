@@ -5,289 +5,289 @@ expression: parse_ast
 [
     Assign(
         StmtAssign {
+            range: 0..36,
             targets: [
                 Name(
                     ExprName {
+                        range: 0..11,
                         id: Identifier(
                             "array_slice",
                         ),
                         ctx: Store,
-                        range: 0..11,
                     },
                 ),
             ],
             value: Subscript(
                 ExprSubscript {
+                    range: 14..36,
                     value: Name(
                         ExprName {
+                            range: 14..19,
                             id: Identifier(
                                 "array",
                             ),
                             ctx: Load,
-                            range: 14..19,
                         },
                     ),
                     slice: Tuple(
                         ExprTuple {
+                            range: 20..35,
                             elts: [
                                 Constant(
                                     ExprConstant {
+                                        range: 20..21,
                                         value: Int(
                                             0,
                                         ),
                                         kind: None,
-                                        range: 20..21,
                                     },
                                 ),
                                 Starred(
                                     ExprStarred {
+                                        range: 23..31,
                                         value: Name(
                                             ExprName {
+                                                range: 24..31,
                                                 id: Identifier(
                                                     "indexes",
                                                 ),
                                                 ctx: Load,
-                                                range: 24..31,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 23..31,
                                     },
                                 ),
                                 UnaryOp(
                                     ExprUnaryOp {
+                                        range: 33..35,
                                         op: USub,
                                         operand: Constant(
                                             ExprConstant {
+                                                range: 34..35,
                                                 value: Int(
                                                     1,
                                                 ),
                                                 kind: None,
-                                                range: 34..35,
                                             },
                                         ),
-                                        range: 33..35,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 20..35,
                         },
                     ),
                     ctx: Load,
-                    range: 14..36,
                 },
             ),
             type_comment: None,
-            range: 0..36,
         },
     ),
     Assign(
         StmtAssign {
+            range: 37..73,
             targets: [
                 Subscript(
                     ExprSubscript {
+                        range: 37..59,
                         value: Name(
                             ExprName {
+                                range: 37..42,
                                 id: Identifier(
                                     "array",
                                 ),
                                 ctx: Load,
-                                range: 37..42,
                             },
                         ),
                         slice: Tuple(
                             ExprTuple {
+                                range: 43..58,
                                 elts: [
                                     Constant(
                                         ExprConstant {
+                                            range: 43..44,
                                             value: Int(
                                                 0,
                                             ),
                                             kind: None,
-                                            range: 43..44,
                                         },
                                     ),
                                     Starred(
                                         ExprStarred {
+                                            range: 46..54,
                                             value: Name(
                                                 ExprName {
+                                                    range: 47..54,
                                                     id: Identifier(
                                                         "indexes",
                                                     ),
                                                     ctx: Load,
-                                                    range: 47..54,
                                                 },
                                             ),
                                             ctx: Load,
-                                            range: 46..54,
                                         },
                                     ),
                                     UnaryOp(
                                         ExprUnaryOp {
+                                            range: 56..58,
                                             op: USub,
                                             operand: Constant(
                                                 ExprConstant {
+                                                    range: 57..58,
                                                     value: Int(
                                                         1,
                                                     ),
                                                     kind: None,
-                                                    range: 57..58,
                                                 },
                                             ),
-                                            range: 56..58,
                                         },
                                     ),
                                 ],
                                 ctx: Load,
-                                range: 43..58,
                             },
                         ),
                         ctx: Store,
-                        range: 37..59,
                     },
                 ),
             ],
             value: Name(
                 ExprName {
+                    range: 62..73,
                     id: Identifier(
                         "array_slice",
                     ),
                     ctx: Load,
-                    range: 62..73,
                 },
             ),
             type_comment: None,
-            range: 37..73,
         },
     ),
     Expr(
         StmtExpr {
+            range: 74..119,
             value: Subscript(
                 ExprSubscript {
+                    range: 74..119,
                     value: Name(
                         ExprName {
+                            range: 74..79,
                             id: Identifier(
                                 "array",
                             ),
                             ctx: Load,
-                            range: 74..79,
                         },
                     ),
                     slice: Tuple(
                         ExprTuple {
+                            range: 80..118,
                             elts: [
                                 Starred(
                                     ExprStarred {
+                                        range: 80..98,
                                         value: Name(
                                             ExprName {
+                                                range: 81..98,
                                                 id: Identifier(
                                                     "indexes_to_select",
                                                 ),
                                                 ctx: Load,
-                                                range: 81..98,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 80..98,
                                     },
                                 ),
                                 Starred(
                                     ExprStarred {
+                                        range: 100..118,
                                         value: Name(
                                             ExprName {
+                                                range: 101..118,
                                                 id: Identifier(
                                                     "indexes_to_select",
                                                 ),
                                                 ctx: Load,
-                                                range: 101..118,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 100..118,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 80..118,
                         },
                     ),
                     ctx: Load,
-                    range: 74..119,
                 },
             ),
-            range: 74..119,
         },
     ),
     Expr(
         StmtExpr {
+            range: 120..150,
             value: Subscript(
                 ExprSubscript {
+                    range: 120..150,
                     value: Name(
                         ExprName {
+                            range: 120..125,
                             id: Identifier(
                                 "array",
                             ),
                             ctx: Load,
-                            range: 120..125,
                         },
                     ),
                     slice: Tuple(
                         ExprTuple {
+                            range: 126..149,
                             elts: [
                                 Slice(
                                     ExprSlice {
+                                        range: 126..129,
                                         lower: Some(
                                             Constant(
                                                 ExprConstant {
+                                                    range: 126..127,
                                                     value: Int(
                                                         3,
                                                     ),
                                                     kind: None,
-                                                    range: 126..127,
                                                 },
                                             ),
                                         ),
                                         upper: Some(
                                             Constant(
                                                 ExprConstant {
+                                                    range: 128..129,
                                                     value: Int(
                                                         5,
                                                     ),
                                                     kind: None,
-                                                    range: 128..129,
                                                 },
                                             ),
                                         ),
                                         step: None,
-                                        range: 126..129,
                                     },
                                 ),
                                 Starred(
                                     ExprStarred {
+                                        range: 131..149,
                                         value: Name(
                                             ExprName {
+                                                range: 132..149,
                                                 id: Identifier(
                                                     "indexes_to_select",
                                                 ),
                                                 ctx: Load,
-                                                range: 132..149,
                                             },
                                         ),
                                         ctx: Load,
-                                        range: 131..149,
                                     },
                                 ),
                             ],
                             ctx: Load,
-                            range: 126..149,
                         },
                     ),
                     ctx: Load,
-                    range: 120..150,
                 },
             ),
-            range: 120..150,
         },
     ),
 ]

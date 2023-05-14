@@ -5,31 +5,32 @@ expression: parse_ast
 [
     Constant(
         ExprConstant {
+            range: 0..14,
             value: Str(
                 "user=",
             ),
             kind: None,
-            range: 0..14,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..14,
             value: Str(
                 "",
             ),
             kind: None,
-            range: 0..14,
         },
     ),
     FormattedValue(
         ExprFormattedValue {
+            range: 0..14,
             value: Name(
                 ExprName {
+                    range: 3..7,
                     id: Identifier(
                         "user",
                     ),
                     ctx: Load,
-                    range: 3..7,
                 },
             ),
             conversion: Int(
@@ -38,22 +39,21 @@ expression: parse_ast
             format_spec: Some(
                 JoinedStr(
                     ExprJoinedStr {
+                        range: 0..14,
                         values: [
                             Constant(
                                 ExprConstant {
+                                    range: 0..14,
                                     value: Str(
                                         ">10",
                                     ),
                                     kind: None,
-                                    range: 0..14,
                                 },
                             ),
                         ],
-                        range: 0..14,
                     },
                 ),
             ),
-            range: 0..14,
         },
     ),
 ]

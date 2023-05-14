@@ -5,41 +5,41 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..9,
             value: JoinedStr(
                 ExprJoinedStr {
+                    range: 0..9,
                     values: [
                         Constant(
                             ExprConstant {
+                                range: 0..9,
                                 value: Str(
                                     "\\\n",
                                 ),
                                 kind: None,
-                                range: 0..9,
                             },
                         ),
                         FormattedValue(
                             ExprFormattedValue {
+                                range: 0..9,
                                 value: Name(
                                     ExprName {
+                                        range: 6..7,
                                         id: Identifier(
                                             "x",
                                         ),
                                         ctx: Load,
-                                        range: 6..7,
                                     },
                                 ),
                                 conversion: Int(
                                     0,
                                 ),
                                 format_spec: None,
-                                range: 0..9,
                             },
                         ),
                     ],
-                    range: 0..9,
                 },
             ),
-            range: 0..9,
         },
     ),
 ]

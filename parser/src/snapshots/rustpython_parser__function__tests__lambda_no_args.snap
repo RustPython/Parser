@@ -6,8 +6,10 @@ Ok(
     [
         Expr(
             StmtExpr {
+                range: 0..9,
                 value: Lambda(
                     ExprLambda {
+                        range: 0..9,
                         args: Arguments {
                             posonlyargs: [],
                             args: [],
@@ -20,17 +22,15 @@ Ok(
                         },
                         body: Constant(
                             ExprConstant {
+                                range: 8..9,
                                 value: Int(
                                     1,
                                 ),
                                 kind: None,
-                                range: 8..9,
                             },
                         ),
-                        range: 0..9,
                     },
                 ),
-                range: 0..9,
             },
         ),
     ],

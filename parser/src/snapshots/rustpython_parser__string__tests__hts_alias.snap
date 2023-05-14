@@ -5,16 +5,16 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..9,
             value: Constant(
                 ExprConstant {
+                    range: 0..9,
                     value: Str(
                         "\u{88}",
                     ),
                     kind: None,
-                    range: 0..9,
                 },
             ),
-            range: 0..9,
         },
     ),
 ]

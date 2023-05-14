@@ -5,27 +5,28 @@ expression: parse_ast
 [
     If(
         StmtIf {
+            range: 0..14,
             test: NamedExpr(
                 ExprNamedExpr {
+                    range: 3..8,
                     target: Name(
                         ExprName {
+                            range: 3..4,
                             id: Identifier(
                                 "x",
                             ),
                             ctx: Store,
-                            range: 3..4,
                         },
                     ),
                     value: Constant(
                         ExprConstant {
+                            range: 7..8,
                             value: Int(
                                 1,
                             ),
                             kind: None,
-                            range: 7..8,
                         },
                     ),
-                    range: 3..8,
                 },
             ),
             body: [
@@ -36,7 +37,6 @@ expression: parse_ast
                 ),
             ],
             orelse: [],
-            range: 0..14,
         },
     ),
 ]

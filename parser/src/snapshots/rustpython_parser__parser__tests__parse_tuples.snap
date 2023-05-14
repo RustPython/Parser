@@ -5,62 +5,62 @@ expression: "parse_program(source, \"<test>\").unwrap()"
 [
     Assign(
         StmtAssign {
+            range: 0..11,
             targets: [
                 Tuple(
                     ExprTuple {
+                        range: 0..4,
                         elts: [
                             Name(
                                 ExprName {
+                                    range: 0..1,
                                     id: Identifier(
                                         "a",
                                     ),
                                     ctx: Store,
-                                    range: 0..1,
                                 },
                             ),
                             Name(
                                 ExprName {
+                                    range: 3..4,
                                     id: Identifier(
                                         "b",
                                     ),
                                     ctx: Store,
-                                    range: 3..4,
                                 },
                             ),
                         ],
                         ctx: Store,
-                        range: 0..4,
                     },
                 ),
             ],
             value: Tuple(
                 ExprTuple {
+                    range: 7..11,
                     elts: [
                         Constant(
                             ExprConstant {
+                                range: 7..8,
                                 value: Int(
                                     4,
                                 ),
                                 kind: None,
-                                range: 7..8,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 10..11,
                                 value: Int(
                                     5,
                                 ),
                                 kind: None,
-                                range: 10..11,
                             },
                         ),
                     ],
                     ctx: Load,
-                    range: 7..11,
                 },
             ),
             type_comment: None,
-            range: 0..11,
         },
     ),
 ]

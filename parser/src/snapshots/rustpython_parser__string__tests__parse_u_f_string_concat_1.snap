@@ -5,25 +5,25 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..18,
             value: JoinedStr(
                 ExprJoinedStr {
+                    range: 0..18,
                     values: [
                         Constant(
                             ExprConstant {
+                                range: 0..18,
                                 value: Str(
                                     "Hello world",
                                 ),
                                 kind: Some(
                                     "u",
                                 ),
-                                range: 0..18,
                             },
                         ),
                     ],
-                    range: 0..18,
                 },
             ),
-            range: 0..18,
         },
     ),
 ]

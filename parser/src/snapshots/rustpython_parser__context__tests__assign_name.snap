@@ -5,54 +5,54 @@ expression: parse_ast
 [
     Assign(
         StmtAssign {
+            range: 0..13,
             targets: [
                 Name(
                     ExprName {
+                        range: 0..1,
                         id: Identifier(
                             "x",
                         ),
                         ctx: Store,
-                        range: 0..1,
                     },
                 ),
             ],
             value: Tuple(
                 ExprTuple {
+                    range: 4..13,
                     elts: [
                         Constant(
                             ExprConstant {
+                                range: 5..6,
                                 value: Int(
                                     1,
                                 ),
                                 kind: None,
-                                range: 5..6,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 8..9,
                                 value: Int(
                                     2,
                                 ),
                                 kind: None,
-                                range: 8..9,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 11..12,
                                 value: Int(
                                     3,
                                 ),
                                 kind: None,
-                                range: 11..12,
                             },
                         ),
                     ],
                     ctx: Load,
-                    range: 4..13,
                 },
             ),
             type_comment: None,
-            range: 0..13,
         },
     ),
 ]

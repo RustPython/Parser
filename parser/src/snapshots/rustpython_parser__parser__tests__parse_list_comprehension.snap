@@ -4,33 +4,34 @@ expression: parse_ast
 ---
 ListComp(
     ExprListComp {
+        range: 0..14,
         elt: Name(
             ExprName {
+                range: 1..2,
                 id: Identifier(
                     "x",
                 ),
                 ctx: Load,
-                range: 1..2,
             },
         ),
         generators: [
             Comprehension {
                 target: Name(
                     ExprName {
+                        range: 7..8,
                         id: Identifier(
                             "y",
                         ),
                         ctx: Store,
-                        range: 7..8,
                     },
                 ),
                 iter: Name(
                     ExprName {
+                        range: 12..13,
                         id: Identifier(
                             "z",
                         ),
                         ctx: Load,
-                        range: 12..13,
                     },
                 ),
                 ifs: [],
@@ -38,6 +39,5 @@ ListComp(
                 range: (),
             },
         ],
-        range: 0..14,
     },
 )

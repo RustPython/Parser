@@ -5,41 +5,41 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..22,
             value: JoinedStr(
                 ExprJoinedStr {
+                    range: 0..22,
                     values: [
                         Constant(
                             ExprConstant {
+                                range: 0..22,
                                 value: Str(
                                     "Hello world",
                                 ),
                                 kind: None,
-                                range: 0..22,
                             },
                         ),
                         FormattedValue(
                             ExprFormattedValue {
+                                range: 9..22,
                                 value: Constant(
                                     ExprConstant {
+                                        range: 17..20,
                                         value: Str(
                                             "!",
                                         ),
                                         kind: None,
-                                        range: 17..20,
                                     },
                                 ),
                                 conversion: Int(
                                     0,
                                 ),
                                 format_spec: None,
-                                range: 9..22,
                             },
                         ),
                     ],
-                    range: 0..22,
                 },
             ),
-            range: 0..22,
         },
     ),
 ]

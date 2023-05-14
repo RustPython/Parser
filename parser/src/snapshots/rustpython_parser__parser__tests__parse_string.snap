@@ -5,16 +5,16 @@ expression: parse_ast
 [
     Expr(
         StmtExpr {
+            range: 0..13,
             value: Constant(
                 ExprConstant {
+                    range: 0..13,
                     value: Str(
                         "Hello world",
                     ),
                     kind: None,
-                    range: 0..13,
                 },
             ),
-            range: 0..13,
         },
     ),
 ]

@@ -5,26 +5,27 @@ expression: "parse_program(source, \"<test>\").unwrap()"
 [
     ClassDef(
         StmtClassDef {
+            range: 0..98,
             name: Identifier(
                 "Foo",
             ),
             bases: [
                 Name(
                     ExprName {
+                        range: 10..11,
                         id: Identifier(
                             "A",
                         ),
                         ctx: Load,
-                        range: 10..11,
                     },
                 ),
                 Name(
                     ExprName {
+                        range: 13..14,
                         id: Identifier(
                             "B",
                         ),
                         ctx: Load,
-                        range: 13..14,
                     },
                 ),
             ],
@@ -32,6 +33,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
             body: [
                 FunctionDef(
                     StmtFunctionDef {
+                        range: 18..44,
                         name: Identifier(
                             "__init__",
                         ),
@@ -64,11 +66,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         decorator_list: [],
                         returns: None,
                         type_comment: None,
-                        range: 18..44,
                     },
                 ),
                 FunctionDef(
                     StmtFunctionDef {
+                        range: 46..98,
                         name: Identifier(
                             "method_with_default",
                         ),
@@ -99,11 +101,11 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                             defaults: [
                                 Constant(
                                     ExprConstant {
+                                        range: 80..89,
                                         value: Str(
                                             "default",
                                         ),
                                         kind: None,
-                                        range: 80..89,
                                     },
                                 ),
                             ],
@@ -119,12 +121,10 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         decorator_list: [],
                         returns: None,
                         type_comment: None,
-                        range: 46..98,
                     },
                 ),
             ],
             decorator_list: [],
-            range: 0..98,
         },
     ),
 ]

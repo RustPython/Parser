@@ -6,6 +6,7 @@ Ok(
     [
         FunctionDef(
             StmtFunctionDef {
+                range: 0..29,
                 name: Identifier(
                     "f",
                 ),
@@ -42,20 +43,20 @@ Ok(
                     kw_defaults: [
                         Constant(
                             ExprConstant {
+                                range: 14..16,
                                 value: Int(
                                     20,
                                 ),
                                 kind: None,
-                                range: 14..16,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 20..22,
                                 value: Int(
                                     30,
                                 ),
                                 kind: None,
-                                range: 20..22,
                             },
                         ),
                     ],
@@ -73,7 +74,6 @@ Ok(
                 decorator_list: [],
                 returns: None,
                 type_comment: None,
-                range: 0..29,
             },
         ),
     ],

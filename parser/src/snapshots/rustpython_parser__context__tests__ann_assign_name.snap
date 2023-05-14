@@ -5,37 +5,37 @@ expression: parse_ast
 [
     AnnAssign(
         StmtAnnAssign {
+            range: 0..10,
             target: Name(
                 ExprName {
+                    range: 0..1,
                     id: Identifier(
                         "x",
                     ),
                     ctx: Store,
-                    range: 0..1,
                 },
             ),
             annotation: Name(
                 ExprName {
+                    range: 3..6,
                     id: Identifier(
                         "int",
                     ),
                     ctx: Load,
-                    range: 3..6,
                 },
             ),
             value: Some(
                 Constant(
                     ExprConstant {
+                        range: 9..10,
                         value: Int(
                             1,
                         ),
                         kind: None,
-                        range: 9..10,
                     },
                 ),
             ),
             simple: true,
-            range: 0..10,
         },
     ),
 ]

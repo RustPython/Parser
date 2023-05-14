@@ -5,27 +5,27 @@ expression: parse_ast
 [
     Delete(
         StmtDelete {
+            range: 0..7,
             targets: [
                 Attribute(
                     ExprAttribute {
+                        range: 4..7,
                         value: Name(
                             ExprName {
+                                range: 4..5,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Load,
-                                range: 4..5,
                             },
                         ),
                         attr: Identifier(
                             "y",
                         ),
                         ctx: Del,
-                        range: 4..7,
                     },
                 ),
             ],
-            range: 0..7,
         },
     ),
 ]

@@ -5,6 +5,7 @@ expression: parse_ast
 [
     FunctionDef(
         StmtFunctionDef {
+            range: 1..49,
             name: Identifier(
                 "args_to_tuple",
             ),
@@ -19,17 +20,17 @@ expression: parse_ast
                         annotation: Some(
                             Starred(
                                 ExprStarred {
+                                    range: 26..29,
                                     value: Name(
                                         ExprName {
+                                            range: 27..29,
                                             id: Identifier(
                                                 "Ts",
                                             ),
                                             ctx: Load,
-                                            range: 27..29,
                                         },
                                     ),
                                     ctx: Load,
-                                    range: 26..29,
                                 },
                             ),
                         ),
@@ -46,14 +47,14 @@ expression: parse_ast
             body: [
                 Expr(
                     StmtExpr {
+                        range: 46..49,
                         value: Constant(
                             ExprConstant {
+                                range: 46..49,
                                 value: Ellipsis,
                                 kind: None,
-                                range: 46..49,
                             },
                         ),
-                        range: 46..49,
                     },
                 ),
             ],
@@ -61,37 +62,36 @@ expression: parse_ast
             returns: Some(
                 Subscript(
                     ExprSubscript {
+                        range: 34..44,
                         value: Name(
                             ExprName {
+                                range: 34..39,
                                 id: Identifier(
                                     "Tuple",
                                 ),
                                 ctx: Load,
-                                range: 34..39,
                             },
                         ),
                         slice: Starred(
                             ExprStarred {
+                                range: 40..43,
                                 value: Name(
                                     ExprName {
+                                        range: 41..43,
                                         id: Identifier(
                                             "Ts",
                                         ),
                                         ctx: Load,
-                                        range: 41..43,
                                     },
                                 ),
                                 ctx: Load,
-                                range: 40..43,
                             },
                         ),
                         ctx: Load,
-                        range: 34..44,
                     },
                 ),
             ),
             type_comment: None,
-            range: 1..49,
         },
     ),
 ]

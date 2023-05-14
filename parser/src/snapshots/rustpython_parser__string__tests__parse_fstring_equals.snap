@@ -5,15 +5,17 @@ expression: parse_ast
 [
     FormattedValue(
         ExprFormattedValue {
+            range: 0..13,
             value: Compare(
                 ExprCompare {
+                    range: 3..11,
                     left: Constant(
                         ExprConstant {
+                            range: 3..5,
                             value: Int(
                                 42,
                             ),
                             kind: None,
-                            range: 3..5,
                         },
                     ),
                     ops: [
@@ -22,22 +24,20 @@ expression: parse_ast
                     comparators: [
                         Constant(
                             ExprConstant {
+                                range: 9..11,
                                 value: Int(
                                     42,
                                 ),
                                 kind: None,
-                                range: 9..11,
                             },
                         ),
                     ],
-                    range: 3..11,
                 },
             ),
             conversion: Int(
                 0,
             ),
             format_spec: None,
-            range: 0..13,
         },
     ),
 ]

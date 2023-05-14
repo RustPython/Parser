@@ -5,72 +5,74 @@ expression: parse_ast
 [
     Assign(
         StmtAssign {
+            range: 0..26,
             targets: [
                 Name(
                     ExprName {
+                        range: 0..1,
                         id: Identifier(
                             "x",
                         ),
                         ctx: Store,
-                        range: 0..1,
                     },
                 ),
             ],
             value: SetComp(
                 ExprSetComp {
+                    range: 4..26,
                     elt: Name(
                         ExprName {
+                            range: 5..6,
                             id: Identifier(
                                 "y",
                             ),
                             ctx: Load,
-                            range: 5..6,
                         },
                     ),
                     generators: [
                         Comprehension {
                             target: Name(
                                 ExprName {
+                                    range: 11..12,
                                     id: Identifier(
                                         "y",
                                     ),
                                     ctx: Store,
-                                    range: 11..12,
                                 },
                             ),
                             iter: Tuple(
                                 ExprTuple {
+                                    range: 16..25,
                                     elts: [
                                         Constant(
                                             ExprConstant {
+                                                range: 17..18,
                                                 value: Int(
                                                     1,
                                                 ),
                                                 kind: None,
-                                                range: 17..18,
                                             },
                                         ),
                                         Constant(
                                             ExprConstant {
+                                                range: 20..21,
                                                 value: Int(
                                                     2,
                                                 ),
                                                 kind: None,
-                                                range: 20..21,
                                             },
                                         ),
                                         Constant(
                                             ExprConstant {
+                                                range: 23..24,
                                                 value: Int(
                                                     3,
                                                 ),
                                                 kind: None,
-                                                range: 23..24,
                                             },
                                         ),
                                     ],
                                     ctx: Load,
-                                    range: 16..25,
                                 },
                             ),
                             ifs: [],
@@ -78,11 +80,9 @@ expression: parse_ast
                             range: (),
                         },
                     ],
-                    range: 4..26,
                 },
             ),
             type_comment: None,
-            range: 0..26,
         },
     ),
 ]

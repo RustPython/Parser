@@ -5,47 +5,47 @@ expression: parse_ast
 [
     FormattedValue(
         ExprFormattedValue {
+            range: 0..18,
             value: Name(
                 ExprName {
+                    range: 3..4,
                     id: Identifier(
                         "a",
                     ),
                     ctx: Load,
-                    range: 3..4,
                 },
             ),
             conversion: Int(
                 0,
             ),
             format_spec: None,
-            range: 0..18,
         },
     ),
     FormattedValue(
         ExprFormattedValue {
+            range: 0..18,
             value: Name(
                 ExprName {
+                    range: 7..8,
                     id: Identifier(
                         "b",
                     ),
                     ctx: Load,
-                    range: 7..8,
                 },
             ),
             conversion: Int(
                 0,
             ),
             format_spec: None,
-            range: 0..18,
         },
     ),
     Constant(
         ExprConstant {
+            range: 0..18,
             value: Str(
                 "{foo}",
             ),
             kind: None,
-            range: 0..18,
         },
     ),
 ]

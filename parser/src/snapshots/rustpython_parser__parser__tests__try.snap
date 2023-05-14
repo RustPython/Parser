@@ -5,53 +5,55 @@ expression: parse_ast
 [
     Try(
         StmtTry {
+            range: 0..134,
             body: [
                 Raise(
                     StmtRaise {
+                        range: 9..28,
                         exc: Some(
                             Call(
                                 ExprCall {
+                                    range: 15..28,
                                     func: Name(
                                         ExprName {
+                                            range: 15..25,
                                             id: Identifier(
                                                 "ValueError",
                                             ),
                                             ctx: Load,
-                                            range: 15..25,
                                         },
                                     ),
                                     args: [
                                         Constant(
                                             ExprConstant {
+                                                range: 26..27,
                                                 value: Int(
                                                     1,
                                                 ),
                                                 kind: None,
-                                                range: 26..27,
                                             },
                                         ),
                                     ],
                                     keywords: [],
-                                    range: 15..28,
                                 },
                             ),
                         ),
                         cause: None,
-                        range: 9..28,
                     },
                 ),
             ],
             handlers: [
                 ExceptHandler(
                     ExcepthandlerExceptHandler {
+                        range: 29..82,
                         type_: Some(
                             Name(
                                 ExprName {
+                                    range: 36..45,
                                     id: Identifier(
                                         "TypeError",
                                     ),
                                     ctx: Load,
-                                    range: 36..45,
                                 },
                             ),
                         ),
@@ -63,91 +65,91 @@ expression: parse_ast
                         body: [
                             Expr(
                                 StmtExpr {
+                                    range: 56..82,
                                     value: Call(
                                         ExprCall {
+                                            range: 56..82,
                                             func: Name(
                                                 ExprName {
+                                                    range: 56..61,
                                                     id: Identifier(
                                                         "print",
                                                     ),
                                                     ctx: Load,
-                                                    range: 56..61,
                                                 },
                                             ),
                                             args: [
                                                 JoinedStr(
                                                     ExprJoinedStr {
+                                                        range: 62..81,
                                                         values: [
                                                             Constant(
                                                                 ExprConstant {
+                                                                    range: 62..81,
                                                                     value: Str(
                                                                         "caught ",
                                                                     ),
                                                                     kind: None,
-                                                                    range: 62..81,
                                                                 },
                                                             ),
                                                             FormattedValue(
                                                                 ExprFormattedValue {
+                                                                    range: 62..81,
                                                                     value: Call(
                                                                         ExprCall {
+                                                                            range: 72..79,
                                                                             func: Name(
                                                                                 ExprName {
+                                                                                    range: 72..76,
                                                                                     id: Identifier(
                                                                                         "type",
                                                                                     ),
                                                                                     ctx: Load,
-                                                                                    range: 72..76,
                                                                                 },
                                                                             ),
                                                                             args: [
                                                                                 Name(
                                                                                     ExprName {
+                                                                                        range: 77..78,
                                                                                         id: Identifier(
                                                                                             "e",
                                                                                         ),
                                                                                         ctx: Load,
-                                                                                        range: 77..78,
                                                                                     },
                                                                                 ),
                                                                             ],
                                                                             keywords: [],
-                                                                            range: 72..79,
                                                                         },
                                                                     ),
                                                                     conversion: Int(
                                                                         0,
                                                                     ),
                                                                     format_spec: None,
-                                                                    range: 62..81,
                                                                 },
                                                             ),
                                                         ],
-                                                        range: 62..81,
                                                     },
                                                 ),
                                             ],
                                             keywords: [],
-                                            range: 56..82,
                                         },
                                     ),
-                                    range: 56..82,
                                 },
                             ),
                         ],
-                        range: 29..82,
                     },
                 ),
                 ExceptHandler(
                     ExcepthandlerExceptHandler {
+                        range: 83..134,
                         type_: Some(
                             Name(
                                 ExprName {
+                                    range: 90..97,
                                     id: Identifier(
                                         "OSError",
                                     ),
                                     ctx: Load,
-                                    range: 90..97,
                                 },
                             ),
                         ),
@@ -159,85 +161,83 @@ expression: parse_ast
                         body: [
                             Expr(
                                 StmtExpr {
+                                    range: 108..134,
                                     value: Call(
                                         ExprCall {
+                                            range: 108..134,
                                             func: Name(
                                                 ExprName {
+                                                    range: 108..113,
                                                     id: Identifier(
                                                         "print",
                                                     ),
                                                     ctx: Load,
-                                                    range: 108..113,
                                                 },
                                             ),
                                             args: [
                                                 JoinedStr(
                                                     ExprJoinedStr {
+                                                        range: 114..133,
                                                         values: [
                                                             Constant(
                                                                 ExprConstant {
+                                                                    range: 114..133,
                                                                     value: Str(
                                                                         "caught ",
                                                                     ),
                                                                     kind: None,
-                                                                    range: 114..133,
                                                                 },
                                                             ),
                                                             FormattedValue(
                                                                 ExprFormattedValue {
+                                                                    range: 114..133,
                                                                     value: Call(
                                                                         ExprCall {
+                                                                            range: 124..131,
                                                                             func: Name(
                                                                                 ExprName {
+                                                                                    range: 124..128,
                                                                                     id: Identifier(
                                                                                         "type",
                                                                                     ),
                                                                                     ctx: Load,
-                                                                                    range: 124..128,
                                                                                 },
                                                                             ),
                                                                             args: [
                                                                                 Name(
                                                                                     ExprName {
+                                                                                        range: 129..130,
                                                                                         id: Identifier(
                                                                                             "e",
                                                                                         ),
                                                                                         ctx: Load,
-                                                                                        range: 129..130,
                                                                                     },
                                                                                 ),
                                                                             ],
                                                                             keywords: [],
-                                                                            range: 124..131,
                                                                         },
                                                                     ),
                                                                     conversion: Int(
                                                                         0,
                                                                     ),
                                                                     format_spec: None,
-                                                                    range: 114..133,
                                                                 },
                                                             ),
                                                         ],
-                                                        range: 114..133,
                                                     },
                                                 ),
                                             ],
                                             keywords: [],
-                                            range: 108..134,
                                         },
                                     ),
-                                    range: 108..134,
                                 },
                             ),
                         ],
-                        range: 83..134,
                     },
                 ),
             ],
             orelse: [],
             finalbody: [],
-            range: 0..134,
         },
     ),
 ]

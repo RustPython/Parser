@@ -4,27 +4,27 @@ expression: parse_ast
 ---
 BoolOp(
     ExprBoolOp {
+        range: 0..6,
         op: Or,
         values: [
             Name(
                 ExprName {
+                    range: 0..1,
                     id: Identifier(
                         "x",
                     ),
                     ctx: Load,
-                    range: 0..1,
                 },
             ),
             Name(
                 ExprName {
+                    range: 5..6,
                     id: Identifier(
                         "y",
                     ),
                     ctx: Load,
-                    range: 5..6,
                 },
             ),
         ],
-        range: 0..6,
     },
 )

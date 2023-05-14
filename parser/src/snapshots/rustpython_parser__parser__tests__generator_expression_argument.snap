@@ -4,143 +4,145 @@ expression: parse_ast
 ---
 Call(
     ExprCall {
+        range: 0..141,
         func: Attribute(
             ExprAttribute {
+                range: 0..8,
                 value: Constant(
                     ExprConstant {
+                        range: 0..3,
                         value: Str(
                             " ",
                         ),
                         kind: None,
-                        range: 0..3,
                     },
                 ),
                 attr: Identifier(
                     "join",
                 ),
                 ctx: Load,
-                range: 0..8,
             },
         ),
         args: [
             GeneratorExp(
                 ExprGeneratorExp {
+                    range: 14..139,
                     elt: Name(
                         ExprName {
+                            range: 14..17,
                             id: Identifier(
                                 "sql",
                             ),
                             ctx: Load,
-                            range: 14..17,
                         },
                     ),
                     generators: [
                         Comprehension {
                             target: Name(
                                 ExprName {
+                                    range: 26..29,
                                     id: Identifier(
                                         "sql",
                                     ),
                                     ctx: Store,
-                                    range: 26..29,
                                 },
                             ),
                             iter: Tuple(
                                 ExprTuple {
+                                    range: 33..139,
                                     elts: [
                                         IfExp(
                                             ExprIfExp {
+                                                range: 43..80,
                                                 test: Name(
                                                     ExprName {
+                                                        range: 65..70,
                                                         id: Identifier(
                                                             "limit",
                                                         ),
                                                         ctx: Load,
-                                                        range: 65..70,
                                                     },
                                                 ),
                                                 body: BinOp(
                                                     ExprBinOp {
+                                                        range: 43..61,
                                                         left: Constant(
                                                             ExprConstant {
+                                                                range: 43..53,
                                                                 value: Str(
                                                                     "LIMIT %d",
                                                                 ),
                                                                 kind: None,
-                                                                range: 43..53,
                                                             },
                                                         ),
                                                         op: Mod,
                                                         right: Name(
                                                             ExprName {
+                                                                range: 56..61,
                                                                 id: Identifier(
                                                                     "limit",
                                                                 ),
                                                                 ctx: Load,
-                                                                range: 56..61,
                                                             },
                                                         ),
-                                                        range: 43..61,
                                                     },
                                                 ),
                                                 orelse: Constant(
                                                     ExprConstant {
+                                                        range: 76..80,
                                                         value: None,
                                                         kind: None,
-                                                        range: 76..80,
                                                     },
                                                 ),
-                                                range: 43..80,
                                             },
                                         ),
                                         IfExp(
                                             ExprIfExp {
+                                                range: 90..132,
                                                 test: Name(
                                                     ExprName {
+                                                        range: 116..122,
                                                         id: Identifier(
                                                             "offset",
                                                         ),
                                                         ctx: Load,
-                                                        range: 116..122,
                                                     },
                                                 ),
                                                 body: BinOp(
                                                     ExprBinOp {
+                                                        range: 91..111,
                                                         left: Constant(
                                                             ExprConstant {
+                                                                range: 91..102,
                                                                 value: Str(
                                                                     "OFFSET %d",
                                                                 ),
                                                                 kind: None,
-                                                                range: 91..102,
                                                             },
                                                         ),
                                                         op: Mod,
                                                         right: Name(
                                                             ExprName {
+                                                                range: 105..111,
                                                                 id: Identifier(
                                                                     "offset",
                                                                 ),
                                                                 ctx: Load,
-                                                                range: 105..111,
                                                             },
                                                         ),
-                                                        range: 91..111,
                                                     },
                                                 ),
                                                 orelse: Constant(
                                                     ExprConstant {
+                                                        range: 128..132,
                                                         value: None,
                                                         kind: None,
-                                                        range: 128..132,
                                                     },
                                                 ),
-                                                range: 90..132,
                                             },
                                         ),
                                     ],
                                     ctx: Load,
-                                    range: 33..139,
                                 },
                             ),
                             ifs: [],
@@ -148,11 +150,9 @@ Call(
                             range: (),
                         },
                     ],
-                    range: 14..139,
                 },
             ),
         ],
         keywords: [],
-        range: 0..141,
     },
 )

@@ -5,33 +5,33 @@ expression: parse_ast
 [
     Delete(
         StmtDelete {
+            range: 0..8,
             targets: [
                 Subscript(
                     ExprSubscript {
+                        range: 4..8,
                         value: Name(
                             ExprName {
+                                range: 4..5,
                                 id: Identifier(
                                     "x",
                                 ),
                                 ctx: Load,
-                                range: 4..5,
                             },
                         ),
                         slice: Name(
                             ExprName {
+                                range: 6..7,
                                 id: Identifier(
                                     "y",
                                 ),
                                 ctx: Load,
-                                range: 6..7,
                             },
                         ),
                         ctx: Del,
-                        range: 4..8,
                     },
                 ),
             ],
-            range: 0..8,
         },
     ),
 ]

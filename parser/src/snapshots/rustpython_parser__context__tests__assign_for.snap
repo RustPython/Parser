@@ -5,48 +5,49 @@ expression: parse_ast
 [
     For(
         StmtFor {
+            range: 0..24,
             target: Name(
                 ExprName {
+                    range: 4..5,
                     id: Identifier(
                         "x",
                     ),
                     ctx: Store,
-                    range: 4..5,
                 },
             ),
             iter: Tuple(
                 ExprTuple {
+                    range: 9..18,
                     elts: [
                         Constant(
                             ExprConstant {
+                                range: 10..11,
                                 value: Int(
                                     1,
                                 ),
                                 kind: None,
-                                range: 10..11,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 13..14,
                                 value: Int(
                                     2,
                                 ),
                                 kind: None,
-                                range: 13..14,
                             },
                         ),
                         Constant(
                             ExprConstant {
+                                range: 16..17,
                                 value: Int(
                                     3,
                                 ),
                                 kind: None,
-                                range: 16..17,
                             },
                         ),
                     ],
                     ctx: Load,
-                    range: 9..18,
                 },
             ),
             body: [
@@ -58,7 +59,6 @@ expression: parse_ast
             ],
             orelse: [],
             type_comment: None,
-            range: 0..24,
         },
     ),
 ]

@@ -4,62 +4,63 @@ expression: parse_ast
 ---
 GeneratorExp(
     ExprGeneratorExp {
+        range: 0..23,
         elt: NamedExpr(
             ExprNamedExpr {
+                range: 1..11,
                 target: Name(
                     ExprName {
+                        range: 1..2,
                         id: Identifier(
                             "x",
                         ),
                         ctx: Store,
-                        range: 1..2,
                     },
                 ),
                 value: BinOp(
                     ExprBinOp {
+                        range: 6..11,
                         left: Name(
                             ExprName {
+                                range: 6..7,
                                 id: Identifier(
                                     "y",
                                 ),
                                 ctx: Load,
-                                range: 6..7,
                             },
                         ),
                         op: Add,
                         right: Constant(
                             ExprConstant {
+                                range: 10..11,
                                 value: Int(
                                     1,
                                 ),
                                 kind: None,
-                                range: 10..11,
                             },
                         ),
-                        range: 6..11,
                     },
                 ),
-                range: 1..11,
             },
         ),
         generators: [
             Comprehension {
                 target: Name(
                     ExprName {
+                        range: 16..17,
                         id: Identifier(
                             "y",
                         ),
                         ctx: Store,
-                        range: 16..17,
                     },
                 ),
                 iter: Name(
                     ExprName {
+                        range: 21..22,
                         id: Identifier(
                             "z",
                         ),
                         ctx: Load,
-                        range: 21..22,
                     },
                 ),
                 ifs: [],
@@ -67,6 +68,5 @@ GeneratorExp(
                 range: (),
             },
         ],
-        range: 0..23,
     },
 )
