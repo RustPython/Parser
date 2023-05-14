@@ -36,6 +36,7 @@ lalrpop-util = { version = "0.20.0", default-features = false }
 phf = "0.11.1"
 rustc-hash = "1.1.0"
 serde = { version = "1.0.133", optional = true, default-features = false, features = ["derive"] }
+thin-vec = "0.2.12"
 
 [dev-dependencies]
 insta = { workspace = true }

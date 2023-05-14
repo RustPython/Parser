@@ -4,8 +4,8 @@ use crate::text_size::TextRange;
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModModule<R = TextRange> {
     pub range: crate::ranged::OptionalRange<R>,
-    pub body: Vec<Stmt<R>>,
-    pub type_ignores: Vec<TypeIgnore<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub type_ignores: thin_vec::ThinVec<TypeIgnore<R>>,
 }
 
 impl<R> From<ModModule<R>> for Mod<R> {
@@ -17,7 +17,7 @@ impl<R> From<ModModule<R>> for Mod<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModInteractive<R = TextRange> {
     pub range: crate::ranged::OptionalRange<R>,
-    pub body: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
 }
 
 impl<R> From<ModInteractive<R>> for Mod<R> {
@@ -41,7 +41,7 @@ impl<R> From<ModExpression<R>> for Mod<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModFunctionType<R = TextRange> {
     pub range: crate::ranged::OptionalRange<R>,
-    pub argtypes: Vec<Expr<R>>,
+    pub argtypes: thin_vec::ThinVec<Expr<R>>,
     pub returns: Box<Expr<R>>,
 }
 
@@ -64,8 +64,8 @@ pub struct StmtFunctionDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
     pub args: Box<Arguments<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub decorator_list: Vec<Expr<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub decorator_list: thin_vec::ThinVec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
     pub type_comment: Option<String>,
 }
@@ -81,8 +81,8 @@ pub struct StmtAsyncFunctionDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
     pub args: Box<Arguments<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub decorator_list: Vec<Expr<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub decorator_list: thin_vec::ThinVec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
     pub type_comment: Option<String>,
 }
@@ -97,10 +97,10 @@ impl<R> From<StmtAsyncFunctionDef<R>> for Stmt<R> {
 pub struct StmtClassDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
-    pub bases: Vec<Expr<R>>,
-    pub keywords: Vec<Keyword<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub decorator_list: Vec<Expr<R>>,
+    pub bases: thin_vec::ThinVec<Expr<R>>,
+    pub keywords: thin_vec::ThinVec<Keyword<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub decorator_list: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<StmtClassDef<R>> for Stmt<R> {
@@ -124,7 +124,7 @@ impl<R> From<StmtReturn<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtDelete<R = TextRange> {
     pub range: R,
-    pub targets: Vec<Expr<R>>,
+    pub targets: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<StmtDelete<R>> for Stmt<R> {
@@ -136,7 +136,7 @@ impl<R> From<StmtDelete<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAssign<R = TextRange> {
     pub range: R,
-    pub targets: Vec<Expr<R>>,
+    pub targets: thin_vec::ThinVec<Expr<R>>,
     pub value: Box<Expr<R>>,
     pub type_comment: Option<String>,
 }
@@ -181,8 +181,8 @@ pub struct StmtFor<R = TextRange> {
     pub range: R,
     pub target: Box<Expr<R>>,
     pub iter: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub orelse: thin_vec::ThinVec<Stmt<R>>,
     pub type_comment: Option<String>,
 }
 
@@ -197,8 +197,8 @@ pub struct StmtAsyncFor<R = TextRange> {
     pub range: R,
     pub target: Box<Expr<R>>,
     pub iter: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub orelse: thin_vec::ThinVec<Stmt<R>>,
     pub type_comment: Option<String>,
 }
 
@@ -212,8 +212,8 @@ impl<R> From<StmtAsyncFor<R>> for Stmt<R> {
 pub struct StmtWhile<R = TextRange> {
     pub range: R,
     pub test: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub orelse: thin_vec::ThinVec<Stmt<R>>,
 }
 
 impl<R> From<StmtWhile<R>> for Stmt<R> {
@@ -226,8 +226,8 @@ impl<R> From<StmtWhile<R>> for Stmt<R> {
 pub struct StmtIf<R = TextRange> {
     pub range: R,
     pub test: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub orelse: thin_vec::ThinVec<Stmt<R>>,
 }
 
 impl<R> From<StmtIf<R>> for Stmt<R> {
@@ -239,8 +239,8 @@ impl<R> From<StmtIf<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtWith<R = TextRange> {
     pub range: R,
-    pub items: Vec<Withitem<R>>,
-    pub body: Vec<Stmt<R>>,
+    pub items: thin_vec::ThinVec<Withitem<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
     pub type_comment: Option<String>,
 }
 
@@ -253,8 +253,8 @@ impl<R> From<StmtWith<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncWith<R = TextRange> {
     pub range: R,
-    pub items: Vec<Withitem<R>>,
-    pub body: Vec<Stmt<R>>,
+    pub items: thin_vec::ThinVec<Withitem<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
     pub type_comment: Option<String>,
 }
 
@@ -268,7 +268,7 @@ impl<R> From<StmtAsyncWith<R>> for Stmt<R> {
 pub struct StmtMatch<R = TextRange> {
     pub range: R,
     pub subject: Box<Expr<R>>,
-    pub cases: Vec<MatchCase<R>>,
+    pub cases: thin_vec::ThinVec<MatchCase<R>>,
 }
 
 impl<R> From<StmtMatch<R>> for Stmt<R> {
@@ -293,10 +293,10 @@ impl<R> From<StmtRaise<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtTry<R = TextRange> {
     pub range: R,
-    pub body: Vec<Stmt<R>>,
-    pub handlers: Vec<Excepthandler<R>>,
-    pub orelse: Vec<Stmt<R>>,
-    pub finalbody: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub handlers: thin_vec::ThinVec<Excepthandler<R>>,
+    pub orelse: thin_vec::ThinVec<Stmt<R>>,
+    pub finalbody: thin_vec::ThinVec<Stmt<R>>,
 }
 
 impl<R> From<StmtTry<R>> for Stmt<R> {
@@ -308,10 +308,10 @@ impl<R> From<StmtTry<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtTryStar<R = TextRange> {
     pub range: R,
-    pub body: Vec<Stmt<R>>,
-    pub handlers: Vec<Excepthandler<R>>,
-    pub orelse: Vec<Stmt<R>>,
-    pub finalbody: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
+    pub handlers: thin_vec::ThinVec<Excepthandler<R>>,
+    pub orelse: thin_vec::ThinVec<Stmt<R>>,
+    pub finalbody: thin_vec::ThinVec<Stmt<R>>,
 }
 
 impl<R> From<StmtTryStar<R>> for Stmt<R> {
@@ -336,7 +336,7 @@ impl<R> From<StmtAssert<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtImport<R = TextRange> {
     pub range: R,
-    pub names: Vec<Alias<R>>,
+    pub names: thin_vec::ThinVec<Alias<R>>,
 }
 
 impl<R> From<StmtImport<R>> for Stmt<R> {
@@ -349,7 +349,7 @@ impl<R> From<StmtImport<R>> for Stmt<R> {
 pub struct StmtImportFrom<R = TextRange> {
     pub range: R,
     pub module: Option<Identifier>,
-    pub names: Vec<Alias<R>>,
+    pub names: thin_vec::ThinVec<Alias<R>>,
     pub level: Option<Int>,
 }
 
@@ -362,7 +362,7 @@ impl<R> From<StmtImportFrom<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtGlobal<R = TextRange> {
     pub range: R,
-    pub names: Vec<Identifier>,
+    pub names: thin_vec::ThinVec<Identifier>,
 }
 
 impl<R> From<StmtGlobal<R>> for Stmt<R> {
@@ -374,7 +374,7 @@ impl<R> From<StmtGlobal<R>> for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtNonlocal<R = TextRange> {
     pub range: R,
-    pub names: Vec<Identifier>,
+    pub names: thin_vec::ThinVec<Identifier>,
 }
 
 impl<R> From<StmtNonlocal<R>> for Stmt<R> {
@@ -490,7 +490,7 @@ pub enum Stmt<R = TextRange> {
 pub struct ExprBoolOp<R = TextRange> {
     pub range: R,
     pub op: Boolop,
-    pub values: Vec<Expr<R>>,
+    pub values: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<ExprBoolOp<R>> for Expr<R> {
@@ -569,8 +569,8 @@ impl<R> From<ExprIfExp<R>> for Expr<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprDict<R = TextRange> {
     pub range: R,
-    pub keys: Vec<Option<Expr<R>>>,
-    pub values: Vec<Expr<R>>,
+    pub keys: thin_vec::ThinVec<Option<Expr<R>>>,
+    pub values: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<ExprDict<R>> for Expr<R> {
@@ -582,7 +582,7 @@ impl<R> From<ExprDict<R>> for Expr<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSet<R = TextRange> {
     pub range: R,
-    pub elts: Vec<Expr<R>>,
+    pub elts: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<ExprSet<R>> for Expr<R> {
@@ -595,7 +595,7 @@ impl<R> From<ExprSet<R>> for Expr<R> {
 pub struct ExprListComp<R = TextRange> {
     pub range: R,
     pub elt: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
+    pub generators: thin_vec::ThinVec<Comprehension<R>>,
 }
 
 impl<R> From<ExprListComp<R>> for Expr<R> {
@@ -608,7 +608,7 @@ impl<R> From<ExprListComp<R>> for Expr<R> {
 pub struct ExprSetComp<R = TextRange> {
     pub range: R,
     pub elt: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
+    pub generators: thin_vec::ThinVec<Comprehension<R>>,
 }
 
 impl<R> From<ExprSetComp<R>> for Expr<R> {
@@ -622,7 +622,7 @@ pub struct ExprDictComp<R = TextRange> {
     pub range: R,
     pub key: Box<Expr<R>>,
     pub value: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
+    pub generators: thin_vec::ThinVec<Comprehension<R>>,
 }
 
 impl<R> From<ExprDictComp<R>> for Expr<R> {
@@ -635,7 +635,7 @@ impl<R> From<ExprDictComp<R>> for Expr<R> {
 pub struct ExprGeneratorExp<R = TextRange> {
     pub range: R,
     pub elt: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
+    pub generators: thin_vec::ThinVec<Comprehension<R>>,
 }
 
 impl<R> From<ExprGeneratorExp<R>> for Expr<R> {
@@ -684,8 +684,8 @@ impl<R> From<ExprYieldFrom<R>> for Expr<R> {
 pub struct ExprCompare<R = TextRange> {
     pub range: R,
     pub left: Box<Expr<R>>,
-    pub ops: Vec<Cmpop>,
-    pub comparators: Vec<Expr<R>>,
+    pub ops: thin_vec::ThinVec<Cmpop>,
+    pub comparators: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<ExprCompare<R>> for Expr<R> {
@@ -698,8 +698,8 @@ impl<R> From<ExprCompare<R>> for Expr<R> {
 pub struct ExprCall<R = TextRange> {
     pub range: R,
     pub func: Box<Expr<R>>,
-    pub args: Vec<Expr<R>>,
-    pub keywords: Vec<Keyword<R>>,
+    pub args: thin_vec::ThinVec<Expr<R>>,
+    pub keywords: thin_vec::ThinVec<Keyword<R>>,
 }
 
 impl<R> From<ExprCall<R>> for Expr<R> {
@@ -725,7 +725,7 @@ impl<R> From<ExprFormattedValue<R>> for Expr<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprJoinedStr<R = TextRange> {
     pub range: R,
-    pub values: Vec<Expr<R>>,
+    pub values: thin_vec::ThinVec<Expr<R>>,
 }
 
 impl<R> From<ExprJoinedStr<R>> for Expr<R> {
@@ -804,7 +804,7 @@ impl<R> From<ExprName<R>> for Expr<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprList<R = TextRange> {
     pub range: R,
-    pub elts: Vec<Expr<R>>,
+    pub elts: thin_vec::ThinVec<Expr<R>>,
     pub ctx: ExprContext,
 }
 
@@ -817,7 +817,7 @@ impl<R> From<ExprList<R>> for Expr<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprTuple<R = TextRange> {
     pub range: R,
-    pub elts: Vec<Expr<R>>,
+    pub elts: thin_vec::ThinVec<Expr<R>>,
     pub ctx: ExprContext,
 }
 
@@ -955,7 +955,7 @@ pub enum Cmpop {
 pub struct Comprehension<R = TextRange> {
     pub target: Expr<R>,
     pub iter: Expr<R>,
-    pub ifs: Vec<Expr<R>>,
+    pub ifs: thin_vec::ThinVec<Expr<R>>,
     pub is_async: bool,
     pub range: crate::ranged::OptionalRange<R>,
 }
@@ -965,7 +965,7 @@ pub struct ExcepthandlerExceptHandler<R = TextRange> {
     pub range: R,
     pub type_: Option<Box<Expr<R>>>,
     pub name: Option<Identifier>,
-    pub body: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
 }
 
 impl<R> From<ExcepthandlerExceptHandler<R>> for Excepthandler<R> {
@@ -981,13 +981,13 @@ pub enum Excepthandler<R = TextRange> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Arguments<R = TextRange> {
-    pub posonlyargs: Vec<Arg<R>>,
-    pub args: Vec<Arg<R>>,
+    pub posonlyargs: thin_vec::ThinVec<Arg<R>>,
+    pub args: thin_vec::ThinVec<Arg<R>>,
     pub vararg: Option<Box<Arg<R>>>,
-    pub kwonlyargs: Vec<Arg<R>>,
-    pub kw_defaults: Vec<Expr<R>>,
+    pub kwonlyargs: thin_vec::ThinVec<Arg<R>>,
+    pub kw_defaults: thin_vec::ThinVec<Expr<R>>,
     pub kwarg: Option<Box<Arg<R>>>,
-    pub defaults: Vec<Expr<R>>,
+    pub defaults: thin_vec::ThinVec<Expr<R>>,
     pub range: crate::ranged::OptionalRange<R>,
 }
 
@@ -1024,7 +1024,7 @@ pub struct Withitem<R = TextRange> {
 pub struct MatchCase<R = TextRange> {
     pub pattern: Pattern<R>,
     pub guard: Option<Box<Expr<R>>>,
-    pub body: Vec<Stmt<R>>,
+    pub body: thin_vec::ThinVec<Stmt<R>>,
     pub range: crate::ranged::OptionalRange<R>,
 }
 
@@ -1055,7 +1055,7 @@ impl<R> From<PatternMatchSingleton<R>> for Pattern<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchSequence<R = TextRange> {
     pub range: R,
-    pub patterns: Vec<Pattern<R>>,
+    pub patterns: thin_vec::ThinVec<Pattern<R>>,
 }
 
 impl<R> From<PatternMatchSequence<R>> for Pattern<R> {
@@ -1067,8 +1067,8 @@ impl<R> From<PatternMatchSequence<R>> for Pattern<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchMapping<R = TextRange> {
     pub range: R,
-    pub keys: Vec<Expr<R>>,
-    pub patterns: Vec<Pattern<R>>,
+    pub keys: thin_vec::ThinVec<Expr<R>>,
+    pub patterns: thin_vec::ThinVec<Pattern<R>>,
     pub rest: Option<Identifier>,
 }
 
@@ -1082,9 +1082,9 @@ impl<R> From<PatternMatchMapping<R>> for Pattern<R> {
 pub struct PatternMatchClass<R = TextRange> {
     pub range: R,
     pub cls: Box<Expr<R>>,
-    pub patterns: Vec<Pattern<R>>,
-    pub kwd_attrs: Vec<Identifier>,
-    pub kwd_patterns: Vec<Pattern<R>>,
+    pub patterns: thin_vec::ThinVec<Pattern<R>>,
+    pub kwd_attrs: thin_vec::ThinVec<Identifier>,
+    pub kwd_patterns: thin_vec::ThinVec<Pattern<R>>,
 }
 
 impl<R> From<PatternMatchClass<R>> for Pattern<R> {
@@ -1121,7 +1121,7 @@ impl<R> From<PatternMatchAs<R>> for Pattern<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchOr<R = TextRange> {
     pub range: R,
-    pub patterns: Vec<Pattern<R>>,
+    pub patterns: thin_vec::ThinVec<Pattern<R>>,
 }
 
 impl<R> From<PatternMatchOr<R>> for Pattern<R> {

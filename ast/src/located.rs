@@ -1,5 +1,7 @@
 #![allow(clippy::derive_partial_eq_without_eq)]
+
 use crate::source_code::{SourceLocation, SourceRange};
+use thin_vec::ThinVec;
 
 pub trait Located {
     fn range(&self) -> SourceRange;
@@ -13,7 +15,7 @@ pub trait Located {
     }
 }
 
-pub type Suite = Vec<Stmt>;
+pub type Suite = ThinVec<Stmt>;
 
 pub use crate::builtin::*;
 include!("gen/located.rs");

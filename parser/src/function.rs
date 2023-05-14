@@ -8,13 +8,14 @@ use crate::{
 };
 use rustc_hash::FxHashSet;
 use rustpython_ast::Ranged;
+use thin_vec::{thin_vec, ThinVec};
 
 pub(crate) struct ArgumentList {
-    pub args: Vec<ast::Expr>,
-    pub keywords: Vec<ast::Keyword>,
+    pub args: ThinVec<ast::Expr>,
+    pub keywords: ThinVec<ast::Keyword>,
 }
 
-type ParameterDefs = (Vec<ast::Arg>, Vec<ast::Arg>, Vec<ast::Expr>);
+type ParameterDefs = (ThinVec<ast::Arg>, ThinVec<ast::Arg>, ThinVec<ast::Expr>);
 type ParameterDef = (ast::Arg, Option<ast::Expr>);
 
 // Perform validation of function/lambda arguments in a function definition.
@@ -53,11 +54,11 @@ pub(crate) fn validate_arguments(
 
 // Parse parameters as supplied during a function/lambda *definition*.
 pub(crate) fn parse_params(
-    params: (Vec<ParameterDef>, Vec<ParameterDef>),
+    params: (ThinVec<ParameterDef>, ThinVec<ParameterDef>),
 ) -> Result<ParameterDefs, LexicalError> {
-    let mut pos_only = Vec::with_capacity(params.0.len());
-    let mut names = Vec::with_capacity(params.1.len());
-    let mut defaults = vec![];
+    let mut pos_only = ThinVec::with_capacity(params.0.len());
+    let mut names = ThinVec::with_capacity(params.1.len());
+    let mut defaults = thin_vec![];
 
     let mut try_default = |name: &ast::Arg, default| {
         if let Some(default) = default {
@@ -92,9 +93,11 @@ type FunctionArgument = (
 );
 
 // Parse arguments as supplied during a function/lambda *call*.
-pub(crate) fn parse_args(func_args: Vec<FunctionArgument>) -> Result<ArgumentList, LexicalError> {
-    let mut args = vec![];
-    let mut keywords = vec![];
+pub(crate) fn parse_args(
+    func_args: ThinVec<FunctionArgument>,
+) -> Result<ArgumentList, LexicalError> {
+    let mut args = thin_vec![];
+    let mut keywords = thin_vec![];
 
     let mut keyword_names =
         FxHashSet::with_capacity_and_hasher(func_args.len(), Default::default());

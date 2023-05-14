@@ -1,6 +1,7 @@
 use crate::text_size::{TextRange, TextSize};
 use std::fmt::{Debug, Display, Formatter};
 use std::marker::PhantomData;
+use thin_vec::ThinVec;
 
 pub use crate::builtin::*;
 use crate::Stmt;
@@ -17,7 +18,7 @@ pub trait Ranged {
     }
 }
 
-pub type Suite<R = TextRange> = Vec<Stmt<R>>;
+pub type Suite<R = TextRange> = ThinVec<Stmt<R>>;
 
 #[cfg(feature = "all-nodes-with-ranges")]
 pub type OptionalRange<R> = R;

@@ -15,6 +15,7 @@ use rustpython_parser_core::{
     text_size::{TextLen, TextSize},
     ConversionFlag,
 };
+use thin_vec::{thin_vec, ThinVec};
 
 // unicode_name2 does not expose `MAX_NAME_LENGTH`, so we replicate that constant here, fix #3798
 const MAX_UNICODE_NAME: usize = 88;
@@ -398,8 +399,8 @@ impl<'a> StringParser<'a> {
         Err(FStringError::new(UnclosedLbrace, self.get_pos()).into())
     }
 
-    fn parse_spec(&mut self, nested: u8) -> Result<Vec<Expr>, LexicalError> {
-        let mut spec_constructor = Vec::new();
+    fn parse_spec(&mut self, nested: u8) -> Result<ThinVec<Expr>, LexicalError> {
+        let mut spec_constructor = ThinVec::new();
         let mut constant_piece = String::new();
         while let Some(&next) = self.peek() {
             match next {
@@ -670,10 +671,10 @@ pub(crate) fn parse_strings(
     }
 
     // De-duplicate adjacent constants.
-    let mut deduped: Vec<Expr> = vec![];
-    let mut current: Vec<String> = vec![];
+    let mut deduped: ThinVec<Expr> = thin_vec![];
+    let mut current: ThinVec<String> = thin_vec![];
 
-    let take_current = |current: &mut Vec<String>| -> Expr {
+    let take_current = |current: &mut ThinVec<String>| -> Expr {
         Expr::Constant(ast::ExprConstant {
             value: Constant::Str(current.drain(..).join("")),
             kind: initial_kind.clone(),

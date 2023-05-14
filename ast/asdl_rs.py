@@ -372,7 +372,7 @@ class StructVisitor(EmitVisitor):
         ):
             typ = f"Option<{typ}>"
         if field.seq:
-            typ = f"Vec<{typ}>"
+            typ = f"thin_vec::ThinVec<{typ}>"
         if typ == "Int":
             typ = BUILTIN_INT_NAMES.get(field.name, typ)
         name = rust_field(field.name)

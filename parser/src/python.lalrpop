@@ -13,6 +13,7 @@ use crate::{
     text_size::TextSize, parser::optional_range
 };
 use num_bigint::BigInt;
+use thin_vec::{thin_vec, ThinVec};
 
 grammar;
 
@@ -20,38 +21,36 @@ grammar;
 // For each public entry point, a full parse table is generated.
 // By having only a single pub function, we reduce this to one.
 pub Top: ast::Mod = {
-    <start:@L> StartModule <body:Program> <end:@R> => ast::ModModule { body, type_ignores: vec![], range: optional_range(start, end) }.into(),
+    <start:@L> StartModule <body:Program> <end:@R> => ast::ModModule { body, type_ignores: thin_vec![], range: optional_range(start, end) }.into(),
     <start:@L> StartInteractive <body:Program> <end:@R> => ast::ModInteractive { body, range: optional_range(start, end) }.into(),
     <start:@L> StartExpression <body:TestList> ("\n")* <end:@R> => ast::ModExpression { body: Box::new(body), range: optional_range(start, end) }.into()
 };
 
 Program: ast::Suite = {
     <lines:FileLine*> => {
-        lines.into_iter().flatten().collect()
+        lines.into_iter().flatten().collect::<ThinVec<_>>()
     },
 };
 
 // A file line either has a declaration, or an empty newline:
 FileLine: ast::Suite = {
     Statement,
-    "\n" => vec![],
+    "\n" => thin_vec![],
 };
 
 Suite: ast::Suite = {
     SimpleStatement,
-    "\n" Indent <s:Statement+> Dedent => s.into_iter().flatten().collect(),
+    "\n" Indent <s:OneOrMore<Statement>> Dedent => s.into_iter().flatten().collect(),
 };
 
 Statement: ast::Suite = {
     SimpleStatement,
-    <s:CompoundStatement> => vec![s],
+    <s:CompoundStatement> => thin_vec![s],
 };
 
 SimpleStatement: ast::Suite = {
-    <s1:SmallStatement> <s2:(";" SmallStatement)*> ";"? "\n" => {
-        let mut statements = vec![s1];
-        statements.extend(s2.into_iter().map(|e| e.1));
-        statements
+    <s:OneOrMoreSeparated<SmallStatement, ";">> ";"? "\n" => {
+        s
     }
 };
 
@@ -88,7 +87,7 @@ ExpressionStatement: ast::Stmt = {
                 ast::StmtExpr { value: Box::new(expression), range: (location..end_location).into() }
             )
         } else {
-            let mut targets = vec![set_context(expression, ast::ExprContext::Store)];
+            let mut targets = thin_vec![set_context(expression, ast::ExprContext::Store)];
             let mut values = suffix;
 
             while values.len() > 1 {
@@ -207,7 +206,7 @@ RaiseStatement: ast::Stmt = {
 };
 
 ImportStatement: ast::Stmt = {
-    <location:@L> "import" <names: OneOrMore<ImportAsAlias<DottedName>>> <end_location:@R> => {
+    <location:@L> "import" <names: OneOrMoreSeparated<ImportAsAlias<DottedName>, ",">> <end_location:@R> => {
         ast::Stmt::Import(
             ast::StmtImport { names, range: (location..end_location).into() }
         )
@@ -239,12 +238,12 @@ ImportDots: ast::Int = {
     "." => ast::Int::new(1),
 };
 
-ImportAsNames: Vec<ast::Alias> = {
-    <location:@L> <i:OneOrMore<ImportAsAlias<Identifier>>> <end_location:@R> => i,
-    <location:@L> "(" <i:OneOrMore<ImportAsAlias<Identifier>>> ","? ")" <end_location:@R> => i,
+ImportAsNames: ThinVec<ast::Alias> = {
+    <location:@L> <i:OneOrMoreSeparated<ImportAsAlias<Identifier>, ",">> <end_location:@R> => i,
+    <location:@L> "(" <i:OneOrMoreSeparated<ImportAsAlias<Identifier>, ",">> ","? ")" <end_location:@R> => i,
     <location:@L> "*" <end_location:@R> => {
         // Star import all
-        vec![ast::Alias { name: ast::Identifier::new("*"), asname: None, range: (location..end_location).into() }]
+        thin_vec![ast::Alias { name: ast::Identifier::new("*"), asname: None, range: (location..end_location).into() }]
     },
 };
 
@@ -268,7 +267,7 @@ DottedName: ast::Identifier = {
 };
 
 GlobalStatement: ast::Stmt = {
-    <location:@L> "global" <names:OneOrMore<Identifier>> <end_location:@R> => {
+    <location:@L> "global" <names:OneOrMoreSeparated<Identifier, ",">> <end_location:@R> => {
         ast::Stmt::Global(
             ast::StmtGlobal { names, range: (location..end_location).into() }
         )
@@ -276,7 +275,7 @@ GlobalStatement: ast::Stmt = {
 };
 
 NonlocalStatement: ast::Stmt = {
-    <location:@L> "nonlocal" <names:OneOrMore<Identifier>> <end_location:@R> => {
+    <location:@L> "nonlocal" <names:OneOrMoreSeparated<Identifier, ",">> <end_location:@R> => {
         ast::Stmt::Nonlocal(
             ast::StmtNonlocal { names, range: (location..end_location).into() }
         )
@@ -307,7 +306,7 @@ CompoundStatement: ast::Stmt = {
 };
 
 MatchStatement: ast::Stmt = {
-    <location:@L> "match" <subject:TestOrStarNamedExpr> ":" "\n" Indent <cases:MatchCase+> Dedent => {
+    <location:@L> "match" <subject:TestOrStarNamedExpr> ":" "\n" Indent <cases:OneOrMore<MatchCase>> Dedent => {
        let end_location = cases
             .last()
             .unwrap()
@@ -323,7 +322,7 @@ MatchStatement: ast::Stmt = {
             }
         )
     },
-    <location:@L> "match" <subject:TestOrStarNamedExpr> "," ":" "\n" Indent <cases:MatchCase+> Dedent => {
+    <location:@L> "match" <subject:TestOrStarNamedExpr> "," ":" "\n" Indent <cases:OneOrMore<MatchCase>> Dedent => {
        let end_location = cases
             .last()
             .unwrap()
@@ -339,7 +338,7 @@ MatchStatement: ast::Stmt = {
             }
         )
     },
-    <location:@L> "match" <subject:TestOrStarNamedExpr> "," <subjects:OneOrMore<TestOrStarNamedExpr>> ","? ":" "\n" Indent <cases:MatchCase+> Dedent => {
+    <location:@L> "match" <subject:TestOrStarNamedExpr> "," <subjects:OneOrMoreSeparated<TestOrStarNamedExpr, ",">> ","? ":" "\n" Indent <cases:OneOrMore<MatchCase>> Dedent => {
         let end_location = cases
             .last()
             .unwrap()
@@ -385,11 +384,11 @@ Guard: ast::Expr = {
 Patterns: ast::Pattern = {
     <location:@L> <pattern:Pattern> "," <end_location:@R> => ast::Pattern::MatchSequence(
         ast::PatternMatchSequence {
-            patterns: vec![pattern],
+            patterns: thin_vec![pattern],
             range: (location..end_location).into()
         },
     ),
-    <location:@L> <pattern:Pattern> "," <patterns:OneOrMore<Pattern>> ","? <end_location:@R> => {
+    <location:@L> <pattern:Pattern> "," <patterns:OneOrMoreSeparated<Pattern, ",">> ","? <end_location:@R> => {
         let mut patterns = patterns;
         patterns.insert(0, pattern);
         ast::Pattern::MatchSequence(
@@ -428,7 +427,7 @@ AsPattern: ast::Pattern = {
 
 OrPattern: ast::Pattern = {
     <pattern:ClosedPattern> => pattern,
-    <location:@L> <pattern:ClosedPattern> <patterns:("|" <ClosedPattern>)+> <end_location:@R> => {
+    <location:@L> <pattern:ClosedPattern> <patterns:OneOrMore<("|" <ClosedPattern>)>> <end_location:@R> => {
         let mut patterns = patterns;
         patterns.insert(0, pattern);
         ast::Pattern::MatchOr(
@@ -451,7 +450,7 @@ SequencePattern: ast::Pattern = {
     // A single-item tuple is a special case: it's a group pattern, _not_ a sequence pattern.
     <location:@L> "(" <pattern:Pattern> ")" <end_location:@R> => pattern,
     <location:@L> "(" ")" <end_location:@R> => ast::PatternMatchSequence {
-        patterns: vec![],
+        patterns: thin_vec![],
         range: (location..end_location).into()
     }.into(),
     <location:@L> "(" <pattern:Pattern> "," <patterns:Comma<Pattern>> ")" <end_location:@R> => {
@@ -605,13 +604,13 @@ MatchMappingEntry: (ast::Expr, ast::Pattern) = {
 MappingPattern: ast::Pattern = {
     <location:@L> "{" "}" <end_location:@R> => {
         return ast::PatternMatchMapping {
-            keys: vec![],
-            patterns: vec![],
+            keys: thin_vec![],
+            patterns: thin_vec![],
             rest: None,
             range: (location..end_location).into()
         }.into();
     },
-    <location:@L> "{" <e:OneOrMore<MatchMappingEntry>> ","? "}" <end_location:@R> => {
+    <location:@L> "{" <e:OneOrMoreSeparated<MatchMappingEntry, ",">> ","? "}" <end_location:@R> => {
         let (keys, patterns) = e
             .into_iter()
             .unzip();
@@ -624,13 +623,13 @@ MappingPattern: ast::Pattern = {
     },
     <location:@L> "{" "**" <rest:Identifier> ","? "}" <end_location:@R> => {
         return ast::PatternMatchMapping {
-            keys: vec![],
-            patterns: vec![],
+            keys: thin_vec![],
+            patterns: thin_vec![],
             rest: Some(rest),
             range: (location..end_location).into()
         }.into();
     },
-    <location:@L> "{" <e:OneOrMore<MatchMappingEntry>> ","  "**" <rest:Identifier> ","? "}" <end_location:@R> => {
+    <location:@L> "{" <e:OneOrMoreSeparated<MatchMappingEntry, ",">> ","  "**" <rest:Identifier> ","? "}" <end_location:@R> => {
         let (keys, patterns) = e
             .into_iter()
             .unzip();
@@ -648,7 +647,7 @@ MatchKeywordEntry: (ast::Identifier, ast::Pattern) = {
 };
 
 ClassPattern: ast::Pattern = {
-    <location:@L> <e:MatchName> "(" <patterns: OneOrMore<Pattern>> "," <kwds:OneOrMore<MatchKeywordEntry>> ","? ")" <end_location:@R> => {
+    <location:@L> <e:MatchName> "(" <patterns: OneOrMoreSeparated<Pattern, ",">> "," <kwds:OneOrMoreSeparated<MatchKeywordEntry, ",">> ","? ")" <end_location:@R> => {
         let (kwd_attrs, kwd_patterns) = kwds
             .into_iter()
             .unzip();
@@ -660,22 +659,22 @@ ClassPattern: ast::Pattern = {
             range: (location..end_location).into()
         }.into()
     },
-    <location:@L> <e:MatchName> "(" <patterns: OneOrMore<Pattern>> ","? ")" <end_location:@R> => {
+    <location:@L> <e:MatchName> "(" <patterns: OneOrMoreSeparated<Pattern, ",">> ","? ")" <end_location:@R> => {
         ast::PatternMatchClass {
             cls: Box::new(e),
             patterns,
-            kwd_attrs: vec![],
-            kwd_patterns: vec![],
+            kwd_attrs: thin_vec![],
+            kwd_patterns: thin_vec![],
             range: (location..end_location).into()
         }.into()
     },
-    <location:@L> <e:MatchName> "(" <kwds:OneOrMore<MatchKeywordEntry>> ","? ")" <end_location:@R> => {
+    <location:@L> <e:MatchName> "(" <kwds:OneOrMoreSeparated<MatchKeywordEntry, ",">> ","? ")" <end_location:@R> => {
          let (kwd_attrs, kwd_patterns) = kwds
             .into_iter()
             .unzip();
         ast::PatternMatchClass {
             cls: Box::new(e),
-            patterns: vec![],
+            patterns: thin_vec![],
             kwd_attrs,
             kwd_patterns,
             range: (location..end_location).into()
@@ -684,13 +683,13 @@ ClassPattern: ast::Pattern = {
     <location:@L> <e:MatchName> "(" ")" <end_location:@R> => {
         ast::PatternMatchClass {
             cls: Box::new(e),
-            patterns: vec![],
-            kwd_attrs: vec![],
-            kwd_patterns: vec![],
+            patterns: thin_vec![],
+            kwd_attrs: thin_vec![],
+            kwd_patterns: thin_vec![],
             range: (location..end_location).into()
         }.into()
     },
-    <location:@L> <e:MatchNameOrAttr> "(" <patterns: OneOrMore<Pattern>> "," <kwds:OneOrMore<MatchKeywordEntry>> ","? ")" <end_location:@R> => {
+    <location:@L> <e:MatchNameOrAttr> "(" <patterns: OneOrMoreSeparated<Pattern, ",">> "," <kwds:OneOrMoreSeparated<MatchKeywordEntry, ",">> ","? ")" <end_location:@R> => {
         let (kwd_attrs, kwd_patterns) = kwds
             .into_iter()
             .unzip();
@@ -702,22 +701,22 @@ ClassPattern: ast::Pattern = {
             range: (location..end_location).into()
         }.into()
     },
-    <location:@L> <e:MatchNameOrAttr> "(" <patterns: OneOrMore<Pattern>> ","? ")" <end_location:@R> => {
+    <location:@L> <e:MatchNameOrAttr> "(" <patterns: OneOrMoreSeparated<Pattern, ",">> ","? ")" <end_location:@R> => {
         ast::PatternMatchClass {
             cls: Box::new(e),
             patterns,
-            kwd_attrs: vec![],
-            kwd_patterns: vec![],
+            kwd_attrs: thin_vec![],
+            kwd_patterns: thin_vec![],
             range: (location..end_location).into()
         }.into()
     },
-    <location:@L> <e:MatchNameOrAttr> "(" <kwds:OneOrMore<MatchKeywordEntry>> ","? ")" <end_location:@R> => {
+    <location:@L> <e:MatchNameOrAttr> "(" <kwds:OneOrMoreSeparated<MatchKeywordEntry, ",">> ","? ")" <end_location:@R> => {
          let (kwd_attrs, kwd_patterns) = kwds
             .into_iter()
             .unzip();
         ast::PatternMatchClass {
             cls: Box::new(e),
-            patterns: vec![],
+            patterns: thin_vec![],
             kwd_attrs,
             kwd_patterns,
             range: (location..end_location).into()
@@ -726,9 +725,9 @@ ClassPattern: ast::Pattern = {
     <location:@L> <e:MatchNameOrAttr> "(" ")" <end_location:@R> => {
         ast::PatternMatchClass {
             cls: Box::new(e),
-            patterns: vec![],
-            kwd_attrs: vec![],
-            kwd_patterns: vec![],
+            patterns: thin_vec![],
+            kwd_attrs: thin_vec![],
+            kwd_patterns: thin_vec![],
             range: (location..end_location).into()
         }.into()
     },
@@ -749,7 +748,7 @@ IfStatement: ast::Stmt = {
             let x = ast::Stmt::If(
                 ast::StmtIf { test: Box::new(i.2), body: i.4, orelse: last, range: (i.0..end_location).into() }
             );
-            last = vec![x];
+            last = thin_vec![x];
         }
 
         ast::Stmt::If(
@@ -797,7 +796,7 @@ ForStatement: ast::Stmt = {
 };
 
 TryStatement: ast::Stmt = {
-    <location:@L> "try" ":" <body:Suite> <handlers:ExceptClause+> <else_suite:("else" ":" Suite)?> <finally:("finally" ":" Suite)?> <end_location:@R> => {
+    <location:@L> "try" ":" <body:Suite> <handlers:OneOrMore<ExceptClause>> <else_suite:("else" ":" Suite)?> <finally:("finally" ":" Suite)?> <end_location:@R> => {
         let orelse = else_suite.map(|s| s.2).unwrap_or_default();
         let finalbody = finally.map(|s| s.2).unwrap_or_default();
         let end_location = finalbody
@@ -816,7 +815,7 @@ TryStatement: ast::Stmt = {
             },
         )
     },
-    <location:@L> "try" ":" <body:Suite> <handlers:ExceptStarClause+> <else_suite:("else" ":" Suite)?> <finally:("finally" ":" Suite)?> <end_location:@R> => {
+    <location:@L> "try" ":" <body:Suite> <handlers:OneOrMore<ExceptStarClause>> <else_suite:("else" ":" Suite)?> <finally:("finally" ":" Suite)?> <end_location:@R> => {
         let orelse = else_suite.map(|s| s.2).unwrap_or_default();
         let finalbody = finally.map(|s| s.2).unwrap_or_default();
         let end_location = finalbody
@@ -836,8 +835,8 @@ TryStatement: ast::Stmt = {
         )
     },
     <location:@L> "try" ":" <body:Suite> <finally:("finally" ":" Suite)> => {
-        let handlers = vec![];
-        let orelse = vec![];
+        let handlers = thin_vec![];
+        let orelse = thin_vec![];
         let finalbody = finally.2;
         let end_location = finalbody.last().unwrap().end();
         ast::Stmt::Try(
@@ -915,20 +914,20 @@ WithStatement: ast::Stmt = {
     },
 };
 
-WithItems: Vec<ast::Withitem> = {
+WithItems: ThinVec<ast::Withitem> = {
     "(" <WithItemsNoAs> ","? ")",
     "(" <left:(<WithItemsNoAs> ",")?> <mid:WithItem<"as">> <right:("," <WithItem<"all">>)*> ","? ")" => {
         left.into_iter().flatten().chain([mid]).chain(right).collect()
     },
-    <WithItem<"no-withitems">> => vec![<>],
+    <WithItem<"no-withitems">> => thin_vec![<>],
     <item:WithItem<"all">> <items:("," <WithItem<"all">>)+> => {
         [item].into_iter().chain(items).collect()
     }
 };
 
 #[inline]
-WithItemsNoAs: Vec<ast::Withitem> = {
-    <location:@L> <all:OneOrMore<Test<"all">>> <end_location:@R> => {
+WithItemsNoAs: ThinVec<ast::Withitem> = {
+    <location:@L> <all:OneOrMoreSeparated<Test<"all">, ",">> <end_location:@R> => {
         all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: optional_range(location, end_location) }).collect()
     },
 }
@@ -942,7 +941,7 @@ WithItem<Goal>: ast::Withitem = {
 };
 
 FuncDef: ast::Stmt = {
-    <decorator_list:Decorator*> <location:@L> <is_async:"async"?> "def" <name:Identifier> <args:Parameters> <r:("->" Test<"all">)?> ":" <body:Suite>  => {
+    <decorator_list:ZeroOrMore<Decorator>> <location:@L> <is_async:"async"?> "def" <name:Identifier> <args:Parameters> <r:("->" Test<"all">)?> ":" <body:Suite> => {
         let args = Box::new(args);
         let returns = r.map(|x| Box::new(x.1));
         let end_location = body.last().unwrap().end();
@@ -959,13 +958,13 @@ Parameters: ast::Arguments = {
     <location:@L> "(" <a: (ParameterList<TypedParameter, StarTypedParameter>)?> ")" <end_location:@R> =>? {
         let args = validate_arguments(
             a.unwrap_or_else(|| ast::Arguments {
-                posonlyargs: vec![],
-                args: vec![],
+                posonlyargs: thin_vec![],
+                args: thin_vec![],
                 vararg: None,
-                kwonlyargs: vec![],
-                kw_defaults: vec![],
+                kwonlyargs: thin_vec![],
+                kw_defaults: thin_vec![],
                 kwarg: None,
-                defaults: vec![],
+                defaults: thin_vec![],
                 range: optional_range(location, end_location)
             })
         )?;
@@ -981,7 +980,7 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
         let (posonlyargs, args, defaults) = parse_params(param1)?;
 
         // Now gather rest of parameters:
-        let (vararg, kwonlyargs, kw_defaults, kwarg) = args2.map_or((None, vec![], vec![], None), |x| x.1);
+        let (vararg, kwonlyargs, kw_defaults, kwarg) = args2.map_or((None, thin_vec![], thin_vec![], None), |x| x.1);
 
         Ok(ast::Arguments {
             posonlyargs,
@@ -999,8 +998,8 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
 
         // Now gather rest of parameters:
         let vararg = None;
-        let kwonlyargs = vec![];
-        let kw_defaults = vec![];
+        let kwonlyargs = thin_vec![];
+        let kw_defaults = thin_vec![];
         let kwarg = kw.1;
 
         Ok(ast::Arguments {
@@ -1017,25 +1016,25 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
     <location:@L> <params:ParameterListStarArgs<ArgType, StarArgType>> ","? <end_location:@R> => {
         let (vararg, kwonlyargs, kw_defaults, kwarg) = params;
         ast::Arguments {
-            posonlyargs: vec![],
-            args: vec![],
+            posonlyargs: thin_vec![],
+            args: thin_vec![],
             kwonlyargs,
             vararg,
             kwarg,
-            defaults: vec![],
+            defaults: thin_vec![],
             kw_defaults,
             range: optional_range(location, end_location)
         }
     },
     <location:@L> <kwarg:KwargParameter<ArgType>> ","? <end_location:@R> => {
         ast::Arguments {
-            posonlyargs: vec![],
-            args: vec![],
-            kwonlyargs: vec![],
+            posonlyargs: thin_vec![],
+            args: thin_vec![],
+            kwonlyargs: thin_vec![],
             vararg: None,
             kwarg,
-            defaults: vec![],
-            kw_defaults: vec![],
+            defaults: thin_vec![],
+            kw_defaults: thin_vec![],
             range: optional_range(location, end_location)
         }
     },
@@ -1043,11 +1042,11 @@ ParameterList<ArgType, StarArgType>: ast::Arguments = {
 
 // Use inline here to make sure the "," is not creating an ambiguity.
 #[inline]
-ParameterDefs<ArgType>: (Vec<(ast::Arg, Option<ast::Expr>)>, Vec<(ast::Arg, Option<ast::Expr>)>) = {
-    <args:OneOrMore<ParameterDef<ArgType>>> => {
-        (vec![], args)
+ParameterDefs<ArgType>: (ThinVec<(ast::Arg, Option<ast::Expr>)>, ThinVec<(ast::Arg, Option<ast::Expr>)>) = {
+    <args:OneOrMoreSeparated<ParameterDef<ArgType>, ",">> => {
+        (thin_vec![], args)
     },
-    <pos_args:OneOrMore<ParameterDef<ArgType>>> "," "/" <args:("," ParameterDef<ArgType>)*>  => {
+    <pos_args:OneOrMoreSeparated<ParameterDef<ArgType>, ",">> "," "/" <args:("," ParameterDef<ArgType>)*>  => {
         (pos_args, args.into_iter().map(|e| e.1).collect())
     },
 };
@@ -1078,12 +1077,12 @@ StarTypedParameter: ast::Arg = {
 // Use inline here to make sure the "," is not creating an ambiguity.
 // TODO: figure out another grammar that makes this inline no longer required.
 #[inline]
-ParameterListStarArgs<ArgType, StarArgType>: (Option<Box<ast::Arg>>, Vec<ast::Arg>, Vec<ast::Expr>, Option<Box<ast::Arg>>) = {
+ParameterListStarArgs<ArgType, StarArgType>: (Option<Box<ast::Arg>>, ThinVec<ast::Arg>, ThinVec<ast::Expr>, Option<Box<ast::Arg>>) = {
     <location:@L> "*" <va:StarArgType?> <kw:("," ParameterDef<ArgType>)*> <kwarg:("," KwargParameter<ArgType>)?> =>? {
         // Extract keyword arguments:
         let mut kwonlyargs = Vec::new();
-        let mut kw_defaults = Vec::new();
-        let mut kwargs = Vec::new();
+        let mut kw_defaults = ThinVec::new();
+        let mut kwargs = ThinVec::new();
         for (name, value) in kw.into_iter().map(|x| x.1) {
             if let Some(value) = value {
                 kwonlyargs.push(name);
@@ -1115,10 +1114,10 @@ KwargParameter<ArgType>: Option<Box<ast::Arg>> = {
 };
 
 ClassDef: ast::Stmt = {
-    <decorator_list:Decorator*> <location:@L> "class" <name:Identifier> <a:("(" ArgumentList ")")?> ":" <body:Suite> => {
+    <decorator_list:ZeroOrMore<Decorator>> <location:@L> "class" <name:Identifier> <a:("(" ArgumentList ")")?> ":" <body:Suite> => {
         let (bases, keywords) = match a {
             Some((_, arg, _)) => (arg.args, arg.keywords),
-            None => (vec![], vec![]),
+            None => (thin_vec![], thin_vec![]),
         };
         let end_location = body.last().unwrap().end();
         ast::Stmt::ClassDef(
@@ -1187,13 +1186,13 @@ LambdaDef: ast::Expr = {
         let p = validate_arguments(
             p.unwrap_or_else(|| {
                 ast::Arguments {
-                    posonlyargs: vec![],
-                    args: vec![],
+                    posonlyargs: thin_vec![],
+                    args: thin_vec![],
                     vararg: None,
-                    kwonlyargs: vec![],
-                    kw_defaults: vec![],
+                    kwonlyargs: thin_vec![],
+                    kw_defaults: thin_vec![],
                     kwarg: None,
-                    defaults: vec![],
+                    defaults: thin_vec![],
                     range: optional_range(location, end_location)
                 }
             }
@@ -1211,7 +1210,7 @@ LambdaDef: ast::Expr = {
 
 OrTest<Goal>: ast::Expr = {
     <location:@L> <e1:AndTest<"all">> <e2:("or" AndTest<"all">)+> <end_location:@R> => {
-        let mut values = vec![e1];
+        let mut values = thin_vec![e1];
         values.extend(e2.into_iter().map(|e| e.1));
         ast::Expr::BoolOp(
             ast::ExprBoolOp { op: ast::Boolop::Or, values, range: (location..end_location).into() }
@@ -1222,7 +1221,7 @@ OrTest<Goal>: ast::Expr = {
 
 AndTest<Goal>: ast::Expr = {
     <location:@L> <e1:NotTest<"all">> <e2:("and" NotTest<"all">)+> <end_location:@R> => {
-        let mut values = vec![e1];
+        let mut values = thin_vec![e1];
         values.extend(e2.into_iter().map(|e| e.1));
         ast::Expr::BoolOp(
             ast::ExprBoolOp { op: ast::Boolop::And, values, range: (location..end_location).into() }
@@ -1370,7 +1369,7 @@ SubscriptList: ast::Expr = {
         if s2.is_empty() && trailing_comma.is_none() {
             s1
         } else {
-            let mut dims = vec![s1];
+            let mut dims = thin_vec![s1];
             for x in s2 {
                 dims.push(x.1)
             }
@@ -1417,7 +1416,7 @@ Atom<Goal>: ast::Expr = {
             ast::ExprListComp { elt: Box::new(elt), generators, range: (location..end_location).into() }
         )
     },
-    <location:@L> "(" <elts:OneOrMore<Test<"all">>> <trailing_comma:","?> ")" <end_location:@R> if Goal != "no-withitems" => {
+    <location:@L> "(" <elts:OneOrMoreSeparated<Test<"all">, ",">> <trailing_comma:","?> ")" <end_location:@R> if Goal != "no-withitems" => {
         if elts.len() == 1 && trailing_comma.is_none() {
             elts.into_iter().next().unwrap()
         } else {
@@ -1426,7 +1425,7 @@ Atom<Goal>: ast::Expr = {
             )
         }
     },
-    <location:@L> "(" <left:(<OneOrMore<Test<"all">>> ",")?> <mid:NamedOrStarExpr> <right:("," <TestOrStarNamedExpr>)*> <trailing_comma:","?> ")" <end_location:@R> =>? {
+    <location:@L> "(" <left:(<OneOrMoreSeparated<Test<"all">, ",">> ",")?> <mid:NamedOrStarExpr> <right:("," <TestOrStarNamedExpr>)*> <trailing_comma:","?> ")" <end_location:@R> =>? {
         if left.is_none() && right.is_empty() && trailing_comma.is_none() {
             if mid.is_starred_expr() {
                 Err(LexicalError{
@@ -1443,7 +1442,7 @@ Atom<Goal>: ast::Expr = {
         }
     },
     <location:@L> "(" ")" <end_location:@R> => ast::Expr::Tuple(
-        ast::ExprTuple { elts: Vec::new(), ctx: ast::ExprContext::Load, range: (location..end_location).into() }
+        ast::ExprTuple { elts: ThinVec::new(), ctx: ast::ExprContext::Load, range: (location..end_location).into() }
     ),
     "(" <e:YieldExpr> ")" => e,
     <location:@L> "(" <elt:NamedExpressionTest> <generators:CompFor> ")" <end_location:@R> => {
@@ -1491,12 +1490,12 @@ Atom<Goal>: ast::Expr = {
     <location:@L> "..." <end_location:@R> => ast::Expr::Constant(ast::ExprConstant { value: ast::Constant::Ellipsis, kind: None, range: (location..end_location).into() }),
 };
 
-ListLiteralValues: Vec<ast::Expr> = {
-    <e:OneOrMore<TestOrStarNamedExpr>> ","? => e,
+ListLiteralValues: ThinVec<ast::Expr> = {
+    <e:OneOrMoreSeparated<TestOrStarNamedExpr, ",">> ","? => e,
 };
 
-DictLiteralValues: Vec<(Option<Box<ast::Expr>>, ast::Expr)> = {
-    <elements:OneOrMore<DictElement>> ","? => elements,
+DictLiteralValues: ThinVec<(Option<Box<ast::Expr>>, ast::Expr)> = {
+    <elements:OneOrMoreSeparated<DictElement, ",">> ","? => elements,
 };
 
 DictEntry: (ast::Expr, ast::Expr) = {
@@ -1508,8 +1507,8 @@ DictElement: (Option<Box<ast::Expr>>, ast::Expr) = {
     "**" <e:Expression<"all">> => (None, e),
 };
 
-SetLiteralValues: Vec<ast::Expr> = {
-    <e1:OneOrMore<TestOrStarNamedExpr>> ","? => e1
+SetLiteralValues: ThinVec<ast::Expr> = {
+    <e1:OneOrMoreSeparated<TestOrStarNamedExpr, ",">> ","? => e1
 };
 
 ExpressionOrStarExpression = {
@@ -1521,8 +1520,8 @@ ExpressionList: ast::Expr = {
     GenericList<ExpressionOrStarExpression>
 };
 
-ExpressionList2: Vec<ast::Expr> = {
-    <elements:OneOrMore<ExpressionOrStarExpression>> ","? => elements,
+ExpressionList2: ThinVec<ast::Expr> = {
+    <elements:OneOrMoreSeparated<ExpressionOrStarExpression, ",">> ","? => elements,
 };
 
 // A test list is one of:
@@ -1535,7 +1534,7 @@ TestList: ast::Expr = {
 };
 
 GenericList<Element>: ast::Expr = {
-    <location:@L> <elts:OneOrMore<Element>> <trailing_comma:","?> <end_location:@R> => {
+    <location:@L> <elts:OneOrMoreSeparated<Element, ",">> <trailing_comma:","?> <end_location:@R> => {
         if elts.len() == 1 && trailing_comma.is_none() {
             elts.into_iter().next().unwrap()
         } else {
@@ -1554,10 +1553,10 @@ StarExpr: ast::Expr = {
 };
 
 // Comprehensions:
-CompFor: Vec<ast::Comprehension> = <c:SingleForComprehension+> => c;
+CompFor: ThinVec<ast::Comprehension> = <c:OneOrMore<SingleForComprehension>> => c;
 
 SingleForComprehension: ast::Comprehension = {
-    <location:@L> <is_async:"async"?> "for" <target:ExpressionList> "in" <iter:OrTest<"all">> <ifs:ComprehensionIf*> <end_location:@R> => {
+    <location:@L> <is_async:"async"?> "for" <target:ExpressionList> "in" <iter:OrTest<"all">> <ifs:ZeroOrMore<ComprehensionIf>> <end_location:@R> => {
         let is_async = is_async.is_some();
         ast::Comprehension {
             target: set_context(target, ast::ExprContext::Store),
@@ -1604,22 +1603,36 @@ FunctionArgument: (Option<(TextSize, TextSize, Option<ast::Identifier>)>, ast::E
 };
 
 #[inline]
-Comma<T>: Vec<T> = {
-    <items: (<T> ",")*> <last: T?> => {
-        let mut items = items;
-        items.extend(last);
-        items
+Comma<T>: ThinVec<T> = {
+    ","? => ThinVec::new(),
+    <e:T> => thin_vec![e],
+    <mut v: OneOrMoreSeparated<T, ",">> "," <e:T?> => {
+        v.extend(e.into_iter());
+        v
+    }
+};
+
+OneOrMoreSeparated<T, S>: ThinVec<T> = {
+    <e:T> => thin_vec![e],
+    <mut v: OneOrMoreSeparated<T, S>> S <e:T> => {
+        v.push(e);
+        v
     }
 };
 
 #[inline]
-OneOrMore<T>: Vec<T> = {
-    <i1: T> <i2:("," T)*> => {
-        let mut items = vec![i1];
-        items.extend(i2.into_iter().map(|e| e.1));
-        items
+ZeroOrMore<T>: ThinVec<T> = {
+    => ThinVec::new(),
+    <v:OneOrMore<T>> => v
+}
+
+OneOrMore<T>: ThinVec<T> = {
+    <e:T> => thin_vec![e],
+    <mut v:OneOrMore<T>> <e:T> => {
+        v.push(e);
+        v
     }
-};
+}
 
 Constant: ast::Constant = {
     <value:int> => ast::Constant::Int(value),

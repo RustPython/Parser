@@ -1,4 +1,5 @@
 use crate::{builtin, fold::Fold};
+use thin_vec::ThinVec;
 
 pub trait Foldable<T, U> {
     type Mapped;
@@ -8,11 +9,11 @@ pub trait Foldable<T, U> {
     ) -> Result<Self::Mapped, F::Error>;
 }
 
-impl<T, U, X> Foldable<T, U> for Vec<X>
+impl<T, U, X> Foldable<T, U> for ThinVec<X>
 where
     X: Foldable<T, U>,
 {
-    type Mapped = Vec<X::Mapped>;
+    type Mapped = ThinVec<X::Mapped>;
     fn fold<F: Fold<T, TargetU = U> + ?Sized>(
         self,
         folder: &mut F,
