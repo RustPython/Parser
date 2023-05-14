@@ -280,10 +280,7 @@ class StructVisitor(EmitVisitor):
         if has_attributes:
             self.emit("pub range: R,", depth + 1)
         else:
-            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', depth + 1)
-            self.emit("pub range: R,", depth + 1)
-            self.emit('#[cfg(not(feature = "all-nodes-with-ranges"))]', depth + 1)
-            self.emit("pub range: crate::EmptyRange<R>,", depth + 1)
+            self.emit("pub range: crate::ranged::OptionalRange<R>,", depth + 1)
 
     def simple_sum(self, sum, name, depth):
         rust_name = rust_type_name(name)
@@ -322,13 +319,13 @@ class StructVisitor(EmitVisitor):
         self.emit_attrs(depth)
         payload_name = f"{rust_name}{t.name}"
         self.emit(f"pub struct {payload_name}<R = TextRange> {{", depth)
+        self.emit_range(sum_type_info.has_attributes, depth)
         for f in t.fields:
             self.visit(f, sum_type_info, "pub ", depth + 1, t.name)
 
         assert sum_type_info.has_attributes == self.type_info[t.name].no_cfg(
             self.type_info
         )
-        self.emit_range(sum_type_info.has_attributes, depth)
 
         self.emit("}", depth)
         self.emit(

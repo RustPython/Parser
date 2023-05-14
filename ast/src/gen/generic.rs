@@ -3,12 +3,9 @@
 use crate::text_size::TextRange;
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModModule<R = TextRange> {
+    pub range: crate::ranged::OptionalRange<R>,
     pub body: Vec<Stmt<R>>,
     pub type_ignores: Vec<TypeIgnore<R>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModModule<R>> for Mod<R> {
@@ -19,11 +16,8 @@ impl<R> From<ModModule<R>> for Mod<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModInteractive<R = TextRange> {
+    pub range: crate::ranged::OptionalRange<R>,
     pub body: Vec<Stmt<R>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModInteractive<R>> for Mod<R> {
@@ -34,11 +28,8 @@ impl<R> From<ModInteractive<R>> for Mod<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModExpression<R = TextRange> {
+    pub range: crate::ranged::OptionalRange<R>,
     pub body: Box<Expr<R>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModExpression<R>> for Mod<R> {
@@ -49,12 +40,9 @@ impl<R> From<ModExpression<R>> for Mod<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModFunctionType<R = TextRange> {
+    pub range: crate::ranged::OptionalRange<R>,
     pub argtypes: Vec<Expr<R>>,
     pub returns: Box<Expr<R>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<ModFunctionType<R>> for Mod<R> {
@@ -73,13 +61,13 @@ pub enum Mod<R = TextRange> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtFunctionDef<R = TextRange> {
+    pub range: R,
     pub name: Identifier,
     pub args: Box<Arguments<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtFunctionDef<R>> for Stmt<R> {
@@ -90,13 +78,13 @@ impl<R> From<StmtFunctionDef<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncFunctionDef<R = TextRange> {
+    pub range: R,
     pub name: Identifier,
     pub args: Box<Arguments<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtAsyncFunctionDef<R>> for Stmt<R> {
@@ -107,12 +95,12 @@ impl<R> From<StmtAsyncFunctionDef<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtClassDef<R = TextRange> {
+    pub range: R,
     pub name: Identifier,
     pub bases: Vec<Expr<R>>,
     pub keywords: Vec<Keyword<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtClassDef<R>> for Stmt<R> {
@@ -123,8 +111,8 @@ impl<R> From<StmtClassDef<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtReturn<R = TextRange> {
-    pub value: Option<Box<Expr<R>>>,
     pub range: R,
+    pub value: Option<Box<Expr<R>>>,
 }
 
 impl<R> From<StmtReturn<R>> for Stmt<R> {
@@ -135,8 +123,8 @@ impl<R> From<StmtReturn<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtDelete<R = TextRange> {
-    pub targets: Vec<Expr<R>>,
     pub range: R,
+    pub targets: Vec<Expr<R>>,
 }
 
 impl<R> From<StmtDelete<R>> for Stmt<R> {
@@ -147,10 +135,10 @@ impl<R> From<StmtDelete<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAssign<R = TextRange> {
+    pub range: R,
     pub targets: Vec<Expr<R>>,
     pub value: Box<Expr<R>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtAssign<R>> for Stmt<R> {
@@ -161,10 +149,10 @@ impl<R> From<StmtAssign<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAugAssign<R = TextRange> {
+    pub range: R,
     pub target: Box<Expr<R>>,
     pub op: Operator,
     pub value: Box<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtAugAssign<R>> for Stmt<R> {
@@ -175,11 +163,11 @@ impl<R> From<StmtAugAssign<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAnnAssign<R = TextRange> {
+    pub range: R,
     pub target: Box<Expr<R>>,
     pub annotation: Box<Expr<R>>,
     pub value: Option<Box<Expr<R>>>,
     pub simple: bool,
-    pub range: R,
 }
 
 impl<R> From<StmtAnnAssign<R>> for Stmt<R> {
@@ -190,12 +178,12 @@ impl<R> From<StmtAnnAssign<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtFor<R = TextRange> {
+    pub range: R,
     pub target: Box<Expr<R>>,
     pub iter: Box<Expr<R>>,
     pub body: Vec<Stmt<R>>,
     pub orelse: Vec<Stmt<R>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtFor<R>> for Stmt<R> {
@@ -206,12 +194,12 @@ impl<R> From<StmtFor<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncFor<R = TextRange> {
+    pub range: R,
     pub target: Box<Expr<R>>,
     pub iter: Box<Expr<R>>,
     pub body: Vec<Stmt<R>>,
     pub orelse: Vec<Stmt<R>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtAsyncFor<R>> for Stmt<R> {
@@ -222,10 +210,10 @@ impl<R> From<StmtAsyncFor<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtWhile<R = TextRange> {
+    pub range: R,
     pub test: Box<Expr<R>>,
     pub body: Vec<Stmt<R>>,
     pub orelse: Vec<Stmt<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtWhile<R>> for Stmt<R> {
@@ -236,10 +224,10 @@ impl<R> From<StmtWhile<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtIf<R = TextRange> {
+    pub range: R,
     pub test: Box<Expr<R>>,
     pub body: Vec<Stmt<R>>,
     pub orelse: Vec<Stmt<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtIf<R>> for Stmt<R> {
@@ -250,10 +238,10 @@ impl<R> From<StmtIf<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtWith<R = TextRange> {
+    pub range: R,
     pub items: Vec<Withitem<R>>,
     pub body: Vec<Stmt<R>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtWith<R>> for Stmt<R> {
@@ -264,10 +252,10 @@ impl<R> From<StmtWith<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncWith<R = TextRange> {
+    pub range: R,
     pub items: Vec<Withitem<R>>,
     pub body: Vec<Stmt<R>>,
     pub type_comment: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<StmtAsyncWith<R>> for Stmt<R> {
@@ -278,9 +266,9 @@ impl<R> From<StmtAsyncWith<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtMatch<R = TextRange> {
+    pub range: R,
     pub subject: Box<Expr<R>>,
     pub cases: Vec<MatchCase<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtMatch<R>> for Stmt<R> {
@@ -291,9 +279,9 @@ impl<R> From<StmtMatch<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtRaise<R = TextRange> {
+    pub range: R,
     pub exc: Option<Box<Expr<R>>>,
     pub cause: Option<Box<Expr<R>>>,
-    pub range: R,
 }
 
 impl<R> From<StmtRaise<R>> for Stmt<R> {
@@ -304,11 +292,11 @@ impl<R> From<StmtRaise<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtTry<R = TextRange> {
+    pub range: R,
     pub body: Vec<Stmt<R>>,
     pub handlers: Vec<Excepthandler<R>>,
     pub orelse: Vec<Stmt<R>>,
     pub finalbody: Vec<Stmt<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtTry<R>> for Stmt<R> {
@@ -319,11 +307,11 @@ impl<R> From<StmtTry<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtTryStar<R = TextRange> {
+    pub range: R,
     pub body: Vec<Stmt<R>>,
     pub handlers: Vec<Excepthandler<R>>,
     pub orelse: Vec<Stmt<R>>,
     pub finalbody: Vec<Stmt<R>>,
-    pub range: R,
 }
 
 impl<R> From<StmtTryStar<R>> for Stmt<R> {
@@ -334,9 +322,9 @@ impl<R> From<StmtTryStar<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAssert<R = TextRange> {
+    pub range: R,
     pub test: Box<Expr<R>>,
     pub msg: Option<Box<Expr<R>>>,
-    pub range: R,
 }
 
 impl<R> From<StmtAssert<R>> for Stmt<R> {
@@ -347,8 +335,8 @@ impl<R> From<StmtAssert<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtImport<R = TextRange> {
-    pub names: Vec<Alias<R>>,
     pub range: R,
+    pub names: Vec<Alias<R>>,
 }
 
 impl<R> From<StmtImport<R>> for Stmt<R> {
@@ -359,10 +347,10 @@ impl<R> From<StmtImport<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtImportFrom<R = TextRange> {
+    pub range: R,
     pub module: Option<Identifier>,
     pub names: Vec<Alias<R>>,
     pub level: Option<Int>,
-    pub range: R,
 }
 
 impl<R> From<StmtImportFrom<R>> for Stmt<R> {
@@ -373,8 +361,8 @@ impl<R> From<StmtImportFrom<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtGlobal<R = TextRange> {
-    pub names: Vec<Identifier>,
     pub range: R,
+    pub names: Vec<Identifier>,
 }
 
 impl<R> From<StmtGlobal<R>> for Stmt<R> {
@@ -385,8 +373,8 @@ impl<R> From<StmtGlobal<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtNonlocal<R = TextRange> {
-    pub names: Vec<Identifier>,
     pub range: R,
+    pub names: Vec<Identifier>,
 }
 
 impl<R> From<StmtNonlocal<R>> for Stmt<R> {
@@ -397,8 +385,8 @@ impl<R> From<StmtNonlocal<R>> for Stmt<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtExpr<R = TextRange> {
-    pub value: Box<Expr<R>>,
     pub range: R,
+    pub value: Box<Expr<R>>,
 }
 
 impl<R> From<StmtExpr<R>> for Stmt<R> {
@@ -500,9 +488,9 @@ pub enum Stmt<R = TextRange> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprBoolOp<R = TextRange> {
+    pub range: R,
     pub op: Boolop,
     pub values: Vec<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprBoolOp<R>> for Expr<R> {
@@ -513,9 +501,9 @@ impl<R> From<ExprBoolOp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprNamedExpr<R = TextRange> {
+    pub range: R,
     pub target: Box<Expr<R>>,
     pub value: Box<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprNamedExpr<R>> for Expr<R> {
@@ -526,10 +514,10 @@ impl<R> From<ExprNamedExpr<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprBinOp<R = TextRange> {
+    pub range: R,
     pub left: Box<Expr<R>>,
     pub op: Operator,
     pub right: Box<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprBinOp<R>> for Expr<R> {
@@ -540,9 +528,9 @@ impl<R> From<ExprBinOp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprUnaryOp<R = TextRange> {
+    pub range: R,
     pub op: Unaryop,
     pub operand: Box<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprUnaryOp<R>> for Expr<R> {
@@ -553,9 +541,9 @@ impl<R> From<ExprUnaryOp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprLambda<R = TextRange> {
+    pub range: R,
     pub args: Box<Arguments<R>>,
     pub body: Box<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprLambda<R>> for Expr<R> {
@@ -566,10 +554,10 @@ impl<R> From<ExprLambda<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprIfExp<R = TextRange> {
+    pub range: R,
     pub test: Box<Expr<R>>,
     pub body: Box<Expr<R>>,
     pub orelse: Box<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprIfExp<R>> for Expr<R> {
@@ -580,9 +568,9 @@ impl<R> From<ExprIfExp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprDict<R = TextRange> {
+    pub range: R,
     pub keys: Vec<Option<Expr<R>>>,
     pub values: Vec<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprDict<R>> for Expr<R> {
@@ -593,8 +581,8 @@ impl<R> From<ExprDict<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSet<R = TextRange> {
-    pub elts: Vec<Expr<R>>,
     pub range: R,
+    pub elts: Vec<Expr<R>>,
 }
 
 impl<R> From<ExprSet<R>> for Expr<R> {
@@ -605,9 +593,9 @@ impl<R> From<ExprSet<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprListComp<R = TextRange> {
+    pub range: R,
     pub elt: Box<Expr<R>>,
     pub generators: Vec<Comprehension<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprListComp<R>> for Expr<R> {
@@ -618,9 +606,9 @@ impl<R> From<ExprListComp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSetComp<R = TextRange> {
+    pub range: R,
     pub elt: Box<Expr<R>>,
     pub generators: Vec<Comprehension<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprSetComp<R>> for Expr<R> {
@@ -631,10 +619,10 @@ impl<R> From<ExprSetComp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprDictComp<R = TextRange> {
+    pub range: R,
     pub key: Box<Expr<R>>,
     pub value: Box<Expr<R>>,
     pub generators: Vec<Comprehension<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprDictComp<R>> for Expr<R> {
@@ -645,9 +633,9 @@ impl<R> From<ExprDictComp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprGeneratorExp<R = TextRange> {
+    pub range: R,
     pub elt: Box<Expr<R>>,
     pub generators: Vec<Comprehension<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprGeneratorExp<R>> for Expr<R> {
@@ -658,8 +646,8 @@ impl<R> From<ExprGeneratorExp<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprAwait<R = TextRange> {
-    pub value: Box<Expr<R>>,
     pub range: R,
+    pub value: Box<Expr<R>>,
 }
 
 impl<R> From<ExprAwait<R>> for Expr<R> {
@@ -670,8 +658,8 @@ impl<R> From<ExprAwait<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprYield<R = TextRange> {
-    pub value: Option<Box<Expr<R>>>,
     pub range: R,
+    pub value: Option<Box<Expr<R>>>,
 }
 
 impl<R> From<ExprYield<R>> for Expr<R> {
@@ -682,8 +670,8 @@ impl<R> From<ExprYield<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprYieldFrom<R = TextRange> {
-    pub value: Box<Expr<R>>,
     pub range: R,
+    pub value: Box<Expr<R>>,
 }
 
 impl<R> From<ExprYieldFrom<R>> for Expr<R> {
@@ -694,10 +682,10 @@ impl<R> From<ExprYieldFrom<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprCompare<R = TextRange> {
+    pub range: R,
     pub left: Box<Expr<R>>,
     pub ops: Vec<Cmpop>,
     pub comparators: Vec<Expr<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprCompare<R>> for Expr<R> {
@@ -708,10 +696,10 @@ impl<R> From<ExprCompare<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprCall<R = TextRange> {
+    pub range: R,
     pub func: Box<Expr<R>>,
     pub args: Vec<Expr<R>>,
     pub keywords: Vec<Keyword<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExprCall<R>> for Expr<R> {
@@ -722,10 +710,10 @@ impl<R> From<ExprCall<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprFormattedValue<R = TextRange> {
+    pub range: R,
     pub value: Box<Expr<R>>,
     pub conversion: Int,
     pub format_spec: Option<Box<Expr<R>>>,
-    pub range: R,
 }
 
 impl<R> From<ExprFormattedValue<R>> for Expr<R> {
@@ -736,8 +724,8 @@ impl<R> From<ExprFormattedValue<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprJoinedStr<R = TextRange> {
-    pub values: Vec<Expr<R>>,
     pub range: R,
+    pub values: Vec<Expr<R>>,
 }
 
 impl<R> From<ExprJoinedStr<R>> for Expr<R> {
@@ -748,9 +736,9 @@ impl<R> From<ExprJoinedStr<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprConstant<R = TextRange> {
+    pub range: R,
     pub value: Constant,
     pub kind: Option<String>,
-    pub range: R,
 }
 
 impl<R> From<ExprConstant<R>> for Expr<R> {
@@ -761,10 +749,10 @@ impl<R> From<ExprConstant<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprAttribute<R = TextRange> {
+    pub range: R,
     pub value: Box<Expr<R>>,
     pub attr: Identifier,
     pub ctx: ExprContext,
-    pub range: R,
 }
 
 impl<R> From<ExprAttribute<R>> for Expr<R> {
@@ -775,10 +763,10 @@ impl<R> From<ExprAttribute<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSubscript<R = TextRange> {
+    pub range: R,
     pub value: Box<Expr<R>>,
     pub slice: Box<Expr<R>>,
     pub ctx: ExprContext,
-    pub range: R,
 }
 
 impl<R> From<ExprSubscript<R>> for Expr<R> {
@@ -789,9 +777,9 @@ impl<R> From<ExprSubscript<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprStarred<R = TextRange> {
+    pub range: R,
     pub value: Box<Expr<R>>,
     pub ctx: ExprContext,
-    pub range: R,
 }
 
 impl<R> From<ExprStarred<R>> for Expr<R> {
@@ -802,9 +790,9 @@ impl<R> From<ExprStarred<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprName<R = TextRange> {
+    pub range: R,
     pub id: Identifier,
     pub ctx: ExprContext,
-    pub range: R,
 }
 
 impl<R> From<ExprName<R>> for Expr<R> {
@@ -815,9 +803,9 @@ impl<R> From<ExprName<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprList<R = TextRange> {
+    pub range: R,
     pub elts: Vec<Expr<R>>,
     pub ctx: ExprContext,
-    pub range: R,
 }
 
 impl<R> From<ExprList<R>> for Expr<R> {
@@ -828,9 +816,9 @@ impl<R> From<ExprList<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprTuple<R = TextRange> {
+    pub range: R,
     pub elts: Vec<Expr<R>>,
     pub ctx: ExprContext,
-    pub range: R,
 }
 
 impl<R> From<ExprTuple<R>> for Expr<R> {
@@ -841,10 +829,10 @@ impl<R> From<ExprTuple<R>> for Expr<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprSlice<R = TextRange> {
+    pub range: R,
     pub lower: Option<Box<Expr<R>>>,
     pub upper: Option<Box<Expr<R>>>,
     pub step: Option<Box<Expr<R>>>,
-    pub range: R,
 }
 
 impl<R> From<ExprSlice<R>> for Expr<R> {
@@ -969,18 +957,15 @@ pub struct Comprehension<R = TextRange> {
     pub iter: Expr<R>,
     pub ifs: Vec<Expr<R>>,
     pub is_async: bool,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
+    pub range: crate::ranged::OptionalRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExcepthandlerExceptHandler<R = TextRange> {
+    pub range: R,
     pub type_: Option<Box<Expr<R>>>,
     pub name: Option<Identifier>,
     pub body: Vec<Stmt<R>>,
-    pub range: R,
 }
 
 impl<R> From<ExcepthandlerExceptHandler<R>> for Excepthandler<R> {
@@ -1003,10 +988,7 @@ pub struct Arguments<R = TextRange> {
     pub kw_defaults: Vec<Expr<R>>,
     pub kwarg: Option<Box<Arg<R>>>,
     pub defaults: Vec<Expr<R>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
+    pub range: crate::ranged::OptionalRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1035,10 +1017,7 @@ pub struct Alias<R = TextRange> {
 pub struct Withitem<R = TextRange> {
     pub context_expr: Expr<R>,
     pub optional_vars: Option<Box<Expr<R>>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
+    pub range: crate::ranged::OptionalRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1046,16 +1025,13 @@ pub struct MatchCase<R = TextRange> {
     pub pattern: Pattern<R>,
     pub guard: Option<Box<Expr<R>>>,
     pub body: Vec<Stmt<R>>,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
+    pub range: crate::ranged::OptionalRange<R>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchValue<R = TextRange> {
-    pub value: Box<Expr<R>>,
     pub range: R,
+    pub value: Box<Expr<R>>,
 }
 
 impl<R> From<PatternMatchValue<R>> for Pattern<R> {
@@ -1066,8 +1042,8 @@ impl<R> From<PatternMatchValue<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchSingleton<R = TextRange> {
-    pub value: Constant,
     pub range: R,
+    pub value: Constant,
 }
 
 impl<R> From<PatternMatchSingleton<R>> for Pattern<R> {
@@ -1078,8 +1054,8 @@ impl<R> From<PatternMatchSingleton<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchSequence<R = TextRange> {
-    pub patterns: Vec<Pattern<R>>,
     pub range: R,
+    pub patterns: Vec<Pattern<R>>,
 }
 
 impl<R> From<PatternMatchSequence<R>> for Pattern<R> {
@@ -1090,10 +1066,10 @@ impl<R> From<PatternMatchSequence<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchMapping<R = TextRange> {
+    pub range: R,
     pub keys: Vec<Expr<R>>,
     pub patterns: Vec<Pattern<R>>,
     pub rest: Option<Identifier>,
-    pub range: R,
 }
 
 impl<R> From<PatternMatchMapping<R>> for Pattern<R> {
@@ -1104,11 +1080,11 @@ impl<R> From<PatternMatchMapping<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchClass<R = TextRange> {
+    pub range: R,
     pub cls: Box<Expr<R>>,
     pub patterns: Vec<Pattern<R>>,
     pub kwd_attrs: Vec<Identifier>,
     pub kwd_patterns: Vec<Pattern<R>>,
-    pub range: R,
 }
 
 impl<R> From<PatternMatchClass<R>> for Pattern<R> {
@@ -1119,8 +1095,8 @@ impl<R> From<PatternMatchClass<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchStar<R = TextRange> {
-    pub name: Option<Identifier>,
     pub range: R,
+    pub name: Option<Identifier>,
 }
 
 impl<R> From<PatternMatchStar<R>> for Pattern<R> {
@@ -1131,9 +1107,9 @@ impl<R> From<PatternMatchStar<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchAs<R = TextRange> {
+    pub range: R,
     pub pattern: Option<Box<Pattern<R>>>,
     pub name: Option<Identifier>,
-    pub range: R,
 }
 
 impl<R> From<PatternMatchAs<R>> for Pattern<R> {
@@ -1144,8 +1120,8 @@ impl<R> From<PatternMatchAs<R>> for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchOr<R = TextRange> {
-    pub patterns: Vec<Pattern<R>>,
     pub range: R,
+    pub patterns: Vec<Pattern<R>>,
 }
 
 impl<R> From<PatternMatchOr<R>> for Pattern<R> {
@@ -1168,12 +1144,9 @@ pub enum Pattern<R = TextRange> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TypeIgnoreTypeIgnore<R = TextRange> {
+    pub range: crate::ranged::OptionalRange<R>,
     pub lineno: Int,
     pub tag: String,
-    #[cfg(feature = "all-nodes-with-ranges")]
-    pub range: R,
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
-    pub range: crate::EmptyRange<R>,
 }
 
 impl<R> From<TypeIgnoreTypeIgnore<R>> for TypeIgnore<R> {

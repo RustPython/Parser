@@ -16,7 +16,7 @@ mod unparse;
 
 pub use builtin::*;
 pub use generic::*;
-pub use ranged::{EmptyRange, Ranged};
+pub use ranged::{EmptyRange, OptionalRange, Ranged};
 pub use rustpython_parser_core::{text_size, ConversionFlag};
 
 pub type Suite<R = TextRange> = Vec<Stmt<R>>;

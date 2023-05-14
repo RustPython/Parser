@@ -1,11 +1,11 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: 402d166f44e2679fb2f083fb2e4d621c7725b86d3c93474c2730b9b240a8794a
+// sha3: dcd27eae3d0dc16a3ba0744e12b96ef7e802b7fe3eff03cbd5e86f6bb02cc325
 use crate::{
-    ast::{self as ast, Ranged},
+    ast::{self as ast, Ranged, OptionalRange},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,
-    string::parse_strings, parser::range_or_empty,
+    string::parse_strings,
     token::{self, StringKind},
     text_size::TextSize,
 };
@@ -22,11 +22,11 @@ extern crate alloc;
 mod __parse__Top {
 
     use crate::{
-    ast::{self as ast, Ranged},
+    ast::{self as ast, Ranged, OptionalRange},
     lexer::{LexicalError, LexicalErrorType},
     function::{ArgumentList, parse_args, parse_params, validate_arguments},
     context::set_context,
-    string::parse_strings, parser::range_or_empty,
+    string::parse_strings,
     token::{self, StringKind},
     text_size::TextSize,
 };
@@ -36623,7 +36623,7 @@ fn __action1<
     (_, end, _): (TextSize, TextSize, TextSize),
 ) -> ast::Mod
 {
-    ast::ModModule { body, type_ignores: vec![], range: range_or_empty(start..end) }.into()
+    ast::ModModule { body, type_ignores: vec![], range: OptionalRange::new(start, end) }.into()
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -36635,7 +36635,7 @@ fn __action2<
     (_, end, _): (TextSize, TextSize, TextSize),
 ) -> ast::Mod
 {
-    ast::ModInteractive { body, range: range_or_empty(start..end) }.into()
+    ast::ModInteractive { body, range: OptionalRange::new(start, end) }.into()
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -36648,7 +36648,7 @@ fn __action3<
     (_, end, _): (TextSize, TextSize, TextSize),
 ) -> ast::Mod
 {
-    ast::ModExpression { body: Box::new(body), range: range_or_empty(start..end) }.into()
+    ast::ModExpression { body: Box::new(body), range: OptionalRange::new(start, end) }.into()
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -37615,7 +37615,7 @@ fn __action80<
             pattern,
             guard: guard.map(Box::new),
             body,
-            range: range_or_empty(start..end)
+            range: OptionalRange::new(start, end)
         }
     }
 }
@@ -38887,7 +38887,7 @@ fn __action153<
 ) -> Vec<ast::Withitem>
 {
     {
-        all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: range_or_empty(location..end_location) }).collect()
+        all.into_iter().map(|context_expr| ast::Withitem { context_expr, optional_vars: None, range: OptionalRange::new(location, end_location) }).collect()
     }
 }
 
@@ -38938,7 +38938,7 @@ fn __action155<
                 kw_defaults: vec![],
                 kwarg: None,
                 defaults: vec![],
-                range: range_or_empty(location..end_location)
+                range: OptionalRange::new(location, end_location)
             })
         )?;
 
@@ -39124,7 +39124,7 @@ fn __action166<
                     kw_defaults: vec![],
                     kwarg: None,
                     defaults: vec![],
-                    range: range_or_empty(location..end_location)
+                    range: OptionalRange::new(location, end_location)
                 }
             }
         ))?;
@@ -39555,7 +39555,7 @@ fn __action206<
             iter,
             ifs,
             is_async,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         }
     }
 }
@@ -39974,7 +39974,7 @@ fn __action240<
             kwarg,
             defaults,
             kw_defaults,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         })
     }
 }
@@ -40006,7 +40006,7 @@ fn __action241<
             kwarg,
             defaults,
             kw_defaults,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         })
     }
 }
@@ -40030,7 +40030,7 @@ fn __action242<
             kwarg,
             defaults: vec![],
             kw_defaults,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         }
     }
 }
@@ -40053,7 +40053,7 @@ fn __action243<
             kwarg,
             defaults: vec![],
             kw_defaults: vec![],
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         }
     }
 }
@@ -40198,7 +40198,7 @@ fn __action256<
             kwarg,
             defaults,
             kw_defaults,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         })
     }
 }
@@ -40230,7 +40230,7 @@ fn __action257<
             kwarg,
             defaults,
             kw_defaults,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         })
     }
 }
@@ -40254,7 +40254,7 @@ fn __action258<
             kwarg,
             defaults: vec![],
             kw_defaults,
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         }
     }
 }
@@ -40277,7 +40277,7 @@ fn __action259<
             kwarg,
             defaults: vec![],
             kw_defaults: vec![],
-            range: range_or_empty(location..end_location)
+            range: OptionalRange::new(location, end_location)
         }
     }
 }
@@ -40371,7 +40371,7 @@ fn __action268<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Withitem
 {
-    ast::Withitem { context_expr, optional_vars: None, range: range_or_empty(location..end_location) }
+    ast::Withitem { context_expr, optional_vars: None, range: OptionalRange::new(location, end_location) }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -40386,7 +40386,7 @@ fn __action269<
 {
     {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: range_or_empty(location..end_location) }
+        ast::Withitem { context_expr, optional_vars, range: OptionalRange::new(location, end_location) }
     }
 }
 
@@ -40427,7 +40427,7 @@ fn __action273<
     (_, end_location, _): (TextSize, TextSize, TextSize),
 ) -> ast::Withitem
 {
-    ast::Withitem { context_expr, optional_vars: None, range: range_or_empty(location..end_location) }
+    ast::Withitem { context_expr, optional_vars: None, range: OptionalRange::new(location, end_location) }
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -40442,7 +40442,7 @@ fn __action274<
 {
     {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: range_or_empty(location..end_location) }
+        ast::Withitem { context_expr, optional_vars, range: OptionalRange::new(location, end_location) }
     }
 }
 
@@ -40458,7 +40458,7 @@ fn __action275<
 {
     {
         let optional_vars = Some(Box::new(set_context(vars, ast::ExprContext::Store)));
-        ast::Withitem { context_expr, optional_vars, range: range_or_empty(location..end_location) }
+        ast::Withitem { context_expr, optional_vars, range: OptionalRange::new(location, end_location) }
     }
 }
 

@@ -16,9 +16,24 @@ pub trait Ranged {
     }
 }
 
+#[cfg(feature = "all-nodes-with-ranges")]
+pub type OptionalRange<R> = R;
+
+#[cfg(not(feature = "all-nodes-with-ranges"))]
+pub type OptionalRange<R> = EmptyRange<R>;
+
 #[derive(Eq, PartialEq, Hash, Copy, Clone)]
 pub struct EmptyRange<R> {
     phantom: PhantomData<R>,
+}
+
+impl<R> EmptyRange<R> {
+    #[inline(always)]
+    pub fn new(_start: TextSize, _end: TextSize) -> Self {
+        Self {
+            phantom: PhantomData,
+        }
+    }
 }
 
 impl<R> Display for EmptyRange<R> {

@@ -318,20 +318,6 @@ impl ParseErrorType {
     }
 }
 
-#[cfg(feature = "all-nodes-with-ranges")]
-#[inline(always)]
-pub(super) fn range_or_empty<T: Into<crate::text_size::TextRange>>(
-    range: T,
-) -> crate::text_size::TextRange {
-    range.into()
-}
-
-#[cfg(not(feature = "all-nodes-with-ranges"))]
-#[inline(always)]
-pub(super) fn range_or_empty<T, R>(_: T) -> rustpython_ast::EmptyRange<R> {
-    rustpython_ast::EmptyRange::default()
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
