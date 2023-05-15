@@ -711,6 +711,583 @@ class VisitorModuleVisitor(EmitVisitor):
         VisitorTraitDefVisitor(self.file, self.type_info).visit(mod, depth)
 
 
+class ToPyo3AstVisitor(EmitVisitor):
+    """Visitor to generate type-defs for AST."""
+
+    def __init__(self, namespace, *args, **kw):
+        super().__init__(*args, **kw)
+        self.namespace = namespace
+
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitProduct(self, product, name, depth=0):
+        rust_name = rust_type_name(name)
+        self.emit(
+            f"""
+            // product
+            impl ToPyo3Ast for crate::{self.namespace}::{rust_name} {{
+                fn to_pyo3_ast(&self, _py: Python) -> PyResult<Py<PyAny>> {{
+                    let class = ranged::{rust_name}::py_type_cell().get().unwrap();
+                    let instance = class.call1(_py, (
+            """,
+            0,
+        )
+        for field in product.fields:
+            self.emit(f"""self.{field.name}.to_pyo3_ast(_py)?,""", depth + 1)
+        self.emit(
+            """
+                    ))?;
+                    Ok(instance.into())
+                }
+            }
+            """,
+            0,
+        )
+
+    def visitSum(self, sum, name, depth=0):
+        rust_name = rust_type_name(name)
+
+        self.emit(
+            f"""
+            impl ToPyo3Ast for crate::{self.namespace}::{rust_name} {{
+                fn to_pyo3_ast(&self, _py: Python) -> PyResult<Py<PyAny>> {{
+                    let instance = match &self {{
+                        """,
+            0,
+        )
+
+        for cons in sum.types:
+            if not is_simple(sum):
+                self.emit(
+                    f"""crate::{rust_name}::{cons.name}(cons) => cons.to_pyo3_ast(_py)?,""",
+                    depth,
+                )
+            else:
+                self.emit(
+                    f"""crate::{rust_name}::{cons.name} => ranged::{rust_name}{cons.name}::py_type_cell().get().unwrap().clone(),""",
+                    depth,
+                )
+
+        self.emit(
+            """
+                    };
+                    Ok(instance)
+                }
+            }
+            """,
+            0,
+        )
+
+        if is_simple(sum):
+            return
+
+        for cons in sum.types:
+            self.visit(cons, rust_name, depth)
+
+    def visitConstructor(self, cons, parent, depth):
+        self.emit(
+            f"""
+            // constructor
+            impl ToPyo3Ast for crate::{self.namespace}::{parent}{cons.name} {{
+                fn to_pyo3_ast(&self, _py: Python) -> PyResult<Py<PyAny>> {{
+                    let class = ranged::{parent}{cons.name}::py_type_cell().get().unwrap();
+                    let instance = class.call1(_py, (
+            """,
+            depth,
+        )
+        for field in cons.fields:
+            self.emit(
+                f"self.{rust_field(field.name)}.to_pyo3_ast(_py)?,",
+                depth + 1,
+            )
+        self.emit(
+            """
+                    ))?;
+                    Ok(instance.into())
+                }
+            }
+            """,
+            depth,
+        )
+
+
+class RangedDefVisitor(EmitVisitor):
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitSum(self, sum, name, depth):
+        info = self.type_info[name]
+
+        self.emit_type_alias(info)
+
+        if info.is_simple:
+            return
+
+        sum_match_arms = ""
+
+        for ty in sum.types:
+            variant_info = self.type_info[ty.name]
+            sum_match_arms += (
+                f"        Self::{variant_info.rust_name}(node) => node.range(),"
+            )
+            self.emit_type_alias(variant_info)
+            self.emit_ranged_impl(variant_info)
+
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
+
+        self.emit(
+            f"""
+            impl Ranged for crate::{info.rust_sum_name} {{
+                fn range(&self) -> TextRange {{
+                    match self {{
+                        {sum_match_arms}
+                    }}
+                }}
+            }}
+            """.lstrip(),
+            0,
+        )
+
+    def visitProduct(self, product, name, depth):
+        info = self.type_info[name]
+
+        self.emit_type_alias(info)
+        self.emit_ranged_impl(info)
+
+    def emit_type_alias(self, info):
+        generics = "" if info.is_simple else "::<TextRange>"
+
+        self.emit(
+            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};",
+            0,
+        )
+        self.emit("", 0)
+
+    def emit_ranged_impl(self, info):
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
+
+        self.file.write(
+            f"""
+            impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
+                fn range(&self) -> TextRange {{
+                    self.range
+                }}
+            }}
+            """.strip()
+        )
+
+
+class LocatedDefVisitor(EmitVisitor):
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitSum(self, sum, name, depth):
+        info = self.type_info[name]
+
+        self.emit_type_alias(info)
+
+        if info.is_simple:
+            return
+
+        sum_match_arms = ""
+
+        for ty in sum.types:
+            variant_info = self.type_info[ty.name]
+            sum_match_arms += (
+                f"        Self::{variant_info.rust_name}(node) => node.range(),"
+            )
+            self.emit_type_alias(variant_info)
+            self.emit_located_impl(variant_info)
+
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
+
+        self.emit(
+            f"""
+            impl Located for {info.rust_sum_name} {{
+                fn range(&self) -> SourceRange {{
+                    match self {{
+                        {sum_match_arms}
+                    }}
+                }}
+            }}
+            """.lstrip(),
+            0,
+        )
+
+    def visitProduct(self, product, name, depth):
+        info = self.type_info[name]
+
+        self.emit_type_alias(info)
+        self.emit_located_impl(info)
+
+    def emit_type_alias(self, info):
+        generics = "" if info.is_simple else "::<SourceRange>"
+
+        self.emit(
+            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};",
+            0,
+        )
+        self.emit("", 0)
+
+    def emit_located_impl(self, info):
+        if not info.no_cfg(self.type_info):
+            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
+
+        self.emit(
+            f"""
+            impl Located for {info.rust_sum_name} {{
+                fn range(&self) -> SourceRange {{
+                    self.range
+                }}
+            }}
+            """,
+            0,
+        )
+
+
+class Pyo3StructVisitor(EmitVisitor):
+    """Visitor to generate type-defs for AST."""
+
+    def __init__(self, namespace, *args, borrow=False, **kw):
+        self.namespace = namespace
+        self.borrow = borrow
+        super().__init__(*args, **kw)
+
+    @property
+    def module_name(self):
+        name = f"rustpython_ast.{self.namespace}"
+        return name
+
+    @property
+    def ref_def(self):
+        return "&'static " if self.borrow else ""
+
+    @property
+    def ref(self):
+        return "&" if self.borrow else ""
+
+    def emit_class(self, name, rust_name, subclass, base="super::AST"):
+        if subclass:
+            subclass = ", subclass"
+            body = ""
+            into = f"{rust_name}"
+        else:
+            subclass = ""
+            body = f"(pub {self.ref_def} crate::{self.namespace}::{rust_name})"
+            into = f"{rust_name}(node)"
+
+        self.emit(
+            textwrap.dedent(
+                f"""
+                #[pyclass(module="{self.module_name}", name="_{name}", extends={base}{subclass})]
+                #[derive(Clone, Debug)]
+                pub struct {rust_name} {body};
+
+                impl {rust_name} {{
+                    #[inline]
+                    pub fn py_type_cell() -> &'static OnceCell<Py<PyAny>> {{
+                        static PY_TYPE: OnceCell<Py<PyAny>> = OnceCell::new();
+                        &PY_TYPE
+                    }}
+                }}
+
+                impl From<{self.ref_def} crate::{self.namespace}::{rust_name}> for {rust_name} {{
+                    fn from({"" if body else "_"}node: {self.ref_def} crate::{self.namespace}::{rust_name}) -> Self {{
+                        {into}
+                    }}
+                }}
+                """
+            ),
+            0,
+        )
+        if subclass:
+            self.emit(
+                textwrap.dedent(
+                    f"""
+                    #[pymethods]
+                    impl {rust_name} {{
+                        #[new]
+                        fn new() -> PyClassInitializer<Self> {{
+                            PyClassInitializer::from(AST)
+                                .add_subclass(Self)
+                        }}
+
+                    }}
+                    impl ToPyObject for {rust_name} {{
+                        fn to_object(&self, py: Python) -> PyObject {{
+                            let initializer = PyClassInitializer::from(AST)
+                            .add_subclass(self.clone());
+                            Py::new(py, initializer).unwrap().into_py(py)
+                        }}
+                    }}
+                    """
+                ),
+                0,
+            )
+        else:
+            if base != "super::AST":
+                add_subclass = f".add_subclass({base})"
+            else:
+                add_subclass = ""
+            self.emit(
+                textwrap.dedent(
+                    f"""
+                    impl ToPyObject for {rust_name} {{
+                        fn to_object(&self, py: Python) -> PyObject {{
+                            let initializer = PyClassInitializer::from(AST)
+                            {add_subclass}
+                            .add_subclass(self.clone());
+                            Py::new(py, initializer).unwrap().into_py(py)
+                        }}
+                    }}
+                    """
+                ),
+                0,
+            )
+
+        if self.borrow and not subclass:
+            self.emit_wrapper(rust_name)
+
+    def emit_getter(self, owner, type_name):
+        self.emit(
+            textwrap.dedent(
+                f"""
+                #[pymethods]
+                impl {type_name} {{
+                """
+            ),
+            0,
+        )
+
+        for field in owner.fields:
+            self.emit(
+                textwrap.dedent(
+                    f"""
+                    #[getter]
+                    #[inline]
+                    fn get_{field.name}(&self, py: Python) -> PyResult<PyObject> {{
+                        self.0.{rust_field(field.name)}.to_pyo3_wrapper(py)
+                    }}
+                    """
+                ),
+                3,
+            )
+
+        self.emit(
+            textwrap.dedent(
+                """
+                }
+                """
+            ),
+            0,
+        )
+
+    def emit_getattr(self, owner, type_name):
+        self.emit(
+            textwrap.dedent(
+                f"""
+                #[pymethods]
+                impl {type_name} {{
+                    fn __getattr__(&self, py: Python, key: &str) -> PyResult<PyObject> {{
+                        let object: Py<PyAny> = match key {{
+                """
+            ),
+            0,
+        )
+
+        for field in owner.fields:
+            self.emit(
+                f'"{field.name}" => self.0.{rust_field(field.name)}.to_pyo3_wrapper(py)?,',
+                3,
+            )
+
+        self.emit(
+            textwrap.dedent(
+                """
+                            _ => todo!(),
+                        };
+                        Ok(object)
+                    }
+                }
+                """
+            ),
+            0,
+        )
+
+    def emit_wrapper(self, rust_name):
+        self.emit(
+            f"""
+            impl ToPyo3Wrapper for crate::{self.namespace}::{rust_name} {{
+                #[inline]
+                fn to_pyo3_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {{
+                    Ok({rust_name}(self).to_object(py))
+                }}
+            }}
+            """,
+            0,
+        )
+
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitSum(self, sum, name, depth=0):
+        rust_name = rust_type_name(name)
+        self.emit_class(name, rust_name, True)
+
+        simple = is_simple(sum)
+
+        if self.borrow:
+            self.emit(
+                f"""
+                impl ToPyo3Wrapper for crate::{self.namespace}::{rust_name} {{
+                    #[inline]
+                    fn to_pyo3_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {{
+                        match &self {{
+                """,
+                0,
+            )
+
+            for cons in sum.types:
+                if simple:
+                    self.emit(
+                        f"Self::{cons.name} => Ok({rust_name}{cons.name}.to_object(py)),",
+                        3,
+                    )
+                else:
+                    self.emit(
+                        f"Self::{cons.name}(cons) => cons.to_pyo3_wrapper(py),", 3
+                    )
+
+            self.emit(
+                f"""
+                        }}
+                    }}
+                }}
+                """,
+                0,
+            )
+
+        for cons in sum.types:
+            self.visit(cons, rust_name, simple, depth + 1)
+
+    def visitProduct(self, product, name, depth=0):
+        rust_name = rust_type_name(name)
+        self.emit_class(name, rust_name, False)
+        if self.borrow:
+            self.emit_getter(product, rust_name)
+
+    def visitConstructor(self, cons, parent, simple, depth):
+        if simple:
+            self.emit(
+                f"""
+#[pyclass(module="{self.module_name}", name="_{cons.name}", extends={parent})]
+pub struct {parent}{cons.name};
+
+impl {parent}{cons.name} {{
+    #[inline]
+    pub fn py_type_cell() -> &'static OnceCell<Py<PyAny>> {{
+        static PY_TYPE: OnceCell<Py<PyAny>> = OnceCell::new();
+        &PY_TYPE
+    }}
+}}
+
+impl ToPyObject for {parent}{cons.name} {{
+    fn to_object(&self, py: Python) -> PyObject {{
+        let initializer = PyClassInitializer::from(AST)
+        .add_subclass({parent})
+        .add_subclass(Self);
+        Py::new(py, initializer).unwrap().into_py(py)
+    }}
+}}
+                """,
+                depth,
+            )
+        else:
+            self.emit_class(
+                cons.name, f"{parent}{cons.name}", subclass=False, base=parent
+            )
+            if self.borrow:
+                self.emit_getter(cons, f"{parent}{cons.name}")
+
+
+class Pyo3PymoduleVisitor(EmitVisitor):
+    def __init__(self, namespace, *args, **kw):
+        self.namespace = namespace
+        super().__init__(*args, **kw)
+
+    def visitModule(self, mod):
+        for dfn in mod.dfns:
+            self.visit(dfn)
+
+    def visitType(self, type, depth=0):
+        self.visit(type.value, type.name, depth)
+
+    def visitProduct(self, product, name, depth=0):
+        rust_name = rust_type_name(name)
+        self.emit_fields(name, rust_name, False, depth)
+
+    def visitSum(self, sum, name, depth):
+        rust_name = rust_type_name(name)
+        simple = is_simple(sum)
+        self.emit_fields(name, rust_name, True, depth)
+
+        for cons in sum.types:
+            self.visit(cons, name, simple, depth)
+
+    def visitConstructor(self, cons, parent, simple, depth):
+        rust_name = rust_type_name(parent) + rust_type_name(cons.name)
+        self.emit_fields(cons.name, rust_name, simple, depth)
+
+    def emit_fields(self, name, rust_name, simple, depth):
+        if simple:
+            call = ".call0().unwrap()"
+        else:
+            call = ""
+        self.emit(
+            f"""
+{rust_name}::py_type_cell().get_or_init(|| {{
+    ast_module.getattr("{name}").unwrap(){call}.into_py(py)
+}});
+        """,
+            depth,
+        )
+        if simple:
+            return
+        self.emit(
+            f"""
+{{
+    m.add_class::<{rust_name}>()?;
+    let node = m.getattr("_{name}")?;
+    m.setattr("{name}", node)?;
+    let names: Vec<&'static str> = crate::{self.namespace}::{rust_name}::FIELD_NAMES.to_vec();
+    let fields = PyTuple::new(py, names);
+    node.setattr("_fields", fields)?;
+}}
+        """,
+            depth,
+        )
+
+
 class StdlibClassDefVisitor(EmitVisitor):
     def visitModule(self, mod):
         for dfn in mod.dfns:
@@ -1011,138 +1588,6 @@ class StdlibTraitImplVisitor(EmitVisitor):
             return f"Node::ast_from_object(_vm, get_node_field(_vm, &_object, {name}, {json.dumps(typename)})?)?"
 
 
-class RangedDefVisitor(EmitVisitor):
-    def visitModule(self, mod):
-        for dfn in mod.dfns:
-            self.visit(dfn)
-
-    def visitType(self, type, depth=0):
-        self.visit(type.value, type.name, depth)
-
-    def visitSum(self, sum, name, depth):
-        info = self.type_info[name]
-
-        if info.is_simple:
-            return
-
-        sum_match_arms = ""
-
-        for ty in sum.types:
-            variant_info = self.type_info[ty.name]
-            sum_match_arms += (
-                f"        Self::{variant_info.rust_name}(node) => node.range(),"
-            )
-            self.emit_ranged_impl(variant_info)
-
-        if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
-
-        self.emit(
-            f"""
-            impl Ranged for crate::{info.rust_sum_name} {{
-                fn range(&self) -> TextRange {{
-                    match self {{
-                        {sum_match_arms}
-                    }}
-                }}
-            }}
-            """.lstrip(),
-            0,
-        )
-
-    def visitProduct(self, product, name, depth):
-        info = self.type_info[name]
-
-        self.emit_ranged_impl(info)
-
-    def emit_ranged_impl(self, info):
-        if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
-
-        self.file.write(
-            f"""
-            impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
-                fn range(&self) -> TextRange {{
-                    self.range
-                }}
-            }}
-            """.strip()
-        )
-
-
-class LocatedDefVisitor(EmitVisitor):
-    def visitModule(self, mod):
-        for dfn in mod.dfns:
-            self.visit(dfn)
-
-    def visitType(self, type, depth=0):
-        self.visit(type.value, type.name, depth)
-
-    def visitSum(self, sum, name, depth):
-        info = self.type_info[name]
-
-        self.emit_type_alias(info)
-
-        if info.is_simple:
-            return
-
-        sum_match_arms = ""
-
-        for ty in sum.types:
-            variant_info = self.type_info[ty.name]
-            sum_match_arms += (
-                f"        Self::{variant_info.rust_name}(node) => node.range(),"
-            )
-            self.emit_type_alias(variant_info)
-            self.emit_located_impl(variant_info)
-
-        if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
-
-        self.emit(
-            f"""
-            impl Located for {info.rust_sum_name} {{
-                fn range(&self) -> SourceRange {{
-                    match self {{
-                        {sum_match_arms}
-                    }}
-                }}
-            }}
-            """.lstrip(),
-            0,
-        )
-
-    def visitProduct(self, product, name, depth):
-        info = self.type_info[name]
-
-        self.emit_type_alias(info)
-        self.emit_located_impl(info)
-
-    def emit_type_alias(self, info):
-        generics = "" if info.is_simple else "::<SourceRange>"
-
-        self.emit(
-            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};",
-            0,
-        )
-        self.emit("", 0)
-
-    def emit_located_impl(self, info):
-        if not info.no_cfg(self.type_info):
-            self.emit('#[cfg(feature = "all-nodes-with-ranges")]', 0)
-
-        self.emit(
-            f"""
-            impl Located for {info.rust_sum_name} {{
-                fn range(&self) -> SourceRange {{
-                    self.range
-                }}
-            }}
-            """,
-            0,
-        )
-
-
 class ChainOfVisitors:
     def __init__(self, *visitors):
         self.visitors = visitors
@@ -1172,6 +1617,27 @@ def write_ranged_def(mod, type_info, f):
 
 def write_located_def(mod, type_info, f):
     LocatedDefVisitor(f, type_info).visit(mod)
+
+
+def write_ast_pyo3(mod, type_info, namespace, f):
+    ToPyo3AstVisitor(namespace, f, type_info).visit(mod)
+
+
+def write_pyo3_def(mod, type_info, namespace, borrow, f):
+    Pyo3StructVisitor(namespace, f, type_info, borrow=borrow).visit(mod)
+
+    f.write(
+        """
+        use once_cell::sync::OnceCell;
+
+        pub fn add_to_module(py: Python, m: &PyModule) -> PyResult<()> {
+            super::init_module(py, m)?;
+
+            let ast_module = PyModule::import(py, "_ast")?;
+        """
+    )
+    Pyo3PymoduleVisitor(namespace, f, type_info).visit(mod)
+    f.write("Ok(())\n}")
 
 
 def write_ast_mod(mod, type_info, f):
@@ -1211,16 +1677,29 @@ def main(
     type_info = {}
     FindUserDataTypesVisitor(type_info).visit(mod)
 
+    from functools import partial as p
+
     for filename, write in [
-        ("generic", write_ast_def),
-        ("fold", write_fold_def),
-        ("ranged", write_ranged_def),
-        ("located", write_located_def),
-        ("visitor", write_visitor_def),
+        ("generic", p(write_ast_def, mod, type_info)),
+        ("fold", p(write_fold_def, mod, type_info)),
+        ("ranged", p(write_ranged_def, mod, type_info)),
+        ("located", p(write_located_def, mod, type_info)),
+        ("visitor", p(write_visitor_def, mod, type_info)),
+        ("to_pyo3_located", p(write_ast_pyo3, mod, type_info, "located")),
+        ("to_pyo3_ranged", p(write_ast_pyo3, mod, type_info, "ranged")),
+        # ("pyo3_located", p(write_pyo3_def, mod, type_info, "located", True)),
+        ("pyo3_ranged", p(write_pyo3_def, mod, type_info, "ranged", True)),
     ]:
         with (ast_dir / f"{filename}.rs").open("w") as f:
             f.write(auto_gen_msg)
-            write(mod, type_info, f)
+            write(f)
+
+    # for filename, write in [
+
+    # ]:
+    #     with (pyo3_dir / f"{filename}.rs").open("w") as f:
+    #         f.write(auto_gen_msg)
+    #         write(mod, type_info, f)
 
     with module_filename.open("w") as module_file:
         module_file.write(auto_gen_msg)
