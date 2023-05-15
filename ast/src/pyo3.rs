@@ -1,6 +1,9 @@
+use std::cell::UnsafeCell;
+use std::collections::HashMap;
+
 use crate::Node;
 use num_complex::Complex64;
-use pyo3::{intern, prelude::*};
+use pyo3::prelude::*;
 use pyo3::types::{PyBytes, PyList, PyString, PyTuple};
 
 pub trait ToPyo3Ast {
@@ -35,17 +38,48 @@ impl<T: ToPyo3Ast> ToPyo3Ast for Vec<T> {
     }
 }
 
+thread_local! {
+    pub static STRING_POOL: UnsafeCell<HashMap<String, Py<PyString>>> = UnsafeCell::new(HashMap::new());
+}
+
+fn cached(py: Python, s: &str) -> Py<PyString> {
+    STRING_POOL.with(|cell| {
+        let pool = unsafe { &mut *cell.get() };
+        if let Some(s) = pool.get(s) {
+            return s.clone();
+        }
+        let s = PyString::new(py, s);
+        let key = s.to_str().unwrap();
+        let s = s.into_py(py);
+        pool.entry(key.to_owned()).or_insert(s).clone()
+    })
+}
+
 impl ToPyo3Ast for crate::Identifier {
     #[inline]
     fn to_pyo3_ast(&self, py: Python) -> PyResult<Py<PyAny>> {
-        Ok(self.as_str().to_object(py))
+        let s = self.as_str();
+        Ok(if s.len() <= 12 {
+            let py = unsafe { std::mem::transmute(py) };
+            cached(py, s).to_object(py)
+            // PyString::new(py, s).to_object(py)
+        } else {
+            self.as_str().to_object(py)
+        })
     }
 }
 
 impl ToPyo3Ast for crate::String {
     #[inline]
     fn to_pyo3_ast(&self, py: Python) -> PyResult<Py<PyAny>> {
-        Ok(self.as_str().to_object(py))
+        let s = self.as_str();
+        Ok(if s.len() <= 12 {
+            let py = unsafe { std::mem::transmute(py) };
+            cached(py, s).to_object(py)
+            // PyString::new(py, s).to_object(py)
+        } else {
+            self.as_str().to_object(py)
+        })
     }
 }
 
