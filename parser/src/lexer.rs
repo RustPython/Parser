@@ -466,7 +466,7 @@ where
         }
     }
 
-    /// abandon a comment
+    /// Discard comment if full-lexer is not enabled.
     #[cfg(not(feature = "full-lexer"))]
     fn lex_comment(&mut self) {
         loop {
