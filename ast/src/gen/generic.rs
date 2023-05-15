@@ -3,7 +3,7 @@
 use crate::text_size::TextRange;
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModModule<R = TextRange> {
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
     pub body: Vec<Stmt<R>>,
     pub type_ignores: Vec<TypeIgnore<R>>,
 }
@@ -20,7 +20,7 @@ impl<R> From<ModModule<R>> for Mod<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModInteractive<R = TextRange> {
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
     pub body: Vec<Stmt<R>>,
 }
 
@@ -36,7 +36,7 @@ impl<R> From<ModInteractive<R>> for Mod<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModExpression<R = TextRange> {
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
     pub body: Box<Expr<R>>,
 }
 
@@ -52,7 +52,7 @@ impl<R> From<ModExpression<R>> for Mod<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModFunctionType<R = TextRange> {
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
     pub argtypes: Vec<Expr<R>>,
     pub returns: Box<Expr<R>>,
 }
@@ -1246,7 +1246,7 @@ pub struct Comprehension<R = TextRange> {
     pub iter: Expr<R>,
     pub ifs: Vec<Expr<R>>,
     pub is_async: bool,
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
 }
 
 impl<R> Node for Comprehension<R> {
@@ -1291,7 +1291,7 @@ pub struct Arguments<R = TextRange> {
     pub kw_defaults: Vec<Expr<R>>,
     pub kwarg: Option<Box<Arg<R>>>,
     pub defaults: Vec<Expr<R>>,
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
 }
 
 impl<R> Node for Arguments<R> {
@@ -1348,7 +1348,7 @@ impl<R> Node for Alias<R> {
 pub struct Withitem<R = TextRange> {
     pub context_expr: Expr<R>,
     pub optional_vars: Option<Box<Expr<R>>>,
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
 }
 
 impl<R> Node for Withitem<R> {
@@ -1361,7 +1361,7 @@ pub struct MatchCase<R = TextRange> {
     pub pattern: Pattern<R>,
     pub guard: Option<Box<Expr<R>>>,
     pub body: Vec<Stmt<R>>,
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
 }
 
 impl<R> Node for MatchCase<R> {
@@ -1522,7 +1522,7 @@ impl<R> Node for Pattern<R> {
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct TypeIgnoreTypeIgnore<R = TextRange> {
-    pub range: crate::ranged::OptionalRange<R>,
+    pub range: OptionalRange<R>,
     pub lineno: Int,
     pub tag: String,
 }

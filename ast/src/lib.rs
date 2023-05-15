@@ -1,23 +1,13 @@
 mod builtin;
-#[cfg(feature = "fold")]
-mod fold_helpers;
-mod generic {
-    #![allow(clippy::derive_partial_eq_without_eq)]
-    use super::Node;
-    pub use crate::builtin::*;
-
-    include!("gen/generic.rs");
-}
+mod generic;
 mod impls;
 mod ranged;
-#[cfg(feature = "location")]
-mod source_locator;
 #[cfg(feature = "unparse")]
 mod unparse;
 
 pub use builtin::*;
 pub use generic::*;
-pub use ranged::{EmptyRange, OptionalRange, Ranged, Suite};
+pub use ranged::Ranged;
 pub use rustpython_parser_core::{text_size, ConversionFlag};
 
 pub trait Node {
@@ -25,6 +15,8 @@ pub trait Node {
     const FIELD_NAMES: &'static [&'static str];
 }
 
+#[cfg(feature = "fold")]
+mod fold_helpers;
 #[cfg(feature = "fold")]
 pub mod fold {
     use super::generic::*;
@@ -43,14 +35,15 @@ mod visitor {
 
 #[cfg(feature = "location")]
 pub mod located;
-
+#[cfg(feature = "location")]
+mod source_locator;
 #[cfg(feature = "location")]
 pub use rustpython_parser_core::source_code;
+
 #[cfg(feature = "visitor")]
 pub use visitor::Visitor;
 
 #[cfg(feature = "constant-optimization")]
 mod optimizer;
-
 #[cfg(feature = "constant-optimization")]
 pub use optimizer::ConstantOptimizer;
