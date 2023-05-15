@@ -1,0 +1,14 @@
+[package]
+name = "rustpython-parser-pyo3"
+version = "0.2.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "rustpython_parser_pyo3"
+crate-type = ["cdylib"]
+
+[dependencies]
+rustpython-parser = { workspace = true }
+rustpython-ast = { workspace = true, features = ["pyo3"]}
+pyo3 = { version = "0.18.3", features = ["num-bigint", "num-complex"] }
