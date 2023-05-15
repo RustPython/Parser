@@ -3,6 +3,7 @@ mod builtin;
 mod fold_helpers;
 mod generic {
     #![allow(clippy::derive_partial_eq_without_eq)]
+    use super::Node;
     pub use crate::builtin::*;
 
     include!("gen/generic.rs");
@@ -19,12 +20,19 @@ pub use generic::*;
 pub use ranged::{EmptyRange, OptionalRange, Ranged, Suite};
 pub use rustpython_parser_core::{text_size, ConversionFlag};
 
+pub trait Node {
+    const NAME: &'static str;
+    const FIELD_NAMES: &'static [&'static str];
+}
+
 #[cfg(feature = "fold")]
 pub mod fold {
     use super::generic::*;
 
     include!("gen/fold.rs");
 }
+#[cfg(feature = "fold")]
+pub use fold::Fold;
 
 #[cfg(feature = "visitor")]
 mod visitor {
