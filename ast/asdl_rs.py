@@ -1663,6 +1663,7 @@ def write_ast_mod(mod, type_info, f):
 def main(
     input_filename,
     ast_dir,
+    pyo3_dir,
     module_filename,
     dump_module=False,
 ):
@@ -1712,6 +1713,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("input_file", type=Path)
     parser.add_argument("-A", "--ast-dir", type=Path, required=True)
+    parser.add_argument("-O", "--pyo3-dir", type=Path, required=True)
     parser.add_argument("-M", "--module-file", type=Path, required=True)
     parser.add_argument("-d", "--dump-module", action="store_true")
 
@@ -1719,6 +1721,7 @@ if __name__ == "__main__":
     main(
         args.input_file,
         args.ast_dir,
+        args.pyo3_dir,
         args.module_file,
         args.dump_module,
     )
