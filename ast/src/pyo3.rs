@@ -123,4 +123,8 @@ fn cache_py_type<N: Pyo3Node + Node>(ast_module: &PyAny) -> PyResult<()> {
     Ok(())
 }
 
+pub fn init(py: Python) -> PyResult<()> {
+    init_types(py)
+}
+
 include!("gen/to_pyo3.rs");
