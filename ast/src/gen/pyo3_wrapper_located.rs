@@ -19,7 +19,7 @@ impl Mod {
 }
 impl ToPyObject for Mod {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -207,7 +207,7 @@ impl Stmt {
 }
 impl ToPyObject for Stmt {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -1481,7 +1481,7 @@ impl Expr {
 }
 impl ToPyObject for Expr {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -2671,7 +2671,7 @@ impl ExprContext {
 }
 impl ToPyObject for ExprContext {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -2731,7 +2731,7 @@ impl Boolop {
 }
 impl ToPyObject for Boolop {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -2779,7 +2779,7 @@ impl Operator {
 }
 impl ToPyObject for Operator {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -2959,7 +2959,7 @@ impl Unaryop {
 }
 impl ToPyObject for Unaryop {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -3031,7 +3031,7 @@ impl Cmpop {
 }
 impl ToPyObject for Cmpop {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -3226,7 +3226,7 @@ impl Excepthandler {
 }
 impl ToPyObject for Excepthandler {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -3582,7 +3582,7 @@ impl Pattern {
 }
 impl ToPyObject for Pattern {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }
@@ -3938,7 +3938,7 @@ impl TypeIgnore {
 }
 impl ToPyObject for TypeIgnore {
     fn to_object(&self, py: Python) -> PyObject {
-        let initializer = PyClassInitializer::from(AST).add_subclass(self.clone());
+        let initializer = Self::new();
         Py::new(py, initializer).unwrap().into_py(py)
     }
 }

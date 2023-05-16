@@ -1053,11 +1053,12 @@ class ToPyo3AstVisitor(EmitVisitor):
         if type.value.attributes and self.namespace == "located":
             self.emit(
                 """
-                instance.setattr(py, "lineno", _range.start.row.get())?;
-                instance.setattr(py, "col_offset", _range.start.column.get())?;
+                let cache = ast_key_cache().get().unwrap();
+                instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+                instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
                 if let Some(end) = _range.end {
-                    instance.setattr(py, "end_lineno", end.row.get())?;
-                    instance.setattr(py, "end_col_offset", end.column.get())?;
+                    instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+                    instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
                 }
                 """,
                 1,
@@ -1148,8 +1149,7 @@ class Pyo3StructVisitor(EmitVisitor):
                     }}
                     impl ToPyObject for {rust_name} {{
                         fn to_object(&self, py: Python) -> PyObject {{
-                            let initializer = PyClassInitializer::from(AST)
-                            .add_subclass(self.clone());
+                            let initializer = Self::new();
                             Py::new(py, initializer).unwrap().into_py(py)
                         }}
                     }}

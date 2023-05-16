@@ -2794,11 +2794,12 @@ impl ToPyo3Ast for crate::StmtFunctionDef<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -2831,11 +2832,12 @@ impl ToPyo3Ast for crate::StmtAsyncFunctionDef<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -2866,11 +2868,12 @@ impl ToPyo3Ast for crate::StmtClassDef<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -2888,11 +2891,12 @@ impl ToPyo3Ast for crate::StmtReturn<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -2910,11 +2914,12 @@ impl ToPyo3Ast for crate::StmtDelete<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (targets.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -2941,11 +2946,12 @@ impl ToPyo3Ast for crate::StmtAssign<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -2972,11 +2978,12 @@ impl ToPyo3Ast for crate::StmtAugAssign<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3005,11 +3012,12 @@ impl ToPyo3Ast for crate::StmtAnnAssign<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3040,11 +3048,12 @@ impl ToPyo3Ast for crate::StmtFor<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3075,11 +3084,12 @@ impl ToPyo3Ast for crate::StmtAsyncFor<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3106,11 +3116,12 @@ impl ToPyo3Ast for crate::StmtWhile<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3137,11 +3148,12 @@ impl ToPyo3Ast for crate::StmtIf<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3168,11 +3180,12 @@ impl ToPyo3Ast for crate::StmtWith<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3199,11 +3212,12 @@ impl ToPyo3Ast for crate::StmtAsyncWith<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3224,11 +3238,12 @@ impl ToPyo3Ast for crate::StmtMatch<SourceRange> {
             .0
             .call1(py, (subject.to_pyo3_ast(py)?, cases.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3249,11 +3264,12 @@ impl ToPyo3Ast for crate::StmtRaise<SourceRange> {
             .0
             .call1(py, (exc.to_pyo3_ast(py)?, cause.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3282,11 +3298,12 @@ impl ToPyo3Ast for crate::StmtTry<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3315,11 +3332,12 @@ impl ToPyo3Ast for crate::StmtTryStar<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3340,11 +3358,12 @@ impl ToPyo3Ast for crate::StmtAssert<SourceRange> {
             .0
             .call1(py, (test.to_pyo3_ast(py)?, msg.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3362,11 +3381,12 @@ impl ToPyo3Ast for crate::StmtImport<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (names.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3393,11 +3413,12 @@ impl ToPyo3Ast for crate::StmtImportFrom<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3415,11 +3436,12 @@ impl ToPyo3Ast for crate::StmtGlobal<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (names.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3437,11 +3459,12 @@ impl ToPyo3Ast for crate::StmtNonlocal<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (names.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3459,11 +3482,12 @@ impl ToPyo3Ast for crate::StmtExpr<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3478,11 +3502,12 @@ impl ToPyo3Ast for crate::StmtPass<SourceRange> {
         let instance = cache.0.call0(py)?;
         let Self { range: _range } = self;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3497,11 +3522,12 @@ impl ToPyo3Ast for crate::StmtBreak<SourceRange> {
         let instance = cache.0.call0(py)?;
         let Self { range: _range } = self;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3516,11 +3542,12 @@ impl ToPyo3Ast for crate::StmtContinue<SourceRange> {
         let instance = cache.0.call0(py)?;
         let Self { range: _range } = self;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3577,11 +3604,12 @@ impl ToPyo3Ast for crate::ExprBoolOp<SourceRange> {
             .0
             .call1(py, (op.to_pyo3_ast(py)?, values.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3602,11 +3630,12 @@ impl ToPyo3Ast for crate::ExprNamedExpr<SourceRange> {
             .0
             .call1(py, (target.to_pyo3_ast(py)?, value.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3633,11 +3662,12 @@ impl ToPyo3Ast for crate::ExprBinOp<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3658,11 +3688,12 @@ impl ToPyo3Ast for crate::ExprUnaryOp<SourceRange> {
             .0
             .call1(py, (op.to_pyo3_ast(py)?, operand.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3683,11 +3714,12 @@ impl ToPyo3Ast for crate::ExprLambda<SourceRange> {
             .0
             .call1(py, (args.to_pyo3_ast(py)?, body.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3714,11 +3746,12 @@ impl ToPyo3Ast for crate::ExprIfExp<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3739,11 +3772,12 @@ impl ToPyo3Ast for crate::ExprDict<SourceRange> {
             .0
             .call1(py, (keys.to_pyo3_ast(py)?, values.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3761,11 +3795,12 @@ impl ToPyo3Ast for crate::ExprSet<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (elts.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3786,11 +3821,12 @@ impl ToPyo3Ast for crate::ExprListComp<SourceRange> {
             .0
             .call1(py, (elt.to_pyo3_ast(py)?, generators.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3811,11 +3847,12 @@ impl ToPyo3Ast for crate::ExprSetComp<SourceRange> {
             .0
             .call1(py, (elt.to_pyo3_ast(py)?, generators.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3842,11 +3879,12 @@ impl ToPyo3Ast for crate::ExprDictComp<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3867,11 +3905,12 @@ impl ToPyo3Ast for crate::ExprGeneratorExp<SourceRange> {
             .0
             .call1(py, (elt.to_pyo3_ast(py)?, generators.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3889,11 +3928,12 @@ impl ToPyo3Ast for crate::ExprAwait<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3911,11 +3951,12 @@ impl ToPyo3Ast for crate::ExprYield<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3933,11 +3974,12 @@ impl ToPyo3Ast for crate::ExprYieldFrom<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3964,11 +4006,12 @@ impl ToPyo3Ast for crate::ExprCompare<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -3995,11 +4038,12 @@ impl ToPyo3Ast for crate::ExprCall<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4026,11 +4070,12 @@ impl ToPyo3Ast for crate::ExprFormattedValue<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4048,11 +4093,12 @@ impl ToPyo3Ast for crate::ExprJoinedStr<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (values.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4073,11 +4119,12 @@ impl ToPyo3Ast for crate::ExprConstant<SourceRange> {
             .0
             .call1(py, (value.to_pyo3_ast(py)?, kind.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4104,11 +4151,12 @@ impl ToPyo3Ast for crate::ExprAttribute<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4135,11 +4183,12 @@ impl ToPyo3Ast for crate::ExprSubscript<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4160,11 +4209,12 @@ impl ToPyo3Ast for crate::ExprStarred<SourceRange> {
             .0
             .call1(py, (value.to_pyo3_ast(py)?, ctx.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4185,11 +4235,12 @@ impl ToPyo3Ast for crate::ExprName<SourceRange> {
             .0
             .call1(py, (id.to_pyo3_ast(py)?, ctx.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4210,11 +4261,12 @@ impl ToPyo3Ast for crate::ExprList<SourceRange> {
             .0
             .call1(py, (elts.to_pyo3_ast(py)?, ctx.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4235,11 +4287,12 @@ impl ToPyo3Ast for crate::ExprTuple<SourceRange> {
             .0
             .call1(py, (elts.to_pyo3_ast(py)?, ctx.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4266,11 +4319,12 @@ impl ToPyo3Ast for crate::ExprSlice<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4333,11 +4387,12 @@ impl ToPyo3Ast for crate::ExcepthandlerExceptHandler<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4396,11 +4451,12 @@ impl ToPyo3Ast for crate::Arg<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4421,11 +4477,12 @@ impl ToPyo3Ast for crate::Keyword<SourceRange> {
             .0
             .call1(py, (arg.to_pyo3_ast(py)?, value.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4446,11 +4503,12 @@ impl ToPyo3Ast for crate::Alias<SourceRange> {
             .0
             .call1(py, (name.to_pyo3_ast(py)?, asname.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4531,11 +4589,12 @@ impl ToPyo3Ast for crate::PatternMatchValue<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4553,11 +4612,12 @@ impl ToPyo3Ast for crate::PatternMatchSingleton<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (value.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4575,11 +4635,12 @@ impl ToPyo3Ast for crate::PatternMatchSequence<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (patterns.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4606,11 +4667,12 @@ impl ToPyo3Ast for crate::PatternMatchMapping<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4639,11 +4701,12 @@ impl ToPyo3Ast for crate::PatternMatchClass<SourceRange> {
             ),
         )?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4661,11 +4724,12 @@ impl ToPyo3Ast for crate::PatternMatchStar<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (name.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4686,11 +4750,12 @@ impl ToPyo3Ast for crate::PatternMatchAs<SourceRange> {
             .0
             .call1(py, (pattern.to_pyo3_ast(py)?, name.to_pyo3_ast(py)?))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
@@ -4708,11 +4773,12 @@ impl ToPyo3Ast for crate::PatternMatchOr<SourceRange> {
         } = self;
         let instance = cache.0.call1(py, (patterns.to_pyo3_ast(py)?,))?;
 
-        instance.setattr(py, "lineno", _range.start.row.get())?;
-        instance.setattr(py, "col_offset", _range.start.column.get())?;
+        let cache = ast_key_cache().get().unwrap();
+        instance.setattr(py, cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(py, cache.col_offset.as_ref(py), _range.start.column.get())?;
         if let Some(end) = _range.end {
-            instance.setattr(py, "end_lineno", end.row.get())?;
-            instance.setattr(py, "end_col_offset", end.column.get())?;
+            instance.setattr(py, cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(py, cache.end_col_offset.as_ref(py), end.column.get())?;
         }
 
         Ok(instance)
