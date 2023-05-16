@@ -496,15 +496,29 @@ class FoldTraitDefVisitor(EmitVisitor):
         self.emit("pub trait Fold<U> {", depth)
         self.emit("type TargetU;", depth + 1)
         self.emit("type Error;", depth + 1)
+        self.emit("type UserContext;", depth + 1)
         self.emit(
             """
-            fn map_user(&mut self, user: U) -> Result<Self::TargetU, Self::Error>;
+            fn will_map_user(&mut self, user: &U) -> Self::UserContext;
             #[cfg(feature = "all-nodes-with-ranges")]
-            fn map_user_cfg(&mut self, user: U) -> Result<Self::TargetU, Self::Error> {
-                self.map_user(user)
+            fn will_map_user_cfg(&mut self, user: &U) -> Self::UserContext {
+                self.will_map_user(user)
             }
             #[cfg(not(feature = "all-nodes-with-ranges"))]
-            fn map_user_cfg(&mut self, _user: crate::EmptyRange<U>) -> Result<crate::EmptyRange<Self::TargetU>, Self::Error> {
+            fn will_map_user_cfg(&mut self, user: &crate::EmptyRange<U>) -> crate::EmptyRange<Self::TargetU> {
+                crate::EmptyRange::default()
+            }
+            fn map_user(&mut self, user: U, context: Self::UserContext) -> Result<Self::TargetU, Self::Error>;
+            #[cfg(feature = "all-nodes-with-ranges")]
+            fn map_user_cfg(&mut self, user: U, context: Self::UserContext) -> Result<Self::TargetU, Self::Error> {
+                self.map_user(user, context)
+            }
+            #[cfg(not(feature = "all-nodes-with-ranges"))]
+            fn map_user_cfg(
+                &mut self,
+                _user: crate::EmptyRange<U>,
+                _context: crate::EmptyRange<Self::TargetU>,
+            ) -> Result<crate::EmptyRange<Self::TargetU>, Self::Error> {
                 Ok(crate::EmptyRange::default())
             }
             """,
@@ -578,10 +592,17 @@ class FoldImplVisitor(EmitVisitor):
 
             map_user_suffix = "" if type_info.has_attributes else "_cfg"
             self.emit(
-                f"let range = folder.map_user{map_user_suffix}(range)?;", depth + 3
+                f"let context = folder.will_map_user{map_user_suffix}(&range);",
+                depth + 3,
             )
-
-            self.gen_construction(
+            self.fold_fields(
+                fields_pattern[0], cons.fields, fields_pattern[2], depth + 3
+            )
+            self.emit(
+                f"let range = folder.map_user{map_user_suffix}(range, context)?;",
+                depth + 3,
+            )
+            self.composite_fields(
                 fields_pattern[0], cons.fields, fields_pattern[2], depth + 3
             )
             self.emit("}", depth + 2)
@@ -614,9 +635,15 @@ class FoldImplVisitor(EmitVisitor):
         self.emit(f"let {struct_name} {{ {fields_pattern[1]} }} = node;", depth + 1)
 
         map_user_suffix = "" if has_attributes else "_cfg"
-        self.emit(f"let range = folder.map_user{map_user_suffix}(range)?;", depth + 3)
 
-        self.gen_construction(struct_name, product.fields, "", depth + 1)
+        self.emit(
+            f"let context = folder.will_map_user{map_user_suffix}(&range);", depth + 3
+        )
+        self.fold_fields(struct_name, product.fields, "", depth + 1)
+        self.emit(
+            f"let range = folder.map_user{map_user_suffix}(range, context)?;", depth + 3
+        )
+        self.composite_fields(struct_name, product.fields, "", depth + 1)
 
         self.emit("}", depth)
 
@@ -631,13 +658,17 @@ class FoldImplVisitor(EmitVisitor):
 
         return header, body, footer
 
-    def gen_construction(self, header, fields, footer, depth):
+    def fold_fields(self, header, fields, footer, depth):
+        for field in fields:
+            name = rust_field(field.name)
+            self.emit(f"let {name} = Foldable::fold({name}, folder)?;", depth + 1)
+
+    def composite_fields(self, header, fields, footer, depth):
         self.emit(f"Ok({header} {{", depth)
         for field in fields:
             name = rust_field(field.name)
-            self.emit(f"{name}: Foldable::fold({name}, folder)?,", depth + 1)
+            self.emit(f"{name},", depth + 1)
         self.emit("range,", depth + 1)
-
         self.emit(f"}}{footer})", depth)
 
 
