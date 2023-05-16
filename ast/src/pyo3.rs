@@ -113,10 +113,13 @@ impl AST {
 }
 
 fn cache_py_type<N: Pyo3Node + Node>(ast_module: &PyAny) -> PyResult<()> {
-    let class = ast_module.getattr(N::NAME).unwrap();
-    let base = class.getattr("__new__").unwrap();
+    let class = ast_module.getattr(N::NAME)?;
+    let base = if std::mem::size_of::<N>() == 0 {
+        class.call0()?
+    } else {
+        class.getattr("__new__")?
+    };
     N::py_type_cache().get_or_init(|| (class.into(), base.into()));
-
     Ok(())
 }
 
