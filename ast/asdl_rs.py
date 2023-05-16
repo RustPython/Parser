@@ -644,7 +644,6 @@ class FoldImplVisitor(EmitVisitor):
 class FoldModuleVisitor(EmitVisitor):
     def visitModule(self, mod):
         depth = 0
-        self.emit("use crate::fold_helpers::Foldable;", depth)
         FoldTraitDefVisitor(self.file, self.type_info).visit(mod, depth)
         FoldImplVisitor(self.file, self.type_info).visit(mod, depth)
 
