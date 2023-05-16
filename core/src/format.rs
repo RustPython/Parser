@@ -1,5 +1,5 @@
 /// Transforms a value prior to formatting it.
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, is_macro::Is)]
 #[repr(i8)]
 pub enum ConversionFlag {
     /// No conversion
