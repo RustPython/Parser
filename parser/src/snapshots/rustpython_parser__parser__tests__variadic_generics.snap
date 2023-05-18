@@ -9,8 +9,8 @@ expression: parse_ast
             name: Identifier(
                 "args_to_tuple",
             ),
-            args: Arguments {
-                range: (),
+            args: FunctionArguments {
+                range: 19..29,
                 posonlyargs: [],
                 args: [],
                 vararg: Some(
@@ -40,9 +40,7 @@ expression: parse_ast
                     },
                 ),
                 kwonlyargs: [],
-                kw_defaults: [],
                 kwarg: None,
-                defaults: [],
             },
             body: [
                 Expr(

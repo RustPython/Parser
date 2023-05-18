@@ -10,15 +10,13 @@ Ok(
                 value: Lambda(
                     ExprLambda {
                         range: 0..9,
-                        args: Arguments {
-                            range: (),
+                        args: FunctionArguments {
+                            range: 0..9,
                             posonlyargs: [],
                             args: [],
                             vararg: None,
                             kwonlyargs: [],
-                            kw_defaults: [],
                             kwarg: None,
-                            defaults: [],
                         },
                         body: Constant(
                             ExprConstant {

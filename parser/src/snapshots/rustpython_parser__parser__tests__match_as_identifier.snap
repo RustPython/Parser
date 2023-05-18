@@ -712,7 +712,7 @@ expression: parse_ast
             ),
             cases: [
                 MatchCase {
-                    range: (),
+                    range: 544..557,
                     pattern: MatchValue(
                         PatternMatchValue {
                             range: 549..550,
@@ -737,7 +737,7 @@ expression: parse_ast
                     ],
                 },
                 MatchCase {
-                    range: (),
+                    range: 561..582,
                     pattern: MatchValue(
                         PatternMatchValue {
                             range: 566..567,
@@ -781,24 +781,26 @@ expression: parse_ast
             value: Lambda(
                 ExprLambda {
                     range: 590..618,
-                    args: Arguments {
-                        range: (),
+                    args: FunctionArguments {
+                        range: 597..602,
                         posonlyargs: [],
                         args: [
-                            Arg {
+                            ArgWithDefault {
                                 range: 597..602,
-                                arg: Identifier(
-                                    "query",
-                                ),
-                                annotation: None,
-                                type_comment: None,
+                                def: Arg {
+                                    range: 597..602,
+                                    arg: Identifier(
+                                        "query",
+                                    ),
+                                    annotation: None,
+                                    type_comment: None,
+                                },
+                                default: None,
                             },
                         ],
                         vararg: None,
                         kwonlyargs: [],
-                        kw_defaults: [],
                         kwarg: None,
-                        defaults: [],
                     },
                     body: Compare(
                         ExprCompare {

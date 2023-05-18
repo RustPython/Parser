@@ -45,6 +45,67 @@ RUST_KEYWORDS = {
     "type",
 }
 
+attributes = [
+    asdl.Field("int", "lineno"),
+    asdl.Field("int", "col_offset"),
+    asdl.Field("int", "end_lineno"),
+    asdl.Field("int", "end_col_offset"),
+]
+
+ORIGINAL_NODE_WARNING = "NOTE: This type is different from original Python AST."
+
+arg_with_default = asdl.Type(
+    "arg_with_default",
+    asdl.Product(
+        [
+            asdl.Field("arg", "def"),
+            asdl.Field("expr", "default", opt=True),  # order is important for cost-free borrow!
+        ],
+    ),
+)
+arg_with_default.doc = f"""
+An alternative type of AST `arg`. This is used for function arguments *with* default value.
+Used by `FunctionArguments` original type.
+
+{ORIGINAL_NODE_WARNING}
+""".strip()
+
+function_arguments = asdl.Type(
+    "function_arguments",
+    asdl.Product(
+        [
+            asdl.Field("arg_with_default", "posonlyargs", seq=True),
+            asdl.Field("arg_with_default", "args", seq=True),
+            asdl.Field("arg", "vararg", opt=True),
+            asdl.Field("arg_with_default", "kwonlyargs", seq=True),
+            asdl.Field("arg", "kwarg", opt=True),
+        ]
+    ),
+)
+function_arguments.doc = f"""
+An alternative type of AST `arguments`. This is parser-friendly definition of function arguments.
+`defaults` and `kw_defaults` are placed under each `arg_with_default` typed fields.
+
+{ORIGINAL_NODE_WARNING}
+""".strip()
+
+# Must be used only for rust types, not python types
+CUSTOM_TYPES = [
+    function_arguments,
+    arg_with_default,
+]
+
+CUSTOM_REPLACEMENTS = {
+    "arguments": function_arguments,
+}
+CUSTOM_ATTACHMENTS = [
+    arg_with_default,
+]
+
+
+def maybe_custom(type):
+    return CUSTOM_REPLACEMENTS.get(type.name, type)
+
 
 def rust_field_name(name):
     name = rust_type_name(name)
@@ -137,6 +198,10 @@ class TypeInfo:
             f.type != "identifier" for f in self.type.value.fields
         )
 
+    @property
+    def is_custom(self):
+        return self.type.name in [t.name for t in CUSTOM_TYPES]
+
     def no_cfg(self, typeinfo):
         if self.is_product:
             return self.has_attributes
@@ -150,14 +215,14 @@ class TypeInfo:
         return rust_type_name(self.name)
 
     @property
-    def sum_name(self):
+    def full_field_name(self):
         if self.enum_name is None:
             return self.name
         else:
-            return f"{self.enum_name}_{self.name}"
+            return f"{self.enum_name}_{rust_field_name(self.name)}"
 
     @property
-    def rust_sum_name(self):
+    def full_type_name(self):
         rust_name = rust_type_name(self.name)
         if self.enum_name is None:
             return rust_name
@@ -223,7 +288,7 @@ class FindUserDataTypesVisitor(asdl.VisitorBase):
         super().__init__()
 
     def visitModule(self, mod):
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + CUSTOM_TYPES:
             self.visit(dfn)
         stack = set()
         for info in self.type_info.values():
@@ -308,6 +373,7 @@ class StructVisitor(EmitVisitor):
             0,
         )
         for dfn in mod.dfns:
+            dfn = maybe_custom(dfn)
             rust_name = rust_type_name(dfn.name)
             generics = "" if self.type_info[dfn.name].is_simple else "<R>"
             if dfn.name == "mod":
@@ -329,6 +395,7 @@ class StructVisitor(EmitVisitor):
             0,
         )
         for dfn in mod.dfns:
+            dfn = maybe_custom(dfn)
             rust_name = rust_type_name(dfn.name)
             generics = "" if self.type_info[dfn.name].is_simple else "<R>"
             self.emit(
@@ -342,10 +409,13 @@ class StructVisitor(EmitVisitor):
                 0,
             )
 
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + CUSTOM_TYPES:
             self.visit(dfn)
 
     def visitType(self, type, depth=0):
+        if hasattr(type, "doc"):
+            doc = "/// " + type.doc.replace("\n", "\n/// ") + "\n"
+            self.emit(doc, depth)
         self.visit(type.value, type, depth)
 
     def visitSum(self, sum, type, depth):
@@ -492,8 +562,12 @@ class StructVisitor(EmitVisitor):
             self.emit(f"{cons.name},", depth)
 
     def visitField(self, field, parent, vis, depth, constructor=None):
-        typ = rust_type_name(field.type)
-        field_type = self.type_info.get(field.type)
+        if field.type in CUSTOM_REPLACEMENTS:
+            type_name = CUSTOM_REPLACEMENTS[field.type].name
+        else:
+            type_name = field.type
+        typ = rust_type_name(type_name)
+        field_type = self.type_info.get(type_name)
         if field_type and not field_type.is_simple:
             typ = f"{typ}<R>"
         # don't box if we're doing Vec<T>, but do box if we're doing Vec<Option<Box<T>>>
@@ -522,7 +596,6 @@ class StructVisitor(EmitVisitor):
         type_info = self.type_info[type.name]
         product_name = rust_type_name(type.name)
         self.emit_attrs(depth)
-
         self.emit(f"pub struct {product_name}<R = TextRange> {{", depth)
         self.emit_range(product.attributes, depth + 1)
         for f in product.fields:
@@ -584,7 +657,8 @@ class FoldTraitDefVisitor(EmitVisitor):
             }""",
             depth + 1,
         )
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + [arg_with_default]:
+            dfn = maybe_custom(dfn)
             self.visit(dfn, depth + 2)
         self.emit("}", depth)
 
@@ -617,7 +691,8 @@ class FoldTraitDefVisitor(EmitVisitor):
 
 class FoldImplVisitor(EmitVisitor):
     def visitModule(self, mod, depth):
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + [arg_with_default]:
+            dfn = maybe_custom(dfn)
             self.visit(dfn, depth)
 
     def visitType(self, type, depth=0):
@@ -777,7 +852,7 @@ class FoldModuleVisitor(EmitVisitor):
         FoldImplVisitor(self.file, self.type_info).visit(mod, depth)
 
 
-class VisitorTraitDefVisitor(StructVisitor):
+class VisitorModuleVisitor(StructVisitor):
     def full_name(self, name):
         type_info = self.type_info[name]
         if type_info.enum_name:
@@ -792,10 +867,11 @@ class VisitorTraitDefVisitor(StructVisitor):
         else:
             return rust_type_name(name)
 
-    def visitModule(self, mod, depth):
+    def visitModule(self, mod, depth=0):
+        self.emit("#[allow(unused_variables)]", depth)
         self.emit("pub trait Visitor<R=crate::text_size::TextRange> {", depth)
 
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + CUSTOM_TYPES:
             self.visit(dfn, depth + 1)
         self.emit("}", depth)
 
@@ -810,26 +886,28 @@ class VisitorTraitDefVisitor(StructVisitor):
 
     def emit_visitor(self, nodename, depth, has_node=True):
         type_info = self.type_info[nodename]
-        node_type = type_info.rust_sum_name
+        node_type = type_info.full_type_name
         (generic,) = self.apply_generics(nodename, "R")
         self.emit(
-            f"fn visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{",
+            f"fn visit_{type_info.full_field_name}(&mut self, node: {node_type}{generic}) {{",
             depth,
         )
         if has_node:
-            self.emit(f"self.generic_visit_{type_info.sum_name}(node)", depth + 1)
+            self.emit(
+                f"self.generic_visit_{type_info.full_field_name}(node)", depth + 1
+            )
 
         self.emit("}", depth)
 
     def emit_generic_visitor_signature(self, nodename, depth, has_node=True):
         type_info = self.type_info[nodename]
         if has_node:
-            node_type = type_info.rust_sum_name
+            node_type = type_info.full_type_name
         else:
             node_type = "()"
         (generic,) = self.apply_generics(nodename, "R")
         self.emit(
-            f"fn generic_visit_{type_info.sum_name}(&mut self, node: {node_type}{generic}) {{",
+            f"fn generic_visit_{type_info.full_field_name}(&mut self, node: {node_type}{generic}) {{",
             depth,
         )
 
@@ -844,7 +922,9 @@ class VisitorTraitDefVisitor(StructVisitor):
     def visit_match_for_type(self, nodename, rust_name, type_, depth):
         self.emit(f"{rust_name}::{type_.name}", depth)
         self.emit("(data)", depth)
-        self.emit(f"=> self.visit_{nodename}_{type_.name}(data),", depth)
+        self.emit(
+            f"=> self.visit_{nodename}_{rust_field_name(type_.name)}(data),", depth
+        )
 
     def visit_sum_type(self, name, type_, depth):
         self.emit_visitor(type_.name, depth, has_node=type_.fields)
@@ -852,28 +932,32 @@ class VisitorTraitDefVisitor(StructVisitor):
             return
 
         self.emit_generic_visitor_signature(type_.name, depth, has_node=True)
-        for f in type_.fields:
-            fieldname = rust_field(f.name)
-            field_type = self.type_info.get(f.type)
+        for field in type_.fields:
+            if field.type in CUSTOM_REPLACEMENTS:
+                type_name = CUSTOM_REPLACEMENTS[field.type].name
+            else:
+                type_name = field.type
+            field_name = rust_field(field.name)
+            field_type = self.type_info.get(type_name)
             if not (field_type and field_type.has_user_data):
                 continue
 
-            if f.opt:
-                self.emit(f"if let Some(value) = node.{fieldname} {{", depth + 1)
-            elif f.seq:
-                iterable = f"node.{fieldname}"
-                if type_.name == "Dict" and f.name == "keys":
+            if field.opt:
+                self.emit(f"if let Some(value) = node.{field_name} {{", depth + 1)
+            elif field.seq:
+                iterable = f"node.{field_name}"
+                if type_.name == "Dict" and field.name == "keys":
                     iterable = f"{iterable}.into_iter().flatten()"
                 self.emit(f"for value in {iterable} {{", depth + 1)
             else:
                 self.emit("{", depth + 1)
-                self.emit(f"let value = node.{fieldname};", depth + 2)
+                self.emit(f"let value = node.{field_name};", depth + 2)
 
             variable = "value"
-            if field_type.boxed and (not f.seq or f.opt):
+            if field_type.boxed and (not field.seq or field.opt):
                 variable = "*" + variable
             type_info = self.type_info[field_type.name]
-            self.emit(f"self.visit_{type_info.sum_name}({variable});", depth + 2)
+            self.emit(f"self.visit_{type_info.full_field_name}({variable});", depth + 2)
 
             self.emit("}", depth + 1)
 
@@ -903,16 +987,9 @@ class VisitorTraitDefVisitor(StructVisitor):
         self.emit_empty_generic_visitor(name, depth)
 
 
-class VisitorModuleVisitor(EmitVisitor):
-    def visitModule(self, mod):
-        depth = 0
-        self.emit("#[allow(unused_variables, non_snake_case)]", depth)
-        VisitorTraitDefVisitor(self.file, self.type_info).visit(mod, depth)
-
-
 class RangedDefVisitor(EmitVisitor):
     def visitModule(self, mod):
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + CUSTOM_TYPES:
             self.visit(dfn)
 
     def visitType(self, type, depth=0):
@@ -944,7 +1021,7 @@ class RangedDefVisitor(EmitVisitor):
 
         self.emit(
             f"""
-            impl Ranged for crate::{info.rust_sum_name} {{
+            impl Ranged for crate::{info.full_type_name} {{
                 fn range(&self) -> TextRange {{
                     match self {{
                         {sum_match_arms}
@@ -966,7 +1043,7 @@ class RangedDefVisitor(EmitVisitor):
         generics = "" if info.is_simple else "::<TextRange>"
 
         self.emit(
-            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};",
+            f"pub type {info.full_type_name} = crate::generic::{info.full_type_name}{generics};",
             0,
         )
         self.emit("", 0)
@@ -977,7 +1054,7 @@ class RangedDefVisitor(EmitVisitor):
 
         self.file.write(
             f"""
-            impl Ranged for crate::generic::{info.rust_sum_name}::<TextRange> {{
+            impl Ranged for crate::generic::{info.full_type_name}::<TextRange> {{
                 fn range(&self) -> TextRange {{
                     self.range
                 }}
@@ -988,7 +1065,7 @@ class RangedDefVisitor(EmitVisitor):
 
 class LocatedDefVisitor(EmitVisitor):
     def visitModule(self, mod):
-        for dfn in mod.dfns:
+        for dfn in mod.dfns + CUSTOM_TYPES:
             self.visit(dfn)
 
     def visitType(self, type, depth=0):
@@ -1020,7 +1097,7 @@ class LocatedDefVisitor(EmitVisitor):
 
         self.emit(
             f"""
-            impl Located for {info.rust_sum_name} {{
+            impl Located for {info.full_type_name} {{
                 fn range(&self) -> SourceRange {{
                     match self {{
                         {sum_match_arms}
@@ -1041,7 +1118,7 @@ class LocatedDefVisitor(EmitVisitor):
         generics = "" if info.is_simple else "::<SourceRange>"
 
         self.emit(
-            f"pub type {info.rust_sum_name} = crate::generic::{info.rust_sum_name}{generics};",
+            f"pub type {info.full_type_name} = crate::generic::{info.full_type_name}{generics};",
             0,
         )
         self.emit("", 0)
@@ -1052,7 +1129,7 @@ class LocatedDefVisitor(EmitVisitor):
 
         self.emit(
             f"""
-            impl Located for {info.rust_sum_name} {{
+            impl Located for {info.full_type_name} {{
                 fn range(&self) -> SourceRange {{
                     self.range
                 }}
@@ -1598,9 +1675,6 @@ class StdlibTraitImplVisitor(EmitVisitor):
     def visitSum(self, sum, name, depth):
         rust_name = rust_type_name(name)
 
-        self.emit(f"impl NamedNode for ast::located::{rust_name} {{", depth)
-        self.emit(f"const NAME: &'static str = {json.dumps(name)};", depth + 1)
-        self.emit("}", depth)
         self.emit("// sum", depth)
         self.emit(f"impl Node for ast::located::{rust_name} {{", depth)
         self.emit(
@@ -1644,11 +1718,6 @@ class StdlibTraitImplVisitor(EmitVisitor):
     def visitConstructor(self, cons, sum, sum_rust_name, depth):
         rust_name = rust_type_name(cons.name)
         self.emit("// constructor", depth)
-        self.emit(
-            f"impl NamedNode for ast::located::{sum_rust_name}{rust_name} {{", depth
-        )
-        self.emit(f"const NAME: &'static str = {json.dumps(cons.name)};", depth + 1)
-        self.emit("}", depth)
         self.emit(f"impl Node for ast::located::{sum_rust_name}{rust_name} {{", depth)
 
         fields_pattern = self.make_pattern(cons.fields)
@@ -1680,9 +1749,6 @@ class StdlibTraitImplVisitor(EmitVisitor):
         struct_name = rust_type_name(name)
 
         self.emit("// product", depth)
-        self.emit(f"impl NamedNode for ast::located::{struct_name} {{", depth)
-        self.emit(f"const NAME: &'static str = {json.dumps(name)};", depth + 1)
-        self.emit("}", depth)
         self.emit(f"impl Node for ast::located::{struct_name} {{", depth)
         self.emit(
             "fn ast_to_object(self, _vm: &VirtualMachine) -> PyObjectRef {", depth + 1
@@ -1827,7 +1893,7 @@ def write_located_def(mod, type_info, f):
 
 def write_pyo3_node(type_info, f):
     def write(info: TypeInfo):
-        rust_name = info.rust_sum_name
+        rust_name = info.full_type_name
         if info.is_simple:
             generics = ""
         else:
@@ -1846,6 +1912,8 @@ def write_pyo3_node(type_info, f):
         )
 
     for info in type_info.values():
+        if info.is_custom:
+            continue
         write(info)
 
 
@@ -1864,7 +1932,9 @@ def write_to_pyo3(mod, type_info, f):
     )
 
     for info in type_info.values():
-        rust_name = info.rust_sum_name
+        if info.is_custom:
+            continue
+        rust_name = info.full_type_name
         f.write(f"cache_py_type::<ast::{rust_name}>(ast_module)?;\n")
     f.write("Ok(())\n}")
 
@@ -1876,7 +1946,7 @@ def write_to_pyo3_simple(type_info, f):
         if not type_info.is_simple:
             continue
 
-        rust_name = type_info.rust_sum_name
+        rust_name = type_info.full_type_name
         f.write(
             f"""
             impl ToPyAst for ast::{rust_name} {{
@@ -1907,7 +1977,7 @@ def write_pyo3_wrapper(mod, type_info, namespace, f):
             if not type_info.is_simple or not type_info.is_sum:
                 continue
 
-            rust_name = type_info.rust_sum_name
+            rust_name = type_info.full_type_name
             f.write(
                 f"""
                 impl ToPyWrapper for ast::{rust_name} {{

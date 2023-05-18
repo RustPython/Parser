@@ -815,3 +815,23 @@ impl Located for TypeIgnore {
         }
     }
 }
+
+pub type FunctionArguments = crate::generic::FunctionArguments<SourceRange>;
+
+#[cfg(feature = "all-nodes-with-ranges")]
+
+impl Located for FunctionArguments {
+    fn range(&self) -> SourceRange {
+        self.range
+    }
+}
+
+pub type ArgWithDefault = crate::generic::ArgWithDefault<SourceRange>;
+
+#[cfg(feature = "all-nodes-with-ranges")]
+
+impl Located for ArgWithDefault {
+    fn range(&self) -> SourceRange {
+        self.range
+    }
+}

@@ -94,6 +94,19 @@ impl<T: ToPyWrapper> ToPyWrapper for Vec<T> {
 }
 
 #[pyclass(module = "rustpython_ast", name = "AST", subclass)]
+impl<R> ToPyWrapper for ast::FunctionArguments<R>
+where
+    Self: Clone,
+    ast::Arguments<R>: ToPyWrapper,
+{
+    #[inline]
+    fn to_py_wrapper(&'static self, _py: Python) -> PyResult<Py<PyAny>> {
+        todo!()
+        // Ok(FunctionArguments(self).to_object(py))
+    }
+}
+
+#[pyclass(module = "rustpython_ast", subclass)]
 pub struct Ast;
 
 #[pymethods]

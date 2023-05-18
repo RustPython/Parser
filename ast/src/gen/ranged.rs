@@ -495,3 +495,16 @@ impl Ranged for crate::TypeIgnore {
         }
     }
 }
+
+#[cfg(feature = "all-nodes-with-ranges")]
+impl Ranged for crate::generic::FunctionArguments<TextRange> {
+    fn range(&self) -> TextRange {
+        self.range
+    }
+}
+#[cfg(feature = "all-nodes-with-ranges")]
+impl Ranged for crate::generic::ArgWithDefault<TextRange> {
+    fn range(&self) -> TextRange {
+        self.range
+    }
+}

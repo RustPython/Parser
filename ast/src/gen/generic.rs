@@ -15,7 +15,7 @@ pub enum Ast<R = TextRange> {
     Cmpop(Cmpop),
     Comprehension(Comprehension<R>),
     Excepthandler(Excepthandler<R>),
-    Arguments(Arguments<R>),
+    FunctionArguments(FunctionArguments<R>),
     Arg(Arg<R>),
     Keyword(Keyword<R>),
     Alias(Alias<R>),
@@ -89,9 +89,9 @@ impl<R> From<Excepthandler<R>> for Ast<R> {
     }
 }
 
-impl<R> From<Arguments<R>> for Ast<R> {
-    fn from(node: Arguments<R>) -> Self {
-        Ast::Arguments(node)
+impl<R> From<FunctionArguments<R>> for Ast<R> {
+    fn from(node: FunctionArguments<R>) -> Self {
+        Ast::FunctionArguments(node)
     }
 }
 
@@ -240,7 +240,7 @@ impl<R> Node for Mod<R> {
 pub struct StmtFunctionDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
-    pub args: Box<Arguments<R>>,
+    pub args: Box<FunctionArguments<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
@@ -273,7 +273,7 @@ impl<R> From<StmtFunctionDef<R>> for Ast<R> {
 pub struct StmtAsyncFunctionDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
-    pub args: Box<Arguments<R>>,
+    pub args: Box<FunctionArguments<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
@@ -1020,7 +1020,7 @@ impl<R> From<ExprUnaryOp<R>> for Ast<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprLambda<R = TextRange> {
     pub range: R,
-    pub args: Box<Arguments<R>>,
+    pub args: Box<FunctionArguments<R>>,
     pub body: Box<Expr<R>>,
 }
 
@@ -2986,4 +2986,42 @@ pub enum TypeIgnore<R = TextRange> {
 impl<R> Node for TypeIgnore<R> {
     const NAME: &'static str = "type_ignore";
     const FIELD_NAMES: &'static [&'static str] = &[];
+}
+
+/// An alternative type of AST `arguments`. This is parser-friendly definition of function arguments.
+/// `defaults` and `kw_defaults` are placed under each `arg_with_default` typed fields.
+///
+/// NOTE: This type is different from original Python AST.
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct FunctionArguments<R = TextRange> {
+    pub range: OptionalRange<R>,
+    pub posonlyargs: Vec<ArgWithDefault<R>>,
+    pub args: Vec<ArgWithDefault<R>>,
+    pub vararg: Option<Box<Arg<R>>>,
+    pub kwonlyargs: Vec<ArgWithDefault<R>>,
+    pub kwarg: Option<Box<Arg<R>>>,
+}
+
+impl<R> Node for FunctionArguments<R> {
+    const NAME: &'static str = "function_arguments";
+    const FIELD_NAMES: &'static [&'static str] =
+        &["posonlyargs", "args", "vararg", "kwonlyargs", "kwarg"];
+}
+
+/// An alternative type of AST `arg`. This is used for function arguments *with* default value.
+/// Used by `FunctionArguments` original type.
+///
+/// NOTE: This type is different from original Python AST.
+
+#[derive(Clone, Debug, PartialEq)]
+pub struct ArgWithDefault<R = TextRange> {
+    pub range: OptionalRange<R>,
+    pub def: Arg<R>,
+    pub default: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for ArgWithDefault<R> {
+    const NAME: &'static str = "arg_with_default";
+    const FIELD_NAMES: &'static [&'static str] = &["def", "default"];
 }

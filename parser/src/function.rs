@@ -14,76 +14,58 @@ pub(crate) struct ArgumentList {
     pub keywords: Vec<ast::Keyword>,
 }
 
-type ParameterDefs = (Vec<ast::Arg>, Vec<ast::Arg>, Vec<ast::Expr>);
-type ParameterDef = (ast::Arg, Option<ast::Expr>);
-
 // Perform validation of function/lambda arguments in a function definition.
-pub(crate) fn validate_arguments(
-    arguments: ast::Arguments,
-) -> Result<ast::Arguments, LexicalError> {
-    let mut all_args: Vec<&ast::Arg> = vec![];
-
-    all_args.extend(arguments.posonlyargs.iter());
-    all_args.extend(arguments.args.iter());
-
-    if let Some(a) = &arguments.vararg {
-        all_args.push(a);
-    }
-
-    all_args.extend(arguments.kwonlyargs.iter());
-
-    if let Some(a) = &arguments.kwarg {
-        all_args.push(a);
-    }
-
+pub(crate) fn validate_arguments(arguments: &ast::FunctionArguments) -> Result<(), LexicalError> {
     let mut all_arg_names = FxHashSet::with_hasher(Default::default());
-    for arg in all_args {
-        let arg_name = &arg.arg;
-        // Check for duplicate arguments in the function definition.
+
+    for (range, arg_name) in arguments
+        .posonlyargs
+        .iter()
+        .chain(arguments.args.iter())
+        .chain(arguments.kwonlyargs.iter())
+        .map(|arg| (arg.def.range, arg.def.arg.as_str()))
+        .chain(
+            arguments
+                .vararg
+                .as_ref()
+                .map(|arg| (arg.range, arg.arg.as_str())),
+        )
+        .chain(
+            arguments
+                .kwarg
+                .as_ref()
+                .map(|arg| (arg.range, arg.arg.as_str())),
+        )
+    {
         if !all_arg_names.insert(arg_name) {
             return Err(LexicalError {
                 error: LexicalErrorType::DuplicateArgumentError(arg_name.to_string()),
-                location: arg.start(),
+                location: range.start(),
             });
         }
     }
 
-    Ok(arguments)
+    Ok(())
 }
 
-// Parse parameters as supplied during a function/lambda *definition*.
-pub(crate) fn parse_params(
-    params: (Vec<ParameterDef>, Vec<ParameterDef>),
-) -> Result<ParameterDefs, LexicalError> {
-    let mut pos_only = Vec::with_capacity(params.0.len());
-    let mut names = Vec::with_capacity(params.1.len());
-    let mut defaults = vec![];
-
-    let mut try_default = |name: &ast::Arg, default| {
-        if let Some(default) = default {
-            defaults.push(default);
-        } else if !defaults.is_empty() {
-            // Once we have started with defaults, all remaining arguments must
-            // have defaults.
-            return Err(LexicalError {
-                error: LexicalErrorType::DefaultArgumentError,
-                location: name.start(),
-            });
-        }
-        Ok(())
-    };
-
-    for (name, default) in params.0 {
-        try_default(&name, default)?;
-        pos_only.push(name);
+pub(crate) fn validate_pos_params(
+    args: &(Vec<ast::ArgWithDefault>, Vec<ast::ArgWithDefault>),
+) -> Result<(), LexicalError> {
+    let (posonlyargs, args) = args;
+    #[allow(clippy::skip_while_next)]
+    let first_invalid = posonlyargs
+        .iter()
+        .chain(args.iter()) // for all args
+        .skip_while(|arg| arg.default.is_none()) // starting with args without default
+        .skip_while(|arg| arg.default.is_some()) // and then args with default
+        .next(); // there must not be any more args without default
+    if let Some(invalid) = first_invalid {
+        return Err(LexicalError {
+            error: LexicalErrorType::DefaultArgumentError,
+            location: invalid.def.range.start(),
+        });
     }
-
-    for (name, default) in params.1 {
-        try_default(&name, default)?;
-        names.push(name);
-    }
-
-    Ok((pos_only, names, defaults))
+    Ok(())
 }
 
 type FunctionArgument = (
@@ -157,7 +139,7 @@ mod tests {
     use super::*;
     use crate::{ast, parser::ParseErrorType, Parse};
 
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    #[cfg(feature = "all-nodes-with-ranges")]
     macro_rules! function_and_lambda {
         ($($name:ident: $code:expr,)*) => {
             $(
@@ -170,7 +152,7 @@ mod tests {
         }
     }
 
-    #[cfg(not(feature = "all-nodes-with-ranges"))]
+    #[cfg(feature = "all-nodes-with-ranges")]
     function_and_lambda! {
         test_function_no_args: "def f(): pass",
         test_function_pos_args: "def f(a, b, c): pass",
