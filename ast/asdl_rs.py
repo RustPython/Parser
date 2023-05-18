@@ -505,7 +505,7 @@ class FoldTraitDefVisitor(EmitVisitor):
                 self.will_map_user(user)
             }
             #[cfg(not(feature = "all-nodes-with-ranges"))]
-            fn will_map_user_cfg(&mut self, user: &crate::EmptyRange<U>) -> crate::EmptyRange<Self::TargetU> {
+            fn will_map_user_cfg(&mut self, _user: &crate::EmptyRange<U>) -> crate::EmptyRange<Self::TargetU> {
                 crate::EmptyRange::default()
             }
             fn map_user(&mut self, user: U, context: Self::UserContext) -> Result<Self::TargetU, Self::Error>;
