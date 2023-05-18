@@ -471,10 +471,10 @@ class StructVisitor(EmitVisitor):
         self.emit_attrs(depth)
 
         self.emit(f"pub struct {product_name}<R = TextRange> {{", depth)
+        self.emit_range(product.attributes, depth + 1)
         for f in product.fields:
             self.visit(f, type_info, "pub ", depth + 1)
         assert bool(product.attributes) == type_info.no_cfg(self.type_info)
-        self.emit_range(product.attributes, depth + 1)
         self.emit("}", depth)
 
         field_names = [f'"{f.name}"' for f in product.fields]
