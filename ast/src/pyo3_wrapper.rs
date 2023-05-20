@@ -67,7 +67,7 @@ impl ToPyo3Wrapper for crate::Constant {
             crate::Constant::Bool(bool) => bool.to_object(py),
             crate::Constant::Str(string) => string.to_object(py),
             crate::Constant::Bytes(bytes) => PyBytes::new(py, bytes).into(),
-            crate::Constant::Int(int) => int.to_object(py),
+            crate::Constant::Int(int) => num_bigint::BigInt::from(int.clone()).to_object(py),
             crate::Constant::Tuple(elts) => {
                 let elts: PyResult<Vec<_>> = elts.iter().map(|c| c.to_pyo3_wrapper(py)).collect();
                 PyTuple::new(py, elts?).into()
