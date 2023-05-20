@@ -34,7 +34,7 @@ num-complex = "0.4.0"
 num-bigint = "0.4.3"
 num-traits = "0.2"
 pyo3 = { version = "0.18.3" }
-malachite-bigint = { rev = "8258f4869636674917c34042bf0a8aa1c90e83ad", git = "https://github.com/RustPython/malachite-bigint.git" }
+malachite-bigint = { version = "0.1.8", git = "https://github.com/RustPython/malachite-bigint.git" }
 rand = "0.8.5"
 serde = "1.0"
 static_assertions = "1.1"
