@@ -10,7 +10,7 @@ Ok(
                 name: Identifier(
                     "f",
                 ),
-                args: FunctionArguments {
+                args: Arguments {
                     range: 6..45,
                     posonlyargs: [],
                     args: [

@@ -420,11 +420,11 @@ pub trait Fold<U> {
     ) -> Result<ExcepthandlerExceptHandler<Self::TargetU>, Self::Error> {
         fold_excepthandler_except_handler(self, node)
     }
-    fn fold_function_arguments(
+    fn fold_arguments(
         &mut self,
-        node: FunctionArguments<U>,
-    ) -> Result<FunctionArguments<Self::TargetU>, Self::Error> {
-        fold_function_arguments(self, node)
+        node: Arguments<U>,
+    ) -> Result<Arguments<Self::TargetU>, Self::Error> {
+        fold_arguments(self, node)
     }
     fn fold_arg(&mut self, node: Arg<U>) -> Result<Arg<Self::TargetU>, Self::Error> {
         fold_arg(self, node)
@@ -2356,20 +2356,20 @@ pub fn fold_excepthandler_except_handler<U, F: Fold<U> + ?Sized>(
         range,
     })
 }
-impl<T, U> Foldable<T, U> for FunctionArguments<T> {
-    type Mapped = FunctionArguments<U>;
+impl<T, U> Foldable<T, U> for Arguments<T> {
+    type Mapped = Arguments<U>;
     fn fold<F: Fold<T, TargetU = U> + ?Sized>(
         self,
         folder: &mut F,
     ) -> Result<Self::Mapped, F::Error> {
-        folder.fold_function_arguments(self)
+        folder.fold_arguments(self)
     }
 }
-pub fn fold_function_arguments<U, F: Fold<U> + ?Sized>(
+pub fn fold_arguments<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
-    node: FunctionArguments<U>,
-) -> Result<FunctionArguments<F::TargetU>, F::Error> {
-    let FunctionArguments {
+    node: Arguments<U>,
+) -> Result<Arguments<F::TargetU>, F::Error> {
+    let Arguments {
         posonlyargs,
         args,
         vararg,
@@ -2384,7 +2384,7 @@ pub fn fold_function_arguments<U, F: Fold<U> + ?Sized>(
     let kwonlyargs = Foldable::fold(kwonlyargs, folder)?;
     let kwarg = Foldable::fold(kwarg, folder)?;
     let range = folder.map_user_cfg(range, context)?;
-    Ok(FunctionArguments {
+    Ok(Arguments {
         posonlyargs,
         args,
         vararg,

@@ -1,6 +1,6 @@
 use crate::{
-    Arg, Arguments, Boolop, Cmpop, Comprehension, Constant, ConversionFlag, Expr, ArgWithDefault,
-    FunctionArguments, Identifier, Operator,
+    Arg, ArgWithDefault, Arguments, Boolop, Comprehension, Constant, ConversionFlag, Expr,
+    Identifier, Operator, PythonArguments,
 };
 use std::fmt;
 
@@ -157,7 +157,7 @@ impl<'a> Unparser<'a> {
                 group_if!(precedence::TEST, {
                     let pos = args.args.len() + args.posonlyargs.len();
                     self.p(if pos > 0 { "lambda " } else { "lambda" })?;
-                    self.unparse_function_arguments(args)?;
+                    self.unparse_arguments(args)?;
                     write!(self, ": {}", **body)?;
                 })
             }
@@ -439,7 +439,7 @@ impl<'a> Unparser<'a> {
         Ok(())
     }
 
-    fn unparse_function_arguments<U>(&mut self, args: &FunctionArguments<U>) -> fmt::Result {
+    fn unparse_arguments<U>(&mut self, args: &Arguments<U>) -> fmt::Result {
         let mut first = true;
         for (i, arg) in args.posonlyargs.iter().chain(&args.args).enumerate() {
             self.p_delim(&mut first, ", ")?;
@@ -476,7 +476,7 @@ impl<'a> Unparser<'a> {
     }
 
     #[allow(dead_code)]
-    fn unparse_arguments<U>(&mut self, args: &Arguments<U>) -> fmt::Result {
+    fn unparse_python_arguments<U>(&mut self, args: &PythonArguments<U>) -> fmt::Result {
         let mut first = true;
         let defaults_start = args.posonlyargs.len() + args.args.len() - args.defaults.len();
         for (i, arg) in args.posonlyargs.iter().chain(&args.args).enumerate() {

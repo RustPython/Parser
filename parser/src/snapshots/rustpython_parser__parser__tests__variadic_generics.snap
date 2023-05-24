@@ -9,7 +9,7 @@ expression: parse_ast
             name: Identifier(
                 "args_to_tuple",
             ),
-            args: FunctionArguments {
+            args: Arguments {
                 range: 19..29,
                 posonlyargs: [],
                 args: [],

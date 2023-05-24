@@ -15,7 +15,7 @@ pub enum Ast<R = TextRange> {
     Cmpop(Cmpop),
     Comprehension(Comprehension<R>),
     Excepthandler(Excepthandler<R>),
-    FunctionArguments(FunctionArguments<R>),
+    Arguments(Arguments<R>),
     Arg(Arg<R>),
     Keyword(Keyword<R>),
     Alias(Alias<R>),
@@ -89,9 +89,9 @@ impl<R> From<Excepthandler<R>> for Ast<R> {
     }
 }
 
-impl<R> From<FunctionArguments<R>> for Ast<R> {
-    fn from(node: FunctionArguments<R>) -> Self {
-        Ast::FunctionArguments(node)
+impl<R> From<Arguments<R>> for Ast<R> {
+    fn from(node: Arguments<R>) -> Self {
+        Ast::Arguments(node)
     }
 }
 
@@ -240,7 +240,7 @@ impl<R> Node for Mod<R> {
 pub struct StmtFunctionDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
-    pub args: Box<FunctionArguments<R>>,
+    pub args: Box<Arguments<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
@@ -273,7 +273,7 @@ impl<R> From<StmtFunctionDef<R>> for Ast<R> {
 pub struct StmtAsyncFunctionDef<R = TextRange> {
     pub range: R,
     pub name: Identifier,
-    pub args: Box<FunctionArguments<R>>,
+    pub args: Box<Arguments<R>>,
     pub body: Vec<Stmt<R>>,
     pub decorator_list: Vec<Expr<R>>,
     pub returns: Option<Box<Expr<R>>>,
@@ -1020,7 +1020,7 @@ impl<R> From<ExprUnaryOp<R>> for Ast<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprLambda<R = TextRange> {
     pub range: R,
-    pub args: Box<FunctionArguments<R>>,
+    pub args: Box<Arguments<R>>,
     pub body: Box<Expr<R>>,
 }
 
@@ -2679,7 +2679,7 @@ impl<R> Node for Excepthandler<R> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Arguments<R = TextRange> {
+pub struct PythonArguments<R = TextRange> {
     pub range: OptionalRange<R>,
     pub posonlyargs: Vec<Arg<R>>,
     pub args: Vec<Arg<R>>,
@@ -2690,7 +2690,7 @@ pub struct Arguments<R = TextRange> {
     pub defaults: Vec<Expr<R>>,
 }
 
-impl<R> Node for Arguments<R> {
+impl<R> Node for PythonArguments<R> {
     const NAME: &'static str = "arguments";
     const FIELD_NAMES: &'static [&'static str] = &[
         "posonlyargs",
@@ -2988,13 +2988,18 @@ impl<R> Node for TypeIgnore<R> {
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
-/// An alternative type of AST `arguments`. This is parser-friendly definition of function arguments.
-/// `defaults` and `kw_defaults` are placed under each `arg_with_default` typed fields.
+/// An alternative type of AST `arguments`. This is parser-friendly and human-friendly definition of function arguments.
+/// This form also has advantage to implement pre-order traverse.
+/// `defaults` and `kw_defaults` fields are removed and the default values are placed under each `arg_with_default` typed argument.
+/// `vararg` and `kwarg` are still typed as `arg` because they never can have a default value.
+///
+/// The matching Python style AST type is [PythonArguments]. While [PythonArguments] has ordered `kwonlyargs` fields by
+/// default existence, [Arguments] has location-ordered kwonlyargs fields.
 ///
 /// NOTE: This type is different from original Python AST.
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct FunctionArguments<R = TextRange> {
+pub struct Arguments<R = TextRange> {
     pub range: OptionalRange<R>,
     pub posonlyargs: Vec<ArgWithDefault<R>>,
     pub args: Vec<ArgWithDefault<R>>,
@@ -3003,14 +3008,14 @@ pub struct FunctionArguments<R = TextRange> {
     pub kwarg: Option<Box<Arg<R>>>,
 }
 
-impl<R> Node for FunctionArguments<R> {
-    const NAME: &'static str = "function_arguments";
+impl<R> Node for Arguments<R> {
+    const NAME: &'static str = "alt:arguments";
     const FIELD_NAMES: &'static [&'static str] =
         &["posonlyargs", "args", "vararg", "kwonlyargs", "kwarg"];
 }
 
-/// An alternative type of AST `arg`. This is used for function arguments *with* default value.
-/// Used by `FunctionArguments` original type.
+/// An alternative type of AST `arg`. This is used for each function argument that might have a default value.
+/// Used by `Arguments` original type.
 ///
 /// NOTE: This type is different from original Python AST.
 

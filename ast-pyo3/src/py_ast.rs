@@ -78,14 +78,14 @@ impl ToPyAst for ConversionFlag {
     }
 }
 
-impl<R> ToPyAst for ast::FunctionArguments<R>
+impl<R> ToPyAst for ast::Arguments<R>
 where
-    Self: Clone,
-    ast::Arguments<R>: ToPyAst,
+    R: Clone,
+    ast::PythonArguments<R>: ToPyAst,
 {
     #[inline]
     fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
-        let arguments = ast::Arguments::from(self.clone());
+        let arguments = self.to_python_arguments();
         arguments.to_py_ast(py)
     }
 }

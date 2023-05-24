@@ -71,7 +71,7 @@ impl Cmpop {
     }
 }
 
-impl<R> FunctionArguments<R> {
+impl<R> Arguments<R> {
     pub fn empty(range: OptionalRange<R>) -> Self {
         Self {
             range,
@@ -95,8 +95,14 @@ impl<R> ArgWithDefault<R> {
     where
         R: Clone,
     {
-        #[allow(clippy::useless_conversion)] // false positive due to cfg
-        let range = OptionalRange::from(def.range.clone()); // FIXME: def.range.start()..default.range.end()
+        let range = {
+            if cfg!(feature = "all-nodes-with-ranges") {
+                todo!("range recovery is not implemented yet") // def.range.start()..default.range.end()
+            } else {
+                #[allow(clippy::useless_conversion)] // false positive by cfg
+                OptionalRange::from(def.range.clone())
+            }
+        };
         Self {
             range,
             def,
@@ -129,7 +135,7 @@ impl<R> ArgWithDefault<R> {
     }
 }
 
-impl<R> FunctionArguments<R> {
+impl<R> Arguments<R> {
     pub fn defaults(&self) -> impl std::iter::Iterator<Item = &Expr<R>> {
         self.posonlyargs
             .iter()
@@ -151,11 +157,11 @@ impl<R> FunctionArguments<R> {
         (args, with_defaults)
     }
 
-    pub fn to_arguments(&self) -> Arguments<R>
+    pub fn to_python_arguments(&self) -> PythonArguments<R>
     where
         R: Clone,
     {
-        let FunctionArguments {
+        let Arguments {
             range,
             posonlyargs,
             args,
@@ -192,7 +198,7 @@ impl<R> FunctionArguments<R> {
             kw_only.push(arg);
         }
 
-        Arguments {
+        PythonArguments {
             range: range.clone(),
             posonlyargs: pos_only,
             args: pos_args,
@@ -204,8 +210,8 @@ impl<R> FunctionArguments<R> {
         }
     }
 
-    pub fn into_arguments(self) -> Arguments<R> {
-        let FunctionArguments {
+    pub fn into_python_arguments(self) -> PythonArguments<R> {
+        let Arguments {
             range,
             posonlyargs,
             args,
@@ -242,7 +248,7 @@ impl<R> FunctionArguments<R> {
             kw_only.push(arg);
         }
 
-        Arguments {
+        PythonArguments {
             range,
             posonlyargs: pos_only,
             args: pos_args,
@@ -255,12 +261,12 @@ impl<R> FunctionArguments<R> {
     }
 }
 
-impl<R> Arguments<R> {
-    pub fn into_function_arguments(self) -> FunctionArguments<R>
+impl<R> PythonArguments<R> {
+    pub fn into_arguments(self) -> Arguments<R>
     where
         R: Clone,
     {
-        let Arguments {
+        let PythonArguments {
             range,
             posonlyargs,
             args,
@@ -301,7 +307,7 @@ impl<R> Arguments<R> {
             kw_only.push(arg);
         }
 
-        FunctionArguments {
+        Arguments {
             range,
             posonlyargs: pos_only,
             args: pos_args,
@@ -312,9 +318,9 @@ impl<R> Arguments<R> {
     }
 }
 
-impl<R> From<FunctionArguments<R>> for Arguments<R> {
-    fn from(arguments: FunctionArguments<R>) -> Self {
-        arguments.into_arguments()
+impl<R> From<Arguments<R>> for PythonArguments<R> {
+    fn from(arguments: Arguments<R>) -> Self {
+        arguments.into_python_arguments()
     }
 }
 

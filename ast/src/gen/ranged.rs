@@ -394,7 +394,7 @@ impl Ranged for crate::Excepthandler {
 }
 
 #[cfg(feature = "all-nodes-with-ranges")]
-impl Ranged for crate::generic::Arguments<TextRange> {
+impl Ranged for crate::generic::PythonArguments<TextRange> {
     fn range(&self) -> TextRange {
         self.range
     }
@@ -497,7 +497,7 @@ impl Ranged for crate::TypeIgnore {
 }
 
 #[cfg(feature = "all-nodes-with-ranges")]
-impl Ranged for crate::generic::FunctionArguments<TextRange> {
+impl Ranged for crate::generic::Arguments<TextRange> {
     fn range(&self) -> TextRange {
         self.range
     }

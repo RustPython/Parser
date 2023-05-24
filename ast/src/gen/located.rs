@@ -660,11 +660,11 @@ impl Located for Excepthandler {
     }
 }
 
-pub type Arguments = crate::generic::Arguments<SourceRange>;
+pub type PythonArguments = crate::generic::PythonArguments<SourceRange>;
 
 #[cfg(feature = "all-nodes-with-ranges")]
 
-impl Located for Arguments {
+impl Located for PythonArguments {
     fn range(&self) -> SourceRange {
         self.range
     }
@@ -816,11 +816,11 @@ impl Located for TypeIgnore {
     }
 }
 
-pub type FunctionArguments = crate::generic::FunctionArguments<SourceRange>;
+pub type Arguments = crate::generic::Arguments<SourceRange>;
 
 #[cfg(feature = "all-nodes-with-ranges")]
 
-impl Located for FunctionArguments {
+impl Located for Arguments {
     fn range(&self) -> SourceRange {
         self.range
     }

@@ -37,7 +37,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         name: Identifier(
                             "__init__",
                         ),
-                        args: FunctionArguments {
+                        args: Arguments {
                             range: 31..35,
                             posonlyargs: [],
                             args: [
@@ -76,7 +76,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         name: Identifier(
                             "method_with_default",
                         ),
-                        args: FunctionArguments {
+                        args: Arguments {
                             range: 70..89,
                             posonlyargs: [],
                             args: [

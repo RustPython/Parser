@@ -42,7 +42,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
     fn generic_visit_stmt_function_def(&mut self, node: StmtFunctionDef<R>) {
         {
             let value = node.args;
-            self.visit_function_arguments(*value);
+            self.visit_arguments(*value);
         }
         for value in node.body {
             self.visit_stmt(value);
@@ -60,7 +60,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
     fn generic_visit_stmt_async_function_def(&mut self, node: StmtAsyncFunctionDef<R>) {
         {
             let value = node.args;
-            self.visit_function_arguments(*value);
+            self.visit_arguments(*value);
         }
         for value in node.body {
             self.visit_stmt(value);
@@ -424,7 +424,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
     fn generic_visit_expr_lambda(&mut self, node: ExprLambda<R>) {
         {
             let value = node.args;
-            self.visit_function_arguments(*value);
+            self.visit_arguments(*value);
         }
         {
             let value = node.body;
@@ -810,12 +810,4 @@ pub trait Visitor<R = crate::text_size::TextRange> {
             self.visit_pattern(value);
         }
     }
-    fn visit_function_arguments(&mut self, node: FunctionArguments<R>) {
-        self.generic_visit_function_arguments(node)
-    }
-    fn generic_visit_function_arguments(&mut self, node: FunctionArguments<R>) {}
-    fn visit_arg_with_default(&mut self, node: ArgWithDefault<R>) {
-        self.generic_visit_arg_with_default(node)
-    }
-    fn generic_visit_arg_with_default(&mut self, node: ArgWithDefault<R>) {}
 }

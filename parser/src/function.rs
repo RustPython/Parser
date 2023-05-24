@@ -15,28 +15,25 @@ pub(crate) struct ArgumentList {
 }
 
 // Perform validation of function/lambda arguments in a function definition.
-pub(crate) fn validate_arguments(arguments: &ast::FunctionArguments) -> Result<(), LexicalError> {
+pub(crate) fn validate_arguments(arguments: &ast::Arguments) -> Result<(), LexicalError> {
     let mut all_arg_names = FxHashSet::with_hasher(Default::default());
 
-    for (range, arg_name) in arguments
-        .posonlyargs
-        .iter()
-        .chain(arguments.args.iter())
-        .chain(arguments.kwonlyargs.iter())
-        .map(|arg| (arg.def.range, arg.def.arg.as_str()))
-        .chain(
-            arguments
-                .vararg
-                .as_ref()
-                .map(|arg| (arg.range, arg.arg.as_str())),
-        )
-        .chain(
-            arguments
-                .kwarg
-                .as_ref()
-                .map(|arg| (arg.range, arg.arg.as_str())),
-        )
+    let posonlyargs = arguments.posonlyargs.iter();
+    let args = arguments.args.iter();
+    let kwonlyargs = arguments.kwonlyargs.iter();
+
+    let vararg: Option<&ast::Arg> = arguments.vararg.as_deref();
+    let kwarg: Option<&ast::Arg> = arguments.kwarg.as_deref();
+
+    for arg in posonlyargs
+        .chain(args)
+        .chain(kwonlyargs)
+        .map(|arg| &arg.def)
+        .chain(vararg)
+        .chain(kwarg)
     {
+        let range = arg.range;
+        let arg_name = arg.arg.as_str();
         if !all_arg_names.insert(arg_name) {
             return Err(LexicalError {
                 error: LexicalErrorType::DuplicateArgumentError(arg_name.to_string()),
