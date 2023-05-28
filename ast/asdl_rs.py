@@ -31,6 +31,14 @@ BUILTIN_INT_NAMES = {
     "conversion": "ConversionFlag",
 }
 
+RENAME_MAP = {
+    "cmpop": "cmp_op",
+    "unaryop": "unary_op",
+    "boolop": "bool_op",
+    "excepthandler": "except_handler",
+    "withitem": "with_item",
+}
+
 RUST_KEYWORDS = {
     "if",
     "while",
@@ -124,6 +132,7 @@ def rust_type_name(name):
 
     This function special cases the default types provided by asdl.
     """
+    name = RENAME_MAP.get(name, name)
     if name in asdl.builtin_types:
         builtin = BUILTIN_TYPE_NAMES[name]
         return builtin

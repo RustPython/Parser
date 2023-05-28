@@ -9,17 +9,17 @@ pub enum Ast<R = TextRange> {
     Stmt(Stmt<R>),
     Expr(Expr<R>),
     ExprContext(ExprContext),
-    Boolop(Boolop),
+    BoolOp(BoolOp),
     Operator(Operator),
-    Unaryop(Unaryop),
-    Cmpop(Cmpop),
+    UnaryOp(UnaryOp),
+    CmpOp(CmpOp),
     Comprehension(Comprehension<R>),
-    Excepthandler(Excepthandler<R>),
+    ExceptHandler(ExceptHandler<R>),
     Arguments(Arguments<R>),
     Arg(Arg<R>),
     Keyword(Keyword<R>),
     Alias(Alias<R>),
-    Withitem(Withitem<R>),
+    WithItem(WithItem<R>),
     MatchCase(MatchCase<R>),
     Pattern(Pattern<R>),
     TypeIgnore(TypeIgnore<R>),
@@ -53,9 +53,9 @@ impl<R> From<ExprContext> for Ast<R> {
     }
 }
 
-impl<R> From<Boolop> for Ast<R> {
-    fn from(node: Boolop) -> Self {
-        Ast::Boolop(node)
+impl<R> From<BoolOp> for Ast<R> {
+    fn from(node: BoolOp) -> Self {
+        Ast::BoolOp(node)
     }
 }
 
@@ -65,15 +65,15 @@ impl<R> From<Operator> for Ast<R> {
     }
 }
 
-impl<R> From<Unaryop> for Ast<R> {
-    fn from(node: Unaryop) -> Self {
-        Ast::Unaryop(node)
+impl<R> From<UnaryOp> for Ast<R> {
+    fn from(node: UnaryOp) -> Self {
+        Ast::UnaryOp(node)
     }
 }
 
-impl<R> From<Cmpop> for Ast<R> {
-    fn from(node: Cmpop) -> Self {
-        Ast::Cmpop(node)
+impl<R> From<CmpOp> for Ast<R> {
+    fn from(node: CmpOp) -> Self {
+        Ast::CmpOp(node)
     }
 }
 
@@ -83,9 +83,9 @@ impl<R> From<Comprehension<R>> for Ast<R> {
     }
 }
 
-impl<R> From<Excepthandler<R>> for Ast<R> {
-    fn from(node: Excepthandler<R>) -> Self {
-        Ast::Excepthandler(node)
+impl<R> From<ExceptHandler<R>> for Ast<R> {
+    fn from(node: ExceptHandler<R>) -> Self {
+        Ast::ExceptHandler(node)
     }
 }
 
@@ -113,9 +113,9 @@ impl<R> From<Alias<R>> for Ast<R> {
     }
 }
 
-impl<R> From<Withitem<R>> for Ast<R> {
-    fn from(node: Withitem<R>) -> Self {
-        Ast::Withitem(node)
+impl<R> From<WithItem<R>> for Ast<R> {
+    fn from(node: WithItem<R>) -> Self {
+        Ast::WithItem(node)
     }
 }
 
@@ -541,7 +541,7 @@ impl<R> From<StmtIf<R>> for Ast<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtWith<R = TextRange> {
     pub range: R,
-    pub items: Vec<Withitem<R>>,
+    pub items: Vec<WithItem<R>>,
     pub body: Vec<Stmt<R>>,
     pub type_comment: Option<String>,
 }
@@ -564,7 +564,7 @@ impl<R> From<StmtWith<R>> for Ast<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct StmtAsyncWith<R = TextRange> {
     pub range: R,
-    pub items: Vec<Withitem<R>>,
+    pub items: Vec<WithItem<R>>,
     pub body: Vec<Stmt<R>>,
     pub type_comment: Option<String>,
 }
@@ -632,7 +632,7 @@ impl<R> From<StmtRaise<R>> for Ast<R> {
 pub struct StmtTry<R = TextRange> {
     pub range: R,
     pub body: Vec<Stmt<R>>,
-    pub handlers: Vec<Excepthandler<R>>,
+    pub handlers: Vec<ExceptHandler<R>>,
     pub orelse: Vec<Stmt<R>>,
     pub finalbody: Vec<Stmt<R>>,
 }
@@ -656,7 +656,7 @@ impl<R> From<StmtTry<R>> for Ast<R> {
 pub struct StmtTryStar<R = TextRange> {
     pub range: R,
     pub body: Vec<Stmt<R>>,
-    pub handlers: Vec<Excepthandler<R>>,
+    pub handlers: Vec<ExceptHandler<R>>,
     pub orelse: Vec<Stmt<R>>,
     pub finalbody: Vec<Stmt<R>>,
 }
@@ -931,7 +931,7 @@ impl<R> Node for Stmt<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprBoolOp<R = TextRange> {
     pub range: R,
-    pub op: Boolop,
+    pub op: BoolOp,
     pub values: Vec<Expr<R>>,
 }
 
@@ -998,7 +998,7 @@ impl<R> From<ExprBinOp<R>> for Ast<R> {
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExprUnaryOp<R = TextRange> {
     pub range: R,
-    pub op: Unaryop,
+    pub op: UnaryOp,
     pub operand: Box<Expr<R>>,
 }
 
@@ -1261,7 +1261,7 @@ impl<R> From<ExprYieldFrom<R>> for Ast<R> {
 pub struct ExprCompare<R = TextRange> {
     pub range: R,
     pub left: Box<Expr<R>>,
-    pub ops: Vec<Cmpop>,
+    pub ops: Vec<CmpOp>,
     pub comparators: Vec<Expr<R>>,
 }
 
@@ -1693,73 +1693,73 @@ impl Node for ExprContext {
 }
 
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
-pub enum Boolop {
+pub enum BoolOp {
     And,
     Or,
 }
-impl Boolop {
+impl BoolOp {
     #[inline]
-    pub const fn and(&self) -> Option<BoolopAnd> {
+    pub const fn and(&self) -> Option<BoolOpAnd> {
         match self {
-            Boolop::And => Some(BoolopAnd),
+            BoolOp::And => Some(BoolOpAnd),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn or(&self) -> Option<BoolopOr> {
+    pub const fn or(&self) -> Option<BoolOpOr> {
         match self {
-            Boolop::Or => Some(BoolopOr),
+            BoolOp::Or => Some(BoolOpOr),
             _ => None,
         }
     }
 }
 
-pub struct BoolopAnd;
-impl From<BoolopAnd> for Boolop {
-    fn from(_: BoolopAnd) -> Self {
-        Boolop::And
+pub struct BoolOpAnd;
+impl From<BoolOpAnd> for BoolOp {
+    fn from(_: BoolOpAnd) -> Self {
+        BoolOp::And
     }
 }
-impl<R> From<BoolopAnd> for Ast<R> {
-    fn from(_: BoolopAnd) -> Self {
-        Boolop::And.into()
+impl<R> From<BoolOpAnd> for Ast<R> {
+    fn from(_: BoolOpAnd) -> Self {
+        BoolOp::And.into()
     }
 }
-impl Node for BoolopAnd {
+impl Node for BoolOpAnd {
     const NAME: &'static str = "And";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Boolop> for BoolopAnd {
+impl std::cmp::PartialEq<BoolOp> for BoolOpAnd {
     #[inline]
-    fn eq(&self, other: &Boolop) -> bool {
-        matches!(other, Boolop::And)
+    fn eq(&self, other: &BoolOp) -> bool {
+        matches!(other, BoolOp::And)
     }
 }
 
-pub struct BoolopOr;
-impl From<BoolopOr> for Boolop {
-    fn from(_: BoolopOr) -> Self {
-        Boolop::Or
+pub struct BoolOpOr;
+impl From<BoolOpOr> for BoolOp {
+    fn from(_: BoolOpOr) -> Self {
+        BoolOp::Or
     }
 }
-impl<R> From<BoolopOr> for Ast<R> {
-    fn from(_: BoolopOr) -> Self {
-        Boolop::Or.into()
+impl<R> From<BoolOpOr> for Ast<R> {
+    fn from(_: BoolOpOr) -> Self {
+        BoolOp::Or.into()
     }
 }
-impl Node for BoolopOr {
+impl Node for BoolOpOr {
     const NAME: &'static str = "Or";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Boolop> for BoolopOr {
+impl std::cmp::PartialEq<BoolOp> for BoolOpOr {
     #[inline]
-    fn eq(&self, other: &Boolop) -> bool {
-        matches!(other, Boolop::Or)
+    fn eq(&self, other: &BoolOp) -> bool {
+        matches!(other, BoolOp::Or)
     }
 }
 
-impl Node for Boolop {
+impl Node for BoolOp {
     const NAME: &'static str = "boolop";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
@@ -2178,141 +2178,141 @@ impl Node for Operator {
 }
 
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
-pub enum Unaryop {
+pub enum UnaryOp {
     Invert,
     Not,
     UAdd,
     USub,
 }
-impl Unaryop {
+impl UnaryOp {
     #[inline]
-    pub const fn invert(&self) -> Option<UnaryopInvert> {
+    pub const fn invert(&self) -> Option<UnaryOpInvert> {
         match self {
-            Unaryop::Invert => Some(UnaryopInvert),
+            UnaryOp::Invert => Some(UnaryOpInvert),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn not(&self) -> Option<UnaryopNot> {
+    pub const fn not(&self) -> Option<UnaryOpNot> {
         match self {
-            Unaryop::Not => Some(UnaryopNot),
+            UnaryOp::Not => Some(UnaryOpNot),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn u_add(&self) -> Option<UnaryopUAdd> {
+    pub const fn u_add(&self) -> Option<UnaryOpUAdd> {
         match self {
-            Unaryop::UAdd => Some(UnaryopUAdd),
+            UnaryOp::UAdd => Some(UnaryOpUAdd),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn u_sub(&self) -> Option<UnaryopUSub> {
+    pub const fn u_sub(&self) -> Option<UnaryOpUSub> {
         match self {
-            Unaryop::USub => Some(UnaryopUSub),
+            UnaryOp::USub => Some(UnaryOpUSub),
             _ => None,
         }
     }
 }
 
-pub struct UnaryopInvert;
-impl From<UnaryopInvert> for Unaryop {
-    fn from(_: UnaryopInvert) -> Self {
-        Unaryop::Invert
+pub struct UnaryOpInvert;
+impl From<UnaryOpInvert> for UnaryOp {
+    fn from(_: UnaryOpInvert) -> Self {
+        UnaryOp::Invert
     }
 }
-impl<R> From<UnaryopInvert> for Ast<R> {
-    fn from(_: UnaryopInvert) -> Self {
-        Unaryop::Invert.into()
+impl<R> From<UnaryOpInvert> for Ast<R> {
+    fn from(_: UnaryOpInvert) -> Self {
+        UnaryOp::Invert.into()
     }
 }
-impl Node for UnaryopInvert {
+impl Node for UnaryOpInvert {
     const NAME: &'static str = "Invert";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Unaryop> for UnaryopInvert {
+impl std::cmp::PartialEq<UnaryOp> for UnaryOpInvert {
     #[inline]
-    fn eq(&self, other: &Unaryop) -> bool {
-        matches!(other, Unaryop::Invert)
+    fn eq(&self, other: &UnaryOp) -> bool {
+        matches!(other, UnaryOp::Invert)
     }
 }
 
-pub struct UnaryopNot;
-impl From<UnaryopNot> for Unaryop {
-    fn from(_: UnaryopNot) -> Self {
-        Unaryop::Not
+pub struct UnaryOpNot;
+impl From<UnaryOpNot> for UnaryOp {
+    fn from(_: UnaryOpNot) -> Self {
+        UnaryOp::Not
     }
 }
-impl<R> From<UnaryopNot> for Ast<R> {
-    fn from(_: UnaryopNot) -> Self {
-        Unaryop::Not.into()
+impl<R> From<UnaryOpNot> for Ast<R> {
+    fn from(_: UnaryOpNot) -> Self {
+        UnaryOp::Not.into()
     }
 }
-impl Node for UnaryopNot {
+impl Node for UnaryOpNot {
     const NAME: &'static str = "Not";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Unaryop> for UnaryopNot {
+impl std::cmp::PartialEq<UnaryOp> for UnaryOpNot {
     #[inline]
-    fn eq(&self, other: &Unaryop) -> bool {
-        matches!(other, Unaryop::Not)
+    fn eq(&self, other: &UnaryOp) -> bool {
+        matches!(other, UnaryOp::Not)
     }
 }
 
-pub struct UnaryopUAdd;
-impl From<UnaryopUAdd> for Unaryop {
-    fn from(_: UnaryopUAdd) -> Self {
-        Unaryop::UAdd
+pub struct UnaryOpUAdd;
+impl From<UnaryOpUAdd> for UnaryOp {
+    fn from(_: UnaryOpUAdd) -> Self {
+        UnaryOp::UAdd
     }
 }
-impl<R> From<UnaryopUAdd> for Ast<R> {
-    fn from(_: UnaryopUAdd) -> Self {
-        Unaryop::UAdd.into()
+impl<R> From<UnaryOpUAdd> for Ast<R> {
+    fn from(_: UnaryOpUAdd) -> Self {
+        UnaryOp::UAdd.into()
     }
 }
-impl Node for UnaryopUAdd {
+impl Node for UnaryOpUAdd {
     const NAME: &'static str = "UAdd";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Unaryop> for UnaryopUAdd {
+impl std::cmp::PartialEq<UnaryOp> for UnaryOpUAdd {
     #[inline]
-    fn eq(&self, other: &Unaryop) -> bool {
-        matches!(other, Unaryop::UAdd)
+    fn eq(&self, other: &UnaryOp) -> bool {
+        matches!(other, UnaryOp::UAdd)
     }
 }
 
-pub struct UnaryopUSub;
-impl From<UnaryopUSub> for Unaryop {
-    fn from(_: UnaryopUSub) -> Self {
-        Unaryop::USub
+pub struct UnaryOpUSub;
+impl From<UnaryOpUSub> for UnaryOp {
+    fn from(_: UnaryOpUSub) -> Self {
+        UnaryOp::USub
     }
 }
-impl<R> From<UnaryopUSub> for Ast<R> {
-    fn from(_: UnaryopUSub) -> Self {
-        Unaryop::USub.into()
+impl<R> From<UnaryOpUSub> for Ast<R> {
+    fn from(_: UnaryOpUSub) -> Self {
+        UnaryOp::USub.into()
     }
 }
-impl Node for UnaryopUSub {
+impl Node for UnaryOpUSub {
     const NAME: &'static str = "USub";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Unaryop> for UnaryopUSub {
+impl std::cmp::PartialEq<UnaryOp> for UnaryOpUSub {
     #[inline]
-    fn eq(&self, other: &Unaryop) -> bool {
-        matches!(other, Unaryop::USub)
+    fn eq(&self, other: &UnaryOp) -> bool {
+        matches!(other, UnaryOp::USub)
     }
 }
 
-impl Node for Unaryop {
+impl Node for UnaryOp {
     const NAME: &'static str = "unaryop";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
-pub enum Cmpop {
+pub enum CmpOp {
     Eq,
     NotEq,
     Lt,
@@ -2324,309 +2324,309 @@ pub enum Cmpop {
     In,
     NotIn,
 }
-impl Cmpop {
+impl CmpOp {
     #[inline]
-    pub const fn cmpop_eq(&self) -> Option<CmpopEq> {
+    pub const fn cmp_op_eq(&self) -> Option<CmpOpEq> {
         match self {
-            Cmpop::Eq => Some(CmpopEq),
+            CmpOp::Eq => Some(CmpOpEq),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_not_eq(&self) -> Option<CmpopNotEq> {
+    pub const fn cmp_op_not_eq(&self) -> Option<CmpOpNotEq> {
         match self {
-            Cmpop::NotEq => Some(CmpopNotEq),
+            CmpOp::NotEq => Some(CmpOpNotEq),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_lt(&self) -> Option<CmpopLt> {
+    pub const fn cmp_op_lt(&self) -> Option<CmpOpLt> {
         match self {
-            Cmpop::Lt => Some(CmpopLt),
+            CmpOp::Lt => Some(CmpOpLt),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_lt_e(&self) -> Option<CmpopLtE> {
+    pub const fn cmp_op_lt_e(&self) -> Option<CmpOpLtE> {
         match self {
-            Cmpop::LtE => Some(CmpopLtE),
+            CmpOp::LtE => Some(CmpOpLtE),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_gt(&self) -> Option<CmpopGt> {
+    pub const fn cmp_op_gt(&self) -> Option<CmpOpGt> {
         match self {
-            Cmpop::Gt => Some(CmpopGt),
+            CmpOp::Gt => Some(CmpOpGt),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_gt_e(&self) -> Option<CmpopGtE> {
+    pub const fn cmp_op_gt_e(&self) -> Option<CmpOpGtE> {
         match self {
-            Cmpop::GtE => Some(CmpopGtE),
+            CmpOp::GtE => Some(CmpOpGtE),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_is(&self) -> Option<CmpopIs> {
+    pub const fn cmp_op_is(&self) -> Option<CmpOpIs> {
         match self {
-            Cmpop::Is => Some(CmpopIs),
+            CmpOp::Is => Some(CmpOpIs),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_is_not(&self) -> Option<CmpopIsNot> {
+    pub const fn cmp_op_is_not(&self) -> Option<CmpOpIsNot> {
         match self {
-            Cmpop::IsNot => Some(CmpopIsNot),
+            CmpOp::IsNot => Some(CmpOpIsNot),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_in(&self) -> Option<CmpopIn> {
+    pub const fn cmp_op_in(&self) -> Option<CmpOpIn> {
         match self {
-            Cmpop::In => Some(CmpopIn),
+            CmpOp::In => Some(CmpOpIn),
             _ => None,
         }
     }
 
     #[inline]
-    pub const fn cmpop_not_in(&self) -> Option<CmpopNotIn> {
+    pub const fn cmp_op_not_in(&self) -> Option<CmpOpNotIn> {
         match self {
-            Cmpop::NotIn => Some(CmpopNotIn),
+            CmpOp::NotIn => Some(CmpOpNotIn),
             _ => None,
         }
     }
 }
 
-pub struct CmpopEq;
-impl From<CmpopEq> for Cmpop {
-    fn from(_: CmpopEq) -> Self {
-        Cmpop::Eq
+pub struct CmpOpEq;
+impl From<CmpOpEq> for CmpOp {
+    fn from(_: CmpOpEq) -> Self {
+        CmpOp::Eq
     }
 }
-impl<R> From<CmpopEq> for Ast<R> {
-    fn from(_: CmpopEq) -> Self {
-        Cmpop::Eq.into()
+impl<R> From<CmpOpEq> for Ast<R> {
+    fn from(_: CmpOpEq) -> Self {
+        CmpOp::Eq.into()
     }
 }
-impl Node for CmpopEq {
+impl Node for CmpOpEq {
     const NAME: &'static str = "Eq";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopEq {
+impl std::cmp::PartialEq<CmpOp> for CmpOpEq {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::Eq)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::Eq)
     }
 }
 
-pub struct CmpopNotEq;
-impl From<CmpopNotEq> for Cmpop {
-    fn from(_: CmpopNotEq) -> Self {
-        Cmpop::NotEq
+pub struct CmpOpNotEq;
+impl From<CmpOpNotEq> for CmpOp {
+    fn from(_: CmpOpNotEq) -> Self {
+        CmpOp::NotEq
     }
 }
-impl<R> From<CmpopNotEq> for Ast<R> {
-    fn from(_: CmpopNotEq) -> Self {
-        Cmpop::NotEq.into()
+impl<R> From<CmpOpNotEq> for Ast<R> {
+    fn from(_: CmpOpNotEq) -> Self {
+        CmpOp::NotEq.into()
     }
 }
-impl Node for CmpopNotEq {
+impl Node for CmpOpNotEq {
     const NAME: &'static str = "NotEq";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopNotEq {
+impl std::cmp::PartialEq<CmpOp> for CmpOpNotEq {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::NotEq)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::NotEq)
     }
 }
 
-pub struct CmpopLt;
-impl From<CmpopLt> for Cmpop {
-    fn from(_: CmpopLt) -> Self {
-        Cmpop::Lt
+pub struct CmpOpLt;
+impl From<CmpOpLt> for CmpOp {
+    fn from(_: CmpOpLt) -> Self {
+        CmpOp::Lt
     }
 }
-impl<R> From<CmpopLt> for Ast<R> {
-    fn from(_: CmpopLt) -> Self {
-        Cmpop::Lt.into()
+impl<R> From<CmpOpLt> for Ast<R> {
+    fn from(_: CmpOpLt) -> Self {
+        CmpOp::Lt.into()
     }
 }
-impl Node for CmpopLt {
+impl Node for CmpOpLt {
     const NAME: &'static str = "Lt";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopLt {
+impl std::cmp::PartialEq<CmpOp> for CmpOpLt {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::Lt)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::Lt)
     }
 }
 
-pub struct CmpopLtE;
-impl From<CmpopLtE> for Cmpop {
-    fn from(_: CmpopLtE) -> Self {
-        Cmpop::LtE
+pub struct CmpOpLtE;
+impl From<CmpOpLtE> for CmpOp {
+    fn from(_: CmpOpLtE) -> Self {
+        CmpOp::LtE
     }
 }
-impl<R> From<CmpopLtE> for Ast<R> {
-    fn from(_: CmpopLtE) -> Self {
-        Cmpop::LtE.into()
+impl<R> From<CmpOpLtE> for Ast<R> {
+    fn from(_: CmpOpLtE) -> Self {
+        CmpOp::LtE.into()
     }
 }
-impl Node for CmpopLtE {
+impl Node for CmpOpLtE {
     const NAME: &'static str = "LtE";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopLtE {
+impl std::cmp::PartialEq<CmpOp> for CmpOpLtE {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::LtE)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::LtE)
     }
 }
 
-pub struct CmpopGt;
-impl From<CmpopGt> for Cmpop {
-    fn from(_: CmpopGt) -> Self {
-        Cmpop::Gt
+pub struct CmpOpGt;
+impl From<CmpOpGt> for CmpOp {
+    fn from(_: CmpOpGt) -> Self {
+        CmpOp::Gt
     }
 }
-impl<R> From<CmpopGt> for Ast<R> {
-    fn from(_: CmpopGt) -> Self {
-        Cmpop::Gt.into()
+impl<R> From<CmpOpGt> for Ast<R> {
+    fn from(_: CmpOpGt) -> Self {
+        CmpOp::Gt.into()
     }
 }
-impl Node for CmpopGt {
+impl Node for CmpOpGt {
     const NAME: &'static str = "Gt";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopGt {
+impl std::cmp::PartialEq<CmpOp> for CmpOpGt {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::Gt)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::Gt)
     }
 }
 
-pub struct CmpopGtE;
-impl From<CmpopGtE> for Cmpop {
-    fn from(_: CmpopGtE) -> Self {
-        Cmpop::GtE
+pub struct CmpOpGtE;
+impl From<CmpOpGtE> for CmpOp {
+    fn from(_: CmpOpGtE) -> Self {
+        CmpOp::GtE
     }
 }
-impl<R> From<CmpopGtE> for Ast<R> {
-    fn from(_: CmpopGtE) -> Self {
-        Cmpop::GtE.into()
+impl<R> From<CmpOpGtE> for Ast<R> {
+    fn from(_: CmpOpGtE) -> Self {
+        CmpOp::GtE.into()
     }
 }
-impl Node for CmpopGtE {
+impl Node for CmpOpGtE {
     const NAME: &'static str = "GtE";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopGtE {
+impl std::cmp::PartialEq<CmpOp> for CmpOpGtE {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::GtE)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::GtE)
     }
 }
 
-pub struct CmpopIs;
-impl From<CmpopIs> for Cmpop {
-    fn from(_: CmpopIs) -> Self {
-        Cmpop::Is
+pub struct CmpOpIs;
+impl From<CmpOpIs> for CmpOp {
+    fn from(_: CmpOpIs) -> Self {
+        CmpOp::Is
     }
 }
-impl<R> From<CmpopIs> for Ast<R> {
-    fn from(_: CmpopIs) -> Self {
-        Cmpop::Is.into()
+impl<R> From<CmpOpIs> for Ast<R> {
+    fn from(_: CmpOpIs) -> Self {
+        CmpOp::Is.into()
     }
 }
-impl Node for CmpopIs {
+impl Node for CmpOpIs {
     const NAME: &'static str = "Is";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopIs {
+impl std::cmp::PartialEq<CmpOp> for CmpOpIs {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::Is)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::Is)
     }
 }
 
-pub struct CmpopIsNot;
-impl From<CmpopIsNot> for Cmpop {
-    fn from(_: CmpopIsNot) -> Self {
-        Cmpop::IsNot
+pub struct CmpOpIsNot;
+impl From<CmpOpIsNot> for CmpOp {
+    fn from(_: CmpOpIsNot) -> Self {
+        CmpOp::IsNot
     }
 }
-impl<R> From<CmpopIsNot> for Ast<R> {
-    fn from(_: CmpopIsNot) -> Self {
-        Cmpop::IsNot.into()
+impl<R> From<CmpOpIsNot> for Ast<R> {
+    fn from(_: CmpOpIsNot) -> Self {
+        CmpOp::IsNot.into()
     }
 }
-impl Node for CmpopIsNot {
+impl Node for CmpOpIsNot {
     const NAME: &'static str = "IsNot";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopIsNot {
+impl std::cmp::PartialEq<CmpOp> for CmpOpIsNot {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::IsNot)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::IsNot)
     }
 }
 
-pub struct CmpopIn;
-impl From<CmpopIn> for Cmpop {
-    fn from(_: CmpopIn) -> Self {
-        Cmpop::In
+pub struct CmpOpIn;
+impl From<CmpOpIn> for CmpOp {
+    fn from(_: CmpOpIn) -> Self {
+        CmpOp::In
     }
 }
-impl<R> From<CmpopIn> for Ast<R> {
-    fn from(_: CmpopIn) -> Self {
-        Cmpop::In.into()
+impl<R> From<CmpOpIn> for Ast<R> {
+    fn from(_: CmpOpIn) -> Self {
+        CmpOp::In.into()
     }
 }
-impl Node for CmpopIn {
+impl Node for CmpOpIn {
     const NAME: &'static str = "In";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopIn {
+impl std::cmp::PartialEq<CmpOp> for CmpOpIn {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::In)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::In)
     }
 }
 
-pub struct CmpopNotIn;
-impl From<CmpopNotIn> for Cmpop {
-    fn from(_: CmpopNotIn) -> Self {
-        Cmpop::NotIn
+pub struct CmpOpNotIn;
+impl From<CmpOpNotIn> for CmpOp {
+    fn from(_: CmpOpNotIn) -> Self {
+        CmpOp::NotIn
     }
 }
-impl<R> From<CmpopNotIn> for Ast<R> {
-    fn from(_: CmpopNotIn) -> Self {
-        Cmpop::NotIn.into()
+impl<R> From<CmpOpNotIn> for Ast<R> {
+    fn from(_: CmpOpNotIn) -> Self {
+        CmpOp::NotIn.into()
     }
 }
-impl Node for CmpopNotIn {
+impl Node for CmpOpNotIn {
     const NAME: &'static str = "NotIn";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
-impl std::cmp::PartialEq<Cmpop> for CmpopNotIn {
+impl std::cmp::PartialEq<CmpOp> for CmpOpNotIn {
     #[inline]
-    fn eq(&self, other: &Cmpop) -> bool {
-        matches!(other, Cmpop::NotIn)
+    fn eq(&self, other: &CmpOp) -> bool {
+        matches!(other, CmpOp::NotIn)
     }
 }
 
-impl Node for Cmpop {
+impl Node for CmpOp {
     const NAME: &'static str = "cmpop";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
@@ -2646,34 +2646,34 @@ impl<R> Node for Comprehension<R> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct ExcepthandlerExceptHandler<R = TextRange> {
+pub struct ExceptHandlerExceptHandler<R = TextRange> {
     pub range: R,
     pub type_: Option<Box<Expr<R>>>,
     pub name: Option<Identifier>,
     pub body: Vec<Stmt<R>>,
 }
 
-impl<R> Node for ExcepthandlerExceptHandler<R> {
+impl<R> Node for ExceptHandlerExceptHandler<R> {
     const NAME: &'static str = "ExceptHandler";
     const FIELD_NAMES: &'static [&'static str] = &["type", "name", "body"];
 }
-impl<R> From<ExcepthandlerExceptHandler<R>> for Excepthandler<R> {
-    fn from(payload: ExcepthandlerExceptHandler<R>) -> Self {
-        Excepthandler::ExceptHandler(payload)
+impl<R> From<ExceptHandlerExceptHandler<R>> for ExceptHandler<R> {
+    fn from(payload: ExceptHandlerExceptHandler<R>) -> Self {
+        ExceptHandler::ExceptHandler(payload)
     }
 }
-impl<R> From<ExcepthandlerExceptHandler<R>> for Ast<R> {
-    fn from(payload: ExcepthandlerExceptHandler<R>) -> Self {
-        Excepthandler::from(payload).into()
+impl<R> From<ExceptHandlerExceptHandler<R>> for Ast<R> {
+    fn from(payload: ExceptHandlerExceptHandler<R>) -> Self {
+        ExceptHandler::from(payload).into()
     }
 }
 
 #[derive(Clone, Debug, PartialEq, is_macro::Is)]
-pub enum Excepthandler<R = TextRange> {
-    ExceptHandler(ExcepthandlerExceptHandler<R>),
+pub enum ExceptHandler<R = TextRange> {
+    ExceptHandler(ExceptHandlerExceptHandler<R>),
 }
 
-impl<R> Node for Excepthandler<R> {
+impl<R> Node for ExceptHandler<R> {
     const NAME: &'static str = "excepthandler";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
@@ -2741,13 +2741,13 @@ impl<R> Node for Alias<R> {
 }
 
 #[derive(Clone, Debug, PartialEq)]
-pub struct Withitem<R = TextRange> {
+pub struct WithItem<R = TextRange> {
     pub range: OptionalRange<R>,
     pub context_expr: Expr<R>,
     pub optional_vars: Option<Box<Expr<R>>>,
 }
 
-impl<R> Node for Withitem<R> {
+impl<R> Node for WithItem<R> {
     const NAME: &'static str = "withitem";
     const FIELD_NAMES: &'static [&'static str] = &["context_expr", "optional_vars"];
 }
