@@ -137,6 +137,16 @@ impl<R> From<TypeIgnore<R>> for Ast<R> {
     }
 }
 
+/// See also [mod](https://docs.python.org/3/library/ast.html#ast.mod)
+#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+pub enum Mod<R = TextRange> {
+    Module(ModModule<R>),
+    Interactive(ModInteractive<R>),
+    Expression(ModExpression<R>),
+    FunctionType(ModFunctionType<R>),
+}
+
+/// See also [Module](https://docs.python.org/3/library/ast.html#ast.Module)
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModModule<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -159,6 +169,7 @@ impl<R> From<ModModule<R>> for Ast<R> {
     }
 }
 
+/// See also [Interactive](https://docs.python.org/3/library/ast.html#ast.Interactive)
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModInteractive<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -180,6 +191,7 @@ impl<R> From<ModInteractive<R>> for Ast<R> {
     }
 }
 
+/// See also [Expression](https://docs.python.org/3/library/ast.html#ast.Expression)
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModExpression<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -201,6 +213,7 @@ impl<R> From<ModExpression<R>> for Ast<R> {
     }
 }
 
+/// See also [FunctionType](https://docs.python.org/3/library/ast.html#ast.FunctionType)
 #[derive(Clone, Debug, PartialEq)]
 pub struct ModFunctionType<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -223,648 +236,12 @@ impl<R> From<ModFunctionType<R>> for Ast<R> {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
-pub enum Mod<R = TextRange> {
-    Module(ModModule<R>),
-    Interactive(ModInteractive<R>),
-    Expression(ModExpression<R>),
-    FunctionType(ModFunctionType<R>),
-}
-
 impl<R> Node for Mod<R> {
     const NAME: &'static str = "mod";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtFunctionDef<R = TextRange> {
-    pub range: R,
-    pub name: Identifier,
-    pub args: Box<Arguments<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub decorator_list: Vec<Expr<R>>,
-    pub returns: Option<Box<Expr<R>>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtFunctionDef<R> {
-    const NAME: &'static str = "FunctionDef";
-    const FIELD_NAMES: &'static [&'static str] = &[
-        "name",
-        "args",
-        "body",
-        "decorator_list",
-        "returns",
-        "type_comment",
-    ];
-}
-impl<R> From<StmtFunctionDef<R>> for Stmt<R> {
-    fn from(payload: StmtFunctionDef<R>) -> Self {
-        Stmt::FunctionDef(payload)
-    }
-}
-impl<R> From<StmtFunctionDef<R>> for Ast<R> {
-    fn from(payload: StmtFunctionDef<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAsyncFunctionDef<R = TextRange> {
-    pub range: R,
-    pub name: Identifier,
-    pub args: Box<Arguments<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub decorator_list: Vec<Expr<R>>,
-    pub returns: Option<Box<Expr<R>>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtAsyncFunctionDef<R> {
-    const NAME: &'static str = "AsyncFunctionDef";
-    const FIELD_NAMES: &'static [&'static str] = &[
-        "name",
-        "args",
-        "body",
-        "decorator_list",
-        "returns",
-        "type_comment",
-    ];
-}
-impl<R> From<StmtAsyncFunctionDef<R>> for Stmt<R> {
-    fn from(payload: StmtAsyncFunctionDef<R>) -> Self {
-        Stmt::AsyncFunctionDef(payload)
-    }
-}
-impl<R> From<StmtAsyncFunctionDef<R>> for Ast<R> {
-    fn from(payload: StmtAsyncFunctionDef<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtClassDef<R = TextRange> {
-    pub range: R,
-    pub name: Identifier,
-    pub bases: Vec<Expr<R>>,
-    pub keywords: Vec<Keyword<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub decorator_list: Vec<Expr<R>>,
-}
-
-impl<R> Node for StmtClassDef<R> {
-    const NAME: &'static str = "ClassDef";
-    const FIELD_NAMES: &'static [&'static str] =
-        &["name", "bases", "keywords", "body", "decorator_list"];
-}
-impl<R> From<StmtClassDef<R>> for Stmt<R> {
-    fn from(payload: StmtClassDef<R>) -> Self {
-        Stmt::ClassDef(payload)
-    }
-}
-impl<R> From<StmtClassDef<R>> for Ast<R> {
-    fn from(payload: StmtClassDef<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtReturn<R = TextRange> {
-    pub range: R,
-    pub value: Option<Box<Expr<R>>>,
-}
-
-impl<R> Node for StmtReturn<R> {
-    const NAME: &'static str = "Return";
-    const FIELD_NAMES: &'static [&'static str] = &["value"];
-}
-impl<R> From<StmtReturn<R>> for Stmt<R> {
-    fn from(payload: StmtReturn<R>) -> Self {
-        Stmt::Return(payload)
-    }
-}
-impl<R> From<StmtReturn<R>> for Ast<R> {
-    fn from(payload: StmtReturn<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtDelete<R = TextRange> {
-    pub range: R,
-    pub targets: Vec<Expr<R>>,
-}
-
-impl<R> Node for StmtDelete<R> {
-    const NAME: &'static str = "Delete";
-    const FIELD_NAMES: &'static [&'static str] = &["targets"];
-}
-impl<R> From<StmtDelete<R>> for Stmt<R> {
-    fn from(payload: StmtDelete<R>) -> Self {
-        Stmt::Delete(payload)
-    }
-}
-impl<R> From<StmtDelete<R>> for Ast<R> {
-    fn from(payload: StmtDelete<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAssign<R = TextRange> {
-    pub range: R,
-    pub targets: Vec<Expr<R>>,
-    pub value: Box<Expr<R>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtAssign<R> {
-    const NAME: &'static str = "Assign";
-    const FIELD_NAMES: &'static [&'static str] = &["targets", "value", "type_comment"];
-}
-impl<R> From<StmtAssign<R>> for Stmt<R> {
-    fn from(payload: StmtAssign<R>) -> Self {
-        Stmt::Assign(payload)
-    }
-}
-impl<R> From<StmtAssign<R>> for Ast<R> {
-    fn from(payload: StmtAssign<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAugAssign<R = TextRange> {
-    pub range: R,
-    pub target: Box<Expr<R>>,
-    pub op: Operator,
-    pub value: Box<Expr<R>>,
-}
-
-impl<R> Node for StmtAugAssign<R> {
-    const NAME: &'static str = "AugAssign";
-    const FIELD_NAMES: &'static [&'static str] = &["target", "op", "value"];
-}
-impl<R> From<StmtAugAssign<R>> for Stmt<R> {
-    fn from(payload: StmtAugAssign<R>) -> Self {
-        Stmt::AugAssign(payload)
-    }
-}
-impl<R> From<StmtAugAssign<R>> for Ast<R> {
-    fn from(payload: StmtAugAssign<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAnnAssign<R = TextRange> {
-    pub range: R,
-    pub target: Box<Expr<R>>,
-    pub annotation: Box<Expr<R>>,
-    pub value: Option<Box<Expr<R>>>,
-    pub simple: bool,
-}
-
-impl<R> Node for StmtAnnAssign<R> {
-    const NAME: &'static str = "AnnAssign";
-    const FIELD_NAMES: &'static [&'static str] = &["target", "annotation", "value", "simple"];
-}
-impl<R> From<StmtAnnAssign<R>> for Stmt<R> {
-    fn from(payload: StmtAnnAssign<R>) -> Self {
-        Stmt::AnnAssign(payload)
-    }
-}
-impl<R> From<StmtAnnAssign<R>> for Ast<R> {
-    fn from(payload: StmtAnnAssign<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtFor<R = TextRange> {
-    pub range: R,
-    pub target: Box<Expr<R>>,
-    pub iter: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtFor<R> {
-    const NAME: &'static str = "For";
-    const FIELD_NAMES: &'static [&'static str] =
-        &["target", "iter", "body", "orelse", "type_comment"];
-}
-impl<R> From<StmtFor<R>> for Stmt<R> {
-    fn from(payload: StmtFor<R>) -> Self {
-        Stmt::For(payload)
-    }
-}
-impl<R> From<StmtFor<R>> for Ast<R> {
-    fn from(payload: StmtFor<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAsyncFor<R = TextRange> {
-    pub range: R,
-    pub target: Box<Expr<R>>,
-    pub iter: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtAsyncFor<R> {
-    const NAME: &'static str = "AsyncFor";
-    const FIELD_NAMES: &'static [&'static str] =
-        &["target", "iter", "body", "orelse", "type_comment"];
-}
-impl<R> From<StmtAsyncFor<R>> for Stmt<R> {
-    fn from(payload: StmtAsyncFor<R>) -> Self {
-        Stmt::AsyncFor(payload)
-    }
-}
-impl<R> From<StmtAsyncFor<R>> for Ast<R> {
-    fn from(payload: StmtAsyncFor<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtWhile<R = TextRange> {
-    pub range: R,
-    pub test: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
-}
-
-impl<R> Node for StmtWhile<R> {
-    const NAME: &'static str = "While";
-    const FIELD_NAMES: &'static [&'static str] = &["test", "body", "orelse"];
-}
-impl<R> From<StmtWhile<R>> for Stmt<R> {
-    fn from(payload: StmtWhile<R>) -> Self {
-        Stmt::While(payload)
-    }
-}
-impl<R> From<StmtWhile<R>> for Ast<R> {
-    fn from(payload: StmtWhile<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtIf<R = TextRange> {
-    pub range: R,
-    pub test: Box<Expr<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub orelse: Vec<Stmt<R>>,
-}
-
-impl<R> Node for StmtIf<R> {
-    const NAME: &'static str = "If";
-    const FIELD_NAMES: &'static [&'static str] = &["test", "body", "orelse"];
-}
-impl<R> From<StmtIf<R>> for Stmt<R> {
-    fn from(payload: StmtIf<R>) -> Self {
-        Stmt::If(payload)
-    }
-}
-impl<R> From<StmtIf<R>> for Ast<R> {
-    fn from(payload: StmtIf<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtWith<R = TextRange> {
-    pub range: R,
-    pub items: Vec<WithItem<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtWith<R> {
-    const NAME: &'static str = "With";
-    const FIELD_NAMES: &'static [&'static str] = &["items", "body", "type_comment"];
-}
-impl<R> From<StmtWith<R>> for Stmt<R> {
-    fn from(payload: StmtWith<R>) -> Self {
-        Stmt::With(payload)
-    }
-}
-impl<R> From<StmtWith<R>> for Ast<R> {
-    fn from(payload: StmtWith<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAsyncWith<R = TextRange> {
-    pub range: R,
-    pub items: Vec<WithItem<R>>,
-    pub body: Vec<Stmt<R>>,
-    pub type_comment: Option<String>,
-}
-
-impl<R> Node for StmtAsyncWith<R> {
-    const NAME: &'static str = "AsyncWith";
-    const FIELD_NAMES: &'static [&'static str] = &["items", "body", "type_comment"];
-}
-impl<R> From<StmtAsyncWith<R>> for Stmt<R> {
-    fn from(payload: StmtAsyncWith<R>) -> Self {
-        Stmt::AsyncWith(payload)
-    }
-}
-impl<R> From<StmtAsyncWith<R>> for Ast<R> {
-    fn from(payload: StmtAsyncWith<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtMatch<R = TextRange> {
-    pub range: R,
-    pub subject: Box<Expr<R>>,
-    pub cases: Vec<MatchCase<R>>,
-}
-
-impl<R> Node for StmtMatch<R> {
-    const NAME: &'static str = "Match";
-    const FIELD_NAMES: &'static [&'static str] = &["subject", "cases"];
-}
-impl<R> From<StmtMatch<R>> for Stmt<R> {
-    fn from(payload: StmtMatch<R>) -> Self {
-        Stmt::Match(payload)
-    }
-}
-impl<R> From<StmtMatch<R>> for Ast<R> {
-    fn from(payload: StmtMatch<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtRaise<R = TextRange> {
-    pub range: R,
-    pub exc: Option<Box<Expr<R>>>,
-    pub cause: Option<Box<Expr<R>>>,
-}
-
-impl<R> Node for StmtRaise<R> {
-    const NAME: &'static str = "Raise";
-    const FIELD_NAMES: &'static [&'static str] = &["exc", "cause"];
-}
-impl<R> From<StmtRaise<R>> for Stmt<R> {
-    fn from(payload: StmtRaise<R>) -> Self {
-        Stmt::Raise(payload)
-    }
-}
-impl<R> From<StmtRaise<R>> for Ast<R> {
-    fn from(payload: StmtRaise<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtTry<R = TextRange> {
-    pub range: R,
-    pub body: Vec<Stmt<R>>,
-    pub handlers: Vec<ExceptHandler<R>>,
-    pub orelse: Vec<Stmt<R>>,
-    pub finalbody: Vec<Stmt<R>>,
-}
-
-impl<R> Node for StmtTry<R> {
-    const NAME: &'static str = "Try";
-    const FIELD_NAMES: &'static [&'static str] = &["body", "handlers", "orelse", "finalbody"];
-}
-impl<R> From<StmtTry<R>> for Stmt<R> {
-    fn from(payload: StmtTry<R>) -> Self {
-        Stmt::Try(payload)
-    }
-}
-impl<R> From<StmtTry<R>> for Ast<R> {
-    fn from(payload: StmtTry<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtTryStar<R = TextRange> {
-    pub range: R,
-    pub body: Vec<Stmt<R>>,
-    pub handlers: Vec<ExceptHandler<R>>,
-    pub orelse: Vec<Stmt<R>>,
-    pub finalbody: Vec<Stmt<R>>,
-}
-
-impl<R> Node for StmtTryStar<R> {
-    const NAME: &'static str = "TryStar";
-    const FIELD_NAMES: &'static [&'static str] = &["body", "handlers", "orelse", "finalbody"];
-}
-impl<R> From<StmtTryStar<R>> for Stmt<R> {
-    fn from(payload: StmtTryStar<R>) -> Self {
-        Stmt::TryStar(payload)
-    }
-}
-impl<R> From<StmtTryStar<R>> for Ast<R> {
-    fn from(payload: StmtTryStar<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtAssert<R = TextRange> {
-    pub range: R,
-    pub test: Box<Expr<R>>,
-    pub msg: Option<Box<Expr<R>>>,
-}
-
-impl<R> Node for StmtAssert<R> {
-    const NAME: &'static str = "Assert";
-    const FIELD_NAMES: &'static [&'static str] = &["test", "msg"];
-}
-impl<R> From<StmtAssert<R>> for Stmt<R> {
-    fn from(payload: StmtAssert<R>) -> Self {
-        Stmt::Assert(payload)
-    }
-}
-impl<R> From<StmtAssert<R>> for Ast<R> {
-    fn from(payload: StmtAssert<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtImport<R = TextRange> {
-    pub range: R,
-    pub names: Vec<Alias<R>>,
-}
-
-impl<R> Node for StmtImport<R> {
-    const NAME: &'static str = "Import";
-    const FIELD_NAMES: &'static [&'static str] = &["names"];
-}
-impl<R> From<StmtImport<R>> for Stmt<R> {
-    fn from(payload: StmtImport<R>) -> Self {
-        Stmt::Import(payload)
-    }
-}
-impl<R> From<StmtImport<R>> for Ast<R> {
-    fn from(payload: StmtImport<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtImportFrom<R = TextRange> {
-    pub range: R,
-    pub module: Option<Identifier>,
-    pub names: Vec<Alias<R>>,
-    pub level: Option<Int>,
-}
-
-impl<R> Node for StmtImportFrom<R> {
-    const NAME: &'static str = "ImportFrom";
-    const FIELD_NAMES: &'static [&'static str] = &["module", "names", "level"];
-}
-impl<R> From<StmtImportFrom<R>> for Stmt<R> {
-    fn from(payload: StmtImportFrom<R>) -> Self {
-        Stmt::ImportFrom(payload)
-    }
-}
-impl<R> From<StmtImportFrom<R>> for Ast<R> {
-    fn from(payload: StmtImportFrom<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtGlobal<R = TextRange> {
-    pub range: R,
-    pub names: Vec<Identifier>,
-}
-
-impl<R> Node for StmtGlobal<R> {
-    const NAME: &'static str = "Global";
-    const FIELD_NAMES: &'static [&'static str] = &["names"];
-}
-impl<R> From<StmtGlobal<R>> for Stmt<R> {
-    fn from(payload: StmtGlobal<R>) -> Self {
-        Stmt::Global(payload)
-    }
-}
-impl<R> From<StmtGlobal<R>> for Ast<R> {
-    fn from(payload: StmtGlobal<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtNonlocal<R = TextRange> {
-    pub range: R,
-    pub names: Vec<Identifier>,
-}
-
-impl<R> Node for StmtNonlocal<R> {
-    const NAME: &'static str = "Nonlocal";
-    const FIELD_NAMES: &'static [&'static str] = &["names"];
-}
-impl<R> From<StmtNonlocal<R>> for Stmt<R> {
-    fn from(payload: StmtNonlocal<R>) -> Self {
-        Stmt::Nonlocal(payload)
-    }
-}
-impl<R> From<StmtNonlocal<R>> for Ast<R> {
-    fn from(payload: StmtNonlocal<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtExpr<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-}
-
-impl<R> Node for StmtExpr<R> {
-    const NAME: &'static str = "Expr";
-    const FIELD_NAMES: &'static [&'static str] = &["value"];
-}
-impl<R> From<StmtExpr<R>> for Stmt<R> {
-    fn from(payload: StmtExpr<R>) -> Self {
-        Stmt::Expr(payload)
-    }
-}
-impl<R> From<StmtExpr<R>> for Ast<R> {
-    fn from(payload: StmtExpr<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtPass<R = TextRange> {
-    pub range: R,
-}
-
-impl<R> Node for StmtPass<R> {
-    const NAME: &'static str = "Pass";
-    const FIELD_NAMES: &'static [&'static str] = &[];
-}
-impl<R> From<StmtPass<R>> for Stmt<R> {
-    fn from(payload: StmtPass<R>) -> Self {
-        Stmt::Pass(payload)
-    }
-}
-impl<R> From<StmtPass<R>> for Ast<R> {
-    fn from(payload: StmtPass<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtBreak<R = TextRange> {
-    pub range: R,
-}
-
-impl<R> Node for StmtBreak<R> {
-    const NAME: &'static str = "Break";
-    const FIELD_NAMES: &'static [&'static str] = &[];
-}
-impl<R> From<StmtBreak<R>> for Stmt<R> {
-    fn from(payload: StmtBreak<R>) -> Self {
-        Stmt::Break(payload)
-    }
-}
-impl<R> From<StmtBreak<R>> for Ast<R> {
-    fn from(payload: StmtBreak<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct StmtContinue<R = TextRange> {
-    pub range: R,
-}
-
-impl<R> Node for StmtContinue<R> {
-    const NAME: &'static str = "Continue";
-    const FIELD_NAMES: &'static [&'static str] = &[];
-}
-impl<R> From<StmtContinue<R>> for Stmt<R> {
-    fn from(payload: StmtContinue<R>) -> Self {
-        Stmt::Continue(payload)
-    }
-}
-impl<R> From<StmtContinue<R>> for Ast<R> {
-    fn from(payload: StmtContinue<R>) -> Self {
-        Stmt::from(payload).into()
-    }
-}
-
+/// See also [stmt](https://docs.python.org/3/library/ast.html#ast.stmt)
 #[derive(Clone, Debug, PartialEq, is_macro::Is)]
 pub enum Stmt<R = TextRange> {
     #[is(name = "function_def_stmt")]
@@ -923,609 +300,668 @@ pub enum Stmt<R = TextRange> {
     Continue(StmtContinue<R>),
 }
 
+/// See also [FunctionDef](https://docs.python.org/3/library/ast.html#ast.FunctionDef)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtFunctionDef<R = TextRange> {
+    pub range: R,
+    pub name: Identifier,
+    pub args: Box<Arguments<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub decorator_list: Vec<Expr<R>>,
+    pub returns: Option<Box<Expr<R>>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtFunctionDef<R> {
+    const NAME: &'static str = "FunctionDef";
+    const FIELD_NAMES: &'static [&'static str] = &[
+        "name",
+        "args",
+        "body",
+        "decorator_list",
+        "returns",
+        "type_comment",
+    ];
+}
+impl<R> From<StmtFunctionDef<R>> for Stmt<R> {
+    fn from(payload: StmtFunctionDef<R>) -> Self {
+        Stmt::FunctionDef(payload)
+    }
+}
+impl<R> From<StmtFunctionDef<R>> for Ast<R> {
+    fn from(payload: StmtFunctionDef<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [AsyncFunctionDef](https://docs.python.org/3/library/ast.html#ast.AsyncFunctionDef)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAsyncFunctionDef<R = TextRange> {
+    pub range: R,
+    pub name: Identifier,
+    pub args: Box<Arguments<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub decorator_list: Vec<Expr<R>>,
+    pub returns: Option<Box<Expr<R>>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtAsyncFunctionDef<R> {
+    const NAME: &'static str = "AsyncFunctionDef";
+    const FIELD_NAMES: &'static [&'static str] = &[
+        "name",
+        "args",
+        "body",
+        "decorator_list",
+        "returns",
+        "type_comment",
+    ];
+}
+impl<R> From<StmtAsyncFunctionDef<R>> for Stmt<R> {
+    fn from(payload: StmtAsyncFunctionDef<R>) -> Self {
+        Stmt::AsyncFunctionDef(payload)
+    }
+}
+impl<R> From<StmtAsyncFunctionDef<R>> for Ast<R> {
+    fn from(payload: StmtAsyncFunctionDef<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [ClassDef](https://docs.python.org/3/library/ast.html#ast.ClassDef)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtClassDef<R = TextRange> {
+    pub range: R,
+    pub name: Identifier,
+    pub bases: Vec<Expr<R>>,
+    pub keywords: Vec<Keyword<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub decorator_list: Vec<Expr<R>>,
+}
+
+impl<R> Node for StmtClassDef<R> {
+    const NAME: &'static str = "ClassDef";
+    const FIELD_NAMES: &'static [&'static str] =
+        &["name", "bases", "keywords", "body", "decorator_list"];
+}
+impl<R> From<StmtClassDef<R>> for Stmt<R> {
+    fn from(payload: StmtClassDef<R>) -> Self {
+        Stmt::ClassDef(payload)
+    }
+}
+impl<R> From<StmtClassDef<R>> for Ast<R> {
+    fn from(payload: StmtClassDef<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Return](https://docs.python.org/3/library/ast.html#ast.Return)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtReturn<R = TextRange> {
+    pub range: R,
+    pub value: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for StmtReturn<R> {
+    const NAME: &'static str = "Return";
+    const FIELD_NAMES: &'static [&'static str] = &["value"];
+}
+impl<R> From<StmtReturn<R>> for Stmt<R> {
+    fn from(payload: StmtReturn<R>) -> Self {
+        Stmt::Return(payload)
+    }
+}
+impl<R> From<StmtReturn<R>> for Ast<R> {
+    fn from(payload: StmtReturn<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Delete](https://docs.python.org/3/library/ast.html#ast.Delete)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtDelete<R = TextRange> {
+    pub range: R,
+    pub targets: Vec<Expr<R>>,
+}
+
+impl<R> Node for StmtDelete<R> {
+    const NAME: &'static str = "Delete";
+    const FIELD_NAMES: &'static [&'static str] = &["targets"];
+}
+impl<R> From<StmtDelete<R>> for Stmt<R> {
+    fn from(payload: StmtDelete<R>) -> Self {
+        Stmt::Delete(payload)
+    }
+}
+impl<R> From<StmtDelete<R>> for Ast<R> {
+    fn from(payload: StmtDelete<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Assign](https://docs.python.org/3/library/ast.html#ast.Assign)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAssign<R = TextRange> {
+    pub range: R,
+    pub targets: Vec<Expr<R>>,
+    pub value: Box<Expr<R>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtAssign<R> {
+    const NAME: &'static str = "Assign";
+    const FIELD_NAMES: &'static [&'static str] = &["targets", "value", "type_comment"];
+}
+impl<R> From<StmtAssign<R>> for Stmt<R> {
+    fn from(payload: StmtAssign<R>) -> Self {
+        Stmt::Assign(payload)
+    }
+}
+impl<R> From<StmtAssign<R>> for Ast<R> {
+    fn from(payload: StmtAssign<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [AugAssign](https://docs.python.org/3/library/ast.html#ast.AugAssign)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAugAssign<R = TextRange> {
+    pub range: R,
+    pub target: Box<Expr<R>>,
+    pub op: Operator,
+    pub value: Box<Expr<R>>,
+}
+
+impl<R> Node for StmtAugAssign<R> {
+    const NAME: &'static str = "AugAssign";
+    const FIELD_NAMES: &'static [&'static str] = &["target", "op", "value"];
+}
+impl<R> From<StmtAugAssign<R>> for Stmt<R> {
+    fn from(payload: StmtAugAssign<R>) -> Self {
+        Stmt::AugAssign(payload)
+    }
+}
+impl<R> From<StmtAugAssign<R>> for Ast<R> {
+    fn from(payload: StmtAugAssign<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [AnnAssign](https://docs.python.org/3/library/ast.html#ast.AnnAssign)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAnnAssign<R = TextRange> {
+    pub range: R,
+    pub target: Box<Expr<R>>,
+    pub annotation: Box<Expr<R>>,
+    pub value: Option<Box<Expr<R>>>,
+    pub simple: bool,
+}
+
+impl<R> Node for StmtAnnAssign<R> {
+    const NAME: &'static str = "AnnAssign";
+    const FIELD_NAMES: &'static [&'static str] = &["target", "annotation", "value", "simple"];
+}
+impl<R> From<StmtAnnAssign<R>> for Stmt<R> {
+    fn from(payload: StmtAnnAssign<R>) -> Self {
+        Stmt::AnnAssign(payload)
+    }
+}
+impl<R> From<StmtAnnAssign<R>> for Ast<R> {
+    fn from(payload: StmtAnnAssign<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [For](https://docs.python.org/3/library/ast.html#ast.For)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtFor<R = TextRange> {
+    pub range: R,
+    pub target: Box<Expr<R>>,
+    pub iter: Box<Expr<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub orelse: Vec<Stmt<R>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtFor<R> {
+    const NAME: &'static str = "For";
+    const FIELD_NAMES: &'static [&'static str] =
+        &["target", "iter", "body", "orelse", "type_comment"];
+}
+impl<R> From<StmtFor<R>> for Stmt<R> {
+    fn from(payload: StmtFor<R>) -> Self {
+        Stmt::For(payload)
+    }
+}
+impl<R> From<StmtFor<R>> for Ast<R> {
+    fn from(payload: StmtFor<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [AsyncFor](https://docs.python.org/3/library/ast.html#ast.AsyncFor)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAsyncFor<R = TextRange> {
+    pub range: R,
+    pub target: Box<Expr<R>>,
+    pub iter: Box<Expr<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub orelse: Vec<Stmt<R>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtAsyncFor<R> {
+    const NAME: &'static str = "AsyncFor";
+    const FIELD_NAMES: &'static [&'static str] =
+        &["target", "iter", "body", "orelse", "type_comment"];
+}
+impl<R> From<StmtAsyncFor<R>> for Stmt<R> {
+    fn from(payload: StmtAsyncFor<R>) -> Self {
+        Stmt::AsyncFor(payload)
+    }
+}
+impl<R> From<StmtAsyncFor<R>> for Ast<R> {
+    fn from(payload: StmtAsyncFor<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [While](https://docs.python.org/3/library/ast.html#ast.While)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtWhile<R = TextRange> {
+    pub range: R,
+    pub test: Box<Expr<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub orelse: Vec<Stmt<R>>,
+}
+
+impl<R> Node for StmtWhile<R> {
+    const NAME: &'static str = "While";
+    const FIELD_NAMES: &'static [&'static str] = &["test", "body", "orelse"];
+}
+impl<R> From<StmtWhile<R>> for Stmt<R> {
+    fn from(payload: StmtWhile<R>) -> Self {
+        Stmt::While(payload)
+    }
+}
+impl<R> From<StmtWhile<R>> for Ast<R> {
+    fn from(payload: StmtWhile<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [If](https://docs.python.org/3/library/ast.html#ast.If)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtIf<R = TextRange> {
+    pub range: R,
+    pub test: Box<Expr<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub orelse: Vec<Stmt<R>>,
+}
+
+impl<R> Node for StmtIf<R> {
+    const NAME: &'static str = "If";
+    const FIELD_NAMES: &'static [&'static str] = &["test", "body", "orelse"];
+}
+impl<R> From<StmtIf<R>> for Stmt<R> {
+    fn from(payload: StmtIf<R>) -> Self {
+        Stmt::If(payload)
+    }
+}
+impl<R> From<StmtIf<R>> for Ast<R> {
+    fn from(payload: StmtIf<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [With](https://docs.python.org/3/library/ast.html#ast.With)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtWith<R = TextRange> {
+    pub range: R,
+    pub items: Vec<WithItem<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtWith<R> {
+    const NAME: &'static str = "With";
+    const FIELD_NAMES: &'static [&'static str] = &["items", "body", "type_comment"];
+}
+impl<R> From<StmtWith<R>> for Stmt<R> {
+    fn from(payload: StmtWith<R>) -> Self {
+        Stmt::With(payload)
+    }
+}
+impl<R> From<StmtWith<R>> for Ast<R> {
+    fn from(payload: StmtWith<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [AsyncWith](https://docs.python.org/3/library/ast.html#ast.AsyncWith)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAsyncWith<R = TextRange> {
+    pub range: R,
+    pub items: Vec<WithItem<R>>,
+    pub body: Vec<Stmt<R>>,
+    pub type_comment: Option<String>,
+}
+
+impl<R> Node for StmtAsyncWith<R> {
+    const NAME: &'static str = "AsyncWith";
+    const FIELD_NAMES: &'static [&'static str] = &["items", "body", "type_comment"];
+}
+impl<R> From<StmtAsyncWith<R>> for Stmt<R> {
+    fn from(payload: StmtAsyncWith<R>) -> Self {
+        Stmt::AsyncWith(payload)
+    }
+}
+impl<R> From<StmtAsyncWith<R>> for Ast<R> {
+    fn from(payload: StmtAsyncWith<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Match](https://docs.python.org/3/library/ast.html#ast.Match)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtMatch<R = TextRange> {
+    pub range: R,
+    pub subject: Box<Expr<R>>,
+    pub cases: Vec<MatchCase<R>>,
+}
+
+impl<R> Node for StmtMatch<R> {
+    const NAME: &'static str = "Match";
+    const FIELD_NAMES: &'static [&'static str] = &["subject", "cases"];
+}
+impl<R> From<StmtMatch<R>> for Stmt<R> {
+    fn from(payload: StmtMatch<R>) -> Self {
+        Stmt::Match(payload)
+    }
+}
+impl<R> From<StmtMatch<R>> for Ast<R> {
+    fn from(payload: StmtMatch<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Raise](https://docs.python.org/3/library/ast.html#ast.Raise)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtRaise<R = TextRange> {
+    pub range: R,
+    pub exc: Option<Box<Expr<R>>>,
+    pub cause: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for StmtRaise<R> {
+    const NAME: &'static str = "Raise";
+    const FIELD_NAMES: &'static [&'static str] = &["exc", "cause"];
+}
+impl<R> From<StmtRaise<R>> for Stmt<R> {
+    fn from(payload: StmtRaise<R>) -> Self {
+        Stmt::Raise(payload)
+    }
+}
+impl<R> From<StmtRaise<R>> for Ast<R> {
+    fn from(payload: StmtRaise<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Try](https://docs.python.org/3/library/ast.html#ast.Try)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtTry<R = TextRange> {
+    pub range: R,
+    pub body: Vec<Stmt<R>>,
+    pub handlers: Vec<ExceptHandler<R>>,
+    pub orelse: Vec<Stmt<R>>,
+    pub finalbody: Vec<Stmt<R>>,
+}
+
+impl<R> Node for StmtTry<R> {
+    const NAME: &'static str = "Try";
+    const FIELD_NAMES: &'static [&'static str] = &["body", "handlers", "orelse", "finalbody"];
+}
+impl<R> From<StmtTry<R>> for Stmt<R> {
+    fn from(payload: StmtTry<R>) -> Self {
+        Stmt::Try(payload)
+    }
+}
+impl<R> From<StmtTry<R>> for Ast<R> {
+    fn from(payload: StmtTry<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [TryStar](https://docs.python.org/3/library/ast.html#ast.TryStar)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtTryStar<R = TextRange> {
+    pub range: R,
+    pub body: Vec<Stmt<R>>,
+    pub handlers: Vec<ExceptHandler<R>>,
+    pub orelse: Vec<Stmt<R>>,
+    pub finalbody: Vec<Stmt<R>>,
+}
+
+impl<R> Node for StmtTryStar<R> {
+    const NAME: &'static str = "TryStar";
+    const FIELD_NAMES: &'static [&'static str] = &["body", "handlers", "orelse", "finalbody"];
+}
+impl<R> From<StmtTryStar<R>> for Stmt<R> {
+    fn from(payload: StmtTryStar<R>) -> Self {
+        Stmt::TryStar(payload)
+    }
+}
+impl<R> From<StmtTryStar<R>> for Ast<R> {
+    fn from(payload: StmtTryStar<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Assert](https://docs.python.org/3/library/ast.html#ast.Assert)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtAssert<R = TextRange> {
+    pub range: R,
+    pub test: Box<Expr<R>>,
+    pub msg: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for StmtAssert<R> {
+    const NAME: &'static str = "Assert";
+    const FIELD_NAMES: &'static [&'static str] = &["test", "msg"];
+}
+impl<R> From<StmtAssert<R>> for Stmt<R> {
+    fn from(payload: StmtAssert<R>) -> Self {
+        Stmt::Assert(payload)
+    }
+}
+impl<R> From<StmtAssert<R>> for Ast<R> {
+    fn from(payload: StmtAssert<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Import](https://docs.python.org/3/library/ast.html#ast.Import)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtImport<R = TextRange> {
+    pub range: R,
+    pub names: Vec<Alias<R>>,
+}
+
+impl<R> Node for StmtImport<R> {
+    const NAME: &'static str = "Import";
+    const FIELD_NAMES: &'static [&'static str] = &["names"];
+}
+impl<R> From<StmtImport<R>> for Stmt<R> {
+    fn from(payload: StmtImport<R>) -> Self {
+        Stmt::Import(payload)
+    }
+}
+impl<R> From<StmtImport<R>> for Ast<R> {
+    fn from(payload: StmtImport<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [ImportFrom](https://docs.python.org/3/library/ast.html#ast.ImportFrom)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtImportFrom<R = TextRange> {
+    pub range: R,
+    pub module: Option<Identifier>,
+    pub names: Vec<Alias<R>>,
+    pub level: Option<Int>,
+}
+
+impl<R> Node for StmtImportFrom<R> {
+    const NAME: &'static str = "ImportFrom";
+    const FIELD_NAMES: &'static [&'static str] = &["module", "names", "level"];
+}
+impl<R> From<StmtImportFrom<R>> for Stmt<R> {
+    fn from(payload: StmtImportFrom<R>) -> Self {
+        Stmt::ImportFrom(payload)
+    }
+}
+impl<R> From<StmtImportFrom<R>> for Ast<R> {
+    fn from(payload: StmtImportFrom<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Global](https://docs.python.org/3/library/ast.html#ast.Global)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtGlobal<R = TextRange> {
+    pub range: R,
+    pub names: Vec<Identifier>,
+}
+
+impl<R> Node for StmtGlobal<R> {
+    const NAME: &'static str = "Global";
+    const FIELD_NAMES: &'static [&'static str] = &["names"];
+}
+impl<R> From<StmtGlobal<R>> for Stmt<R> {
+    fn from(payload: StmtGlobal<R>) -> Self {
+        Stmt::Global(payload)
+    }
+}
+impl<R> From<StmtGlobal<R>> for Ast<R> {
+    fn from(payload: StmtGlobal<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Nonlocal](https://docs.python.org/3/library/ast.html#ast.Nonlocal)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtNonlocal<R = TextRange> {
+    pub range: R,
+    pub names: Vec<Identifier>,
+}
+
+impl<R> Node for StmtNonlocal<R> {
+    const NAME: &'static str = "Nonlocal";
+    const FIELD_NAMES: &'static [&'static str] = &["names"];
+}
+impl<R> From<StmtNonlocal<R>> for Stmt<R> {
+    fn from(payload: StmtNonlocal<R>) -> Self {
+        Stmt::Nonlocal(payload)
+    }
+}
+impl<R> From<StmtNonlocal<R>> for Ast<R> {
+    fn from(payload: StmtNonlocal<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Expr](https://docs.python.org/3/library/ast.html#ast.Expr)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtExpr<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+}
+
+impl<R> Node for StmtExpr<R> {
+    const NAME: &'static str = "Expr";
+    const FIELD_NAMES: &'static [&'static str] = &["value"];
+}
+impl<R> From<StmtExpr<R>> for Stmt<R> {
+    fn from(payload: StmtExpr<R>) -> Self {
+        Stmt::Expr(payload)
+    }
+}
+impl<R> From<StmtExpr<R>> for Ast<R> {
+    fn from(payload: StmtExpr<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Pass](https://docs.python.org/3/library/ast.html#ast.Pass)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtPass<R = TextRange> {
+    pub range: R,
+}
+
+impl<R> Node for StmtPass<R> {
+    const NAME: &'static str = "Pass";
+    const FIELD_NAMES: &'static [&'static str] = &[];
+}
+impl<R> From<StmtPass<R>> for Stmt<R> {
+    fn from(payload: StmtPass<R>) -> Self {
+        Stmt::Pass(payload)
+    }
+}
+impl<R> From<StmtPass<R>> for Ast<R> {
+    fn from(payload: StmtPass<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Break](https://docs.python.org/3/library/ast.html#ast.Break)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtBreak<R = TextRange> {
+    pub range: R,
+}
+
+impl<R> Node for StmtBreak<R> {
+    const NAME: &'static str = "Break";
+    const FIELD_NAMES: &'static [&'static str] = &[];
+}
+impl<R> From<StmtBreak<R>> for Stmt<R> {
+    fn from(payload: StmtBreak<R>) -> Self {
+        Stmt::Break(payload)
+    }
+}
+impl<R> From<StmtBreak<R>> for Ast<R> {
+    fn from(payload: StmtBreak<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
+/// See also [Continue](https://docs.python.org/3/library/ast.html#ast.Continue)
+#[derive(Clone, Debug, PartialEq)]
+pub struct StmtContinue<R = TextRange> {
+    pub range: R,
+}
+
+impl<R> Node for StmtContinue<R> {
+    const NAME: &'static str = "Continue";
+    const FIELD_NAMES: &'static [&'static str] = &[];
+}
+impl<R> From<StmtContinue<R>> for Stmt<R> {
+    fn from(payload: StmtContinue<R>) -> Self {
+        Stmt::Continue(payload)
+    }
+}
+impl<R> From<StmtContinue<R>> for Ast<R> {
+    fn from(payload: StmtContinue<R>) -> Self {
+        Stmt::from(payload).into()
+    }
+}
+
 impl<R> Node for Stmt<R> {
     const NAME: &'static str = "stmt";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprBoolOp<R = TextRange> {
-    pub range: R,
-    pub op: BoolOp,
-    pub values: Vec<Expr<R>>,
-}
-
-impl<R> Node for ExprBoolOp<R> {
-    const NAME: &'static str = "BoolOp";
-    const FIELD_NAMES: &'static [&'static str] = &["op", "values"];
-}
-impl<R> From<ExprBoolOp<R>> for Expr<R> {
-    fn from(payload: ExprBoolOp<R>) -> Self {
-        Expr::BoolOp(payload)
-    }
-}
-impl<R> From<ExprBoolOp<R>> for Ast<R> {
-    fn from(payload: ExprBoolOp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprNamedExpr<R = TextRange> {
-    pub range: R,
-    pub target: Box<Expr<R>>,
-    pub value: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprNamedExpr<R> {
-    const NAME: &'static str = "NamedExpr";
-    const FIELD_NAMES: &'static [&'static str] = &["target", "value"];
-}
-impl<R> From<ExprNamedExpr<R>> for Expr<R> {
-    fn from(payload: ExprNamedExpr<R>) -> Self {
-        Expr::NamedExpr(payload)
-    }
-}
-impl<R> From<ExprNamedExpr<R>> for Ast<R> {
-    fn from(payload: ExprNamedExpr<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprBinOp<R = TextRange> {
-    pub range: R,
-    pub left: Box<Expr<R>>,
-    pub op: Operator,
-    pub right: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprBinOp<R> {
-    const NAME: &'static str = "BinOp";
-    const FIELD_NAMES: &'static [&'static str] = &["left", "op", "right"];
-}
-impl<R> From<ExprBinOp<R>> for Expr<R> {
-    fn from(payload: ExprBinOp<R>) -> Self {
-        Expr::BinOp(payload)
-    }
-}
-impl<R> From<ExprBinOp<R>> for Ast<R> {
-    fn from(payload: ExprBinOp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprUnaryOp<R = TextRange> {
-    pub range: R,
-    pub op: UnaryOp,
-    pub operand: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprUnaryOp<R> {
-    const NAME: &'static str = "UnaryOp";
-    const FIELD_NAMES: &'static [&'static str] = &["op", "operand"];
-}
-impl<R> From<ExprUnaryOp<R>> for Expr<R> {
-    fn from(payload: ExprUnaryOp<R>) -> Self {
-        Expr::UnaryOp(payload)
-    }
-}
-impl<R> From<ExprUnaryOp<R>> for Ast<R> {
-    fn from(payload: ExprUnaryOp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprLambda<R = TextRange> {
-    pub range: R,
-    pub args: Box<Arguments<R>>,
-    pub body: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprLambda<R> {
-    const NAME: &'static str = "Lambda";
-    const FIELD_NAMES: &'static [&'static str] = &["args", "body"];
-}
-impl<R> From<ExprLambda<R>> for Expr<R> {
-    fn from(payload: ExprLambda<R>) -> Self {
-        Expr::Lambda(payload)
-    }
-}
-impl<R> From<ExprLambda<R>> for Ast<R> {
-    fn from(payload: ExprLambda<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprIfExp<R = TextRange> {
-    pub range: R,
-    pub test: Box<Expr<R>>,
-    pub body: Box<Expr<R>>,
-    pub orelse: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprIfExp<R> {
-    const NAME: &'static str = "IfExp";
-    const FIELD_NAMES: &'static [&'static str] = &["test", "body", "orelse"];
-}
-impl<R> From<ExprIfExp<R>> for Expr<R> {
-    fn from(payload: ExprIfExp<R>) -> Self {
-        Expr::IfExp(payload)
-    }
-}
-impl<R> From<ExprIfExp<R>> for Ast<R> {
-    fn from(payload: ExprIfExp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprDict<R = TextRange> {
-    pub range: R,
-    pub keys: Vec<Option<Expr<R>>>,
-    pub values: Vec<Expr<R>>,
-}
-
-impl<R> Node for ExprDict<R> {
-    const NAME: &'static str = "Dict";
-    const FIELD_NAMES: &'static [&'static str] = &["keys", "values"];
-}
-impl<R> From<ExprDict<R>> for Expr<R> {
-    fn from(payload: ExprDict<R>) -> Self {
-        Expr::Dict(payload)
-    }
-}
-impl<R> From<ExprDict<R>> for Ast<R> {
-    fn from(payload: ExprDict<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprSet<R = TextRange> {
-    pub range: R,
-    pub elts: Vec<Expr<R>>,
-}
-
-impl<R> Node for ExprSet<R> {
-    const NAME: &'static str = "Set";
-    const FIELD_NAMES: &'static [&'static str] = &["elts"];
-}
-impl<R> From<ExprSet<R>> for Expr<R> {
-    fn from(payload: ExprSet<R>) -> Self {
-        Expr::Set(payload)
-    }
-}
-impl<R> From<ExprSet<R>> for Ast<R> {
-    fn from(payload: ExprSet<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprListComp<R = TextRange> {
-    pub range: R,
-    pub elt: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
-}
-
-impl<R> Node for ExprListComp<R> {
-    const NAME: &'static str = "ListComp";
-    const FIELD_NAMES: &'static [&'static str] = &["elt", "generators"];
-}
-impl<R> From<ExprListComp<R>> for Expr<R> {
-    fn from(payload: ExprListComp<R>) -> Self {
-        Expr::ListComp(payload)
-    }
-}
-impl<R> From<ExprListComp<R>> for Ast<R> {
-    fn from(payload: ExprListComp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprSetComp<R = TextRange> {
-    pub range: R,
-    pub elt: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
-}
-
-impl<R> Node for ExprSetComp<R> {
-    const NAME: &'static str = "SetComp";
-    const FIELD_NAMES: &'static [&'static str] = &["elt", "generators"];
-}
-impl<R> From<ExprSetComp<R>> for Expr<R> {
-    fn from(payload: ExprSetComp<R>) -> Self {
-        Expr::SetComp(payload)
-    }
-}
-impl<R> From<ExprSetComp<R>> for Ast<R> {
-    fn from(payload: ExprSetComp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprDictComp<R = TextRange> {
-    pub range: R,
-    pub key: Box<Expr<R>>,
-    pub value: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
-}
-
-impl<R> Node for ExprDictComp<R> {
-    const NAME: &'static str = "DictComp";
-    const FIELD_NAMES: &'static [&'static str] = &["key", "value", "generators"];
-}
-impl<R> From<ExprDictComp<R>> for Expr<R> {
-    fn from(payload: ExprDictComp<R>) -> Self {
-        Expr::DictComp(payload)
-    }
-}
-impl<R> From<ExprDictComp<R>> for Ast<R> {
-    fn from(payload: ExprDictComp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprGeneratorExp<R = TextRange> {
-    pub range: R,
-    pub elt: Box<Expr<R>>,
-    pub generators: Vec<Comprehension<R>>,
-}
-
-impl<R> Node for ExprGeneratorExp<R> {
-    const NAME: &'static str = "GeneratorExp";
-    const FIELD_NAMES: &'static [&'static str] = &["elt", "generators"];
-}
-impl<R> From<ExprGeneratorExp<R>> for Expr<R> {
-    fn from(payload: ExprGeneratorExp<R>) -> Self {
-        Expr::GeneratorExp(payload)
-    }
-}
-impl<R> From<ExprGeneratorExp<R>> for Ast<R> {
-    fn from(payload: ExprGeneratorExp<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprAwait<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprAwait<R> {
-    const NAME: &'static str = "Await";
-    const FIELD_NAMES: &'static [&'static str] = &["value"];
-}
-impl<R> From<ExprAwait<R>> for Expr<R> {
-    fn from(payload: ExprAwait<R>) -> Self {
-        Expr::Await(payload)
-    }
-}
-impl<R> From<ExprAwait<R>> for Ast<R> {
-    fn from(payload: ExprAwait<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprYield<R = TextRange> {
-    pub range: R,
-    pub value: Option<Box<Expr<R>>>,
-}
-
-impl<R> Node for ExprYield<R> {
-    const NAME: &'static str = "Yield";
-    const FIELD_NAMES: &'static [&'static str] = &["value"];
-}
-impl<R> From<ExprYield<R>> for Expr<R> {
-    fn from(payload: ExprYield<R>) -> Self {
-        Expr::Yield(payload)
-    }
-}
-impl<R> From<ExprYield<R>> for Ast<R> {
-    fn from(payload: ExprYield<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprYieldFrom<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-}
-
-impl<R> Node for ExprYieldFrom<R> {
-    const NAME: &'static str = "YieldFrom";
-    const FIELD_NAMES: &'static [&'static str] = &["value"];
-}
-impl<R> From<ExprYieldFrom<R>> for Expr<R> {
-    fn from(payload: ExprYieldFrom<R>) -> Self {
-        Expr::YieldFrom(payload)
-    }
-}
-impl<R> From<ExprYieldFrom<R>> for Ast<R> {
-    fn from(payload: ExprYieldFrom<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprCompare<R = TextRange> {
-    pub range: R,
-    pub left: Box<Expr<R>>,
-    pub ops: Vec<CmpOp>,
-    pub comparators: Vec<Expr<R>>,
-}
-
-impl<R> Node for ExprCompare<R> {
-    const NAME: &'static str = "Compare";
-    const FIELD_NAMES: &'static [&'static str] = &["left", "ops", "comparators"];
-}
-impl<R> From<ExprCompare<R>> for Expr<R> {
-    fn from(payload: ExprCompare<R>) -> Self {
-        Expr::Compare(payload)
-    }
-}
-impl<R> From<ExprCompare<R>> for Ast<R> {
-    fn from(payload: ExprCompare<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprCall<R = TextRange> {
-    pub range: R,
-    pub func: Box<Expr<R>>,
-    pub args: Vec<Expr<R>>,
-    pub keywords: Vec<Keyword<R>>,
-}
-
-impl<R> Node for ExprCall<R> {
-    const NAME: &'static str = "Call";
-    const FIELD_NAMES: &'static [&'static str] = &["func", "args", "keywords"];
-}
-impl<R> From<ExprCall<R>> for Expr<R> {
-    fn from(payload: ExprCall<R>) -> Self {
-        Expr::Call(payload)
-    }
-}
-impl<R> From<ExprCall<R>> for Ast<R> {
-    fn from(payload: ExprCall<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprFormattedValue<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-    pub conversion: ConversionFlag,
-    pub format_spec: Option<Box<Expr<R>>>,
-}
-
-impl<R> Node for ExprFormattedValue<R> {
-    const NAME: &'static str = "FormattedValue";
-    const FIELD_NAMES: &'static [&'static str] = &["value", "conversion", "format_spec"];
-}
-impl<R> From<ExprFormattedValue<R>> for Expr<R> {
-    fn from(payload: ExprFormattedValue<R>) -> Self {
-        Expr::FormattedValue(payload)
-    }
-}
-impl<R> From<ExprFormattedValue<R>> for Ast<R> {
-    fn from(payload: ExprFormattedValue<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprJoinedStr<R = TextRange> {
-    pub range: R,
-    pub values: Vec<Expr<R>>,
-}
-
-impl<R> Node for ExprJoinedStr<R> {
-    const NAME: &'static str = "JoinedStr";
-    const FIELD_NAMES: &'static [&'static str] = &["values"];
-}
-impl<R> From<ExprJoinedStr<R>> for Expr<R> {
-    fn from(payload: ExprJoinedStr<R>) -> Self {
-        Expr::JoinedStr(payload)
-    }
-}
-impl<R> From<ExprJoinedStr<R>> for Ast<R> {
-    fn from(payload: ExprJoinedStr<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprConstant<R = TextRange> {
-    pub range: R,
-    pub value: Constant,
-    pub kind: Option<String>,
-}
-
-impl<R> Node for ExprConstant<R> {
-    const NAME: &'static str = "Constant";
-    const FIELD_NAMES: &'static [&'static str] = &["value", "kind"];
-}
-impl<R> From<ExprConstant<R>> for Expr<R> {
-    fn from(payload: ExprConstant<R>) -> Self {
-        Expr::Constant(payload)
-    }
-}
-impl<R> From<ExprConstant<R>> for Ast<R> {
-    fn from(payload: ExprConstant<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprAttribute<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-    pub attr: Identifier,
-    pub ctx: ExprContext,
-}
-
-impl<R> Node for ExprAttribute<R> {
-    const NAME: &'static str = "Attribute";
-    const FIELD_NAMES: &'static [&'static str] = &["value", "attr", "ctx"];
-}
-impl<R> From<ExprAttribute<R>> for Expr<R> {
-    fn from(payload: ExprAttribute<R>) -> Self {
-        Expr::Attribute(payload)
-    }
-}
-impl<R> From<ExprAttribute<R>> for Ast<R> {
-    fn from(payload: ExprAttribute<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprSubscript<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-    pub slice: Box<Expr<R>>,
-    pub ctx: ExprContext,
-}
-
-impl<R> Node for ExprSubscript<R> {
-    const NAME: &'static str = "Subscript";
-    const FIELD_NAMES: &'static [&'static str] = &["value", "slice", "ctx"];
-}
-impl<R> From<ExprSubscript<R>> for Expr<R> {
-    fn from(payload: ExprSubscript<R>) -> Self {
-        Expr::Subscript(payload)
-    }
-}
-impl<R> From<ExprSubscript<R>> for Ast<R> {
-    fn from(payload: ExprSubscript<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprStarred<R = TextRange> {
-    pub range: R,
-    pub value: Box<Expr<R>>,
-    pub ctx: ExprContext,
-}
-
-impl<R> Node for ExprStarred<R> {
-    const NAME: &'static str = "Starred";
-    const FIELD_NAMES: &'static [&'static str] = &["value", "ctx"];
-}
-impl<R> From<ExprStarred<R>> for Expr<R> {
-    fn from(payload: ExprStarred<R>) -> Self {
-        Expr::Starred(payload)
-    }
-}
-impl<R> From<ExprStarred<R>> for Ast<R> {
-    fn from(payload: ExprStarred<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprName<R = TextRange> {
-    pub range: R,
-    pub id: Identifier,
-    pub ctx: ExprContext,
-}
-
-impl<R> Node for ExprName<R> {
-    const NAME: &'static str = "Name";
-    const FIELD_NAMES: &'static [&'static str] = &["id", "ctx"];
-}
-impl<R> From<ExprName<R>> for Expr<R> {
-    fn from(payload: ExprName<R>) -> Self {
-        Expr::Name(payload)
-    }
-}
-impl<R> From<ExprName<R>> for Ast<R> {
-    fn from(payload: ExprName<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprList<R = TextRange> {
-    pub range: R,
-    pub elts: Vec<Expr<R>>,
-    pub ctx: ExprContext,
-}
-
-impl<R> Node for ExprList<R> {
-    const NAME: &'static str = "List";
-    const FIELD_NAMES: &'static [&'static str] = &["elts", "ctx"];
-}
-impl<R> From<ExprList<R>> for Expr<R> {
-    fn from(payload: ExprList<R>) -> Self {
-        Expr::List(payload)
-    }
-}
-impl<R> From<ExprList<R>> for Ast<R> {
-    fn from(payload: ExprList<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprTuple<R = TextRange> {
-    pub range: R,
-    pub elts: Vec<Expr<R>>,
-    pub ctx: ExprContext,
-}
-
-impl<R> Node for ExprTuple<R> {
-    const NAME: &'static str = "Tuple";
-    const FIELD_NAMES: &'static [&'static str] = &["elts", "ctx"];
-}
-impl<R> From<ExprTuple<R>> for Expr<R> {
-    fn from(payload: ExprTuple<R>) -> Self {
-        Expr::Tuple(payload)
-    }
-}
-impl<R> From<ExprTuple<R>> for Ast<R> {
-    fn from(payload: ExprTuple<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct ExprSlice<R = TextRange> {
-    pub range: R,
-    pub lower: Option<Box<Expr<R>>>,
-    pub upper: Option<Box<Expr<R>>>,
-    pub step: Option<Box<Expr<R>>>,
-}
-
-impl<R> Node for ExprSlice<R> {
-    const NAME: &'static str = "Slice";
-    const FIELD_NAMES: &'static [&'static str] = &["lower", "upper", "step"];
-}
-impl<R> From<ExprSlice<R>> for Expr<R> {
-    fn from(payload: ExprSlice<R>) -> Self {
-        Expr::Slice(payload)
-    }
-}
-impl<R> From<ExprSlice<R>> for Ast<R> {
-    fn from(payload: ExprSlice<R>) -> Self {
-        Expr::from(payload).into()
-    }
-}
-
+/// See also [expr](https://docs.python.org/3/library/ast.html#ast.expr)
 #[derive(Clone, Debug, PartialEq, is_macro::Is)]
 pub enum Expr<R = TextRange> {
     #[is(name = "bool_op_expr")]
@@ -1584,11 +1020,637 @@ pub enum Expr<R = TextRange> {
     Slice(ExprSlice<R>),
 }
 
+/// See also [BoolOp](https://docs.python.org/3/library/ast.html#ast.BoolOp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprBoolOp<R = TextRange> {
+    pub range: R,
+    pub op: BoolOp,
+    pub values: Vec<Expr<R>>,
+}
+
+impl<R> Node for ExprBoolOp<R> {
+    const NAME: &'static str = "BoolOp";
+    const FIELD_NAMES: &'static [&'static str] = &["op", "values"];
+}
+impl<R> From<ExprBoolOp<R>> for Expr<R> {
+    fn from(payload: ExprBoolOp<R>) -> Self {
+        Expr::BoolOp(payload)
+    }
+}
+impl<R> From<ExprBoolOp<R>> for Ast<R> {
+    fn from(payload: ExprBoolOp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [NamedExpr](https://docs.python.org/3/library/ast.html#ast.NamedExpr)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprNamedExpr<R = TextRange> {
+    pub range: R,
+    pub target: Box<Expr<R>>,
+    pub value: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprNamedExpr<R> {
+    const NAME: &'static str = "NamedExpr";
+    const FIELD_NAMES: &'static [&'static str] = &["target", "value"];
+}
+impl<R> From<ExprNamedExpr<R>> for Expr<R> {
+    fn from(payload: ExprNamedExpr<R>) -> Self {
+        Expr::NamedExpr(payload)
+    }
+}
+impl<R> From<ExprNamedExpr<R>> for Ast<R> {
+    fn from(payload: ExprNamedExpr<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [BinOp](https://docs.python.org/3/library/ast.html#ast.BinOp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprBinOp<R = TextRange> {
+    pub range: R,
+    pub left: Box<Expr<R>>,
+    pub op: Operator,
+    pub right: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprBinOp<R> {
+    const NAME: &'static str = "BinOp";
+    const FIELD_NAMES: &'static [&'static str] = &["left", "op", "right"];
+}
+impl<R> From<ExprBinOp<R>> for Expr<R> {
+    fn from(payload: ExprBinOp<R>) -> Self {
+        Expr::BinOp(payload)
+    }
+}
+impl<R> From<ExprBinOp<R>> for Ast<R> {
+    fn from(payload: ExprBinOp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [UnaryOp](https://docs.python.org/3/library/ast.html#ast.UnaryOp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprUnaryOp<R = TextRange> {
+    pub range: R,
+    pub op: UnaryOp,
+    pub operand: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprUnaryOp<R> {
+    const NAME: &'static str = "UnaryOp";
+    const FIELD_NAMES: &'static [&'static str] = &["op", "operand"];
+}
+impl<R> From<ExprUnaryOp<R>> for Expr<R> {
+    fn from(payload: ExprUnaryOp<R>) -> Self {
+        Expr::UnaryOp(payload)
+    }
+}
+impl<R> From<ExprUnaryOp<R>> for Ast<R> {
+    fn from(payload: ExprUnaryOp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Lambda](https://docs.python.org/3/library/ast.html#ast.Lambda)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprLambda<R = TextRange> {
+    pub range: R,
+    pub args: Box<Arguments<R>>,
+    pub body: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprLambda<R> {
+    const NAME: &'static str = "Lambda";
+    const FIELD_NAMES: &'static [&'static str] = &["args", "body"];
+}
+impl<R> From<ExprLambda<R>> for Expr<R> {
+    fn from(payload: ExprLambda<R>) -> Self {
+        Expr::Lambda(payload)
+    }
+}
+impl<R> From<ExprLambda<R>> for Ast<R> {
+    fn from(payload: ExprLambda<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [IfExp](https://docs.python.org/3/library/ast.html#ast.IfExp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprIfExp<R = TextRange> {
+    pub range: R,
+    pub test: Box<Expr<R>>,
+    pub body: Box<Expr<R>>,
+    pub orelse: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprIfExp<R> {
+    const NAME: &'static str = "IfExp";
+    const FIELD_NAMES: &'static [&'static str] = &["test", "body", "orelse"];
+}
+impl<R> From<ExprIfExp<R>> for Expr<R> {
+    fn from(payload: ExprIfExp<R>) -> Self {
+        Expr::IfExp(payload)
+    }
+}
+impl<R> From<ExprIfExp<R>> for Ast<R> {
+    fn from(payload: ExprIfExp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Dict](https://docs.python.org/3/library/ast.html#ast.Dict)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprDict<R = TextRange> {
+    pub range: R,
+    pub keys: Vec<Option<Expr<R>>>,
+    pub values: Vec<Expr<R>>,
+}
+
+impl<R> Node for ExprDict<R> {
+    const NAME: &'static str = "Dict";
+    const FIELD_NAMES: &'static [&'static str] = &["keys", "values"];
+}
+impl<R> From<ExprDict<R>> for Expr<R> {
+    fn from(payload: ExprDict<R>) -> Self {
+        Expr::Dict(payload)
+    }
+}
+impl<R> From<ExprDict<R>> for Ast<R> {
+    fn from(payload: ExprDict<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Set](https://docs.python.org/3/library/ast.html#ast.Set)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprSet<R = TextRange> {
+    pub range: R,
+    pub elts: Vec<Expr<R>>,
+}
+
+impl<R> Node for ExprSet<R> {
+    const NAME: &'static str = "Set";
+    const FIELD_NAMES: &'static [&'static str] = &["elts"];
+}
+impl<R> From<ExprSet<R>> for Expr<R> {
+    fn from(payload: ExprSet<R>) -> Self {
+        Expr::Set(payload)
+    }
+}
+impl<R> From<ExprSet<R>> for Ast<R> {
+    fn from(payload: ExprSet<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [ListComp](https://docs.python.org/3/library/ast.html#ast.ListComp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprListComp<R = TextRange> {
+    pub range: R,
+    pub elt: Box<Expr<R>>,
+    pub generators: Vec<Comprehension<R>>,
+}
+
+impl<R> Node for ExprListComp<R> {
+    const NAME: &'static str = "ListComp";
+    const FIELD_NAMES: &'static [&'static str] = &["elt", "generators"];
+}
+impl<R> From<ExprListComp<R>> for Expr<R> {
+    fn from(payload: ExprListComp<R>) -> Self {
+        Expr::ListComp(payload)
+    }
+}
+impl<R> From<ExprListComp<R>> for Ast<R> {
+    fn from(payload: ExprListComp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [SetComp](https://docs.python.org/3/library/ast.html#ast.SetComp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprSetComp<R = TextRange> {
+    pub range: R,
+    pub elt: Box<Expr<R>>,
+    pub generators: Vec<Comprehension<R>>,
+}
+
+impl<R> Node for ExprSetComp<R> {
+    const NAME: &'static str = "SetComp";
+    const FIELD_NAMES: &'static [&'static str] = &["elt", "generators"];
+}
+impl<R> From<ExprSetComp<R>> for Expr<R> {
+    fn from(payload: ExprSetComp<R>) -> Self {
+        Expr::SetComp(payload)
+    }
+}
+impl<R> From<ExprSetComp<R>> for Ast<R> {
+    fn from(payload: ExprSetComp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [DictComp](https://docs.python.org/3/library/ast.html#ast.DictComp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprDictComp<R = TextRange> {
+    pub range: R,
+    pub key: Box<Expr<R>>,
+    pub value: Box<Expr<R>>,
+    pub generators: Vec<Comprehension<R>>,
+}
+
+impl<R> Node for ExprDictComp<R> {
+    const NAME: &'static str = "DictComp";
+    const FIELD_NAMES: &'static [&'static str] = &["key", "value", "generators"];
+}
+impl<R> From<ExprDictComp<R>> for Expr<R> {
+    fn from(payload: ExprDictComp<R>) -> Self {
+        Expr::DictComp(payload)
+    }
+}
+impl<R> From<ExprDictComp<R>> for Ast<R> {
+    fn from(payload: ExprDictComp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [GeneratorExp](https://docs.python.org/3/library/ast.html#ast.GeneratorExp)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprGeneratorExp<R = TextRange> {
+    pub range: R,
+    pub elt: Box<Expr<R>>,
+    pub generators: Vec<Comprehension<R>>,
+}
+
+impl<R> Node for ExprGeneratorExp<R> {
+    const NAME: &'static str = "GeneratorExp";
+    const FIELD_NAMES: &'static [&'static str] = &["elt", "generators"];
+}
+impl<R> From<ExprGeneratorExp<R>> for Expr<R> {
+    fn from(payload: ExprGeneratorExp<R>) -> Self {
+        Expr::GeneratorExp(payload)
+    }
+}
+impl<R> From<ExprGeneratorExp<R>> for Ast<R> {
+    fn from(payload: ExprGeneratorExp<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Await](https://docs.python.org/3/library/ast.html#ast.Await)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprAwait<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprAwait<R> {
+    const NAME: &'static str = "Await";
+    const FIELD_NAMES: &'static [&'static str] = &["value"];
+}
+impl<R> From<ExprAwait<R>> for Expr<R> {
+    fn from(payload: ExprAwait<R>) -> Self {
+        Expr::Await(payload)
+    }
+}
+impl<R> From<ExprAwait<R>> for Ast<R> {
+    fn from(payload: ExprAwait<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Yield](https://docs.python.org/3/library/ast.html#ast.Yield)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprYield<R = TextRange> {
+    pub range: R,
+    pub value: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for ExprYield<R> {
+    const NAME: &'static str = "Yield";
+    const FIELD_NAMES: &'static [&'static str] = &["value"];
+}
+impl<R> From<ExprYield<R>> for Expr<R> {
+    fn from(payload: ExprYield<R>) -> Self {
+        Expr::Yield(payload)
+    }
+}
+impl<R> From<ExprYield<R>> for Ast<R> {
+    fn from(payload: ExprYield<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [YieldFrom](https://docs.python.org/3/library/ast.html#ast.YieldFrom)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprYieldFrom<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+}
+
+impl<R> Node for ExprYieldFrom<R> {
+    const NAME: &'static str = "YieldFrom";
+    const FIELD_NAMES: &'static [&'static str] = &["value"];
+}
+impl<R> From<ExprYieldFrom<R>> for Expr<R> {
+    fn from(payload: ExprYieldFrom<R>) -> Self {
+        Expr::YieldFrom(payload)
+    }
+}
+impl<R> From<ExprYieldFrom<R>> for Ast<R> {
+    fn from(payload: ExprYieldFrom<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Compare](https://docs.python.org/3/library/ast.html#ast.Compare)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprCompare<R = TextRange> {
+    pub range: R,
+    pub left: Box<Expr<R>>,
+    pub ops: Vec<CmpOp>,
+    pub comparators: Vec<Expr<R>>,
+}
+
+impl<R> Node for ExprCompare<R> {
+    const NAME: &'static str = "Compare";
+    const FIELD_NAMES: &'static [&'static str] = &["left", "ops", "comparators"];
+}
+impl<R> From<ExprCompare<R>> for Expr<R> {
+    fn from(payload: ExprCompare<R>) -> Self {
+        Expr::Compare(payload)
+    }
+}
+impl<R> From<ExprCompare<R>> for Ast<R> {
+    fn from(payload: ExprCompare<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Call](https://docs.python.org/3/library/ast.html#ast.Call)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprCall<R = TextRange> {
+    pub range: R,
+    pub func: Box<Expr<R>>,
+    pub args: Vec<Expr<R>>,
+    pub keywords: Vec<Keyword<R>>,
+}
+
+impl<R> Node for ExprCall<R> {
+    const NAME: &'static str = "Call";
+    const FIELD_NAMES: &'static [&'static str] = &["func", "args", "keywords"];
+}
+impl<R> From<ExprCall<R>> for Expr<R> {
+    fn from(payload: ExprCall<R>) -> Self {
+        Expr::Call(payload)
+    }
+}
+impl<R> From<ExprCall<R>> for Ast<R> {
+    fn from(payload: ExprCall<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [FormattedValue](https://docs.python.org/3/library/ast.html#ast.FormattedValue)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprFormattedValue<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+    pub conversion: ConversionFlag,
+    pub format_spec: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for ExprFormattedValue<R> {
+    const NAME: &'static str = "FormattedValue";
+    const FIELD_NAMES: &'static [&'static str] = &["value", "conversion", "format_spec"];
+}
+impl<R> From<ExprFormattedValue<R>> for Expr<R> {
+    fn from(payload: ExprFormattedValue<R>) -> Self {
+        Expr::FormattedValue(payload)
+    }
+}
+impl<R> From<ExprFormattedValue<R>> for Ast<R> {
+    fn from(payload: ExprFormattedValue<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [JoinedStr](https://docs.python.org/3/library/ast.html#ast.JoinedStr)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprJoinedStr<R = TextRange> {
+    pub range: R,
+    pub values: Vec<Expr<R>>,
+}
+
+impl<R> Node for ExprJoinedStr<R> {
+    const NAME: &'static str = "JoinedStr";
+    const FIELD_NAMES: &'static [&'static str] = &["values"];
+}
+impl<R> From<ExprJoinedStr<R>> for Expr<R> {
+    fn from(payload: ExprJoinedStr<R>) -> Self {
+        Expr::JoinedStr(payload)
+    }
+}
+impl<R> From<ExprJoinedStr<R>> for Ast<R> {
+    fn from(payload: ExprJoinedStr<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Constant](https://docs.python.org/3/library/ast.html#ast.Constant)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprConstant<R = TextRange> {
+    pub range: R,
+    pub value: Constant,
+    pub kind: Option<String>,
+}
+
+impl<R> Node for ExprConstant<R> {
+    const NAME: &'static str = "Constant";
+    const FIELD_NAMES: &'static [&'static str] = &["value", "kind"];
+}
+impl<R> From<ExprConstant<R>> for Expr<R> {
+    fn from(payload: ExprConstant<R>) -> Self {
+        Expr::Constant(payload)
+    }
+}
+impl<R> From<ExprConstant<R>> for Ast<R> {
+    fn from(payload: ExprConstant<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Attribute](https://docs.python.org/3/library/ast.html#ast.Attribute)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprAttribute<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+    pub attr: Identifier,
+    pub ctx: ExprContext,
+}
+
+impl<R> Node for ExprAttribute<R> {
+    const NAME: &'static str = "Attribute";
+    const FIELD_NAMES: &'static [&'static str] = &["value", "attr", "ctx"];
+}
+impl<R> From<ExprAttribute<R>> for Expr<R> {
+    fn from(payload: ExprAttribute<R>) -> Self {
+        Expr::Attribute(payload)
+    }
+}
+impl<R> From<ExprAttribute<R>> for Ast<R> {
+    fn from(payload: ExprAttribute<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Subscript](https://docs.python.org/3/library/ast.html#ast.Subscript)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprSubscript<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+    pub slice: Box<Expr<R>>,
+    pub ctx: ExprContext,
+}
+
+impl<R> Node for ExprSubscript<R> {
+    const NAME: &'static str = "Subscript";
+    const FIELD_NAMES: &'static [&'static str] = &["value", "slice", "ctx"];
+}
+impl<R> From<ExprSubscript<R>> for Expr<R> {
+    fn from(payload: ExprSubscript<R>) -> Self {
+        Expr::Subscript(payload)
+    }
+}
+impl<R> From<ExprSubscript<R>> for Ast<R> {
+    fn from(payload: ExprSubscript<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Starred](https://docs.python.org/3/library/ast.html#ast.Starred)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprStarred<R = TextRange> {
+    pub range: R,
+    pub value: Box<Expr<R>>,
+    pub ctx: ExprContext,
+}
+
+impl<R> Node for ExprStarred<R> {
+    const NAME: &'static str = "Starred";
+    const FIELD_NAMES: &'static [&'static str] = &["value", "ctx"];
+}
+impl<R> From<ExprStarred<R>> for Expr<R> {
+    fn from(payload: ExprStarred<R>) -> Self {
+        Expr::Starred(payload)
+    }
+}
+impl<R> From<ExprStarred<R>> for Ast<R> {
+    fn from(payload: ExprStarred<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Name](https://docs.python.org/3/library/ast.html#ast.Name)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprName<R = TextRange> {
+    pub range: R,
+    pub id: Identifier,
+    pub ctx: ExprContext,
+}
+
+impl<R> Node for ExprName<R> {
+    const NAME: &'static str = "Name";
+    const FIELD_NAMES: &'static [&'static str] = &["id", "ctx"];
+}
+impl<R> From<ExprName<R>> for Expr<R> {
+    fn from(payload: ExprName<R>) -> Self {
+        Expr::Name(payload)
+    }
+}
+impl<R> From<ExprName<R>> for Ast<R> {
+    fn from(payload: ExprName<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [List](https://docs.python.org/3/library/ast.html#ast.List)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprList<R = TextRange> {
+    pub range: R,
+    pub elts: Vec<Expr<R>>,
+    pub ctx: ExprContext,
+}
+
+impl<R> Node for ExprList<R> {
+    const NAME: &'static str = "List";
+    const FIELD_NAMES: &'static [&'static str] = &["elts", "ctx"];
+}
+impl<R> From<ExprList<R>> for Expr<R> {
+    fn from(payload: ExprList<R>) -> Self {
+        Expr::List(payload)
+    }
+}
+impl<R> From<ExprList<R>> for Ast<R> {
+    fn from(payload: ExprList<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Tuple](https://docs.python.org/3/library/ast.html#ast.Tuple)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprTuple<R = TextRange> {
+    pub range: R,
+    pub elts: Vec<Expr<R>>,
+    pub ctx: ExprContext,
+}
+
+impl<R> Node for ExprTuple<R> {
+    const NAME: &'static str = "Tuple";
+    const FIELD_NAMES: &'static [&'static str] = &["elts", "ctx"];
+}
+impl<R> From<ExprTuple<R>> for Expr<R> {
+    fn from(payload: ExprTuple<R>) -> Self {
+        Expr::Tuple(payload)
+    }
+}
+impl<R> From<ExprTuple<R>> for Ast<R> {
+    fn from(payload: ExprTuple<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
+/// See also [Slice](https://docs.python.org/3/library/ast.html#ast.Slice)
+#[derive(Clone, Debug, PartialEq)]
+pub struct ExprSlice<R = TextRange> {
+    pub range: R,
+    pub lower: Option<Box<Expr<R>>>,
+    pub upper: Option<Box<Expr<R>>>,
+    pub step: Option<Box<Expr<R>>>,
+}
+
+impl<R> Node for ExprSlice<R> {
+    const NAME: &'static str = "Slice";
+    const FIELD_NAMES: &'static [&'static str] = &["lower", "upper", "step"];
+}
+impl<R> From<ExprSlice<R>> for Expr<R> {
+    fn from(payload: ExprSlice<R>) -> Self {
+        Expr::Slice(payload)
+    }
+}
+impl<R> From<ExprSlice<R>> for Ast<R> {
+    fn from(payload: ExprSlice<R>) -> Self {
+        Expr::from(payload).into()
+    }
+}
+
 impl<R> Node for Expr<R> {
     const NAME: &'static str = "expr";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [expr_context](https://docs.python.org/3/library/ast.html#ast.expr_context)
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
 pub enum ExprContext {
     Load,
@@ -1692,6 +1754,7 @@ impl Node for ExprContext {
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [boolop](https://docs.python.org/3/library/ast.html#ast.boolop)
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
 pub enum BoolOp {
     And,
@@ -1764,6 +1827,7 @@ impl Node for BoolOp {
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [operator](https://docs.python.org/3/library/ast.html#ast.operator)
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
 pub enum Operator {
     Add,
@@ -2177,6 +2241,7 @@ impl Node for Operator {
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [unaryop](https://docs.python.org/3/library/ast.html#ast.unaryop)
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
 pub enum UnaryOp {
     Invert,
@@ -2311,6 +2376,7 @@ impl Node for UnaryOp {
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [cmpop](https://docs.python.org/3/library/ast.html#ast.cmpop)
 #[derive(Clone, Debug, PartialEq, is_macro::Is, Copy, Hash, Eq)]
 pub enum CmpOp {
     Eq,
@@ -2631,6 +2697,7 @@ impl Node for CmpOp {
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [comprehension](https://docs.python.org/3/library/ast.html#ast.comprehension)
 #[derive(Clone, Debug, PartialEq)]
 pub struct Comprehension<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -2645,6 +2712,13 @@ impl<R> Node for Comprehension<R> {
     const FIELD_NAMES: &'static [&'static str] = &["target", "iter", "ifs", "is_async"];
 }
 
+/// See also [excepthandler](https://docs.python.org/3/library/ast.html#ast.excepthandler)
+#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+pub enum ExceptHandler<R = TextRange> {
+    ExceptHandler(ExceptHandlerExceptHandler<R>),
+}
+
+/// See also [ExceptHandler](https://docs.python.org/3/library/ast.html#ast.ExceptHandler)
 #[derive(Clone, Debug, PartialEq)]
 pub struct ExceptHandlerExceptHandler<R = TextRange> {
     pub range: R,
@@ -2668,16 +2742,12 @@ impl<R> From<ExceptHandlerExceptHandler<R>> for Ast<R> {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
-pub enum ExceptHandler<R = TextRange> {
-    ExceptHandler(ExceptHandlerExceptHandler<R>),
-}
-
 impl<R> Node for ExceptHandler<R> {
     const NAME: &'static str = "excepthandler";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [arguments](https://docs.python.org/3/library/ast.html#ast.arguments)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PythonArguments<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -2703,6 +2773,7 @@ impl<R> Node for PythonArguments<R> {
     ];
 }
 
+/// See also [arg](https://docs.python.org/3/library/ast.html#ast.arg)
 #[derive(Clone, Debug, PartialEq)]
 pub struct Arg<R = TextRange> {
     pub range: R,
@@ -2716,6 +2787,7 @@ impl<R> Node for Arg<R> {
     const FIELD_NAMES: &'static [&'static str] = &["arg", "annotation", "type_comment"];
 }
 
+/// See also [keyword](https://docs.python.org/3/library/ast.html#ast.keyword)
 #[derive(Clone, Debug, PartialEq)]
 pub struct Keyword<R = TextRange> {
     pub range: R,
@@ -2728,6 +2800,7 @@ impl<R> Node for Keyword<R> {
     const FIELD_NAMES: &'static [&'static str] = &["arg", "value"];
 }
 
+/// See also [alias](https://docs.python.org/3/library/ast.html#ast.alias)
 #[derive(Clone, Debug, PartialEq)]
 pub struct Alias<R = TextRange> {
     pub range: R,
@@ -2740,6 +2813,7 @@ impl<R> Node for Alias<R> {
     const FIELD_NAMES: &'static [&'static str] = &["name", "asname"];
 }
 
+/// See also [withitem](https://docs.python.org/3/library/ast.html#ast.withitem)
 #[derive(Clone, Debug, PartialEq)]
 pub struct WithItem<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -2752,6 +2826,7 @@ impl<R> Node for WithItem<R> {
     const FIELD_NAMES: &'static [&'static str] = &["context_expr", "optional_vars"];
 }
 
+/// See also [match_case](https://docs.python.org/3/library/ast.html#ast.match_case)
 #[derive(Clone, Debug, PartialEq)]
 pub struct MatchCase<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -2765,6 +2840,20 @@ impl<R> Node for MatchCase<R> {
     const FIELD_NAMES: &'static [&'static str] = &["pattern", "guard", "body"];
 }
 
+/// See also [pattern](https://docs.python.org/3/library/ast.html#ast.pattern)
+#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+pub enum Pattern<R = TextRange> {
+    MatchValue(PatternMatchValue<R>),
+    MatchSingleton(PatternMatchSingleton<R>),
+    MatchSequence(PatternMatchSequence<R>),
+    MatchMapping(PatternMatchMapping<R>),
+    MatchClass(PatternMatchClass<R>),
+    MatchStar(PatternMatchStar<R>),
+    MatchAs(PatternMatchAs<R>),
+    MatchOr(PatternMatchOr<R>),
+}
+
+/// See also [MatchValue](https://docs.python.org/3/library/ast.html#ast.MatchValue)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchValue<R = TextRange> {
     pub range: R,
@@ -2786,6 +2875,7 @@ impl<R> From<PatternMatchValue<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchSingleton](https://docs.python.org/3/library/ast.html#ast.MatchSingleton)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchSingleton<R = TextRange> {
     pub range: R,
@@ -2807,6 +2897,7 @@ impl<R> From<PatternMatchSingleton<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchSequence](https://docs.python.org/3/library/ast.html#ast.MatchSequence)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchSequence<R = TextRange> {
     pub range: R,
@@ -2828,6 +2919,7 @@ impl<R> From<PatternMatchSequence<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchMapping](https://docs.python.org/3/library/ast.html#ast.MatchMapping)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchMapping<R = TextRange> {
     pub range: R,
@@ -2851,6 +2943,7 @@ impl<R> From<PatternMatchMapping<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchClass](https://docs.python.org/3/library/ast.html#ast.MatchClass)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchClass<R = TextRange> {
     pub range: R,
@@ -2875,6 +2968,7 @@ impl<R> From<PatternMatchClass<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchStar](https://docs.python.org/3/library/ast.html#ast.MatchStar)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchStar<R = TextRange> {
     pub range: R,
@@ -2896,6 +2990,7 @@ impl<R> From<PatternMatchStar<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchAs](https://docs.python.org/3/library/ast.html#ast.MatchAs)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchAs<R = TextRange> {
     pub range: R,
@@ -2918,6 +3013,7 @@ impl<R> From<PatternMatchAs<R>> for Ast<R> {
     }
 }
 
+/// See also [MatchOr](https://docs.python.org/3/library/ast.html#ast.MatchOr)
 #[derive(Clone, Debug, PartialEq)]
 pub struct PatternMatchOr<R = TextRange> {
     pub range: R,
@@ -2939,23 +3035,18 @@ impl<R> From<PatternMatchOr<R>> for Ast<R> {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
-pub enum Pattern<R = TextRange> {
-    MatchValue(PatternMatchValue<R>),
-    MatchSingleton(PatternMatchSingleton<R>),
-    MatchSequence(PatternMatchSequence<R>),
-    MatchMapping(PatternMatchMapping<R>),
-    MatchClass(PatternMatchClass<R>),
-    MatchStar(PatternMatchStar<R>),
-    MatchAs(PatternMatchAs<R>),
-    MatchOr(PatternMatchOr<R>),
-}
-
 impl<R> Node for Pattern<R> {
     const NAME: &'static str = "pattern";
     const FIELD_NAMES: &'static [&'static str] = &[];
 }
 
+/// See also [type_ignore](https://docs.python.org/3/library/ast.html#ast.type_ignore)
+#[derive(Clone, Debug, PartialEq, is_macro::Is)]
+pub enum TypeIgnore<R = TextRange> {
+    TypeIgnore(TypeIgnoreTypeIgnore<R>),
+}
+
+/// See also [TypeIgnore](https://docs.python.org/3/library/ast.html#ast.TypeIgnore)
 #[derive(Clone, Debug, PartialEq)]
 pub struct TypeIgnoreTypeIgnore<R = TextRange> {
     pub range: OptionalRange<R>,
@@ -2976,11 +3067,6 @@ impl<R> From<TypeIgnoreTypeIgnore<R>> for Ast<R> {
     fn from(payload: TypeIgnoreTypeIgnore<R>) -> Self {
         TypeIgnore::from(payload).into()
     }
-}
-
-#[derive(Clone, Debug, PartialEq, is_macro::Is)]
-pub enum TypeIgnore<R = TextRange> {
-    TypeIgnore(TypeIgnoreTypeIgnore<R>),
 }
 
 impl<R> Node for TypeIgnore<R> {
