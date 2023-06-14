@@ -1,5 +1,6 @@
 use itertools::{Itertools, PeekingNext};
 use malachite_bigint::{BigInt, Sign};
+use num_traits::FromPrimitive;
 use num_traits::{cast::ToPrimitive, Signed};
 use rustpython_literal::float;
 use rustpython_literal::format::Case;
@@ -419,15 +420,25 @@ impl FormatSpec {
 
     pub fn format_bool(&self, input: bool) -> Result<String, FormatSpecError> {
         let x = u8::from(input);
-        let result: Result<String, FormatSpecError> = match &self.format_type {
-            Some(FormatType::Decimal) => Ok(x.to_string()),
+        match &self.format_type {
+            Some(
+                FormatType::Binary
+                | FormatType::Decimal
+                | FormatType::Octal
+                | FormatType::Number(Case::Lower)
+                | FormatType::Hex(_)
+                | FormatType::GeneralFormat(_)
+                | FormatType::Character,
+            ) => self.format_int(&BigInt::from_u8(x).unwrap()),
+            Some(FormatType::Exponent(_) | FormatType::FixedPoint(_) | FormatType::Percentage) => {
+                self.format_float(x as f64)
+            }
             None => {
                 let first_letter = (input.to_string().as_bytes()[0] as char).to_uppercase();
                 Ok(first_letter.collect::<String>() + &input.to_string()[1..])
             }
             _ => Err(FormatSpecError::InvalidFormatSpecifier),
-        };
-        result
+        }
     }
 
     pub fn format_float(&self, num: f64) -> Result<String, FormatSpecError> {
