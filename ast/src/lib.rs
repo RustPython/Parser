@@ -59,6 +59,11 @@ pub use rustpython_parser_core::source_code;
 #[cfg(feature = "visitor")]
 pub use visitor::Visitor;
 
+#[cfg(feature = "replace")]
+pub mod replace;
+#[cfg(feature = "replace")]
+pub use replace::Replacer;
+
 #[cfg(feature = "constant-optimization")]
 mod optimizer;
 #[cfg(feature = "constant-optimization")]
