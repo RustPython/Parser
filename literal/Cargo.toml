@@ -1,6 +1,6 @@
 [package]
 name = "rustpython-literal"
-version = "0.2.0"
+version = "0.3.0"
 description = "Common literal handling utilities mostly useful for unparse and repr."
 authors = ["RustPython Team"]
 edition = "2021"
