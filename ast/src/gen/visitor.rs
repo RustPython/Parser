@@ -13,6 +13,7 @@ pub trait Visitor<R = crate::text_size::TextRange> {
             Stmt::Return(data) => self.visit_stmt_return(data),
             Stmt::Delete(data) => self.visit_stmt_delete(data),
             Stmt::Assign(data) => self.visit_stmt_assign(data),
+            Stmt::TypeAlias(data) => self.visit_stmt_type_alias(data),
             Stmt::AugAssign(data) => self.visit_stmt_aug_assign(data),
             Stmt::AnnAssign(data) => self.visit_stmt_ann_assign(data),
             Stmt::For(data) => self.visit_stmt_for(data),
@@ -53,6 +54,9 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         if let Some(value) = node.returns {
             self.visit_expr(*value);
         }
+        for value in node.type_params {
+            self.visit_type_param(value);
+        }
     }
     fn visit_stmt_async_function_def(&mut self, node: StmtAsyncFunctionDef<R>) {
         self.generic_visit_stmt_async_function_def(node)
@@ -71,6 +75,9 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         if let Some(value) = node.returns {
             self.visit_expr(*value);
         }
+        for value in node.type_params {
+            self.visit_type_param(value);
+        }
     }
     fn visit_stmt_class_def(&mut self, node: StmtClassDef<R>) {
         self.generic_visit_stmt_class_def(node)
@@ -87,6 +94,9 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         }
         for value in node.decorator_list {
             self.visit_expr(value);
+        }
+        for value in node.type_params {
+            self.visit_type_param(value);
         }
     }
     fn visit_stmt_return(&mut self, node: StmtReturn<R>) {
@@ -111,6 +121,22 @@ pub trait Visitor<R = crate::text_size::TextRange> {
     fn generic_visit_stmt_assign(&mut self, node: StmtAssign<R>) {
         for value in node.targets {
             self.visit_expr(value);
+        }
+        {
+            let value = node.value;
+            self.visit_expr(*value);
+        }
+    }
+    fn visit_stmt_type_alias(&mut self, node: StmtTypeAlias<R>) {
+        self.generic_visit_stmt_type_alias(node)
+    }
+    fn generic_visit_stmt_type_alias(&mut self, node: StmtTypeAlias<R>) {
+        {
+            let value = node.name;
+            self.visit_expr(*value);
+        }
+        for value in node.type_params {
+            self.visit_type_param(value);
         }
         {
             let value = node.value;
@@ -810,4 +836,30 @@ pub trait Visitor<R = crate::text_size::TextRange> {
             self.visit_pattern(value);
         }
     }
+    fn visit_type_param(&mut self, node: TypeParam<R>) {
+        self.generic_visit_type_param(node)
+    }
+    fn generic_visit_type_param(&mut self, node: TypeParam<R>) {
+        match node {
+            TypeParam::TypeVar(data) => self.visit_type_param_type_var(data),
+            TypeParam::ParamSpec(data) => self.visit_type_param_param_spec(data),
+            TypeParam::TypeVarTuple(data) => self.visit_type_param_type_var_tuple(data),
+        }
+    }
+    fn visit_type_param_type_var(&mut self, node: TypeParamTypeVar<R>) {
+        self.generic_visit_type_param_type_var(node)
+    }
+    fn generic_visit_type_param_type_var(&mut self, node: TypeParamTypeVar<R>) {
+        if let Some(value) = node.bound {
+            self.visit_expr(*value);
+        }
+    }
+    fn visit_type_param_param_spec(&mut self, node: TypeParamParamSpec<R>) {
+        self.generic_visit_type_param_param_spec(node)
+    }
+    fn generic_visit_type_param_param_spec(&mut self, node: TypeParamParamSpec<R>) {}
+    fn visit_type_param_type_var_tuple(&mut self, node: TypeParamTypeVarTuple<R>) {
+        self.generic_visit_type_param_type_var_tuple(node)
+    }
+    fn generic_visit_type_param_type_var_tuple(&mut self, node: TypeParamTypeVarTuple<R>) {}
 }

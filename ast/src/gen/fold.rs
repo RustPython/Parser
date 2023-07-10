@@ -108,6 +108,12 @@ pub trait Fold<U> {
     ) -> Result<StmtAssign<Self::TargetU>, Self::Error> {
         fold_stmt_assign(self, node)
     }
+    fn fold_stmt_type_alias(
+        &mut self,
+        node: StmtTypeAlias<U>,
+    ) -> Result<StmtTypeAlias<Self::TargetU>, Self::Error> {
+        fold_stmt_type_alias(self, node)
+    }
     fn fold_stmt_aug_assign(
         &mut self,
         node: StmtAugAssign<U>,
@@ -507,6 +513,30 @@ pub trait Fold<U> {
     ) -> Result<TypeIgnoreTypeIgnore<Self::TargetU>, Self::Error> {
         fold_type_ignore_type_ignore(self, node)
     }
+    fn fold_type_param(
+        &mut self,
+        node: TypeParam<U>,
+    ) -> Result<TypeParam<Self::TargetU>, Self::Error> {
+        fold_type_param(self, node)
+    }
+    fn fold_type_param_type_var(
+        &mut self,
+        node: TypeParamTypeVar<U>,
+    ) -> Result<TypeParamTypeVar<Self::TargetU>, Self::Error> {
+        fold_type_param_type_var(self, node)
+    }
+    fn fold_type_param_param_spec(
+        &mut self,
+        node: TypeParamParamSpec<U>,
+    ) -> Result<TypeParamParamSpec<Self::TargetU>, Self::Error> {
+        fold_type_param_param_spec(self, node)
+    }
+    fn fold_type_param_type_var_tuple(
+        &mut self,
+        node: TypeParamTypeVarTuple<U>,
+    ) -> Result<TypeParamTypeVarTuple<Self::TargetU>, Self::Error> {
+        fold_type_param_type_var_tuple(self, node)
+    }
     fn fold_arg_with_default(
         &mut self,
         node: ArgWithDefault<U>,
@@ -653,6 +683,7 @@ pub fn fold_stmt<U, F: Fold<U> + ?Sized>(
         Stmt::Return(cons) => Stmt::Return(Foldable::fold(cons, folder)?),
         Stmt::Delete(cons) => Stmt::Delete(Foldable::fold(cons, folder)?),
         Stmt::Assign(cons) => Stmt::Assign(Foldable::fold(cons, folder)?),
+        Stmt::TypeAlias(cons) => Stmt::TypeAlias(Foldable::fold(cons, folder)?),
         Stmt::AugAssign(cons) => Stmt::AugAssign(Foldable::fold(cons, folder)?),
         Stmt::AnnAssign(cons) => Stmt::AnnAssign(Foldable::fold(cons, folder)?),
         Stmt::For(cons) => Stmt::For(Foldable::fold(cons, folder)?),
@@ -697,6 +728,7 @@ pub fn fold_stmt_function_def<U, F: Fold<U> + ?Sized>(
         decorator_list,
         returns,
         type_comment,
+        type_params,
         range,
     } = node;
     let context = folder.will_map_user(&range);
@@ -707,6 +739,7 @@ pub fn fold_stmt_function_def<U, F: Fold<U> + ?Sized>(
     let decorator_list = Foldable::fold(decorator_list, folder)?;
     let returns = Foldable::fold(returns, folder)?;
     let type_comment = Foldable::fold(type_comment, folder)?;
+    let type_params = Foldable::fold(type_params, folder)?;
     let range = folder.map_user(range, context)?;
     Ok(StmtFunctionDef {
         name,
@@ -715,6 +748,7 @@ pub fn fold_stmt_function_def<U, F: Fold<U> + ?Sized>(
         decorator_list,
         returns,
         type_comment,
+        type_params,
         range,
     })
 }
@@ -738,6 +772,7 @@ pub fn fold_stmt_async_function_def<U, F: Fold<U> + ?Sized>(
         decorator_list,
         returns,
         type_comment,
+        type_params,
         range,
     } = node;
     let context = folder.will_map_user(&range);
@@ -748,6 +783,7 @@ pub fn fold_stmt_async_function_def<U, F: Fold<U> + ?Sized>(
     let decorator_list = Foldable::fold(decorator_list, folder)?;
     let returns = Foldable::fold(returns, folder)?;
     let type_comment = Foldable::fold(type_comment, folder)?;
+    let type_params = Foldable::fold(type_params, folder)?;
     let range = folder.map_user(range, context)?;
     Ok(StmtAsyncFunctionDef {
         name,
@@ -756,6 +792,7 @@ pub fn fold_stmt_async_function_def<U, F: Fold<U> + ?Sized>(
         decorator_list,
         returns,
         type_comment,
+        type_params,
         range,
     })
 }
@@ -778,6 +815,7 @@ pub fn fold_stmt_class_def<U, F: Fold<U> + ?Sized>(
         keywords,
         body,
         decorator_list,
+        type_params,
         range,
     } = node;
     let context = folder.will_map_user(&range);
@@ -787,6 +825,7 @@ pub fn fold_stmt_class_def<U, F: Fold<U> + ?Sized>(
     let keywords = Foldable::fold(keywords, folder)?;
     let body = Foldable::fold(body, folder)?;
     let decorator_list = Foldable::fold(decorator_list, folder)?;
+    let type_params = Foldable::fold(type_params, folder)?;
     let range = folder.map_user(range, context)?;
     Ok(StmtClassDef {
         name,
@@ -794,6 +833,7 @@ pub fn fold_stmt_class_def<U, F: Fold<U> + ?Sized>(
         keywords,
         body,
         decorator_list,
+        type_params,
         range,
     })
 }
@@ -866,6 +906,38 @@ pub fn fold_stmt_assign<U, F: Fold<U> + ?Sized>(
         targets,
         value,
         type_comment,
+        range,
+    })
+}
+impl<T, U> Foldable<T, U> for StmtTypeAlias<T> {
+    type Mapped = StmtTypeAlias<U>;
+    fn fold<F: Fold<T, TargetU = U> + ?Sized>(
+        self,
+        folder: &mut F,
+    ) -> Result<Self::Mapped, F::Error> {
+        folder.fold_stmt_type_alias(self)
+    }
+}
+pub fn fold_stmt_type_alias<U, F: Fold<U> + ?Sized>(
+    #[allow(unused)] folder: &mut F,
+    node: StmtTypeAlias<U>,
+) -> Result<StmtTypeAlias<F::TargetU>, F::Error> {
+    let StmtTypeAlias {
+        name,
+        type_params,
+        value,
+        range,
+    } = node;
+    let context = folder.will_map_user(&range);
+
+    let name = Foldable::fold(name, folder)?;
+    let type_params = Foldable::fold(type_params, folder)?;
+    let value = Foldable::fold(value, folder)?;
+    let range = folder.map_user(range, context)?;
+    Ok(StmtTypeAlias {
+        name,
+        type_params,
+        value,
         range,
     })
 }
@@ -2790,6 +2862,87 @@ pub fn fold_type_ignore_type_ignore<U, F: Fold<U> + ?Sized>(
     let tag = Foldable::fold(tag, folder)?;
     let range = folder.map_user_cfg(range, context)?;
     Ok(TypeIgnoreTypeIgnore { lineno, tag, range })
+}
+impl<T, U> Foldable<T, U> for TypeParam<T> {
+    type Mapped = TypeParam<U>;
+    fn fold<F: Fold<T, TargetU = U> + ?Sized>(
+        self,
+        folder: &mut F,
+    ) -> Result<Self::Mapped, F::Error> {
+        folder.fold_type_param(self)
+    }
+}
+pub fn fold_type_param<U, F: Fold<U> + ?Sized>(
+    #[allow(unused)] folder: &mut F,
+    node: TypeParam<U>,
+) -> Result<TypeParam<F::TargetU>, F::Error> {
+    let folded = match node {
+        TypeParam::TypeVar(cons) => TypeParam::TypeVar(Foldable::fold(cons, folder)?),
+        TypeParam::ParamSpec(cons) => TypeParam::ParamSpec(Foldable::fold(cons, folder)?),
+        TypeParam::TypeVarTuple(cons) => TypeParam::TypeVarTuple(Foldable::fold(cons, folder)?),
+    };
+    Ok(folded)
+}
+impl<T, U> Foldable<T, U> for TypeParamTypeVar<T> {
+    type Mapped = TypeParamTypeVar<U>;
+    fn fold<F: Fold<T, TargetU = U> + ?Sized>(
+        self,
+        folder: &mut F,
+    ) -> Result<Self::Mapped, F::Error> {
+        folder.fold_type_param_type_var(self)
+    }
+}
+pub fn fold_type_param_type_var<U, F: Fold<U> + ?Sized>(
+    #[allow(unused)] folder: &mut F,
+    node: TypeParamTypeVar<U>,
+) -> Result<TypeParamTypeVar<F::TargetU>, F::Error> {
+    let TypeParamTypeVar { name, bound, range } = node;
+    let context = folder.will_map_user(&range);
+
+    let name = Foldable::fold(name, folder)?;
+    let bound = Foldable::fold(bound, folder)?;
+    let range = folder.map_user(range, context)?;
+    Ok(TypeParamTypeVar { name, bound, range })
+}
+impl<T, U> Foldable<T, U> for TypeParamParamSpec<T> {
+    type Mapped = TypeParamParamSpec<U>;
+    fn fold<F: Fold<T, TargetU = U> + ?Sized>(
+        self,
+        folder: &mut F,
+    ) -> Result<Self::Mapped, F::Error> {
+        folder.fold_type_param_param_spec(self)
+    }
+}
+pub fn fold_type_param_param_spec<U, F: Fold<U> + ?Sized>(
+    #[allow(unused)] folder: &mut F,
+    node: TypeParamParamSpec<U>,
+) -> Result<TypeParamParamSpec<F::TargetU>, F::Error> {
+    let TypeParamParamSpec { name, range } = node;
+    let context = folder.will_map_user(&range);
+
+    let name = Foldable::fold(name, folder)?;
+    let range = folder.map_user(range, context)?;
+    Ok(TypeParamParamSpec { name, range })
+}
+impl<T, U> Foldable<T, U> for TypeParamTypeVarTuple<T> {
+    type Mapped = TypeParamTypeVarTuple<U>;
+    fn fold<F: Fold<T, TargetU = U> + ?Sized>(
+        self,
+        folder: &mut F,
+    ) -> Result<Self::Mapped, F::Error> {
+        folder.fold_type_param_type_var_tuple(self)
+    }
+}
+pub fn fold_type_param_type_var_tuple<U, F: Fold<U> + ?Sized>(
+    #[allow(unused)] folder: &mut F,
+    node: TypeParamTypeVarTuple<U>,
+) -> Result<TypeParamTypeVarTuple<F::TargetU>, F::Error> {
+    let TypeParamTypeVarTuple { name, range } = node;
+    let context = folder.will_map_user(&range);
+
+    let name = Foldable::fold(name, folder)?;
+    let range = folder.map_user(range, context)?;
+    Ok(TypeParamTypeVarTuple { name, range })
 }
 impl<T, U> Foldable<T, U> for ArgWithDefault<T> {
     type Mapped = ArgWithDefault<U>;

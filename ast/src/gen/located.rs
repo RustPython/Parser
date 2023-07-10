@@ -171,6 +171,20 @@ impl LocatedMut for StmtAssign {
     }
 }
 
+pub type StmtTypeAlias = crate::generic::StmtTypeAlias<SourceRange>;
+
+impl Located for StmtTypeAlias {
+    fn range(&self) -> SourceRange {
+        self.range
+    }
+}
+
+impl LocatedMut for StmtTypeAlias {
+    fn range_mut(&mut self) -> &mut SourceRange {
+        &mut self.range
+    }
+}
+
 pub type StmtAugAssign = crate::generic::StmtAugAssign<SourceRange>;
 
 impl Located for StmtAugAssign {
@@ -474,6 +488,7 @@ impl Located for Stmt {
             Self::Return(node) => node.range(),
             Self::Delete(node) => node.range(),
             Self::Assign(node) => node.range(),
+            Self::TypeAlias(node) => node.range(),
             Self::AugAssign(node) => node.range(),
             Self::AnnAssign(node) => node.range(),
             Self::For(node) => node.range(),
@@ -508,6 +523,7 @@ impl LocatedMut for Stmt {
             Self::Return(node) => node.range_mut(),
             Self::Delete(node) => node.range_mut(),
             Self::Assign(node) => node.range_mut(),
+            Self::TypeAlias(node) => node.range_mut(),
             Self::AugAssign(node) => node.range_mut(),
             Self::AnnAssign(node) => node.range_mut(),
             Self::For(node) => node.range_mut(),
@@ -1363,6 +1379,70 @@ impl LocatedMut for TypeIgnore {
     fn range_mut(&mut self) -> &mut SourceRange {
         match self {
             Self::TypeIgnore(node) => node.range_mut(),
+        }
+    }
+}
+
+pub type TypeParam = crate::generic::TypeParam<SourceRange>;
+
+pub type TypeParamTypeVar = crate::generic::TypeParamTypeVar<SourceRange>;
+
+impl Located for TypeParamTypeVar {
+    fn range(&self) -> SourceRange {
+        self.range
+    }
+}
+
+impl LocatedMut for TypeParamTypeVar {
+    fn range_mut(&mut self) -> &mut SourceRange {
+        &mut self.range
+    }
+}
+
+pub type TypeParamParamSpec = crate::generic::TypeParamParamSpec<SourceRange>;
+
+impl Located for TypeParamParamSpec {
+    fn range(&self) -> SourceRange {
+        self.range
+    }
+}
+
+impl LocatedMut for TypeParamParamSpec {
+    fn range_mut(&mut self) -> &mut SourceRange {
+        &mut self.range
+    }
+}
+
+pub type TypeParamTypeVarTuple = crate::generic::TypeParamTypeVarTuple<SourceRange>;
+
+impl Located for TypeParamTypeVarTuple {
+    fn range(&self) -> SourceRange {
+        self.range
+    }
+}
+
+impl LocatedMut for TypeParamTypeVarTuple {
+    fn range_mut(&mut self) -> &mut SourceRange {
+        &mut self.range
+    }
+}
+
+impl Located for TypeParam {
+    fn range(&self) -> SourceRange {
+        match self {
+            Self::TypeVar(node) => node.range(),
+            Self::ParamSpec(node) => node.range(),
+            Self::TypeVarTuple(node) => node.range(),
+        }
+    }
+}
+
+impl LocatedMut for TypeParam {
+    fn range_mut(&mut self) -> &mut SourceRange {
+        match self {
+            Self::TypeVar(node) => node.range_mut(),
+            Self::ParamSpec(node) => node.range_mut(),
+            Self::TypeVarTuple(node) => node.range_mut(),
         }
     }
 }

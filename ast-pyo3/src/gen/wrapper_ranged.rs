@@ -222,6 +222,7 @@ impl ToPyWrapper for ast::Stmt<TextRange> {
             Self::Return(cons) => cons.to_py_wrapper(py),
             Self::Delete(cons) => cons.to_py_wrapper(py),
             Self::Assign(cons) => cons.to_py_wrapper(py),
+            Self::TypeAlias(cons) => cons.to_py_wrapper(py),
             Self::AugAssign(cons) => cons.to_py_wrapper(py),
             Self::AnnAssign(cons) => cons.to_py_wrapper(py),
             Self::For(cons) => cons.to_py_wrapper(py),
@@ -310,6 +311,12 @@ impl StmtFunctionDef {
     fn get_type_comment(&self, py: Python) -> PyResult<PyObject> {
         self.0.type_comment.to_py_wrapper(py)
     }
+
+    #[getter]
+    #[inline]
+    fn get_type_params(&self, py: Python) -> PyResult<PyObject> {
+        self.0.type_params.to_py_wrapper(py)
+    }
 }
 
 #[pyclass(module="rustpython_ast.ranged", name="_AsyncFunctionDef", extends=Stmt, frozen)]
@@ -375,6 +382,12 @@ impl StmtAsyncFunctionDef {
     fn get_type_comment(&self, py: Python) -> PyResult<PyObject> {
         self.0.type_comment.to_py_wrapper(py)
     }
+
+    #[getter]
+    #[inline]
+    fn get_type_params(&self, py: Python) -> PyResult<PyObject> {
+        self.0.type_params.to_py_wrapper(py)
+    }
 }
 
 #[pyclass(module="rustpython_ast.ranged", name="_ClassDef", extends=Stmt, frozen)]
@@ -433,6 +446,12 @@ impl StmtClassDef {
     #[inline]
     fn get_decorator_list(&self, py: Python) -> PyResult<PyObject> {
         self.0.decorator_list.to_py_wrapper(py)
+    }
+
+    #[getter]
+    #[inline]
+    fn get_type_params(&self, py: Python) -> PyResult<PyObject> {
+        self.0.type_params.to_py_wrapper(py)
     }
 }
 
@@ -550,6 +569,53 @@ impl StmtAssign {
     #[inline]
     fn get_type_comment(&self, py: Python) -> PyResult<PyObject> {
         self.0.type_comment.to_py_wrapper(py)
+    }
+}
+
+#[pyclass(module="rustpython_ast.ranged", name="_TypeAlias", extends=Stmt, frozen)]
+#[derive(Clone, Debug)]
+pub struct StmtTypeAlias(pub &'static ast::StmtTypeAlias<TextRange>);
+
+impl From<&'static ast::StmtTypeAlias<TextRange>> for StmtTypeAlias {
+    fn from(node: &'static ast::StmtTypeAlias<TextRange>) -> Self {
+        StmtTypeAlias(node)
+    }
+}
+
+impl ToPyObject for StmtTypeAlias {
+    fn to_object(&self, py: Python) -> PyObject {
+        let initializer = PyClassInitializer::from(Ast)
+            .add_subclass(Stmt)
+            .add_subclass(self.clone());
+        Py::new(py, initializer).unwrap().into_py(py)
+    }
+}
+
+impl ToPyWrapper for ast::StmtTypeAlias<TextRange> {
+    #[inline]
+    fn to_py_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {
+        Ok(StmtTypeAlias(self).to_object(py))
+    }
+}
+
+#[pymethods]
+impl StmtTypeAlias {
+    #[getter]
+    #[inline]
+    fn get_name(&self, py: Python) -> PyResult<PyObject> {
+        self.0.name.to_py_wrapper(py)
+    }
+
+    #[getter]
+    #[inline]
+    fn get_type_params(&self, py: Python) -> PyResult<PyObject> {
+        self.0.type_params.to_py_wrapper(py)
+    }
+
+    #[getter]
+    #[inline]
+    fn get_value(&self, py: Python) -> PyResult<PyObject> {
+        self.0.value.to_py_wrapper(py)
     }
 }
 
@@ -3993,6 +4059,152 @@ impl TypeIgnoreTypeIgnore {
     }
 }
 
+#[pyclass(module="rustpython_ast.ranged", name="_type_param", extends=super::Ast, frozen, subclass)]
+#[derive(Clone, Debug)]
+pub struct TypeParam;
+
+impl From<&'static ast::TypeParam<TextRange>> for TypeParam {
+    fn from(_node: &'static ast::TypeParam<TextRange>) -> Self {
+        TypeParam
+    }
+}
+
+#[pymethods]
+impl TypeParam {
+    #[new]
+    fn new() -> PyClassInitializer<Self> {
+        PyClassInitializer::from(Ast).add_subclass(Self)
+    }
+}
+impl ToPyObject for TypeParam {
+    fn to_object(&self, py: Python) -> PyObject {
+        let initializer = Self::new();
+        Py::new(py, initializer).unwrap().into_py(py)
+    }
+}
+
+impl ToPyWrapper for ast::TypeParam<TextRange> {
+    #[inline]
+    fn to_py_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {
+        match &self {
+            Self::TypeVar(cons) => cons.to_py_wrapper(py),
+            Self::ParamSpec(cons) => cons.to_py_wrapper(py),
+            Self::TypeVarTuple(cons) => cons.to_py_wrapper(py),
+        }
+    }
+}
+
+#[pyclass(module="rustpython_ast.ranged", name="_TypeVar", extends=TypeParam, frozen)]
+#[derive(Clone, Debug)]
+pub struct TypeParamTypeVar(pub &'static ast::TypeParamTypeVar<TextRange>);
+
+impl From<&'static ast::TypeParamTypeVar<TextRange>> for TypeParamTypeVar {
+    fn from(node: &'static ast::TypeParamTypeVar<TextRange>) -> Self {
+        TypeParamTypeVar(node)
+    }
+}
+
+impl ToPyObject for TypeParamTypeVar {
+    fn to_object(&self, py: Python) -> PyObject {
+        let initializer = PyClassInitializer::from(Ast)
+            .add_subclass(TypeParam)
+            .add_subclass(self.clone());
+        Py::new(py, initializer).unwrap().into_py(py)
+    }
+}
+
+impl ToPyWrapper for ast::TypeParamTypeVar<TextRange> {
+    #[inline]
+    fn to_py_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {
+        Ok(TypeParamTypeVar(self).to_object(py))
+    }
+}
+
+#[pymethods]
+impl TypeParamTypeVar {
+    #[getter]
+    #[inline]
+    fn get_name(&self, py: Python) -> PyResult<PyObject> {
+        self.0.name.to_py_wrapper(py)
+    }
+
+    #[getter]
+    #[inline]
+    fn get_bound(&self, py: Python) -> PyResult<PyObject> {
+        self.0.bound.to_py_wrapper(py)
+    }
+}
+
+#[pyclass(module="rustpython_ast.ranged", name="_ParamSpec", extends=TypeParam, frozen)]
+#[derive(Clone, Debug)]
+pub struct TypeParamParamSpec(pub &'static ast::TypeParamParamSpec<TextRange>);
+
+impl From<&'static ast::TypeParamParamSpec<TextRange>> for TypeParamParamSpec {
+    fn from(node: &'static ast::TypeParamParamSpec<TextRange>) -> Self {
+        TypeParamParamSpec(node)
+    }
+}
+
+impl ToPyObject for TypeParamParamSpec {
+    fn to_object(&self, py: Python) -> PyObject {
+        let initializer = PyClassInitializer::from(Ast)
+            .add_subclass(TypeParam)
+            .add_subclass(self.clone());
+        Py::new(py, initializer).unwrap().into_py(py)
+    }
+}
+
+impl ToPyWrapper for ast::TypeParamParamSpec<TextRange> {
+    #[inline]
+    fn to_py_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {
+        Ok(TypeParamParamSpec(self).to_object(py))
+    }
+}
+
+#[pymethods]
+impl TypeParamParamSpec {
+    #[getter]
+    #[inline]
+    fn get_name(&self, py: Python) -> PyResult<PyObject> {
+        self.0.name.to_py_wrapper(py)
+    }
+}
+
+#[pyclass(module="rustpython_ast.ranged", name="_TypeVarTuple", extends=TypeParam, frozen)]
+#[derive(Clone, Debug)]
+pub struct TypeParamTypeVarTuple(pub &'static ast::TypeParamTypeVarTuple<TextRange>);
+
+impl From<&'static ast::TypeParamTypeVarTuple<TextRange>> for TypeParamTypeVarTuple {
+    fn from(node: &'static ast::TypeParamTypeVarTuple<TextRange>) -> Self {
+        TypeParamTypeVarTuple(node)
+    }
+}
+
+impl ToPyObject for TypeParamTypeVarTuple {
+    fn to_object(&self, py: Python) -> PyObject {
+        let initializer = PyClassInitializer::from(Ast)
+            .add_subclass(TypeParam)
+            .add_subclass(self.clone());
+        Py::new(py, initializer).unwrap().into_py(py)
+    }
+}
+
+impl ToPyWrapper for ast::TypeParamTypeVarTuple<TextRange> {
+    #[inline]
+    fn to_py_wrapper(&'static self, py: Python) -> PyResult<Py<PyAny>> {
+        Ok(TypeParamTypeVarTuple(self).to_object(py))
+    }
+}
+
+#[pymethods]
+impl TypeParamTypeVarTuple {
+    #[getter]
+    #[inline]
+    fn get_name(&self, py: Python) -> PyResult<PyObject> {
+        self.0.name.to_py_wrapper(py)
+    }
+}
+
 pub fn add_to_module(py: Python, m: &PyModule) -> PyResult<()> {
     super::init_module(py, m)?;
     super::init_type::<Mod, ast::Mod>(py, m)?;
@@ -4007,6 +4219,7 @@ pub fn add_to_module(py: Python, m: &PyModule) -> PyResult<()> {
     super::init_type::<StmtReturn, ast::StmtReturn>(py, m)?;
     super::init_type::<StmtDelete, ast::StmtDelete>(py, m)?;
     super::init_type::<StmtAssign, ast::StmtAssign>(py, m)?;
+    super::init_type::<StmtTypeAlias, ast::StmtTypeAlias>(py, m)?;
     super::init_type::<StmtAugAssign, ast::StmtAugAssign>(py, m)?;
     super::init_type::<StmtAnnAssign, ast::StmtAnnAssign>(py, m)?;
     super::init_type::<StmtFor, ast::StmtFor>(py, m)?;
@@ -4113,5 +4326,9 @@ pub fn add_to_module(py: Python, m: &PyModule) -> PyResult<()> {
     super::init_type::<PatternMatchOr, ast::PatternMatchOr>(py, m)?;
     super::init_type::<TypeIgnore, ast::TypeIgnore>(py, m)?;
     super::init_type::<TypeIgnoreTypeIgnore, ast::TypeIgnoreTypeIgnore>(py, m)?;
+    super::init_type::<TypeParam, ast::TypeParam>(py, m)?;
+    super::init_type::<TypeParamTypeVar, ast::TypeParamTypeVar>(py, m)?;
+    super::init_type::<TypeParamParamSpec, ast::TypeParamParamSpec>(py, m)?;
+    super::init_type::<TypeParamTypeVarTuple, ast::TypeParamTypeVarTuple>(py, m)?;
     Ok(())
 }
