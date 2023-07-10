@@ -30685,6 +30685,7 @@ fn __action157(
         let returns = r.map(|x| Box::new(x));
         let end_location = body.last().unwrap().end();
         let type_comment = None;
+        let type_params = Vec::new();
         if is_async.is_some() {
             ast::StmtAsyncFunctionDef {
                 name,
@@ -30693,6 +30694,7 @@ fn __action157(
                 decorator_list,
                 returns,
                 type_comment,
+                type_params,
                 range: (location..end_location).into(),
             }
             .into()
@@ -30704,6 +30706,7 @@ fn __action157(
                 decorator_list,
                 returns,
                 type_comment,
+                type_params,
                 range: (location..end_location).into(),
             }
             .into()
@@ -30842,12 +30845,14 @@ fn __action164(
             None => (vec![], vec![]),
         };
         let end_location = body.last().unwrap().end();
+        let type_params = Vec::new();
         ast::Stmt::ClassDef(ast::StmtClassDef {
             name,
             bases,
             keywords,
             body,
             decorator_list,
+            type_params,
             range: (location..end_location).into(),
         })
     }

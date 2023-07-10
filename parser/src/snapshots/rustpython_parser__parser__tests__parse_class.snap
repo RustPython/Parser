@@ -1,6 +1,6 @@
 ---
 source: parser/src/parser.rs
-expression: "parse_program(source, \"<test>\").unwrap()"
+expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
 ---
 [
     ClassDef(
@@ -68,6 +68,7 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         decorator_list: [],
                         returns: None,
                         type_comment: None,
+                        type_params: [],
                     },
                 ),
                 FunctionDef(
@@ -129,10 +130,12 @@ expression: "parse_program(source, \"<test>\").unwrap()"
                         decorator_list: [],
                         returns: None,
                         type_comment: None,
+                        type_params: [],
                     },
                 ),
             ],
             decorator_list: [],
+            type_params: [],
         },
     ),
 ]
