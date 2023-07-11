@@ -1,5 +1,5 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: c39f9711066c6f94aaf93d62d86b41efb4242ddcdcbe5b9d35e5a77a14ff22d6
+// sha3: 63c75be3af99ad823887ab5407feb1d091c0c150fc7ec64c257b95becfbbe6be
 use crate::{
     ast::{self as ast, Ranged, bigint::BigInt},
     lexer::{LexicalError, LexicalErrorType},
