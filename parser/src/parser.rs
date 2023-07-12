@@ -688,6 +688,9 @@ def func[*Ts](*a: *Ts):
 
 def func[**P](*args: P.args, **kwargs: P.kwargs):
     ...
+
+def func[T, U: str, *Ts, **P]():
+    pass
   ";
           insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
