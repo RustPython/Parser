@@ -907,6 +907,11 @@ type X[T] = list[T] | set[T]
 type X[T, *Ts, **P] = (T, Ts, P)
 type X[T: int, *Ts, **P] = (T, Ts, P)
 type X[T: (int, str), *Ts, **P] = (T, Ts, P)
+
+# soft keyword as alias name
+type type = int  
+type match = int
+type case = int
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
@@ -931,11 +936,8 @@ type()[a:
     b]  # (type())[a: b]
 if type := 1: pass
 type = lambda query: query == event
-type type = int | str
 print(type(12))
 type(type)
-type match = int  # other soft keyword
-type case = int
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
