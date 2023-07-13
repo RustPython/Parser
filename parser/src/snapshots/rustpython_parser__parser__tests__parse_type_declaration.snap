@@ -5,12 +5,36 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
 [
     TypeAlias(
         StmtTypeAlias {
-            range: 27..52,
+            range: 1..13,
             name: Name(
                 ExprName {
-                    range: 32..40,
+                    range: 6..7,
                     id: Identifier(
-                        "IntOrStr",
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 10..13,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 14..32,
+            name: Name(
+                ExprName {
+                    range: 19..20,
+                    id: Identifier(
+                        "X",
                     ),
                     ctx: Load,
                 },
@@ -18,10 +42,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [],
             value: BinOp(
                 ExprBinOp {
-                    range: 43..52,
+                    range: 23..32,
                     left: Name(
                         ExprName {
-                            range: 43..46,
+                            range: 23..26,
                             id: Identifier(
                                 "int",
                             ),
@@ -31,7 +55,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     op: BitOr,
                     right: Name(
                         ExprName {
-                            range: 49..52,
+                            range: 29..32,
                             id: Identifier(
                                 "str",
                             ),
@@ -44,91 +68,12 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     TypeAlias(
         StmtTypeAlias {
-            range: 77..113,
+            range: 33..61,
             name: Name(
                 ExprName {
-                    range: 82..91,
+                    range: 38..39,
                     id: Identifier(
-                        "ListOrSet",
-                    ),
-                    ctx: Load,
-                },
-            ),
-            type_params: [
-                TypeVar(
-                    TypeParamTypeVar {
-                        range: 92..93,
-                        name: Identifier(
-                            "T",
-                        ),
-                        bound: None,
-                    },
-                ),
-            ],
-            value: BinOp(
-                ExprBinOp {
-                    range: 97..113,
-                    left: Subscript(
-                        ExprSubscript {
-                            range: 97..104,
-                            value: Name(
-                                ExprName {
-                                    range: 97..101,
-                                    id: Identifier(
-                                        "list",
-                                    ),
-                                    ctx: Load,
-                                },
-                            ),
-                            slice: Name(
-                                ExprName {
-                                    range: 102..103,
-                                    id: Identifier(
-                                        "T",
-                                    ),
-                                    ctx: Load,
-                                },
-                            ),
-                            ctx: Load,
-                        },
-                    ),
-                    op: BitOr,
-                    right: Subscript(
-                        ExprSubscript {
-                            range: 107..113,
-                            value: Name(
-                                ExprName {
-                                    range: 107..110,
-                                    id: Identifier(
-                                        "set",
-                                    ),
-                                    ctx: Load,
-                                },
-                            ),
-                            slice: Name(
-                                ExprName {
-                                    range: 111..112,
-                                    id: Identifier(
-                                        "T",
-                                    ),
-                                    ctx: Load,
-                                },
-                            ),
-                            ctx: Load,
-                        },
-                    ),
-                },
-            ),
-        },
-    ),
-    TypeAlias(
-        StmtTypeAlias {
-            range: 164..209,
-            name: Name(
-                ExprName {
-                    range: 169..186,
-                    id: Identifier(
-                        "AnimalOrVegetable",
+                        "X",
                     ),
                     ctx: Load,
                 },
@@ -136,12 +81,12 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [],
             value: BinOp(
                 ExprBinOp {
-                    range: 189..209,
+                    range: 42..61,
                     left: Name(
                         ExprName {
-                            range: 189..195,
+                            range: 42..45,
                             id: Identifier(
-                                "Animal",
+                                "int",
                             ),
                             ctx: Load,
                         },
@@ -149,9 +94,9 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     op: BitOr,
                     right: Constant(
                         ExprConstant {
-                            range: 198..209,
+                            range: 48..61,
                             value: Str(
-                                "Vegetable",
+                                "ForwardRefY",
                             ),
                             kind: None,
                         },
@@ -162,12 +107,12 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     TypeAlias(
         StmtTypeAlias {
-            range: 251..301,
+            range: 62..88,
             name: Name(
                 ExprName {
-                    range: 256..269,
+                    range: 67..68,
                     id: Identifier(
-                        "RecursiveList",
+                        "X",
                     ),
                     ctx: Load,
                 },
@@ -175,7 +120,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [
                 TypeVar(
                     TypeParamTypeVar {
-                        range: 270..271,
+                        range: 69..70,
                         name: Identifier(
                             "T",
                         ),
@@ -185,10 +130,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             ],
             value: BinOp(
                 ExprBinOp {
-                    range: 275..301,
+                    range: 74..88,
                     left: Name(
                         ExprName {
-                            range: 275..276,
+                            range: 74..75,
                             id: Identifier(
                                 "T",
                             ),
@@ -198,10 +143,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     op: BitOr,
                     right: Subscript(
                         ExprSubscript {
-                            range: 279..301,
+                            range: 78..88,
                             value: Name(
                                 ExprName {
-                                    range: 279..283,
+                                    range: 78..82,
                                     id: Identifier(
                                         "list",
                                     ),
@@ -210,19 +155,19 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                             ),
                             slice: Subscript(
                                 ExprSubscript {
-                                    range: 284..300,
+                                    range: 83..87,
                                     value: Name(
                                         ExprName {
-                                            range: 284..297,
+                                            range: 83..84,
                                             id: Identifier(
-                                                "RecursiveList",
+                                                "X",
                                             ),
                                             ctx: Load,
                                         },
                                     ),
                                     slice: Name(
                                         ExprName {
-                                            range: 298..299,
+                                            range: 85..86,
                                             id: Identifier(
                                                 "T",
                                             ),
@@ -235,6 +180,384 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                             ctx: Load,
                         },
                     ),
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 102..117,
+            name: Name(
+                ExprName {
+                    range: 107..108,
+                    id: Identifier(
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 109..110,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: None,
+                    },
+                ),
+            ],
+            value: Name(
+                ExprName {
+                    range: 114..117,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 118..146,
+            name: Name(
+                ExprName {
+                    range: 123..124,
+                    id: Identifier(
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 125..126,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: None,
+                    },
+                ),
+            ],
+            value: BinOp(
+                ExprBinOp {
+                    range: 130..146,
+                    left: Subscript(
+                        ExprSubscript {
+                            range: 130..137,
+                            value: Name(
+                                ExprName {
+                                    range: 130..134,
+                                    id: Identifier(
+                                        "list",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Name(
+                                ExprName {
+                                    range: 135..136,
+                                    id: Identifier(
+                                        "T",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    op: BitOr,
+                    right: Subscript(
+                        ExprSubscript {
+                            range: 140..146,
+                            value: Name(
+                                ExprName {
+                                    range: 140..143,
+                                    id: Identifier(
+                                        "set",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Name(
+                                ExprName {
+                                    range: 144..145,
+                                    id: Identifier(
+                                        "T",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 147..179,
+            name: Name(
+                ExprName {
+                    range: 152..153,
+                    id: Identifier(
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 154..155,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: None,
+                    },
+                ),
+                TypeVarTuple(
+                    TypeParamTypeVarTuple {
+                        range: 157..160,
+                        name: Identifier(
+                            "Ts",
+                        ),
+                    },
+                ),
+                ParamSpec(
+                    TypeParamParamSpec {
+                        range: 162..165,
+                        name: Identifier(
+                            "P",
+                        ),
+                    },
+                ),
+            ],
+            value: Tuple(
+                ExprTuple {
+                    range: 169..179,
+                    elts: [
+                        Name(
+                            ExprName {
+                                range: 170..171,
+                                id: Identifier(
+                                    "T",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 173..175,
+                                id: Identifier(
+                                    "Ts",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 177..178,
+                                id: Identifier(
+                                    "P",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 180..217,
+            name: Name(
+                ExprName {
+                    range: 185..186,
+                    id: Identifier(
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 187..193,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: Some(
+                            Name(
+                                ExprName {
+                                    range: 190..193,
+                                    id: Identifier(
+                                        "int",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                        ),
+                    },
+                ),
+                TypeVarTuple(
+                    TypeParamTypeVarTuple {
+                        range: 195..198,
+                        name: Identifier(
+                            "Ts",
+                        ),
+                    },
+                ),
+                ParamSpec(
+                    TypeParamParamSpec {
+                        range: 200..203,
+                        name: Identifier(
+                            "P",
+                        ),
+                    },
+                ),
+            ],
+            value: Tuple(
+                ExprTuple {
+                    range: 207..217,
+                    elts: [
+                        Name(
+                            ExprName {
+                                range: 208..209,
+                                id: Identifier(
+                                    "T",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 211..213,
+                                id: Identifier(
+                                    "Ts",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 215..216,
+                                id: Identifier(
+                                    "P",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 218..262,
+            name: Name(
+                ExprName {
+                    range: 223..224,
+                    id: Identifier(
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 225..238,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: Some(
+                            Tuple(
+                                ExprTuple {
+                                    range: 228..238,
+                                    elts: [
+                                        Name(
+                                            ExprName {
+                                                range: 229..232,
+                                                id: Identifier(
+                                                    "int",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                        Name(
+                                            ExprName {
+                                                range: 234..237,
+                                                id: Identifier(
+                                                    "str",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                },
+                            ),
+                        ),
+                    },
+                ),
+                TypeVarTuple(
+                    TypeParamTypeVarTuple {
+                        range: 240..243,
+                        name: Identifier(
+                            "Ts",
+                        ),
+                    },
+                ),
+                ParamSpec(
+                    TypeParamParamSpec {
+                        range: 245..248,
+                        name: Identifier(
+                            "P",
+                        ),
+                    },
+                ),
+            ],
+            value: Tuple(
+                ExprTuple {
+                    range: 252..262,
+                    elts: [
+                        Name(
+                            ExprName {
+                                range: 253..254,
+                                id: Identifier(
+                                    "T",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 256..258,
+                                id: Identifier(
+                                    "Ts",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 260..261,
+                                id: Identifier(
+                                    "P",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
                 },
             ),
         },

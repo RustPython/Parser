@@ -897,19 +897,17 @@ except* OSError as e:
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_type_declaration() {
-        let source = "\
-# A non-generic type alias
-type IntOrStr = int | str
-
-# A generic type alias
-type ListOrSet[T] = list[T] | set[T]
-
-# A type alias that includes a forward reference
-type AnimalOrVegetable = Animal | \"Vegetable\"
-
-# A generic self-referential type alias
-type RecursiveList[T] = T | list[RecursiveList[T]]
-";
+        let source = r#"
+type X = int
+type X = int | str
+type X = int | "ForwardRefY"
+type X[T] = T | list[X[T]]  # recursive
+type X[T] = int
+type X[T] = list[T] | set[T]
+type X[T, *Ts, **P] = (T, Ts, P)
+type X[T: int, *Ts, **P] = (T, Ts, P)
+type X[T: (int, str), *Ts, **P] = (T, Ts, P)
+"#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
