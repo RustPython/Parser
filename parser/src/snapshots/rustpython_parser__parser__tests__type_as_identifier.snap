@@ -769,15 +769,54 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_comment: None,
         },
     ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 536..557,
+            name: Name(
+                ExprName {
+                    range: 541..545,
+                    id: Identifier(
+                        "type",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: BinOp(
+                ExprBinOp {
+                    range: 548..557,
+                    left: Name(
+                        ExprName {
+                            range: 548..551,
+                            id: Identifier(
+                                "int",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    op: BitOr,
+                    right: Name(
+                        ExprName {
+                            range: 554..557,
+                            id: Identifier(
+                                "str",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
     Expr(
         StmtExpr {
-            range: 536..551,
+            range: 558..573,
             value: Call(
                 ExprCall {
-                    range: 536..551,
+                    range: 558..573,
                     func: Name(
                         ExprName {
-                            range: 536..541,
+                            range: 558..563,
                             id: Identifier(
                                 "print",
                             ),
@@ -787,10 +826,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     args: [
                         Call(
                             ExprCall {
-                                range: 542..550,
+                                range: 564..572,
                                 func: Name(
                                     ExprName {
-                                        range: 542..546,
+                                        range: 564..568,
                                         id: Identifier(
                                             "type",
                                         ),
@@ -800,7 +839,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                                 args: [
                                     Constant(
                                         ExprConstant {
-                                            range: 547..549,
+                                            range: 569..571,
                                             value: Int(
                                                 12,
                                             ),
@@ -813,6 +852,85 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                         ),
                     ],
                     keywords: [],
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 574..584,
+            value: Call(
+                ExprCall {
+                    range: 574..584,
+                    func: Name(
+                        ExprName {
+                            range: 574..578,
+                            id: Identifier(
+                                "type",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    args: [
+                        Name(
+                            ExprName {
+                                range: 579..583,
+                                id: Identifier(
+                                    "type",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    keywords: [],
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 585..601,
+            name: Name(
+                ExprName {
+                    range: 590..595,
+                    id: Identifier(
+                        "match",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 598..601,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 624..639,
+            name: Name(
+                ExprName {
+                    range: 629..633,
+                    id: Identifier(
+                        "case",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 636..639,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
                 },
             ),
         },
