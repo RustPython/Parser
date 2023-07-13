@@ -8,9 +8,9 @@ use itertools::{Itertools, MultiPeek};
 /// as soft keywords, meaning that they can be used as identifiers (e.g., variable names) in certain
 /// contexts.
 ///
-/// Later, [PEP 695](https://peps.python.org/pep-0695/#generic-type-alias) introduced the `type` 
+/// Later, [PEP 695](https://peps.python.org/pep-0695/#generic-type-alias) introduced the `type`
 /// soft keyword.
-/// 
+///
 /// This function modifies a token stream to accommodate this change. In particular, it replaces
 /// soft keyword tokens with `identifier` tokens if they are used as identifiers.
 ///
@@ -46,10 +46,10 @@ where
     fn next(&mut self) -> Option<LexResult> {
         let mut next = self.underlying.next();
         if let Some(Ok((tok, range))) = next.as_ref() {
-            // If the token is a soft keyword e.g. `type`, `match`, or `case`, check if it's 
+            // If the token is a soft keyword e.g. `type`, `match`, or `case`, check if it's
             // used as an identifier. We assume every soft keyword use is an identifier unless
             // a heuristic is met.
-            
+
             // For `match` and `case`, all of the following conditions must be met:
             // 1. The token is at the start of a logical line.
             // 2. The logical line contains a top-level colon (that is, a colon that is not nested
@@ -112,7 +112,6 @@ where
                         next = Some(Ok((soft_to_name(tok), *range)));
                     }
                 }
-
             }
         }
 
