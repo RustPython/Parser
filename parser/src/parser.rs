@@ -931,16 +931,12 @@ type()[a:
     b]  # (type())[a: b]
 if type := 1: pass
 type = lambda query: query == event
+type type = int | str
 print(type(12))
+type(type)
+type match = int  # other soft keyword
+type case = int
 "#;
-
-        use crate::lexer::lex;
-        let lexer = lex(source, Mode::Module);
-        println!(
-            "tokens {:#?}",
-            lexer.map(|x| x.unwrap().0).collect::<Vec<_>>()
-        );
-
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 

@@ -102,6 +102,9 @@ where
                         match tok {
                             Tok::Newline => break,
                             Tok::Name { .. } if nesting == 0 => seen_name = true,
+                            // We treat a soft keyword token following a type token as a
+                            // name to support cases like `type type = int` or `type match = int`
+                            Tok::Type | Tok::Match | Tok::Case if nesting == 0 => seen_name = true,
                             Tok::Equal if nesting == 0 && seen_name => seen_equal = true,
                             Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
                             Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
