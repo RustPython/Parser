@@ -636,7 +636,6 @@ class Foo(A, B):
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
-
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_class_generic_types() {
@@ -895,7 +894,6 @@ except* OSError as e:
         assert!(parse(source, Mode::Interactive, "<embedded>").is_ok());
     }
 
-
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_type_declaration() {
@@ -923,11 +921,14 @@ type = lambda query: query == event
 print(type(12))
 "#;
 
-    use crate::lexer::lex;
-    let lexer = lex(source, Mode::Module);
-    println!("tokens {:#?}", lexer.map(|x| x.unwrap().0).collect::<Vec<_>>());
+        use crate::lexer::lex;
+        let lexer = lex(source, Mode::Module);
+        println!(
+            "tokens {:#?}",
+            lexer.map(|x| x.unwrap().0).collect::<Vec<_>>()
+        );
 
-    insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
     #[test]
@@ -956,7 +957,7 @@ match match:
 match = lambda query: query == event
 print(match(12))
 "#;
-    insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
     #[test]
