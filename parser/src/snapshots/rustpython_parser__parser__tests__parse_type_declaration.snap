@@ -562,4 +562,76 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             ),
         },
     ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 293..308,
+            name: Name(
+                ExprName {
+                    range: 298..302,
+                    id: Identifier(
+                        "type",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 305..308,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 311..327,
+            name: Name(
+                ExprName {
+                    range: 316..321,
+                    id: Identifier(
+                        "match",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 324..327,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 328..343,
+            name: Name(
+                ExprName {
+                    range: 333..337,
+                    id: Identifier(
+                        "case",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 340..343,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
 ]
