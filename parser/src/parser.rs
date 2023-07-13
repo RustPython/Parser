@@ -638,6 +638,38 @@ class Foo(A, B):
 
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_parse_class_generic_types() {
+        let source = "\
+# TypeVar
+class Foo[T](): ...
+
+# TypeVar with bound
+class Foo[T: str](): ...
+
+# TypeVar with tuple bound
+class Foo[T: (str, bytes)](): ...
+
+# Multiple TypeVar
+class Foo[T, U](): ...
+
+# Trailing comma
+class Foo[T, U,](): ...
+
+# TypeVarTuple
+class Foo[*Ts](): ...
+
+# ParamSpec
+class Foo[**P](): ...
+
+# Mixed types
+class Foo[X, Y: str, *U, **P]():
+  pass
+";
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_dict_comprehension() {
         let source = "{x1: x2 for y in z}";
         let parse_ast = ast::Expr::parse(source, "<test>").unwrap();
