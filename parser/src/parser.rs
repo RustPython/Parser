@@ -915,6 +915,21 @@ type X[T: (int, str), *Ts, **P] = (T, Ts, P)
     #[cfg(feature = "all-nodes-with-ranges")]
     fn test_type_as_identifier() {
         let source = r#"\
+type *a + b, c   # ((type * a) + b), c
+type *(a + b), c   # (type * (a + b)), c
+type (*a + b, c)   # type ((*(a + b)), c)
+type -a * b + c   # (type - (a * b)) + c
+type -(a * b) + c   # (type - (a * b)) + c
+type (-a) * b + c   # (type (-(a * b))) + c
+type ().a   # (type()).a
+type (()).a   # (type(())).a
+type ((),).a   # (type(())).a
+type [a].b   # (type[a]).b
+type [a,].b   # (type[(a,)]).b  (not (type[a]).b)
+type [(a,)].b   # (type[(a,)]).b
+type()[a:
+    b]  # (type())[a: b]
+if type := 1: pass
 type = lambda query: query == event
 print(type(12))
 "#;

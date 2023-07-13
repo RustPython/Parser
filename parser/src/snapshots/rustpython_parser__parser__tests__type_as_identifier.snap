@@ -3,13 +3,708 @@ source: parser/src/parser.rs
 expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
 ---
 [
+    Expr(
+        StmtExpr {
+            range: 2..16,
+            value: Tuple(
+                ExprTuple {
+                    range: 2..16,
+                    elts: [
+                        BinOp(
+                            ExprBinOp {
+                                range: 2..13,
+                                left: BinOp(
+                                    ExprBinOp {
+                                        range: 2..9,
+                                        left: Name(
+                                            ExprName {
+                                                range: 2..6,
+                                                id: Identifier(
+                                                    "type",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                        op: Mult,
+                                        right: Name(
+                                            ExprName {
+                                                range: 8..9,
+                                                id: Identifier(
+                                                    "a",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    },
+                                ),
+                                op: Add,
+                                right: Name(
+                                    ExprName {
+                                        range: 12..13,
+                                        id: Identifier(
+                                            "b",
+                                        ),
+                                        ctx: Load,
+                                    },
+                                ),
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 15..16,
+                                id: Identifier(
+                                    "c",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 41..57,
+            value: Tuple(
+                ExprTuple {
+                    range: 41..57,
+                    elts: [
+                        BinOp(
+                            ExprBinOp {
+                                range: 41..54,
+                                left: Name(
+                                    ExprName {
+                                        range: 41..45,
+                                        id: Identifier(
+                                            "type",
+                                        ),
+                                        ctx: Load,
+                                    },
+                                ),
+                                op: Mult,
+                                right: BinOp(
+                                    ExprBinOp {
+                                        range: 48..53,
+                                        left: Name(
+                                            ExprName {
+                                                range: 48..49,
+                                                id: Identifier(
+                                                    "a",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                        op: Add,
+                                        right: Name(
+                                            ExprName {
+                                                range: 52..53,
+                                                id: Identifier(
+                                                    "b",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    },
+                                ),
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 56..57,
+                                id: Identifier(
+                                    "c",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 82..98,
+            value: Call(
+                ExprCall {
+                    range: 82..98,
+                    func: Name(
+                        ExprName {
+                            range: 82..86,
+                            id: Identifier(
+                                "type",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    args: [
+                        Starred(
+                            ExprStarred {
+                                range: 88..94,
+                                value: BinOp(
+                                    ExprBinOp {
+                                        range: 89..94,
+                                        left: Name(
+                                            ExprName {
+                                                range: 89..90,
+                                                id: Identifier(
+                                                    "a",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                        op: Add,
+                                        right: Name(
+                                            ExprName {
+                                                range: 93..94,
+                                                id: Identifier(
+                                                    "b",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    },
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                        Name(
+                            ExprName {
+                                range: 96..97,
+                                id: Identifier(
+                                    "c",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    keywords: [],
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 124..139,
+            value: BinOp(
+                ExprBinOp {
+                    range: 124..139,
+                    left: BinOp(
+                        ExprBinOp {
+                            range: 124..135,
+                            left: Name(
+                                ExprName {
+                                    range: 124..128,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            op: Sub,
+                            right: BinOp(
+                                ExprBinOp {
+                                    range: 130..135,
+                                    left: Name(
+                                        ExprName {
+                                            range: 130..131,
+                                            id: Identifier(
+                                                "a",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    op: Mult,
+                                    right: Name(
+                                        ExprName {
+                                            range: 134..135,
+                                            id: Identifier(
+                                                "b",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                    op: Add,
+                    right: Name(
+                        ExprName {
+                            range: 138..139,
+                            id: Identifier(
+                                "c",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 165..182,
+            value: BinOp(
+                ExprBinOp {
+                    range: 165..182,
+                    left: BinOp(
+                        ExprBinOp {
+                            range: 165..178,
+                            left: Name(
+                                ExprName {
+                                    range: 165..169,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            op: Sub,
+                            right: BinOp(
+                                ExprBinOp {
+                                    range: 172..177,
+                                    left: Name(
+                                        ExprName {
+                                            range: 172..173,
+                                            id: Identifier(
+                                                "a",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    op: Mult,
+                                    right: Name(
+                                        ExprName {
+                                            range: 176..177,
+                                            id: Identifier(
+                                                "b",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                },
+                            ),
+                        },
+                    ),
+                    op: Add,
+                    right: Name(
+                        ExprName {
+                            range: 181..182,
+                            id: Identifier(
+                                "c",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 208..225,
+            value: BinOp(
+                ExprBinOp {
+                    range: 208..225,
+                    left: BinOp(
+                        ExprBinOp {
+                            range: 208..221,
+                            left: Call(
+                                ExprCall {
+                                    range: 208..217,
+                                    func: Name(
+                                        ExprName {
+                                            range: 208..212,
+                                            id: Identifier(
+                                                "type",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    args: [
+                                        UnaryOp(
+                                            ExprUnaryOp {
+                                                range: 214..216,
+                                                op: USub,
+                                                operand: Name(
+                                                    ExprName {
+                                                        range: 215..216,
+                                                        id: Identifier(
+                                                            "a",
+                                                        ),
+                                                        ctx: Load,
+                                                    },
+                                                ),
+                                            },
+                                        ),
+                                    ],
+                                    keywords: [],
+                                },
+                            ),
+                            op: Mult,
+                            right: Name(
+                                ExprName {
+                                    range: 220..221,
+                                    id: Identifier(
+                                        "b",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                        },
+                    ),
+                    op: Add,
+                    right: Name(
+                        ExprName {
+                            range: 224..225,
+                            id: Identifier(
+                                "c",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 252..261,
+            value: Attribute(
+                ExprAttribute {
+                    range: 252..261,
+                    value: Call(
+                        ExprCall {
+                            range: 252..259,
+                            func: Name(
+                                ExprName {
+                                    range: 252..256,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            args: [],
+                            keywords: [],
+                        },
+                    ),
+                    attr: Identifier(
+                        "a",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 277..288,
+            value: Attribute(
+                ExprAttribute {
+                    range: 277..288,
+                    value: Call(
+                        ExprCall {
+                            range: 277..286,
+                            func: Name(
+                                ExprName {
+                                    range: 277..281,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            args: [
+                                Tuple(
+                                    ExprTuple {
+                                        range: 283..285,
+                                        elts: [],
+                                        ctx: Load,
+                                    },
+                                ),
+                            ],
+                            keywords: [],
+                        },
+                    ),
+                    attr: Identifier(
+                        "a",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 306..318,
+            value: Attribute(
+                ExprAttribute {
+                    range: 306..318,
+                    value: Call(
+                        ExprCall {
+                            range: 306..316,
+                            func: Name(
+                                ExprName {
+                                    range: 306..310,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            args: [
+                                Tuple(
+                                    ExprTuple {
+                                        range: 312..314,
+                                        elts: [],
+                                        ctx: Load,
+                                    },
+                                ),
+                            ],
+                            keywords: [],
+                        },
+                    ),
+                    attr: Identifier(
+                        "a",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 336..346,
+            value: Attribute(
+                ExprAttribute {
+                    range: 336..346,
+                    value: Subscript(
+                        ExprSubscript {
+                            range: 336..344,
+                            value: Name(
+                                ExprName {
+                                    range: 336..340,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Name(
+                                ExprName {
+                                    range: 342..343,
+                                    id: Identifier(
+                                        "a",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    attr: Identifier(
+                        "b",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 363..374,
+            value: Attribute(
+                ExprAttribute {
+                    range: 363..374,
+                    value: Subscript(
+                        ExprSubscript {
+                            range: 363..372,
+                            value: Name(
+                                ExprName {
+                                    range: 363..367,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Tuple(
+                                ExprTuple {
+                                    range: 369..371,
+                                    elts: [
+                                        Name(
+                                            ExprName {
+                                                range: 369..370,
+                                                id: Identifier(
+                                                    "a",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    attr: Identifier(
+                        "b",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 413..426,
+            value: Attribute(
+                ExprAttribute {
+                    range: 413..426,
+                    value: Subscript(
+                        ExprSubscript {
+                            range: 413..424,
+                            value: Name(
+                                ExprName {
+                                    range: 413..417,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Tuple(
+                                ExprTuple {
+                                    range: 419..423,
+                                    elts: [
+                                        Name(
+                                            ExprName {
+                                                range: 420..421,
+                                                id: Identifier(
+                                                    "a",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    attr: Identifier(
+                        "b",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 446..462,
+            value: Subscript(
+                ExprSubscript {
+                    range: 446..462,
+                    value: Call(
+                        ExprCall {
+                            range: 446..452,
+                            func: Name(
+                                ExprName {
+                                    range: 446..450,
+                                    id: Identifier(
+                                        "type",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            args: [],
+                            keywords: [],
+                        },
+                    ),
+                    slice: Slice(
+                        ExprSlice {
+                            range: 453..461,
+                            lower: Some(
+                                Name(
+                                    ExprName {
+                                        range: 453..454,
+                                        id: Identifier(
+                                            "a",
+                                        ),
+                                        ctx: Load,
+                                    },
+                                ),
+                            ),
+                            upper: Some(
+                                Name(
+                                    ExprName {
+                                        range: 460..461,
+                                        id: Identifier(
+                                            "b",
+                                        ),
+                                        ctx: Load,
+                                    },
+                                ),
+                            ),
+                            step: None,
+                        },
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    If(
+        StmtIf {
+            range: 481..499,
+            test: NamedExpr(
+                ExprNamedExpr {
+                    range: 484..493,
+                    target: Name(
+                        ExprName {
+                            range: 484..488,
+                            id: Identifier(
+                                "type",
+                            ),
+                            ctx: Store,
+                        },
+                    ),
+                    value: Constant(
+                        ExprConstant {
+                            range: 492..493,
+                            value: Int(
+                                1,
+                            ),
+                            kind: None,
+                        },
+                    ),
+                },
+            ),
+            body: [
+                Pass(
+                    StmtPass {
+                        range: 495..499,
+                    },
+                ),
+            ],
+            orelse: [],
+        },
+    ),
     Assign(
         StmtAssign {
-            range: 2..37,
+            range: 500..535,
             targets: [
                 Name(
                     ExprName {
-                        range: 2..6,
+                        range: 500..504,
                         id: Identifier(
                             "type",
                         ),
@@ -19,15 +714,15 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             ],
             value: Lambda(
                 ExprLambda {
-                    range: 9..37,
+                    range: 507..535,
                     args: Arguments {
-                        range: 16..21,
+                        range: 514..519,
                         posonlyargs: [],
                         args: [
                             ArgWithDefault {
-                                range: 16..21,
+                                range: 514..519,
                                 def: Arg {
-                                    range: 16..21,
+                                    range: 514..519,
                                     arg: Identifier(
                                         "query",
                                     ),
@@ -43,10 +738,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     },
                     body: Compare(
                         ExprCompare {
-                            range: 23..37,
+                            range: 521..535,
                             left: Name(
                                 ExprName {
-                                    range: 23..28,
+                                    range: 521..526,
                                     id: Identifier(
                                         "query",
                                     ),
@@ -59,7 +754,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                             comparators: [
                                 Name(
                                     ExprName {
-                                        range: 32..37,
+                                        range: 530..535,
                                         id: Identifier(
                                             "event",
                                         ),
@@ -76,13 +771,13 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     Expr(
         StmtExpr {
-            range: 38..53,
+            range: 536..551,
             value: Call(
                 ExprCall {
-                    range: 38..53,
+                    range: 536..551,
                     func: Name(
                         ExprName {
-                            range: 38..43,
+                            range: 536..541,
                             id: Identifier(
                                 "print",
                             ),
@@ -92,10 +787,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     args: [
                         Call(
                             ExprCall {
-                                range: 44..52,
+                                range: 542..550,
                                 func: Name(
                                     ExprName {
-                                        range: 44..48,
+                                        range: 542..546,
                                         id: Identifier(
                                             "type",
                                         ),
@@ -105,7 +800,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                                 args: [
                                     Constant(
                                         ExprConstant {
-                                            range: 49..51,
+                                            range: 547..549,
                                             value: Int(
                                                 12,
                                             ),
