@@ -96,6 +96,14 @@ impl<R> PyNode for ast::StmtAssign<R> {
     }
 }
 
+impl<R> PyNode for ast::StmtTypeAlias<R> {
+    #[inline]
+    fn py_type_cache() -> &'static OnceCell<(Py<PyAny>, Py<PyAny>)> {
+        static PY_TYPE: OnceCell<(Py<PyAny>, Py<PyAny>)> = OnceCell::new();
+        &PY_TYPE
+    }
+}
+
 impl<R> PyNode for ast::StmtAugAssign<R> {
     #[inline]
     fn py_type_cache() -> &'static OnceCell<(Py<PyAny>, Py<PyAny>)> {
@@ -944,6 +952,38 @@ impl<R> PyNode for ast::TypeIgnoreTypeIgnore<R> {
     }
 }
 
+impl<R> PyNode for ast::TypeParam<R> {
+    #[inline]
+    fn py_type_cache() -> &'static OnceCell<(Py<PyAny>, Py<PyAny>)> {
+        static PY_TYPE: OnceCell<(Py<PyAny>, Py<PyAny>)> = OnceCell::new();
+        &PY_TYPE
+    }
+}
+
+impl<R> PyNode for ast::TypeParamTypeVar<R> {
+    #[inline]
+    fn py_type_cache() -> &'static OnceCell<(Py<PyAny>, Py<PyAny>)> {
+        static PY_TYPE: OnceCell<(Py<PyAny>, Py<PyAny>)> = OnceCell::new();
+        &PY_TYPE
+    }
+}
+
+impl<R> PyNode for ast::TypeParamParamSpec<R> {
+    #[inline]
+    fn py_type_cache() -> &'static OnceCell<(Py<PyAny>, Py<PyAny>)> {
+        static PY_TYPE: OnceCell<(Py<PyAny>, Py<PyAny>)> = OnceCell::new();
+        &PY_TYPE
+    }
+}
+
+impl<R> PyNode for ast::TypeParamTypeVarTuple<R> {
+    #[inline]
+    fn py_type_cache() -> &'static OnceCell<(Py<PyAny>, Py<PyAny>)> {
+        static PY_TYPE: OnceCell<(Py<PyAny>, Py<PyAny>)> = OnceCell::new();
+        &PY_TYPE
+    }
+}
+
 impl ToPyAst for ast::ExprContext {
     #[inline]
     fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
@@ -1112,6 +1152,7 @@ impl ToPyAst for ast::Stmt<TextRange> {
             ast::Stmt::Return(cons) => cons.to_py_ast(py)?,
             ast::Stmt::Delete(cons) => cons.to_py_ast(py)?,
             ast::Stmt::Assign(cons) => cons.to_py_ast(py)?,
+            ast::Stmt::TypeAlias(cons) => cons.to_py_ast(py)?,
             ast::Stmt::AugAssign(cons) => cons.to_py_ast(py)?,
             ast::Stmt::AnnAssign(cons) => cons.to_py_ast(py)?,
             ast::Stmt::For(cons) => cons.to_py_ast(py)?,
@@ -1150,6 +1191,7 @@ impl ToPyAst for ast::StmtFunctionDef<TextRange> {
             decorator_list,
             returns,
             type_comment,
+            type_params,
             range: _range,
         } = self;
 
@@ -1160,6 +1202,7 @@ impl ToPyAst for ast::StmtFunctionDef<TextRange> {
             decorator_list.to_py_ast(py)?,
             returns.to_py_ast(py)?,
             type_comment.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
         ))?;
 
         Ok(instance)
@@ -1178,6 +1221,7 @@ impl ToPyAst for ast::StmtAsyncFunctionDef<TextRange> {
             decorator_list,
             returns,
             type_comment,
+            type_params,
             range: _range,
         } = self;
 
@@ -1188,6 +1232,7 @@ impl ToPyAst for ast::StmtAsyncFunctionDef<TextRange> {
             decorator_list.to_py_ast(py)?,
             returns.to_py_ast(py)?,
             type_comment.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
         ))?;
 
         Ok(instance)
@@ -1205,6 +1250,7 @@ impl ToPyAst for ast::StmtClassDef<TextRange> {
             keywords,
             body,
             decorator_list,
+            type_params,
             range: _range,
         } = self;
 
@@ -1214,6 +1260,7 @@ impl ToPyAst for ast::StmtClassDef<TextRange> {
             keywords.to_py_ast(py)?,
             body.to_py_ast(py)?,
             decorator_list.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
         ))?;
 
         Ok(instance)
@@ -1268,6 +1315,28 @@ impl ToPyAst for ast::StmtAssign<TextRange> {
             targets.to_py_ast(py)?,
             value.to_py_ast(py)?,
             type_comment.to_py_ast(py)?,
+        ))?;
+
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::StmtTypeAlias<TextRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            type_params,
+            value,
+            range: _range,
+        } = self;
+
+        let instance = Py::<PyAny>::as_ref(&cache.0, py).call1((
+            name.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
+            value.to_py_ast(py)?,
         ))?;
 
         Ok(instance)
@@ -2605,6 +2674,68 @@ impl ToPyAst for ast::TypeIgnoreTypeIgnore<TextRange> {
     }
 }
 
+impl ToPyAst for ast::TypeParam<TextRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let instance = match &self {
+            ast::TypeParam::TypeVar(cons) => cons.to_py_ast(py)?,
+            ast::TypeParam::ParamSpec(cons) => cons.to_py_ast(py)?,
+            ast::TypeParam::TypeVarTuple(cons) => cons.to_py_ast(py)?,
+        };
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::TypeParamTypeVar<TextRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            bound,
+            range: _range,
+        } = self;
+
+        let instance =
+            Py::<PyAny>::as_ref(&cache.0, py).call1((name.to_py_ast(py)?, bound.to_py_ast(py)?))?;
+
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::TypeParamParamSpec<TextRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            range: _range,
+        } = self;
+
+        let instance = Py::<PyAny>::as_ref(&cache.0, py).call1((name.to_py_ast(py)?,))?;
+
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::TypeParamTypeVarTuple<TextRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            range: _range,
+        } = self;
+
+        let instance = Py::<PyAny>::as_ref(&cache.0, py).call1((name.to_py_ast(py)?,))?;
+
+        Ok(instance)
+    }
+}
+
 impl ToPyAst for ast::Mod<SourceRange> {
     #[inline]
     fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
@@ -2696,6 +2827,7 @@ impl ToPyAst for ast::Stmt<SourceRange> {
             ast::Stmt::Return(cons) => cons.to_py_ast(py)?,
             ast::Stmt::Delete(cons) => cons.to_py_ast(py)?,
             ast::Stmt::Assign(cons) => cons.to_py_ast(py)?,
+            ast::Stmt::TypeAlias(cons) => cons.to_py_ast(py)?,
             ast::Stmt::AugAssign(cons) => cons.to_py_ast(py)?,
             ast::Stmt::AnnAssign(cons) => cons.to_py_ast(py)?,
             ast::Stmt::For(cons) => cons.to_py_ast(py)?,
@@ -2734,6 +2866,7 @@ impl ToPyAst for ast::StmtFunctionDef<SourceRange> {
             decorator_list,
             returns,
             type_comment,
+            type_params,
             range: _range,
         } = self;
 
@@ -2744,6 +2877,7 @@ impl ToPyAst for ast::StmtFunctionDef<SourceRange> {
             decorator_list.to_py_ast(py)?,
             returns.to_py_ast(py)?,
             type_comment.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
         ))?;
 
         let cache = ast_cache();
@@ -2770,6 +2904,7 @@ impl ToPyAst for ast::StmtAsyncFunctionDef<SourceRange> {
             decorator_list,
             returns,
             type_comment,
+            type_params,
             range: _range,
         } = self;
 
@@ -2780,6 +2915,7 @@ impl ToPyAst for ast::StmtAsyncFunctionDef<SourceRange> {
             decorator_list.to_py_ast(py)?,
             returns.to_py_ast(py)?,
             type_comment.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
         ))?;
 
         let cache = ast_cache();
@@ -2805,6 +2941,7 @@ impl ToPyAst for ast::StmtClassDef<SourceRange> {
             keywords,
             body,
             decorator_list,
+            type_params,
             range: _range,
         } = self;
 
@@ -2814,6 +2951,7 @@ impl ToPyAst for ast::StmtClassDef<SourceRange> {
             keywords.to_py_ast(py)?,
             body.to_py_ast(py)?,
             decorator_list.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
         ))?;
 
         let cache = ast_cache();
@@ -2892,6 +3030,36 @@ impl ToPyAst for ast::StmtAssign<SourceRange> {
             targets.to_py_ast(py)?,
             value.to_py_ast(py)?,
             type_comment.to_py_ast(py)?,
+        ))?;
+
+        let cache = ast_cache();
+        instance.setattr(cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(cache.col_offset.as_ref(py), _range.start.column.get())?;
+        if let Some(end) = _range.end {
+            instance.setattr(cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(cache.end_col_offset.as_ref(py), end.column.get())?;
+        }
+
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::StmtTypeAlias<SourceRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            type_params,
+            value,
+            range: _range,
+        } = self;
+
+        let instance = Py::<PyAny>::as_ref(&cache.0, py).call1((
+            name.to_py_ast(py)?,
+            type_params.to_py_ast(py)?,
+            value.to_py_ast(py)?,
         ))?;
 
         let cache = ast_cache();
@@ -4717,6 +4885,92 @@ impl ToPyAst for ast::TypeIgnoreTypeIgnore<SourceRange> {
     }
 }
 
+impl ToPyAst for ast::TypeParam<SourceRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let instance = match &self {
+            ast::TypeParam::TypeVar(cons) => cons.to_py_ast(py)?,
+            ast::TypeParam::ParamSpec(cons) => cons.to_py_ast(py)?,
+            ast::TypeParam::TypeVarTuple(cons) => cons.to_py_ast(py)?,
+        };
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::TypeParamTypeVar<SourceRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            bound,
+            range: _range,
+        } = self;
+
+        let instance =
+            Py::<PyAny>::as_ref(&cache.0, py).call1((name.to_py_ast(py)?, bound.to_py_ast(py)?))?;
+
+        let cache = ast_cache();
+        instance.setattr(cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(cache.col_offset.as_ref(py), _range.start.column.get())?;
+        if let Some(end) = _range.end {
+            instance.setattr(cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(cache.end_col_offset.as_ref(py), end.column.get())?;
+        }
+
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::TypeParamParamSpec<SourceRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            range: _range,
+        } = self;
+
+        let instance = Py::<PyAny>::as_ref(&cache.0, py).call1((name.to_py_ast(py)?,))?;
+
+        let cache = ast_cache();
+        instance.setattr(cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(cache.col_offset.as_ref(py), _range.start.column.get())?;
+        if let Some(end) = _range.end {
+            instance.setattr(cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(cache.end_col_offset.as_ref(py), end.column.get())?;
+        }
+
+        Ok(instance)
+    }
+}
+
+impl ToPyAst for ast::TypeParamTypeVarTuple<SourceRange> {
+    #[inline]
+    fn to_py_ast<'py>(&self, py: Python<'py>) -> PyResult<&'py PyAny> {
+        let cache = Self::py_type_cache().get().unwrap();
+
+        let Self {
+            name,
+            range: _range,
+        } = self;
+
+        let instance = Py::<PyAny>::as_ref(&cache.0, py).call1((name.to_py_ast(py)?,))?;
+
+        let cache = ast_cache();
+        instance.setattr(cache.lineno.as_ref(py), _range.start.row.get())?;
+        instance.setattr(cache.col_offset.as_ref(py), _range.start.column.get())?;
+        if let Some(end) = _range.end {
+            instance.setattr(cache.end_lineno.as_ref(py), end.row.get())?;
+            instance.setattr(cache.end_col_offset.as_ref(py), end.column.get())?;
+        }
+
+        Ok(instance)
+    }
+}
+
 fn init_types(py: Python) -> PyResult<()> {
     let ast_module = PyModule::import(py, "_ast")?;
     cache_py_type::<ast::Mod>(ast_module)?;
@@ -4731,6 +4985,7 @@ fn init_types(py: Python) -> PyResult<()> {
     cache_py_type::<ast::StmtReturn>(ast_module)?;
     cache_py_type::<ast::StmtDelete>(ast_module)?;
     cache_py_type::<ast::StmtAssign>(ast_module)?;
+    cache_py_type::<ast::StmtTypeAlias>(ast_module)?;
     cache_py_type::<ast::StmtAugAssign>(ast_module)?;
     cache_py_type::<ast::StmtAnnAssign>(ast_module)?;
     cache_py_type::<ast::StmtFor>(ast_module)?;
@@ -4837,5 +5092,9 @@ fn init_types(py: Python) -> PyResult<()> {
     cache_py_type::<ast::PatternMatchOr>(ast_module)?;
     cache_py_type::<ast::TypeIgnore>(ast_module)?;
     cache_py_type::<ast::TypeIgnoreTypeIgnore>(ast_module)?;
+    cache_py_type::<ast::TypeParam>(ast_module)?;
+    cache_py_type::<ast::TypeParamTypeVar>(ast_module)?;
+    cache_py_type::<ast::TypeParamParamSpec>(ast_module)?;
+    cache_py_type::<ast::TypeParamTypeVarTuple>(ast_module)?;
     Ok(())
 }

@@ -149,6 +149,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
             keywords,
             body,
             decorator_list,
+            type_params,
             range,
         } = node;
         let decorator_list = self.fold(decorator_list)?;
@@ -159,12 +160,15 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
         let keywords = self.fold(keywords)?;
         let body = self.fold(body)?;
         let range = self.map_user(range, context)?;
+        let type_params = self.fold(type_params)?;
+
         Ok(crate::StmtClassDef {
             name,
             bases,
             keywords,
             body,
             decorator_list,
+            type_params,
             range,
         })
     }
@@ -180,6 +184,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
             returns,
             type_comment,
             range,
+            type_params,
         } = node;
         let decorator_list = self.fold(decorator_list)?;
         let context = self.will_map_user(&range);
@@ -189,6 +194,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
         let returns = self.fold(returns)?;
         let body = self.fold(body)?;
         let type_comment = self.fold(type_comment)?;
+        let type_params = self.fold(type_params)?;
         let range = self.map_user(range, context)?;
         Ok(crate::StmtFunctionDef {
             name,
@@ -196,6 +202,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
             body,
             decorator_list,
             returns,
+            type_params,
             type_comment,
             range,
         })
@@ -211,6 +218,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
             decorator_list,
             returns,
             type_comment,
+            type_params,
             range,
         } = node;
         let decorator_list = self.fold(decorator_list)?;
@@ -221,6 +229,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
         let returns = self.fold(returns)?;
         let body = self.fold(body)?;
         let type_comment = self.fold(type_comment)?;
+        let type_params = self.fold(type_params)?;
         let range = self.map_user(range, context)?;
         Ok(crate::StmtAsyncFunctionDef {
             name,
@@ -229,6 +238,7 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
             decorator_list,
             returns,
             type_comment,
+            type_params,
             range,
         })
     }

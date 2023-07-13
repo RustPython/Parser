@@ -1,5 +1,5 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: c39f9711066c6f94aaf93d62d86b41efb4242ddcdcbe5b9d35e5a77a14ff22d6
+// sha3: 63c75be3af99ad823887ab5407feb1d091c0c150fc7ec64c257b95becfbbe6be
 use crate::{
     ast::{self as ast, Ranged, bigint::BigInt},
     lexer::{LexicalError, LexicalErrorType},
@@ -31068,10 +31068,11 @@ fn __action157<
         let returns = r.map(|x| Box::new(x));
         let end_location = body.last().unwrap().end();
         let type_comment = None;
+        let type_params = Vec::new();
         if is_async.is_some() {
-            ast::StmtAsyncFunctionDef { name, args, body, decorator_list, returns, type_comment, range: (location..end_location).into() }.into()
+            ast::StmtAsyncFunctionDef { name, args, body, decorator_list, returns, type_comment, type_params, range: (location..end_location).into() }.into()
         } else {
-            ast::StmtFunctionDef { name, args, body, decorator_list, returns, type_comment, range: (location..end_location).into() }.into()
+            ast::StmtFunctionDef { name, args, body, decorator_list, returns, type_comment, type_params, range: (location..end_location).into() }.into()
         }
     }
 }
@@ -31184,6 +31185,7 @@ fn __action164<
             None => (vec![], vec![]),
         };
         let end_location = body.last().unwrap().end();
+        let type_params = Vec::new();
         ast::Stmt::ClassDef(
             ast::StmtClassDef {
                 name,
@@ -31191,6 +31193,7 @@ fn __action164<
                 keywords,
                 body,
                 decorator_list,
+                type_params,
                 range: (location..end_location).into()
             },
         )
