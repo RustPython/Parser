@@ -638,6 +638,38 @@ class Foo(A, B):
 
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_parse_class_generic_types() {
+        let source = "\
+# TypeVar
+class Foo[T](): ...
+
+# TypeVar with bound
+class Foo[T: str](): ...
+
+# TypeVar with tuple bound
+class Foo[T: (str, bytes)](): ...
+
+# Multiple TypeVar
+class Foo[T, U](): ...
+
+# Trailing comma
+class Foo[T, U,](): ...
+
+# TypeVarTuple
+class Foo[*Ts](): ...
+
+# ParamSpec
+class Foo[**P](): ...
+
+# Mixed types
+class Foo[X, Y: str, *U, **P]():
+  pass
+";
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_dict_comprehension() {
         let source = "{x1: x2 for y in z}";
         let parse_ast = ast::Expr::parse(source, "<test>").unwrap();
@@ -837,9 +869,56 @@ except* OSError as e:
 
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_parse_type_declaration() {
+        let source = r#"
+type X = int
+type X = int | str
+type X = int | "ForwardRefY"
+type X[T] = T | list[X[T]]  # recursive
+type X[T] = int
+type X[T] = list[T] | set[T]
+type X[T, *Ts, **P] = (T, Ts, P)
+type X[T: int, *Ts, **P] = (T, Ts, P)
+type X[T: (int, str), *Ts, **P] = (T, Ts, P)
+
+# soft keyword as alias name
+type type = int  
+type match = int
+type case = int
+"#;
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_type_as_identifier() {
+        let source = r#"\
+type *a + b, c   # ((type * a) + b), c
+type *(a + b), c   # (type * (a + b)), c
+type (*a + b, c)   # type ((*(a + b)), c)
+type -a * b + c   # (type - (a * b)) + c
+type -(a * b) + c   # (type - (a * b)) + c
+type (-a) * b + c   # (type (-(a * b))) + c
+type ().a   # (type()).a
+type (()).a   # (type(())).a
+type ((),).a   # (type(())).a
+type [a].b   # (type[a]).b
+type [a,].b   # (type[(a,)]).b  (not (type[a]).b)
+type [(a,)].b   # (type[(a,)]).b
+type()[a:
+    b]  # (type())[a: b]
+if type := 1: pass
+type = lambda query: query == event
+print(type(12))
+type(type)
+"#;
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
     fn test_match_as_identifier() {
-        let parse_ast = ast::Suite::parse(
-            r#"
+        let source = r#"\
 match *a + b, c   # ((match * a) + b), c
 match *(a + b), c   # (match * (a + b)), c
 match (*a + b, c)   # match ((*(a + b)), c)
@@ -861,11 +940,8 @@ match match:
         pass
 match = lambda query: query == event
 print(match(12))
-"#,
-            "<test>",
-        )
-        .unwrap();
-        insta::assert_debug_snapshot!(parse_ast);
+"#;
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
     #[test]

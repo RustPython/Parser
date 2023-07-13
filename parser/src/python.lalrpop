@@ -86,6 +86,7 @@ SmallStatement: ast::Stmt = {
     GlobalStatement,
     NonlocalStatement,
     AssertStatement,
+    TypeAliasStatement,
 };
 
 PassStatement: ast::Stmt = {
@@ -979,6 +980,25 @@ FuncDef: ast::Stmt = {
     },
 };
 
+TypeAliasName: ast::Expr = {
+    <location:@L> <name:Identifier> <end_location:@R> => ast::Expr::Name(
+        ast::ExprName { id: name, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
+    ),
+}
+
+TypeAliasStatement: ast::Stmt = {
+    <location:@L> "type" <name:TypeAliasName> <type_params:TypeParamList?> "=" <value:Test<"all">> <end_location:@R> => {
+        ast::Stmt::TypeAlias(
+            ast::StmtTypeAlias {
+                name: Box::new(name),
+                value: Box::new(value),
+                type_params: type_params.unwrap_or_default(),
+                range: (location..end_location).into()
+            },
+        )
+    },
+};
+
 Parameters: ast::Arguments = {
     <location:@L> "(" <a: (ParameterList<TypedParameter, StarTypedParameter, DoubleStarTypedParameter>)?> ")" <end_location:@R> =>? {
         a.as_ref().map(validate_arguments).transpose()?;
@@ -1126,13 +1146,12 @@ KwargParameter<ArgType>: Option<Box<ast::Arg>> = {
 };
 
 ClassDef: ast::Stmt = {
-    <decorator_list:Decorator*> <location:@L> "class" <name:Identifier> <a:("(" ArgumentList ")")?> ":" <body:Suite> => {
+    <decorator_list:Decorator*> <location:@L> "class" <name:Identifier> <type_params:TypeParamList?> <a:("(" ArgumentList ")")?> ":" <body:Suite> => {
         let (bases, keywords) = match a {
             Some((_, arg, _)) => (arg.args, arg.keywords),
             None => (vec![], vec![]),
         };
         let end_location = body.last().unwrap().end();
-        let type_params = Vec::new();
         ast::Stmt::ClassDef(
             ast::StmtClassDef {
                 name,
@@ -1140,11 +1159,36 @@ ClassDef: ast::Stmt = {
                 keywords,
                 body,
                 decorator_list,
-                type_params,
+                type_params: type_params.unwrap_or_default(),
                 range: (location..end_location).into()
             },
         )
     },
+};
+
+
+TypeParamList: Vec<ast::TypeParam> = {
+    <location:@L> "[" <vars:OneOrMore<TypeParam>> ","? "]" <end_location:@R> => {
+        vars
+    }
+};
+
+TypeParam: ast::TypeParam = {
+    <location:@L> <name:Identifier> <bound:(":" <Test<"all">>)?> <end_location:@R>  => {
+        ast::TypeParam::TypeVar(
+            ast::TypeParamTypeVar { name, bound: bound.map(Box::new), range: (location..end_location).into() }
+        )
+    },
+    <location:@L> "*" <name:Identifier> <end_location:@R>  => {
+        ast::TypeParam::TypeVarTuple(
+            ast::TypeParamTypeVarTuple { name, range: (location..end_location).into() }
+        )
+    },
+    <location:@L> "**" <name:Identifier> <end_location:@R>  => {
+        ast::TypeParam::ParamSpec(
+            ast::TypeParamParamSpec { name, range: (location..end_location).into() }
+        )
+    }
 };
 
 // Decorators:
@@ -1727,6 +1771,7 @@ extern {
         "raise" => token::Tok::Raise,
         "return" => token::Tok::Return,
         "try" => token::Tok::Try,
+        "type" => token::Tok::Type,
         "while" => token::Tok::While,
         "match" => token::Tok::Match,
         "case" => token::Tok::Case,
