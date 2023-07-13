@@ -1,24 +1,24 @@
 ---
 source: parser/src/parser.rs
-expression: parse_ast
+expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
 ---
 [
     Expr(
         StmtExpr {
-            range: 1..16,
+            range: 2..17,
             value: Tuple(
                 ExprTuple {
-                    range: 1..16,
+                    range: 2..17,
                     elts: [
                         BinOp(
                             ExprBinOp {
-                                range: 1..13,
+                                range: 2..14,
                                 left: BinOp(
                                     ExprBinOp {
-                                        range: 1..9,
+                                        range: 2..10,
                                         left: Name(
                                             ExprName {
-                                                range: 1..6,
+                                                range: 2..7,
                                                 id: Identifier(
                                                     "match",
                                                 ),
@@ -28,7 +28,7 @@ expression: parse_ast
                                         op: Mult,
                                         right: Name(
                                             ExprName {
-                                                range: 8..9,
+                                                range: 9..10,
                                                 id: Identifier(
                                                     "a",
                                                 ),
@@ -40,7 +40,7 @@ expression: parse_ast
                                 op: Add,
                                 right: Name(
                                     ExprName {
-                                        range: 12..13,
+                                        range: 13..14,
                                         id: Identifier(
                                             "b",
                                         ),
@@ -51,7 +51,7 @@ expression: parse_ast
                         ),
                         Name(
                             ExprName {
-                                range: 15..16,
+                                range: 16..17,
                                 id: Identifier(
                                     "c",
                                 ),
@@ -66,17 +66,17 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 42..59,
+            range: 43..60,
             value: Tuple(
                 ExprTuple {
-                    range: 42..59,
+                    range: 43..60,
                     elts: [
                         BinOp(
                             ExprBinOp {
-                                range: 42..56,
+                                range: 43..57,
                                 left: Name(
                                     ExprName {
-                                        range: 42..47,
+                                        range: 43..48,
                                         id: Identifier(
                                             "match",
                                         ),
@@ -86,10 +86,10 @@ expression: parse_ast
                                 op: Mult,
                                 right: BinOp(
                                     ExprBinOp {
-                                        range: 50..55,
+                                        range: 51..56,
                                         left: Name(
                                             ExprName {
-                                                range: 50..51,
+                                                range: 51..52,
                                                 id: Identifier(
                                                     "a",
                                                 ),
@@ -99,7 +99,7 @@ expression: parse_ast
                                         op: Add,
                                         right: Name(
                                             ExprName {
-                                                range: 54..55,
+                                                range: 55..56,
                                                 id: Identifier(
                                                     "b",
                                                 ),
@@ -112,7 +112,7 @@ expression: parse_ast
                         ),
                         Name(
                             ExprName {
-                                range: 58..59,
+                                range: 59..60,
                                 id: Identifier(
                                     "c",
                                 ),
@@ -127,13 +127,13 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 85..102,
+            range: 86..103,
             value: Call(
                 ExprCall {
-                    range: 85..102,
+                    range: 86..103,
                     func: Name(
                         ExprName {
-                            range: 85..90,
+                            range: 86..91,
                             id: Identifier(
                                 "match",
                             ),
@@ -143,13 +143,13 @@ expression: parse_ast
                     args: [
                         Starred(
                             ExprStarred {
-                                range: 92..98,
+                                range: 93..99,
                                 value: BinOp(
                                     ExprBinOp {
-                                        range: 93..98,
+                                        range: 94..99,
                                         left: Name(
                                             ExprName {
-                                                range: 93..94,
+                                                range: 94..95,
                                                 id: Identifier(
                                                     "a",
                                                 ),
@@ -159,7 +159,7 @@ expression: parse_ast
                                         op: Add,
                                         right: Name(
                                             ExprName {
-                                                range: 97..98,
+                                                range: 98..99,
                                                 id: Identifier(
                                                     "b",
                                                 ),
@@ -173,7 +173,7 @@ expression: parse_ast
                         ),
                         Name(
                             ExprName {
-                                range: 100..101,
+                                range: 101..102,
                                 id: Identifier(
                                     "c",
                                 ),
@@ -188,16 +188,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 129..145,
+            range: 130..146,
             value: BinOp(
                 ExprBinOp {
-                    range: 129..145,
+                    range: 130..146,
                     left: BinOp(
                         ExprBinOp {
-                            range: 129..141,
+                            range: 130..142,
                             left: Name(
                                 ExprName {
-                                    range: 129..134,
+                                    range: 130..135,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -207,10 +207,10 @@ expression: parse_ast
                             op: Sub,
                             right: BinOp(
                                 ExprBinOp {
-                                    range: 136..141,
+                                    range: 137..142,
                                     left: Name(
                                         ExprName {
-                                            range: 136..137,
+                                            range: 137..138,
                                             id: Identifier(
                                                 "a",
                                             ),
@@ -220,7 +220,7 @@ expression: parse_ast
                                     op: Mult,
                                     right: Name(
                                         ExprName {
-                                            range: 140..141,
+                                            range: 141..142,
                                             id: Identifier(
                                                 "b",
                                             ),
@@ -234,7 +234,7 @@ expression: parse_ast
                     op: Add,
                     right: Name(
                         ExprName {
-                            range: 144..145,
+                            range: 145..146,
                             id: Identifier(
                                 "c",
                             ),
@@ -247,16 +247,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 172..190,
+            range: 173..191,
             value: BinOp(
                 ExprBinOp {
-                    range: 172..190,
+                    range: 173..191,
                     left: BinOp(
                         ExprBinOp {
-                            range: 172..186,
+                            range: 173..187,
                             left: Name(
                                 ExprName {
-                                    range: 172..177,
+                                    range: 173..178,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -266,10 +266,10 @@ expression: parse_ast
                             op: Sub,
                             right: BinOp(
                                 ExprBinOp {
-                                    range: 180..185,
+                                    range: 181..186,
                                     left: Name(
                                         ExprName {
-                                            range: 180..181,
+                                            range: 181..182,
                                             id: Identifier(
                                                 "a",
                                             ),
@@ -279,7 +279,7 @@ expression: parse_ast
                                     op: Mult,
                                     right: Name(
                                         ExprName {
-                                            range: 184..185,
+                                            range: 185..186,
                                             id: Identifier(
                                                 "b",
                                             ),
@@ -293,7 +293,7 @@ expression: parse_ast
                     op: Add,
                     right: Name(
                         ExprName {
-                            range: 189..190,
+                            range: 190..191,
                             id: Identifier(
                                 "c",
                             ),
@@ -306,19 +306,19 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 217..235,
+            range: 218..236,
             value: BinOp(
                 ExprBinOp {
-                    range: 217..235,
+                    range: 218..236,
                     left: BinOp(
                         ExprBinOp {
-                            range: 217..231,
+                            range: 218..232,
                             left: Call(
                                 ExprCall {
-                                    range: 217..227,
+                                    range: 218..228,
                                     func: Name(
                                         ExprName {
-                                            range: 217..222,
+                                            range: 218..223,
                                             id: Identifier(
                                                 "match",
                                             ),
@@ -328,11 +328,11 @@ expression: parse_ast
                                     args: [
                                         UnaryOp(
                                             ExprUnaryOp {
-                                                range: 224..226,
+                                                range: 225..227,
                                                 op: USub,
                                                 operand: Name(
                                                     ExprName {
-                                                        range: 225..226,
+                                                        range: 226..227,
                                                         id: Identifier(
                                                             "a",
                                                         ),
@@ -348,7 +348,7 @@ expression: parse_ast
                             op: Mult,
                             right: Name(
                                 ExprName {
-                                    range: 230..231,
+                                    range: 231..232,
                                     id: Identifier(
                                         "b",
                                     ),
@@ -360,7 +360,7 @@ expression: parse_ast
                     op: Add,
                     right: Name(
                         ExprName {
-                            range: 234..235,
+                            range: 235..236,
                             id: Identifier(
                                 "c",
                             ),
@@ -373,16 +373,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 263..273,
+            range: 264..274,
             value: Attribute(
                 ExprAttribute {
-                    range: 263..273,
+                    range: 264..274,
                     value: Call(
                         ExprCall {
-                            range: 263..271,
+                            range: 264..272,
                             func: Name(
                                 ExprName {
-                                    range: 263..268,
+                                    range: 264..269,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -403,16 +403,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 290..302,
+            range: 291..303,
             value: Attribute(
                 ExprAttribute {
-                    range: 290..302,
+                    range: 291..303,
                     value: Call(
                         ExprCall {
-                            range: 290..300,
+                            range: 291..301,
                             func: Name(
                                 ExprName {
-                                    range: 290..295,
+                                    range: 291..296,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -422,7 +422,7 @@ expression: parse_ast
                             args: [
                                 Tuple(
                                     ExprTuple {
-                                        range: 297..299,
+                                        range: 298..300,
                                         elts: [],
                                         ctx: Load,
                                     },
@@ -441,16 +441,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 321..334,
+            range: 322..335,
             value: Attribute(
                 ExprAttribute {
-                    range: 321..334,
+                    range: 322..335,
                     value: Call(
                         ExprCall {
-                            range: 321..332,
+                            range: 322..333,
                             func: Name(
                                 ExprName {
-                                    range: 321..326,
+                                    range: 322..327,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -460,7 +460,7 @@ expression: parse_ast
                             args: [
                                 Tuple(
                                     ExprTuple {
-                                        range: 328..330,
+                                        range: 329..331,
                                         elts: [],
                                         ctx: Load,
                                     },
@@ -479,16 +479,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 353..364,
+            range: 354..365,
             value: Attribute(
                 ExprAttribute {
-                    range: 353..364,
+                    range: 354..365,
                     value: Subscript(
                         ExprSubscript {
-                            range: 353..362,
+                            range: 354..363,
                             value: Name(
                                 ExprName {
-                                    range: 353..358,
+                                    range: 354..359,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -497,7 +497,7 @@ expression: parse_ast
                             ),
                             slice: Name(
                                 ExprName {
-                                    range: 360..361,
+                                    range: 361..362,
                                     id: Identifier(
                                         "a",
                                     ),
@@ -517,16 +517,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 382..394,
+            range: 383..395,
             value: Attribute(
                 ExprAttribute {
-                    range: 382..394,
+                    range: 383..395,
                     value: Subscript(
                         ExprSubscript {
-                            range: 382..392,
+                            range: 383..393,
                             value: Name(
                                 ExprName {
-                                    range: 382..387,
+                                    range: 383..388,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -535,11 +535,11 @@ expression: parse_ast
                             ),
                             slice: Tuple(
                                 ExprTuple {
-                                    range: 389..391,
+                                    range: 390..392,
                                     elts: [
                                         Name(
                                             ExprName {
-                                                range: 389..390,
+                                                range: 390..391,
                                                 id: Identifier(
                                                     "a",
                                                 ),
@@ -563,16 +563,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 435..449,
+            range: 436..450,
             value: Attribute(
                 ExprAttribute {
-                    range: 435..449,
+                    range: 436..450,
                     value: Subscript(
                         ExprSubscript {
-                            range: 435..447,
+                            range: 436..448,
                             value: Name(
                                 ExprName {
-                                    range: 435..440,
+                                    range: 436..441,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -581,11 +581,11 @@ expression: parse_ast
                             ),
                             slice: Tuple(
                                 ExprTuple {
-                                    range: 442..446,
+                                    range: 443..447,
                                     elts: [
                                         Name(
                                             ExprName {
-                                                range: 443..444,
+                                                range: 444..445,
                                                 id: Identifier(
                                                     "a",
                                                 ),
@@ -609,16 +609,16 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 470..487,
+            range: 471..488,
             value: Subscript(
                 ExprSubscript {
-                    range: 470..487,
+                    range: 471..488,
                     value: Call(
                         ExprCall {
-                            range: 470..477,
+                            range: 471..478,
                             func: Name(
                                 ExprName {
-                                    range: 470..475,
+                                    range: 471..476,
                                     id: Identifier(
                                         "match",
                                     ),
@@ -631,11 +631,11 @@ expression: parse_ast
                     ),
                     slice: Slice(
                         ExprSlice {
-                            range: 478..486,
+                            range: 479..487,
                             lower: Some(
                                 Name(
                                     ExprName {
-                                        range: 478..479,
+                                        range: 479..480,
                                         id: Identifier(
                                             "a",
                                         ),
@@ -646,7 +646,7 @@ expression: parse_ast
                             upper: Some(
                                 Name(
                                     ExprName {
-                                        range: 485..486,
+                                        range: 486..487,
                                         id: Identifier(
                                             "b",
                                         ),
@@ -664,13 +664,13 @@ expression: parse_ast
     ),
     If(
         StmtIf {
-            range: 507..526,
+            range: 508..527,
             test: NamedExpr(
                 ExprNamedExpr {
-                    range: 510..520,
+                    range: 511..521,
                     target: Name(
                         ExprName {
-                            range: 510..515,
+                            range: 511..516,
                             id: Identifier(
                                 "match",
                             ),
@@ -679,7 +679,7 @@ expression: parse_ast
                     ),
                     value: Constant(
                         ExprConstant {
-                            range: 519..520,
+                            range: 520..521,
                             value: Int(
                                 1,
                             ),
@@ -691,7 +691,7 @@ expression: parse_ast
             body: [
                 Pass(
                     StmtPass {
-                        range: 522..526,
+                        range: 523..527,
                     },
                 ),
             ],
@@ -700,10 +700,10 @@ expression: parse_ast
     ),
     Match(
         StmtMatch {
-            range: 527..581,
+            range: 528..582,
             subject: Name(
                 ExprName {
-                    range: 533..538,
+                    range: 534..539,
                     id: Identifier(
                         "match",
                     ),
@@ -712,13 +712,13 @@ expression: parse_ast
             ),
             cases: [
                 MatchCase {
-                    range: 544..556,
+                    range: 545..557,
                     pattern: MatchValue(
                         PatternMatchValue {
-                            range: 549..550,
+                            range: 550..551,
                             value: Constant(
                                 ExprConstant {
-                                    range: 549..550,
+                                    range: 550..551,
                                     value: Int(
                                         1,
                                     ),
@@ -731,19 +731,19 @@ expression: parse_ast
                     body: [
                         Pass(
                             StmtPass {
-                                range: 552..556,
+                                range: 553..557,
                             },
                         ),
                     ],
                 },
                 MatchCase {
-                    range: 561..581,
+                    range: 562..582,
                     pattern: MatchValue(
                         PatternMatchValue {
-                            range: 566..567,
+                            range: 567..568,
                             value: Constant(
                                 ExprConstant {
-                                    range: 566..567,
+                                    range: 567..568,
                                     value: Int(
                                         2,
                                     ),
@@ -756,7 +756,7 @@ expression: parse_ast
                     body: [
                         Pass(
                             StmtPass {
-                                range: 577..581,
+                                range: 578..582,
                             },
                         ),
                     ],
@@ -766,11 +766,11 @@ expression: parse_ast
     ),
     Assign(
         StmtAssign {
-            range: 582..618,
+            range: 583..619,
             targets: [
                 Name(
                     ExprName {
-                        range: 582..587,
+                        range: 583..588,
                         id: Identifier(
                             "match",
                         ),
@@ -780,15 +780,15 @@ expression: parse_ast
             ],
             value: Lambda(
                 ExprLambda {
-                    range: 590..618,
+                    range: 591..619,
                     args: Arguments {
-                        range: 597..602,
+                        range: 598..603,
                         posonlyargs: [],
                         args: [
                             ArgWithDefault {
-                                range: 597..602,
+                                range: 598..603,
                                 def: Arg {
-                                    range: 597..602,
+                                    range: 598..603,
                                     arg: Identifier(
                                         "query",
                                     ),
@@ -804,10 +804,10 @@ expression: parse_ast
                     },
                     body: Compare(
                         ExprCompare {
-                            range: 604..618,
+                            range: 605..619,
                             left: Name(
                                 ExprName {
-                                    range: 604..609,
+                                    range: 605..610,
                                     id: Identifier(
                                         "query",
                                     ),
@@ -820,7 +820,7 @@ expression: parse_ast
                             comparators: [
                                 Name(
                                     ExprName {
-                                        range: 613..618,
+                                        range: 614..619,
                                         id: Identifier(
                                             "event",
                                         ),
@@ -837,13 +837,13 @@ expression: parse_ast
     ),
     Expr(
         StmtExpr {
-            range: 619..635,
+            range: 620..636,
             value: Call(
                 ExprCall {
-                    range: 619..635,
+                    range: 620..636,
                     func: Name(
                         ExprName {
-                            range: 619..624,
+                            range: 620..625,
                             id: Identifier(
                                 "print",
                             ),
@@ -853,10 +853,10 @@ expression: parse_ast
                     args: [
                         Call(
                             ExprCall {
-                                range: 625..634,
+                                range: 626..635,
                                 func: Name(
                                     ExprName {
-                                        range: 625..630,
+                                        range: 626..631,
                                         id: Identifier(
                                             "match",
                                         ),
@@ -866,7 +866,7 @@ expression: parse_ast
                                 args: [
                                     Constant(
                                         ExprConstant {
-                                            range: 631..633,
+                                            range: 632..634,
                                             value: Int(
                                                 12,
                                             ),

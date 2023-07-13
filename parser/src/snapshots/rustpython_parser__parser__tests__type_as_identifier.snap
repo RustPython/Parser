@@ -1,0 +1,125 @@
+---
+source: parser/src/parser.rs
+expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
+---
+[
+    Assign(
+        StmtAssign {
+            range: 2..37,
+            targets: [
+                Name(
+                    ExprName {
+                        range: 2..6,
+                        id: Identifier(
+                            "type",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+            ],
+            value: Lambda(
+                ExprLambda {
+                    range: 9..37,
+                    args: Arguments {
+                        range: 16..21,
+                        posonlyargs: [],
+                        args: [
+                            ArgWithDefault {
+                                range: 16..21,
+                                def: Arg {
+                                    range: 16..21,
+                                    arg: Identifier(
+                                        "query",
+                                    ),
+                                    annotation: None,
+                                    type_comment: None,
+                                },
+                                default: None,
+                            },
+                        ],
+                        vararg: None,
+                        kwonlyargs: [],
+                        kwarg: None,
+                    },
+                    body: Compare(
+                        ExprCompare {
+                            range: 23..37,
+                            left: Name(
+                                ExprName {
+                                    range: 23..28,
+                                    id: Identifier(
+                                        "query",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ops: [
+                                Eq,
+                            ],
+                            comparators: [
+                                Name(
+                                    ExprName {
+                                        range: 32..37,
+                                        id: Identifier(
+                                            "event",
+                                        ),
+                                        ctx: Load,
+                                    },
+                                ),
+                            ],
+                        },
+                    ),
+                },
+            ),
+            type_comment: None,
+        },
+    ),
+    Expr(
+        StmtExpr {
+            range: 38..53,
+            value: Call(
+                ExprCall {
+                    range: 38..53,
+                    func: Name(
+                        ExprName {
+                            range: 38..43,
+                            id: Identifier(
+                                "print",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    args: [
+                        Call(
+                            ExprCall {
+                                range: 44..52,
+                                func: Name(
+                                    ExprName {
+                                        range: 44..48,
+                                        id: Identifier(
+                                            "type",
+                                        ),
+                                        ctx: Load,
+                                    },
+                                ),
+                                args: [
+                                    Constant(
+                                        ExprConstant {
+                                            range: 49..51,
+                                            value: Int(
+                                                12,
+                                            ),
+                                            kind: None,
+                                        },
+                                    ),
+                                ],
+                                keywords: [],
+                            },
+                        ),
+                    ],
+                    keywords: [],
+                },
+            ),
+        },
+    ),
+]
