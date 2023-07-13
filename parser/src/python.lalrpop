@@ -965,16 +965,15 @@ WithItem<Goal>: ast::WithItem = {
 };
 
 FuncDef: ast::Stmt = {
-    <decorator_list:Decorator*> <location:@L> <is_async:"async"?> "def" <name:Identifier> <args:Parameters> <r:("->" <Test<"all">>)?> ":" <body:Suite> => {
+    <decorator_list:Decorator*> <location:@L> <is_async:"async"?> "def" <name:Identifier> <type_params:TypeParamList?> <args:Parameters> <r:("->" <Test<"all">>)?> ":" <body:Suite> => {
         let args = Box::new(args);
         let returns = r.map(|x| Box::new(x));
         let end_location = body.last().unwrap().end();
         let type_comment = None;
-        let type_params = Vec::new();
         if is_async.is_some() {
-            ast::StmtAsyncFunctionDef { name, args, body, decorator_list, returns, type_comment, type_params, range: (location..end_location).into() }.into()
+            ast::StmtAsyncFunctionDef { name, args, body, decorator_list, returns, type_comment, type_params: type_params.unwrap_or_default(), range: (location..end_location).into() }.into()
         } else {
-            ast::StmtFunctionDef { name, args, body, decorator_list, returns, type_comment, type_params, range: (location..end_location).into() }.into()
+            ast::StmtFunctionDef { name, args, body, decorator_list, returns, type_comment, type_params: type_params.unwrap_or_default(), range: (location..end_location).into() }.into()
         }
     },
 };
@@ -1126,13 +1125,12 @@ KwargParameter<ArgType>: Option<Box<ast::Arg>> = {
 };
 
 ClassDef: ast::Stmt = {
-    <decorator_list:Decorator*> <location:@L> "class" <name:Identifier> <a:("(" ArgumentList ")")?> ":" <body:Suite> => {
+    <decorator_list:Decorator*> <location:@L> "class" <name:Identifier> <type_params:TypeParamList?> <a:("(" ArgumentList ")")?> ":" <body:Suite> => {
         let (bases, keywords) = match a {
             Some((_, arg, _)) => (arg.args, arg.keywords),
             None => (vec![], vec![]),
         };
         let end_location = body.last().unwrap().end();
-        let type_params = Vec::new();
         ast::Stmt::ClassDef(
             ast::StmtClassDef {
                 name,
@@ -1140,11 +1138,36 @@ ClassDef: ast::Stmt = {
                 keywords,
                 body,
                 decorator_list,
-                type_params,
+                type_params: type_params.unwrap_or_default(),
                 range: (location..end_location).into()
             },
         )
     },
+};
+
+
+TypeParamList: Vec<ast::TypeParam> = {
+    <location:@L> "[" <vars:OneOrMore<TypeParam>> ","? "]" <end_location:@R> => {
+        vars
+    }
+};
+
+TypeParam: ast::TypeParam = {
+    <location:@L> <name:Identifier> <bound:(":" <Test<"all">>)?> <end_location:@R>  => {
+        ast::TypeParam::TypeVar(
+            ast::TypeParamTypeVar { name, bound: bound.map(Box::new), range: (location..end_location).into() }
+        )
+    },
+    <location:@L> "*" <name:Identifier> <end_location:@R>  => {
+        ast::TypeParam::TypeVarTuple(
+            ast::TypeParamTypeVarTuple { name, range: (location..end_location).into() }
+        )
+    },
+    <location:@L> "**" <name:Identifier> <end_location:@R>  => {
+        ast::TypeParam::ParamSpec(
+            ast::TypeParamParamSpec { name, range: (location..end_location).into() }
+        )
+    }
 };
 
 // Decorators:

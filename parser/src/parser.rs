@@ -638,6 +638,65 @@ class Foo(A, B):
 
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_parse_class_generic_types() {
+        let source = "\
+# TypeVar
+class Foo[T](): ...
+
+# TypeVar with bound
+class Foo[T: str](): ...
+
+# TypeVar with tuple bound
+class Foo[T: (str, bytes)](): ...
+
+# Multiple TypeVar
+class Foo[T, U](): ...
+
+# Trailing comma
+class Foo[T, U,](): ...
+
+# TypeVarTuple
+class Foo[*Ts](): ...
+
+# ParamSpec
+class Foo[**P](): ...
+
+# Mixed types
+class Foo[X, Y: str, *U, **P]():
+  pass
+";
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_parse_function_definition() {
+        let source = "\
+def func(a):
+    ...
+
+def func[T](a: T) -> T:
+    ...
+
+def func[T: str](a: T) -> T:
+    ...
+
+def func[T: (str, bytes)](a: T) -> T:
+    ...
+
+def func[*Ts](*a: *Ts):
+    ...
+
+def func[**P](*args: P.args, **kwargs: P.kwargs):
+    ...
+
+def func[T, U: str, *Ts, **P]():
+    pass
+  ";
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_dict_comprehension() {
         let source = "{x1: x2 for y in z}";
         let parse_ast = ast::Expr::parse(source, "<test>").unwrap();
