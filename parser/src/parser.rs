@@ -920,6 +920,9 @@ type X \
 	= int
 type X = \
 	int
+type X = (
+    int
+)
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }

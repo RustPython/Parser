@@ -706,4 +706,28 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             ),
         },
     ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 415..435,
+            name: Name(
+                ExprName {
+                    range: 420..421,
+                    id: Identifier(
+                        "X",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 430..433,
+                    id: Identifier(
+                        "int",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
 ]
