@@ -54,8 +54,8 @@ where
             // 1. The token is at the start of a logical line.
             // 2. The logical line contains a top-level colon (that is, a colon that is not nested
             //    inside a parenthesized expression, list, or dictionary).
-            // 3. The top-level colon is not the immediate sibling of a soft keyword token.
-            //    (This is to avoid treating soft keywords as identifiers when annotated with
+            // 3. The top-level colon is not the immediate sibling of a `match` or `case` token.
+            //    (This is to avoid treating `match` or `case` as identifiers when annotated with
             //    type hints.)
             if matches!(tok, Tok::Match | Tok::Case) {
                 if !self.start_of_line {
