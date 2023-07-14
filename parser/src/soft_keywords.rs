@@ -96,26 +96,31 @@ where
                     if !self.start_of_line {
                         next = Some(Ok((soft_to_name(tok), *range)));
                     } else {
-                        let mut nesting = 0;
-                        let mut first = true;
-                        let mut seen_name = false;
-                        let mut seen_equal = false;
-                        while let Some(Ok((tok, _))) = self.underlying.peek() {
-                            match tok {
-                                Tok::Newline => break,
+                        let mut is_type_alias = false;
+                        if let Some(Ok((tok, _))) = self.underlying.peek() {
+                            if matches!(
+                                tok,
                                 Tok::Name { .. } |
-                                    // We treat a soft keyword token following a type token as a
-                                    // name to support cases like `type type = int` or `type match = int`
-                                    Tok::Type | Tok::Match | Tok::Case
-                                    if first => seen_name = true,
-                                Tok::Equal if nesting == 0 && seen_name => seen_equal = true,
-                                Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
-                                Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
-                                _ => {}
+                                // We treat a soft keyword token following a type token as a
+                                // name to support cases like `type type = int` or `type match = int`
+                                Tok::Type | Tok::Match | Tok::Case
+                            ) {
+                                let mut nesting = 0;
+                                while let Some(Ok((tok, _))) = self.underlying.peek() {
+                                    match tok {
+                                        Tok::Newline => break,
+                                        Tok::Equal if nesting == 0 => {
+                                            is_type_alias = true;
+                                            break;
+                                        }
+                                        Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
+                                        Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
+                                        _ => {}
+                                    }
+                                }
                             }
-                            first = false;
                         }
-                        if !(seen_name && seen_equal) {
+                        if !is_type_alias {
                             next = Some(Ok((soft_to_name(tok), *range)));
                         }
                     }
