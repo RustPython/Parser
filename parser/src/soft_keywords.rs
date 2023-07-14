@@ -102,7 +102,7 @@ where
                         let mut seen_equal = false;
                         while let Some(Ok((tok, _))) = self.underlying.peek() {
                             match tok {
-                            Tok::Newline => break,
+                                Tok::Newline => break,
                                 Tok::Name { .. } |
                                     // We treat a soft keyword token following a type token as a
                                     // name to support cases like `type type = int` or `type match = int`
