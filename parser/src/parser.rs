@@ -938,6 +938,12 @@ if type := 1: pass
 type = lambda query: query == event
 print(type(12))
 type(type)
+a = (
+	type in C
+)
+a = (
+	type(b)
+)
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }

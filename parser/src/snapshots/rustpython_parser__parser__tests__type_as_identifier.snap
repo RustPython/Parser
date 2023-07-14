@@ -848,4 +848,92 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             ),
         },
     ),
+    Assign(
+        StmtAssign {
+            range: 563..581,
+            targets: [
+                Name(
+                    ExprName {
+                        range: 563..564,
+                        id: Identifier(
+                            "a",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+            ],
+            value: Compare(
+                ExprCompare {
+                    range: 570..579,
+                    left: Name(
+                        ExprName {
+                            range: 570..574,
+                            id: Identifier(
+                                "type",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    ops: [
+                        In,
+                    ],
+                    comparators: [
+                        Name(
+                            ExprName {
+                                range: 578..579,
+                                id: Identifier(
+                                    "C",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                },
+            ),
+            type_comment: None,
+        },
+    ),
+    Assign(
+        StmtAssign {
+            range: 582..598,
+            targets: [
+                Name(
+                    ExprName {
+                        range: 582..583,
+                        id: Identifier(
+                            "a",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+            ],
+            value: Call(
+                ExprCall {
+                    range: 589..596,
+                    func: Name(
+                        ExprName {
+                            range: 589..593,
+                            id: Identifier(
+                                "type",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    args: [
+                        Name(
+                            ExprName {
+                                range: 594..595,
+                                id: Identifier(
+                                    "b",
+                                ),
+                                ctx: Load,
+                            },
+                        ),
+                    ],
+                    keywords: [],
+                },
+            ),
+            type_comment: None,
+        },
+    ),
 ]
