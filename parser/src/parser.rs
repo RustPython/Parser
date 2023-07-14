@@ -912,6 +912,14 @@ type X[T: (int, str), *Ts, **P] = (T, Ts, P)
 type type = int  
 type match = int
 type case = int
+
+# multine definitions
+type \
+	X = int
+type X \
+	= int
+type X = \
+	int
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
