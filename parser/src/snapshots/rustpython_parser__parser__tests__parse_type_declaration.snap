@@ -636,10 +636,82 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     TypeAlias(
         StmtTypeAlias {
-            range: 367..382,
+            range: 369..384,
             name: Name(
                 ExprName {
-                    range: 375..376,
+                    range: 374..377,
+                    id: Identifier(
+                        "foo",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 380..384,
+                    id: Identifier(
+                        "type",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 385..401,
+            name: Name(
+                ExprName {
+                    range: 390..393,
+                    id: Identifier(
+                        "foo",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 396..401,
+                    id: Identifier(
+                        "match",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 402..417,
+            name: Name(
+                ExprName {
+                    range: 407..410,
+                    id: Identifier(
+                        "foo",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: Name(
+                ExprName {
+                    range: 413..417,
+                    id: Identifier(
+                        "case",
+                    ),
+                    ctx: Load,
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 441..456,
+            name: Name(
+                ExprName {
+                    range: 449..450,
                     id: Identifier(
                         "X",
                     ),
@@ -649,7 +721,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [],
             value: Name(
                 ExprName {
-                    range: 379..382,
+                    range: 453..456,
                     id: Identifier(
                         "int",
                     ),
@@ -660,10 +732,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     TypeAlias(
         StmtTypeAlias {
-            range: 383..398,
+            range: 457..472,
             name: Name(
                 ExprName {
-                    range: 388..389,
+                    range: 462..463,
                     id: Identifier(
                         "X",
                     ),
@@ -673,7 +745,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [],
             value: Name(
                 ExprName {
-                    range: 395..398,
+                    range: 469..472,
                     id: Identifier(
                         "int",
                     ),
@@ -684,10 +756,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     TypeAlias(
         StmtTypeAlias {
-            range: 399..414,
+            range: 473..488,
             name: Name(
                 ExprName {
-                    range: 404..405,
+                    range: 478..479,
                     id: Identifier(
                         "X",
                     ),
@@ -697,7 +769,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [],
             value: Name(
                 ExprName {
-                    range: 411..414,
+                    range: 485..488,
                     id: Identifier(
                         "int",
                     ),
@@ -708,10 +780,10 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
     ),
     TypeAlias(
         StmtTypeAlias {
-            range: 415..435,
+            range: 489..509,
             name: Name(
                 ExprName {
-                    range: 420..421,
+                    range: 494..495,
                     id: Identifier(
                         "X",
                     ),
@@ -721,7 +793,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_params: [],
             value: Name(
                 ExprName {
-                    range: 430..433,
+                    range: 504..507,
                     id: Identifier(
                         "int",
                     ),

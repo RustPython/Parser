@@ -90,36 +90,37 @@ where
                 }
                 // For `type` all of the following conditions must be met:
                 // 1. The token is at the start of a logical line.
-                // 2. The type token is followed by a name token.
-                // 3. The name token is followed by an equality token.
+                // 2. The type token is immediately followed by a name token.
+                // 3. The name token is eventually followed by an equality token.
                 Tok::Type => {
                     if !self.start_of_line {
                         next = Some(Ok((soft_to_name(tok), *range)));
                     } else {
                         let mut nesting = 0;
+                        let mut first = true;
                         let mut seen_name = false;
                         let mut seen_equal = false;
                         while let Some(Ok((tok, _))) = self.underlying.peek() {
                             match tok {
-                                Tok::Newline => break,
-                                Tok::Name { .. } if nesting == 0 => seen_name = true,
-                                // We treat a soft keyword token following a type token as a
-                                // name to support cases like `type type = int` or `type match = int`
-                                Tok::Type | Tok::Match | Tok::Case if nesting == 0 => {
-                                    seen_name = true
-                                }
+                            Tok::Newline => break,
+                                Tok::Name { .. } |
+                                    // We treat a soft keyword token following a type token as a
+                                    // name to support cases like `type type = int` or `type match = int`
+                                    Tok::Type | Tok::Match | Tok::Case
+                                    if first => seen_name = true,
                                 Tok::Equal if nesting == 0 && seen_name => seen_equal = true,
                                 Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
                                 Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
                                 _ => {}
                             }
+                            first = false;
                         }
                         if !(seen_name && seen_equal) {
                             next = Some(Ok((soft_to_name(tok), *range)));
                         }
                     }
                 }
-                _ => (),  // Not a soft keyword token
+                _ => (), // Not a soft keyword token
             }
         }
 

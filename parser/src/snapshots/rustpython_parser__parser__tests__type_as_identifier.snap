@@ -1001,4 +1001,74 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_comment: None,
         },
     ),
+    Assign(
+        StmtAssign {
+            range: 626..638,
+            targets: [
+                Name(
+                    ExprName {
+                        range: 626..630,
+                        id: Identifier(
+                            "type",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+                Name(
+                    ExprName {
+                        range: 633..634,
+                        id: Identifier(
+                            "x",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+            ],
+            value: Constant(
+                ExprConstant {
+                    range: 637..638,
+                    value: Int(
+                        1,
+                    ),
+                    kind: None,
+                },
+            ),
+            type_comment: None,
+        },
+    ),
+    Assign(
+        StmtAssign {
+            range: 639..651,
+            targets: [
+                Name(
+                    ExprName {
+                        range: 639..640,
+                        id: Identifier(
+                            "x",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+                Name(
+                    ExprName {
+                        range: 643..647,
+                        id: Identifier(
+                            "type",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+            ],
+            value: Constant(
+                ExprConstant {
+                    range: 650..651,
+                    value: Int(
+                        1,
+                    ),
+                    kind: None,
+                },
+            ),
+            type_comment: None,
+        },
+    ),
 ]

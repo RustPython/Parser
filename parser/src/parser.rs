@@ -913,6 +913,11 @@ type type = int
 type match = int
 type case = int
 
+# soft keyword as value
+type foo = type
+type foo = match
+type foo = case
+
 # multine definitions
 type \
 	X = int
@@ -959,6 +964,8 @@ type (
 	X = int
 )
 type = 1
+type = x = 1
+x = type = 1
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
