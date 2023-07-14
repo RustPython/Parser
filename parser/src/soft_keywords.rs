@@ -50,71 +50,76 @@ where
             // used as an identifier. We assume every soft keyword use is an identifier unless
             // a heuristic is met.
 
-            // For `match` and `case`, all of the following conditions must be met:
-            // 1. The token is at the start of a logical line.
-            // 2. The logical line contains a top-level colon (that is, a colon that is not nested
-            //    inside a parenthesized expression, list, or dictionary).
-            // 3. The top-level colon is not the immediate sibling of a `match` or `case` token.
-            //    (This is to avoid treating `match` or `case` as identifiers when annotated with
-            //    type hints.)
-            if matches!(tok, Tok::Match | Tok::Case) {
-                if !self.start_of_line {
-                    next = Some(Ok((soft_to_name(tok), *range)));
-                } else {
-                    let mut nesting = 0;
-                    let mut first = true;
-                    let mut seen_colon = false;
-                    let mut seen_lambda = false;
-                    while let Some(Ok((tok, _))) = self.underlying.peek() {
-                        match tok {
-                            Tok::Newline => break,
-                            Tok::Lambda if nesting == 0 => seen_lambda = true,
-                            Tok::Colon if nesting == 0 => {
-                                if seen_lambda {
-                                    seen_lambda = false;
-                                } else if !first {
-                                    seen_colon = true;
+            match tok {
+                // For `match` and `case`, all of the following conditions must be met:
+                // 1. The token is at the start of a logical line.
+                // 2. The logical line contains a top-level colon (that is, a colon that is not nested
+                //    inside a parenthesized expression, list, or dictionary).
+                // 3. The top-level colon is not the immediate sibling of a `match` or `case` token.
+                //    (This is to avoid treating `match` or `case` as identifiers when annotated with
+                //    type hints.)   type hints.)
+                Tok::Match | Tok::Case => {
+                    if !self.start_of_line {
+                        next = Some(Ok((soft_to_name(tok), *range)));
+                    } else {
+                        let mut nesting = 0;
+                        let mut first = true;
+                        let mut seen_colon = false;
+                        let mut seen_lambda = false;
+                        while let Some(Ok((tok, _))) = self.underlying.peek() {
+                            match tok {
+                                Tok::Newline => break,
+                                Tok::Lambda if nesting == 0 => seen_lambda = true,
+                                Tok::Colon if nesting == 0 => {
+                                    if seen_lambda {
+                                        seen_lambda = false;
+                                    } else if !first {
+                                        seen_colon = true;
+                                    }
                                 }
+                                Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
+                                Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
+                                _ => {}
                             }
-                            Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
-                            Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
-                            _ => {}
+                            first = false;
                         }
-                        first = false;
-                    }
-                    if !seen_colon {
-                        next = Some(Ok((soft_to_name(tok), *range)));
-                    }
-                }
-            }
-            // For `type` all of the following conditions must be met:
-            // 1. The token is at the start of a logical line.
-            // 2. The type token is followed by a name token.
-            // 3. The name token is followed by an equality token.
-            else if matches!(tok, Tok::Type) {
-                if !self.start_of_line {
-                    next = Some(Ok((soft_to_name(tok), *range)));
-                } else {
-                    let mut nesting = 0;
-                    let mut seen_name = false;
-                    let mut seen_equal = false;
-                    while let Some(Ok((tok, _))) = self.underlying.peek() {
-                        match tok {
-                            Tok::Newline => break,
-                            Tok::Name { .. } if nesting == 0 => seen_name = true,
-                            // We treat a soft keyword token following a type token as a
-                            // name to support cases like `type type = int` or `type match = int`
-                            Tok::Type | Tok::Match | Tok::Case if nesting == 0 => seen_name = true,
-                            Tok::Equal if nesting == 0 && seen_name => seen_equal = true,
-                            Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
-                            Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
-                            _ => {}
+                        if !seen_colon {
+                            next = Some(Ok((soft_to_name(tok), *range)));
                         }
                     }
-                    if !(seen_name && seen_equal) {
+                }
+                // For `type` all of the following conditions must be met:
+                // 1. The token is at the start of a logical line.
+                // 2. The type token is followed by a name token.
+                // 3. The name token is followed by an equality token.
+                Tok::Type => {
+                    if !self.start_of_line {
                         next = Some(Ok((soft_to_name(tok), *range)));
+                    } else {
+                        let mut nesting = 0;
+                        let mut seen_name = false;
+                        let mut seen_equal = false;
+                        while let Some(Ok((tok, _))) = self.underlying.peek() {
+                            match tok {
+                                Tok::Newline => break,
+                                Tok::Name { .. } if nesting == 0 => seen_name = true,
+                                // We treat a soft keyword token following a type token as a
+                                // name to support cases like `type type = int` or `type match = int`
+                                Tok::Type | Tok::Match | Tok::Case if nesting == 0 => {
+                                    seen_name = true
+                                }
+                                Tok::Equal if nesting == 0 && seen_name => seen_equal = true,
+                                Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
+                                Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
+                                _ => {}
+                            }
+                        }
+                        if !(seen_name && seen_equal) {
+                            next = Some(Ok((soft_to_name(tok), *range)));
+                        }
                     }
                 }
+                _ => (),  // Not a soft keyword token
             }
         }
 
