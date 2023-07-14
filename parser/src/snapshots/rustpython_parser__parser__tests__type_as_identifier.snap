@@ -936,4 +936,43 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             type_comment: None,
         },
     ),
+    Expr(
+        StmtExpr {
+            range: 599..616,
+            value: Call(
+                ExprCall {
+                    range: 599..616,
+                    func: Name(
+                        ExprName {
+                            range: 599..603,
+                            id: Identifier(
+                                "type",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    args: [],
+                    keywords: [
+                        Keyword {
+                            range: 607..614,
+                            arg: Some(
+                                Identifier(
+                                    "X",
+                                ),
+                            ),
+                            value: Name(
+                                ExprName {
+                                    range: 611..614,
+                                    id: Identifier(
+                                        "int",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                        },
+                    ],
+                },
+            ),
+        },
+    ),
 ]
