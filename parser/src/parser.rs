@@ -958,6 +958,7 @@ a = (
 type (
 	X = int
 )
+type = 1
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }

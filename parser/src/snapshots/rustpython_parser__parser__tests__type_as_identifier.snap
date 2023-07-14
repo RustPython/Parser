@@ -975,4 +975,30 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
             ),
         },
     ),
+    Assign(
+        StmtAssign {
+            range: 617..625,
+            targets: [
+                Name(
+                    ExprName {
+                        range: 617..621,
+                        id: Identifier(
+                            "type",
+                        ),
+                        ctx: Store,
+                    },
+                ),
+            ],
+            value: Constant(
+                ExprConstant {
+                    range: 624..625,
+                    value: Int(
+                        1,
+                    ),
+                    kind: None,
+                },
+            ),
+            type_comment: None,
+        },
+    ),
 ]
