@@ -113,8 +113,8 @@ where
                                             is_type_alias = true;
                                             break;
                                         }
-                                        Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
-                                        Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
+                                        Tok::Lsqb => nesting += 1,
+                                        Tok::Rsqb => nesting -= 1,
                                         _ => {}
                                     }
                                 }
