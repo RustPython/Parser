@@ -115,7 +115,10 @@ where
                                         }
                                         Tok::Lsqb => nesting += 1,
                                         Tok::Rsqb => nesting -= 1,
-                                        _ => {}
+                                        // Allow arbitrary content within brackets for now
+                                        _ if nesting > 0 => {}
+                                        // Exit if unexpected tokens are seen
+                                        _ => break,
                                     }
                                 }
                             }
