@@ -636,6 +636,7 @@ class Foo(A, B):
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
+
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
     fn test_parse_class_generic_types() {
@@ -894,11 +895,45 @@ except* OSError as e:
         assert!(parse(source, Mode::Interactive, "<embedded>").is_ok());
     }
 
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_parse_type_declaration() {
+        let source = "\
+# A non-generic type alias
+type IntOrStr = int | str
+
+# A generic type alias
+type ListOrSet[T] = list[T] | set[T]
+
+# A type alias that includes a forward reference
+type AnimalOrVegetable = Animal | \"Vegetable\"
+
+# A generic self-referential type alias
+type RecursiveList[T] = T | list[RecursiveList[T]]
+";
+        insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
+    #[test]
+    #[cfg(feature = "all-nodes-with-ranges")]
+    fn test_type_as_identifier() {
+        let source = r#"\
+type = lambda query: query == event
+print(type(12))
+"#;
+
+    use crate::lexer::lex;
+    let lexer = lex(source, Mode::Module);
+    println!("tokens {:#?}", lexer.map(|x| x.unwrap().0).collect::<Vec<_>>());
+
+    insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
+    }
+
     #[test]
     #[cfg(feature = "all-nodes-with-ranges")]
     fn test_match_as_identifier() {
-        let parse_ast = ast::Suite::parse(
-            r#"
+        let source = r#"\
 match *a + b, c   # ((match * a) + b), c
 match *(a + b), c   # (match * (a + b)), c
 match (*a + b, c)   # match ((*(a + b)), c)
@@ -920,11 +955,8 @@ match match:
         pass
 match = lambda query: query == event
 print(match(12))
-"#,
-            "<test>",
-        )
-        .unwrap();
-        insta::assert_debug_snapshot!(parse_ast);
+"#;
+    insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
 
     #[test]

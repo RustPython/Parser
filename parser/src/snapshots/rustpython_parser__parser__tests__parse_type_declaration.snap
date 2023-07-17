@@ -1,0 +1,242 @@
+---
+source: parser/src/parser.rs
+expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
+---
+[
+    TypeAlias(
+        StmtTypeAlias {
+            range: 27..52,
+            name: Name(
+                ExprName {
+                    range: 32..40,
+                    id: Identifier(
+                        "IntOrStr",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: BinOp(
+                ExprBinOp {
+                    range: 43..52,
+                    left: Name(
+                        ExprName {
+                            range: 43..46,
+                            id: Identifier(
+                                "int",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    op: BitOr,
+                    right: Name(
+                        ExprName {
+                            range: 49..52,
+                            id: Identifier(
+                                "str",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 77..113,
+            name: Name(
+                ExprName {
+                    range: 82..91,
+                    id: Identifier(
+                        "ListOrSet",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 92..93,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: None,
+                    },
+                ),
+            ],
+            value: BinOp(
+                ExprBinOp {
+                    range: 97..113,
+                    left: Subscript(
+                        ExprSubscript {
+                            range: 97..104,
+                            value: Name(
+                                ExprName {
+                                    range: 97..101,
+                                    id: Identifier(
+                                        "list",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Name(
+                                ExprName {
+                                    range: 102..103,
+                                    id: Identifier(
+                                        "T",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    op: BitOr,
+                    right: Subscript(
+                        ExprSubscript {
+                            range: 107..113,
+                            value: Name(
+                                ExprName {
+                                    range: 107..110,
+                                    id: Identifier(
+                                        "set",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Name(
+                                ExprName {
+                                    range: 111..112,
+                                    id: Identifier(
+                                        "T",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 164..209,
+            name: Name(
+                ExprName {
+                    range: 169..186,
+                    id: Identifier(
+                        "AnimalOrVegetable",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [],
+            value: BinOp(
+                ExprBinOp {
+                    range: 189..209,
+                    left: Name(
+                        ExprName {
+                            range: 189..195,
+                            id: Identifier(
+                                "Animal",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    op: BitOr,
+                    right: Constant(
+                        ExprConstant {
+                            range: 198..209,
+                            value: Str(
+                                "Vegetable",
+                            ),
+                            kind: None,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+    TypeAlias(
+        StmtTypeAlias {
+            range: 251..301,
+            name: Name(
+                ExprName {
+                    range: 256..269,
+                    id: Identifier(
+                        "RecursiveList",
+                    ),
+                    ctx: Load,
+                },
+            ),
+            type_params: [
+                TypeVar(
+                    TypeParamTypeVar {
+                        range: 270..271,
+                        name: Identifier(
+                            "T",
+                        ),
+                        bound: None,
+                    },
+                ),
+            ],
+            value: BinOp(
+                ExprBinOp {
+                    range: 275..301,
+                    left: Name(
+                        ExprName {
+                            range: 275..276,
+                            id: Identifier(
+                                "T",
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                    op: BitOr,
+                    right: Subscript(
+                        ExprSubscript {
+                            range: 279..301,
+                            value: Name(
+                                ExprName {
+                                    range: 279..283,
+                                    id: Identifier(
+                                        "list",
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            slice: Subscript(
+                                ExprSubscript {
+                                    range: 284..300,
+                                    value: Name(
+                                        ExprName {
+                                            range: 284..297,
+                                            id: Identifier(
+                                                "RecursiveList",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    slice: Name(
+                                        ExprName {
+                                            range: 298..299,
+                                            id: Identifier(
+                                                "T",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    ctx: Load,
+                                },
+                            ),
+                            ctx: Load,
+                        },
+                    ),
+                },
+            ),
+        },
+    ),
+]

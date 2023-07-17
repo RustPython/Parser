@@ -2,14 +2,17 @@ use crate::{lexer::LexResult, token::Tok, Mode};
 use itertools::{Itertools, MultiPeek};
 
 /// An [`Iterator`] that transforms a token stream to accommodate soft keywords (namely, `match`
-/// and `case`).
+/// `case`, and `type`).
 ///
 /// [PEP 634](https://www.python.org/dev/peps/pep-0634/) introduced the `match` and `case` keywords
 /// as soft keywords, meaning that they can be used as identifiers (e.g., variable names) in certain
 /// contexts.
 ///
+/// Later, [PEP 695](https://peps.python.org/pep-0695/#generic-type-alias) introduced the `type` 
+/// soft keyword.
+/// 
 /// This function modifies a token stream to accommodate this change. In particular, it replaces
-/// `match` and `case` tokens with `identifier` tokens if they are used as identifiers.
+/// soft keyword tokens with `identifier` tokens if they are used as identifiers.
 ///
 /// Handling soft keywords in this intermediary pass allows us to simplify both the lexer and
 /// parser, as neither of them need to be aware of soft keywords.
@@ -43,14 +46,16 @@ where
     fn next(&mut self) -> Option<LexResult> {
         let mut next = self.underlying.next();
         if let Some(Ok((tok, range))) = next.as_ref() {
-            // If the token is a `match` or `case` token, check if it's used as an identifier.
-            // We assume every `match` or `case` is an identifier unless both of the following
-            // conditions are met:
+            // If the token is a soft keyword e.g. `type`, `match`, or `case`, check if it's 
+            // used as an identifier. We assume every soft keyword use is an identifier unless
+            // a heuristic is met.
+            
+            // For `match` and `case`, all of the following conditions must be met:
             // 1. The token is at the start of a logical line.
             // 2. The logical line contains a top-level colon (that is, a colon that is not nested
             //    inside a parenthesized expression, list, or dictionary).
-            // 3. The top-level colon is not the immediate sibling of a `match` or `case` token.
-            //    (This is to avoid treating `match` and `case` as identifiers when annotated with
+            // 3. The top-level colon is not the immediate sibling of a soft keyword token.
+            //    (This is to avoid treating soft keywords as identifiers when annotated with
             //    type hints.)
             if matches!(tok, Tok::Match | Tok::Case) {
                 if !self.start_of_line {
@@ -82,6 +87,33 @@ where
                     }
                 }
             }
+            // For `type` all of the following conditions must be met:
+            // 1. The token is at the start of a logical line.
+            // 2. The type token is followed by a name token.
+            // 3. The name token is followed by an equality token.
+            else if matches!(tok, Tok::Type) {
+                if !self.start_of_line {
+                    next = Some(Ok((soft_to_name(tok), *range)));
+                } else {
+                    let mut nesting = 0;
+                    let mut seen_name = false;
+                    let mut seen_equal = false;
+                    while let Some(Ok((tok, _))) = self.underlying.peek() {
+                        match tok {
+                            Tok::Newline => break,
+                            Tok::Name { .. } if nesting == 0 => seen_name = true,
+                            Tok::Equal if nesting == 0 && seen_name => seen_equal = true,
+                            Tok::Lpar | Tok::Lsqb | Tok::Lbrace => nesting += 1,
+                            Tok::Rpar | Tok::Rsqb | Tok::Rbrace => nesting -= 1,
+                            _ => {}
+                        }
+                    }
+                    if !(seen_name && seen_equal) {
+                        next = Some(Ok((soft_to_name(tok), *range)));
+                    }
+                }
+
+            }
         }
 
         self.start_of_line = next.as_ref().map_or(false, |lex_result| {
@@ -111,6 +143,7 @@ fn soft_to_name(tok: &Tok) -> Tok {
     let name = match tok {
         Tok::Match => "match",
         Tok::Case => "case",
+        Tok::Type => "type",
         _ => unreachable!("other tokens never reach here"),
     };
     Tok::Name {
