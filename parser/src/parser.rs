@@ -928,6 +928,12 @@ type X = \
 type X = (
     int
 )
+type \
+    X[T] = T
+type X \
+    [T] = T
+type X[T] \
+    = T
 "#;
         insta::assert_debug_snapshot!(ast::Suite::parse(source, "<test>").unwrap());
     }
