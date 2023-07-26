@@ -1,5 +1,5 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: 3831150e20de8eaf8849292a753e75259c3c34703bbfa26319e8faf5f9a853b5
+// sha3: de5ffc51d44962eb297cbbf668fae33652eed69586405ebef2229fc02d183bc8
 use crate::{
     ast::{self as ast, Ranged, bigint::BigInt},
     lexer::{LexicalError, LexicalErrorType},
@@ -32200,7 +32200,7 @@ fn __action159<
 ) -> ast::Expr
 {
     ast::Expr::Name(
-        ast::ExprName { id: name, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
+        ast::ExprName { id: name, ctx: ast::ExprContext::Store, range: (location..end_location).into() },
     )
 }
 
