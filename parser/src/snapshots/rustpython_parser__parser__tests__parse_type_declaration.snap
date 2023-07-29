@@ -12,7 +12,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -36,7 +36,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -75,7 +75,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -114,7 +114,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -193,7 +193,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -227,7 +227,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -306,7 +306,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -382,7 +382,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -468,7 +468,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -571,7 +571,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "type",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -595,7 +595,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "match",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -619,7 +619,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "case",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -643,7 +643,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "foo",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -667,7 +667,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "foo",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -691,7 +691,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "foo",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -715,7 +715,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -739,7 +739,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -763,7 +763,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -787,7 +787,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [],
@@ -811,7 +811,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -845,7 +845,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [
@@ -879,7 +879,7 @@ expression: "ast::Suite::parse(source, \"<test>\").unwrap()"
                     id: Identifier(
                         "X",
                     ),
-                    ctx: Load,
+                    ctx: Store,
                 },
             ),
             type_params: [

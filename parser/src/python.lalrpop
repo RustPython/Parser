@@ -981,7 +981,7 @@ FuncDef: ast::Stmt = {
 
 TypeAliasName: ast::Expr = {
     <location:@L> <name:Identifier> <end_location:@R> => ast::Expr::Name(
-        ast::ExprName { id: name, ctx: ast::ExprContext::Load, range: (location..end_location).into() },
+        ast::ExprName { id: name, ctx: ast::ExprContext::Store, range: (location..end_location).into() },
     ),
 }
 
