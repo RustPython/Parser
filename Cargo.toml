@@ -1,5 +1,5 @@
 [workspace.package]
-version = "0.2.0"
+version = "0.3.0"
 authors = ["RustPython Team"]
 edition = "2021"
 rust-version = "1.67.1"
@@ -16,12 +16,12 @@ members = [
 ]
 
 [workspace.dependencies]
-rustpython-parser-vendored = { path = "vendored" }
-rustpython-ast = { path = "ast", default-features = false }
-rustpython-parser-core = { path = "core", features = [] }
-rustpython-literal = { path = "literal" }
-rustpython-format = { path = "format" }
-rustpython-parser = { path = "parser", default-features = false }
+rustpython-parser-vendored = { path = "vendored", version = "0.3.0" }
+rustpython-ast = { path = "ast", default-features = false, version = "0.3.0" }
+rustpython-parser-core = { path = "core", features = [], version = "0.3.0" }
+rustpython-literal = { path = "literal", version = "0.3.0" }
+rustpython-format = { path = "format", version = "0.3.0" }
+rustpython-parser = { path = "parser", default-features = false, version = "0.3.0" }
 
 ahash = "0.7.6"
 anyhow = "1.0.45"
