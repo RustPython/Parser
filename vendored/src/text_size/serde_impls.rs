@@ -1,5 +1,5 @@
 use {
-    crate::{TextRange, TextSize},
+    super::{TextRange, TextSize},
     serde::{de, Deserialize, Deserializer, Serialize, Serializer},
 };
 

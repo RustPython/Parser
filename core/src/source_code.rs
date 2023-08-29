@@ -2,7 +2,7 @@
 use crate::text_size::{TextLen, TextSize};
 use memchr::memrchr2;
 
-pub use ruff_source_location::{
+pub use crate::source_location::{
     newlines::{find_newline, UniversalNewlineIterator},
     LineIndex, OneIndexed, SourceCode, SourceLocation,
 };

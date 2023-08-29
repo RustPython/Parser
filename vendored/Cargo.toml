@@ -1,18 +1,16 @@
 [package]
-name = "rustpython-parser-core"
-description = "RustPython parser data types."
-version = "0.2.0"
+name = "rustpython-parser-vendored"
+description = "RustPython parser vendored third-party crates."
+version = "0.3.0"
 authors = ["RustPython Team"]
 edition = "2021"
 repository = "https://github.com/RustPython/Parser/"
 license = "MIT"
 
 [dependencies]
-# vendored dependency shouldn't be placed out of this crate
-rustpython-parser-vendored.workspace = true
 serde = { version = "1.0.133", optional = true, default-features = false, features = ["derive"] }
-is-macro.workspace = true
 memchr.workspace = true
+once_cell.workspace = true
 
 [features]
 default = []

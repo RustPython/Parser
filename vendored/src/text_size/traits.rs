@@ -1,4 +1,4 @@
-use {crate::TextSize, std::convert::TryInto};
+use {super::TextSize, std::convert::TryInto};
 
 use priv_in_pub::Sealed;
 mod priv_in_pub {

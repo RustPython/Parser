@@ -1,5 +1,5 @@
-use crate::SourceLocation;
-use ruff_text_size::{TextLen, TextRange, TextSize};
+use super::SourceLocation;
+use crate::text_size::{TextLen, TextRange, TextSize};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use std::fmt;
@@ -67,8 +67,8 @@ impl LineIndex {
     /// ## Examples
     ///
     /// ```
-    /// # use ruff_text_size::TextSize;
-    /// # use ruff_source_location::{LineIndex, OneIndexed, SourceLocation};
+    /// # use rustpython_parser_vendored::text_size::TextSize;
+    /// # use rustpython_parser_vendored::source_location::{LineIndex, OneIndexed, SourceLocation};
     /// let source = "def a():\n    pass";
     /// let index = LineIndex::from_source_text(source);
     ///
@@ -132,8 +132,8 @@ impl LineIndex {
     /// ## Examples
     ///
     /// ```
-    /// # use ruff_text_size::TextSize;
-    /// # use ruff_source_location::{LineIndex, OneIndexed, SourceLocation};
+    /// # use rustpython_parser_vendored::text_size::TextSize;
+    /// # use rustpython_parser_vendored::source_location::{LineIndex, OneIndexed, SourceLocation};
     /// let source = "def a():\n    pass";
     /// let index = LineIndex::from_source_text(source);
     ///
@@ -349,9 +349,9 @@ const fn unwrap<T: Copy>(option: Option<T>) -> T {
 
 #[cfg(test)]
 mod tests {
-    use crate::line_index::LineIndex;
-    use crate::{OneIndexed, SourceLocation};
-    use ruff_text_size::TextSize;
+    use crate::source_location::line_index::LineIndex;
+    use crate::source_location::{OneIndexed, SourceLocation};
+    use crate::text_size::TextSize;
 
     #[test]
     fn ascii_index() {

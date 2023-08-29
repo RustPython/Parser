@@ -1,0 +1,2 @@
+This module is mainly imported from `ruff_python_ast::source_code`,
+including `ruff_python_ast::source_code::SourceLocation` related source code.
