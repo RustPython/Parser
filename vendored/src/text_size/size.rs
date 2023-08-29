@@ -1,5 +1,5 @@
 use {
-    crate::TextLen,
+    super::TextLen,
     std::{
         convert::TryFrom,
         fmt, iter,
@@ -38,7 +38,7 @@ impl TextSize {
     /// # Examples
     ///
     /// ```rust
-    /// # use ruff_text_size::*;
+    /// # use rustpython_parser_vendored::text_size::*;
     /// assert_eq!(TextSize::from(4), TextSize::new(4));
     /// ```
     pub const fn new(offset: u32) -> Self {
@@ -52,7 +52,7 @@ impl TextSize {
     /// # Examples
     ///
     /// ```rust
-    /// # use ruff_text_size::*;
+    /// # use rustpython_parser_vendored::text_size::*;
     /// let char_size = TextSize::of('🦀');
     /// assert_eq!(char_size, TextSize::from(4));
     ///
@@ -69,7 +69,7 @@ impl TextSize {
     /// # Examples
     ///
     /// ```rust
-    /// # use ruff_text_size::*;
+    /// # use rustpython_parser_vendored::text_size::*;
     /// assert_eq!(TextSize::from(4).to_u32(), 4);
     /// ```
     pub fn to_u32(&self) -> u32 {
@@ -81,7 +81,7 @@ impl TextSize {
     /// # Examples
     ///
     /// ```rust
-    /// # use ruff_text_size::*;
+    /// # use rustpython_parser_vendored::text_size::*;
     /// assert_eq!(TextSize::from(4).to_usize(), 4);
     /// ```
     pub fn to_usize(&self) -> usize {

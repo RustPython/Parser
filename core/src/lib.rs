@@ -11,5 +11,6 @@ pub use error::BaseError;
 pub use format::ConversionFlag;
 pub use mode::Mode;
 
-// re-export our public interface
-pub use ruff_text_size as text_size;
+#[cfg(feature = "location")]
+pub use rustpython_parser_vendored::source_location;
+pub use rustpython_parser_vendored::text_size;

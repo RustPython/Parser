@@ -2,10 +2,8 @@ mod line_index;
 // mod locator;
 pub mod newlines;
 
-pub use crate::line_index::{LineIndex, OneIndexed};
-// TODO: RUSTPYTHON; import it later
-// pub use locator::Locator;
-use ruff_text_size::{TextRange, TextSize};
+pub use self::line_index::{LineIndex, OneIndexed};
+use crate::text_size::{TextRange, TextSize};
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Formatter};

@@ -1,5 +1,5 @@
+use crate::text_size::{TextLen, TextRange, TextSize};
 use memchr::{memchr2, memrchr2};
-use ruff_text_size::{TextLen, TextRange, TextSize};
 use std::iter::FusedIterator;
 use std::ops::Deref;
 
@@ -20,8 +20,8 @@ impl StrExt for str {
 /// ## Examples
 ///
 /// ```rust
-/// # use ruff_text_size::TextSize;
-/// # use ruff_source_location::newlines::{Line, UniversalNewlineIterator};
+/// # use rustpython_parser_vendored::text_size::TextSize;
+/// # use rustpython_parser_vendored::source_location::newlines::{Line, UniversalNewlineIterator};
 /// let mut lines = UniversalNewlineIterator::from("foo\nbar\n\r\nbaz\rbop");
 ///
 /// assert_eq!(lines.next_back(), Some(Line::new("bop", TextSize::from(14))));
@@ -337,9 +337,9 @@ impl Deref for LineEnding {
 
 #[cfg(test)]
 mod tests {
+    use super::Line;
     use super::UniversalNewlineIterator;
-    use crate::newlines::Line;
-    use ruff_text_size::TextSize;
+    use crate::text_size::TextSize;
 
     #[test]
     fn universal_newlines_empty_str() {

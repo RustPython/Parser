@@ -374,7 +374,9 @@ impl<'a> StringParser<'a> {
                     expression.push(ch);
                     loop {
                         let Some(c) = self.next_char() else {
-                            return Err(FStringError::new(UnterminatedString, self.get_pos()).into());
+                            return Err(
+                                FStringError::new(UnterminatedString, self.get_pos()).into()
+                            );
                         };
                         expression.push(c);
                         if c == ch {
@@ -408,7 +410,7 @@ impl<'a> StringParser<'a> {
                         spec_constructor.push(
                             self.expr(
                                 ast::ExprConstant {
-                                    value: constant_piece.drain(..).collect::<String>().into(),
+                                    value: std::mem::take(&mut constant_piece).into(),
                                     kind: None,
                                     range: self.range(),
                                 }
@@ -433,7 +435,7 @@ impl<'a> StringParser<'a> {
             spec_constructor.push(
                 self.expr(
                     ast::ExprConstant {
-                        value: constant_piece.drain(..).collect::<String>().into(),
+                        value: std::mem::take(&mut constant_piece).into(),
                         kind: None,
                         range: self.range(),
                     }
@@ -475,7 +477,7 @@ impl<'a> StringParser<'a> {
                         values.push(
                             self.expr(
                                 ast::ExprConstant {
-                                    value: content.drain(..).collect::<String>().into(),
+                                    value: std::mem::take(&mut content).into(),
                                     kind: None,
                                     range: self.range(),
                                 }

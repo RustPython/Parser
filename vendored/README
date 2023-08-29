@@ -1,0 +1,3 @@
+This crate vendors third-party source codes which we can't depend on them through crates.io.
+
+See README and LICENSE of each modules.

@@ -155,8 +155,15 @@ impl UnicodeEscape<'_> {
             };
             let Some(new_len) = length_add(out_len, incr) else {
                 #[cold]
-                fn stop(single_count: usize, double_count: usize, preferred_quote: Quote) -> EscapeLayout {
-                    EscapeLayout { quote: choose_quote(single_count, double_count, preferred_quote).0, len: None }
+                fn stop(
+                    single_count: usize,
+                    double_count: usize,
+                    preferred_quote: Quote,
+                ) -> EscapeLayout {
+                    EscapeLayout {
+                        quote: choose_quote(single_count, double_count, preferred_quote).0,
+                        len: None,
+                    }
                 }
                 return stop(single_count, double_count, preferred_quote);
             };
@@ -332,8 +339,15 @@ impl AsciiEscape<'_> {
             };
             let Some(new_len) = length_add(out_len, incr) else {
                 #[cold]
-                fn stop(single_count: usize, double_count: usize, preferred_quote: Quote) -> EscapeLayout {
-                    EscapeLayout { quote: choose_quote(single_count, double_count, preferred_quote).0, len: None }
+                fn stop(
+                    single_count: usize,
+                    double_count: usize,
+                    preferred_quote: Quote,
+                ) -> EscapeLayout {
+                    EscapeLayout {
+                        quote: choose_quote(single_count, double_count, preferred_quote).0,
+                        len: None,
+                    }
                 }
                 return stop(single_count, double_count, preferred_quote);
             };
