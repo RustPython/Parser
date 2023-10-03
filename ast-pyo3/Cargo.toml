@@ -1,10 +1,11 @@
 [package]
 name = "rustpython-ast-pyo3"
 version = "0.0.1"
-edition = "2021"
+edition = { workspace = true }
+rust-version = { workspace = true }
 
 [features]
-# abi3 = ["pyo3/abi3-py37"]  # will be supported from next pyo3 version
+abi3 = ["pyo3/abi3-py37"]  # will be supported from next pyo3 version
 # This feature is experimental
 # It reimplements AST types, but currently both slower than python AST types and limited to use in other API
 wrapper = []
