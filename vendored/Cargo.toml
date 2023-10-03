@@ -1,14 +1,15 @@
 [package]
 name = "rustpython-parser-vendored"
 description = "RustPython parser vendored third-party crates."
-version = "0.3.0"
-authors = ["RustPython Team"]
-edition = "2021"
-repository = "https://github.com/RustPython/Parser/"
-license = "MIT"
+authors = ["RustPython Team", "and the original authors of the vendored modules"]
+license = "Various"
+edition = { workspace = true }
+version = { workspace = true }
+repository = { workspace = true }
+rust-version = { workspace = true }
 
 [dependencies]
-serde = { version = "1.0.133", optional = true, default-features = false, features = ["derive"] }
+serde = { workspace = true, optional = true, features = ["derive"] }
 memchr.workspace = true
 once_cell.workspace = true
 

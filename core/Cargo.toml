@@ -1,11 +1,12 @@
 [package]
 name = "rustpython-parser-core"
 description = "RustPython parser data types."
-version = "0.3.0"
-authors = ["RustPython Team"]
-edition = "2021"
-repository = "https://github.com/RustPython/Parser/"
-license = "MIT"
+edition = { workspace = true }
+version = { workspace = true }
+authors = { workspace = true }
+repository = { workspace = true }
+license = { workspace = true }
+rust-version = { workspace = true }
 
 [dependencies]
 # vendored dependency shouldn't be placed out of this crate

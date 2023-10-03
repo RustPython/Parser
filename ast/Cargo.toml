@@ -1,11 +1,12 @@
 [package]
 name = "rustpython-ast"
-version = "0.3.0"
 description = "AST definitions for RustPython"
-authors = ["RustPython Team"]
-edition = "2021"
-repository = "https://github.com/RustPython/Parser/"
-license = "MIT"
+version = { workspace = true }
+authors = { workspace = true }
+edition = { workspace = true }
+repository = { workspace = true }
+license = { workspace = true }
+rust-version = { workspace = true }
 
 [features]
 default = ["location", "malachite-bigint"]
