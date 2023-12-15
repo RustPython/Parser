@@ -16,6 +16,8 @@ fold = []
 unparse = ["rustpython-literal"]
 visitor = []
 all-nodes-with-ranges = []
+malachite-bigint = ["dep:malachite-bigint"]
+num-bigint = ["dep:num-bigint"]
 
 [dependencies]
 rustpython-parser-core = { workspace = true }

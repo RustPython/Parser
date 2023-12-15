@@ -24,7 +24,7 @@ phf_codegen = "0.11.1"
 tiny-keccak = { version = "2", features = ["sha3"] }
 
 [dependencies]
-rustpython-ast = { workspace = true }
+rustpython-ast = { workspace = true, default-features = false }
 rustpython-parser-core = { workspace = true }
 
 itertools = { workspace = true }
