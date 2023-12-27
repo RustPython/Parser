@@ -10,8 +10,6 @@ rust-version = { workspace = true }
 
 [features]
 default = ["malachite-bigint"]
-malachite-bigint = ["dep:malachite-bigint"]
-num-bigint = ["dep:num-bigint"]
 
 [dependencies]
 rustpython-literal = { workspace = true }
