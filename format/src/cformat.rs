@@ -1,10 +1,7 @@
 //! Implementation of Printf-Style string formatting
 //! as per the [Python Docs](https://docs.python.org/3/library/stdtypes.html#printf-style-string-formatting).
+use crate::bigint::{BigInt, Sign};
 use bitflags::bitflags;
-#[cfg(feature = "malachite-bigint")]
-use malachite_bigint::{BigInt, Sign};
-#[cfg(feature = "num-bigint")]
-use num_bigint::{BigInt, Sign};
 use num_traits::Signed;
 use rustpython_literal::{float, format::Case};
 use std::{

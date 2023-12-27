@@ -1,8 +1,5 @@
+use crate::bigint::{BigInt, Sign};
 use itertools::{Itertools, PeekingNext};
-#[cfg(feature = "malachite-bigint")]
-use malachite_bigint::{BigInt, Sign};
-#[cfg(feature = "num-bigint")]
-use num_bigint::{BigInt, Sign};
 use num_traits::FromPrimitive;
 use num_traits::{cast::ToPrimitive, Signed};
 use rustpython_literal::float;
