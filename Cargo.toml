@@ -34,7 +34,7 @@ num-complex = "0.4.0"
 num-bigint = "0.4.3"
 num-traits = "0.2"
 pyo3 = { version = "0.19.2" }
-malachite-bigint = "0.1.1"
+malachite-bigint = "0.2.0"
 memchr = "2.5.0"
 rand = "0.8.5"
 serde = { version = "1.0.133", default-features = false }
