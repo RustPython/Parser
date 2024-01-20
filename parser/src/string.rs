@@ -504,7 +504,7 @@ impl<'a> StringParser<'a> {
                 '\\' if !self.kind.is_raw() => {
                     self.next_char();
                     if let Some('{' | '}') = self.peek() {
-                        content.push_str("\\");
+                        content.push('\\');
                     } else {
                         content.push_str(&self.parse_escaped_char()?);
                     }
