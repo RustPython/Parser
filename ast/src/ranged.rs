@@ -1,7 +1,5 @@
 use crate::text_size::{TextRange, TextSize};
 
-pub use crate::builtin::*;
-
 pub trait Ranged {
     fn range(&self) -> TextRange;
 
