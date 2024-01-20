@@ -961,6 +961,13 @@ mod tests {
     }
 
     #[test]
+    fn test_parse_fstring_escaped_brackets() {
+        let source = "\\{{x\\}}";
+        let parse_ast = parse_fstring(source).unwrap();
+        insta::assert_debug_snapshot!(parse_ast);
+    }
+
+    #[test]
     fn test_parse_string_concat() {
         let source = "'Hello ' 'world'";
         let parse_ast = ast::Suite::parse(source, "<test>").unwrap();
