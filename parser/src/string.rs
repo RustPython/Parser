@@ -503,7 +503,11 @@ impl<'a> StringParser<'a> {
                 }
                 '\\' if !self.kind.is_raw() => {
                     self.next_char();
-                    content.push_str(&self.parse_escaped_char()?);
+                    if let Some('{' | '}') = self.peek() {
+                        content.push_str("\\");
+                    } else {
+                        content.push_str(&self.parse_escaped_char()?);
+                    }
                 }
                 _ => {
                     content.push(ch);
