@@ -503,7 +503,11 @@ impl<'a> StringParser<'a> {
                 }
                 '\\' if !self.kind.is_raw() => {
                     self.next_char();
-                    content.push_str(&self.parse_escaped_char()?);
+                    if let Some('{' | '}') = self.peek() {
+                        content.push('\\');
+                    } else {
+                        content.push_str(&self.parse_escaped_char()?);
+                    }
                 }
                 _ => {
                     content.push(ch);
@@ -952,6 +956,13 @@ mod tests {
     #[test]
     fn test_parse_fstring_yield_expr() {
         let source = "{yield}";
+        let parse_ast = parse_fstring(source).unwrap();
+        insta::assert_debug_snapshot!(parse_ast);
+    }
+
+    #[test]
+    fn test_parse_fstring_escaped_brackets() {
+        let source = "\\{{x\\}}";
         let parse_ast = parse_fstring(source).unwrap();
         insta::assert_debug_snapshot!(parse_ast);
     }
