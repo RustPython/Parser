@@ -20,7 +20,7 @@ mod generic;
 mod impls;
 mod ranged;
 #[cfg(feature = "unparse")]
-mod unparse;
+pub mod unparse;
 
 #[cfg(feature = "malachite-bigint")]
 pub use malachite_bigint as bigint;
