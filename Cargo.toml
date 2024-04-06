@@ -15,12 +15,12 @@ members = [
 ]
 
 [workspace.dependencies]
-rustpython-parser-vendored = { path = "vendored", version = "0.3.0" }
-rustpython-ast = { path = "ast", default-features = false, version = "0.3.0" }
-rustpython-parser-core = { path = "core", features = [], version = "0.3.0" }
-rustpython-literal = { path = "literal", version = "0.3.0" }
-rustpython-format = { path = "format", default-features = false, version = "0.3.0" }
-rustpython-parser = { path = "parser", default-features = false, version = "0.3.0" }
+rustpython-parser-vendored = { path = "vendored", version = "0.3.1" }
+rustpython-ast = { path = "ast", default-features = false, version = "0.3.1" }
+rustpython-parser-core = { path = "core", features = [], version = "0.3.1" }
+rustpython-literal = { path = "literal", version = "0.3.1" }
+rustpython-format = { path = "format", default-features = false, version = "0.3.1" }
+rustpython-parser = { path = "parser", default-features = false, version = "0.3.1" }
 
 anyhow = "1.0.45"
 bitflags = "2.4.0"
@@ -32,7 +32,6 @@ log = "0.4.16"
 num-complex = "0.4.0"
 num-bigint = "0.4.3"
 num-traits = "0.2"
-pyo3 = { version = "0.19.2" }
 malachite-bigint = "0.2.0"
 memchr = "2.5.0"
 rand = "0.8.5"
