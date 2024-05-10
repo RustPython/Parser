@@ -156,11 +156,11 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
         let context = self.will_map_user(&range);
 
         let name = self.fold(name)?;
+        let type_params = self.fold(type_params)?;
         let bases = self.fold(bases)?;
         let keywords = self.fold(keywords)?;
         let body = self.fold(body)?;
         let range = self.map_user(range, context)?;
-        let type_params = self.fold(type_params)?;
 
         Ok(crate::StmtClassDef {
             name,
@@ -190,11 +190,11 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
         let context = self.will_map_user(&range);
 
         let name = self.fold(name)?;
+        let type_params = self.fold(type_params)?;
         let args: Box<crate::Arguments<SourceRange>> = self.fold(args)?;
         let returns = self.fold(returns)?;
         let body = self.fold(body)?;
         let type_comment = self.fold(type_comment)?;
-        let type_params = self.fold(type_params)?;
         let range = self.map_user(range, context)?;
         Ok(crate::StmtFunctionDef {
             name,
@@ -225,11 +225,11 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
         let context = self.will_map_user(&range);
 
         let name = self.fold(name)?;
+        let type_params = self.fold(type_params)?;
         let args: Box<crate::Arguments<SourceRange>> = self.fold(args)?;
         let returns = self.fold(returns)?;
         let body = self.fold(body)?;
         let type_comment = self.fold(type_comment)?;
-        let type_params = self.fold(type_params)?;
         let range = self.map_user(range, context)?;
         Ok(crate::StmtAsyncFunctionDef {
             name,
