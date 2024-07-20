@@ -6,6 +6,33 @@ pub fn parse_str(literal: &str) -> Option<f64> {
     parse_inner(literal.trim().as_bytes())
 }
 
+fn strip_separators(literal: &[u8]) -> Option<Vec<u8>>{
+    let mut prev = b'\0';
+    let mut dup = Vec::<u8>::new();
+    for p in literal {
+        if *p == b'_' {
+            // Underscores are only allowed after digits.
+            if !prev.is_ascii_digit() {
+                return None;
+            }
+        } else {
+            dup.push(*p);
+            // Underscores are only allowed before digits.
+            if prev == b'_' && !p.is_ascii_digit() {
+                return None;
+            }
+        }
+        prev = *p;
+    }
+
+    // Underscores are not allowed at the end.
+    if prev == b'_' {
+        return None;
+    }
+
+    Some(dup)
+}
+
 pub fn parse_bytes(literal: &[u8]) -> Option<f64> {
     parse_inner(trim_slice(literal, |b| b.is_ascii_whitespace()))
 }
@@ -28,12 +55,16 @@ fn parse_inner(literal: &[u8]) -> Option<f64> {
     use lexical_parse_float::{
         format::PYTHON3_LITERAL, FromLexicalWithOptions, NumberFormatBuilder, Options,
     };
+
+    // Use custom function for underline handling for now.
+    // For further information see https://github.com/Alexhuszagh/rust-lexical/issues/96.
+    let stripped = strip_separators(literal)?;
+    
     // lexical-core's format::PYTHON_STRING is inaccurate
     const PYTHON_STRING: u128 = NumberFormatBuilder::rebuild(PYTHON3_LITERAL)
         .no_special(false)
-        .consecutive_digit_separator(false)
         .build();
-    f64::from_lexical_with_options::<PYTHON_STRING>(literal, &Options::new()).ok()
+    f64::from_lexical_with_options::<PYTHON_STRING>(&stripped, &Options::new()).ok()
 }
 
 pub fn is_integer(v: f64) -> bool {
