@@ -6,7 +6,7 @@ pub fn parse_str(literal: &str) -> Option<f64> {
     parse_inner(literal.trim().as_bytes())
 }
 
-fn strip_separators(literal: &[u8]) -> Option<Vec<u8>>{
+fn strip_underlines(literal: &[u8]) -> Option<Vec<u8>>{
     let mut prev = b'\0';
     let mut dup = Vec::<u8>::new();
     for p in literal {
@@ -58,7 +58,7 @@ fn parse_inner(literal: &[u8]) -> Option<f64> {
 
     // Use custom function for underline handling for now.
     // For further information see https://github.com/Alexhuszagh/rust-lexical/issues/96.
-    let stripped = strip_separators(literal)?;
+    let stripped = strip_underlines(literal)?;
     
     // lexical-core's format::PYTHON_STRING is inaccurate
     const PYTHON_STRING: u128 = NumberFormatBuilder::rebuild(PYTHON3_LITERAL)
