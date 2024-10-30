@@ -863,17 +863,54 @@ impl FormatString {
     }
 
     fn parse_part_in_brackets(text: &str) -> Result<FormatPart, FormatParseError> {
-        let parts: Vec<&str> = text.splitn(2, ':').collect();
+        let mut chars = text.chars().peekable();
+
+        let mut left = String::new();
+        let mut right = String::new();
+
+        let mut split = false;
+        let mut inside_brackets = false;
+
+        while let Some(char) = chars.next() {
+            if char == '[' {
+                inside_brackets = true;
+
+                if split {
+                    right.push(char);
+                } else {
+                    left.push(char);
+                }
+
+                while let Some(next_char) = chars.next() {
+                    if split {
+                        right.push(next_char);
+                    } else {
+                        left.push(next_char);
+                    }
+
+                    if next_char == ']' {
+                        inside_brackets = false;
+                        break;
+                    }
+                    if chars.peek().is_none() {
+                        return Err(FormatParseError::MissingRightBracket);
+                    }
+                }
+            } else if char == ':' && !split && !inside_brackets {
+                split = true;
+            } else if split {
+                right.push(char);
+            } else {
+                left.push(char);
+            }
+        }
+
         // before the comma is a keyword or arg index, after the comma is maybe a spec.
-        let arg_part = parts[0];
+        let arg_part: &str = &left;
 
-        let format_spec = if parts.len() > 1 {
-            parts[1].to_owned()
-        } else {
-            String::new()
-        };
+        let format_spec = if split { right } else { String::new() };
 
-        // On parts[0] can still be the conversion (!r, !s, !a)
+        // left can still be the conversion (!r, !s, !a)
         let parts: Vec<&str> = arg_part.splitn(2, '!').collect();
         // before the bang is a keyword or arg index, after the comma is maybe a conversion spec.
         let arg_part = parts[0];
@@ -1166,6 +1203,34 @@ mod tests {
             FormatString::from_str("{s"),
             Err(FormatParseError::UnmatchedBracket)
         );
+    }
+
+    #[test]
+    fn test_square_brackets_inside_format() {
+        assert_eq!(
+            FormatString::from_str("{[:123]}"),
+            Ok(FormatString {
+                format_parts: vec![FormatPart::Field {
+                    field_name: "[:123]".to_owned(),
+                    conversion_spec: None,
+                    format_spec: "".to_owned(),
+                }],
+            }),
+        );
+
+        assert_eq!(FormatString::from_str("{asdf[:123]asdf}"), {
+            Ok(FormatString {
+                format_parts: vec![FormatPart::Field {
+                    field_name: "asdf[:123]asdf".to_owned(),
+                    conversion_spec: None,
+                    format_spec: "".to_owned(),
+                }],
+            })
+        });
+
+        assert_eq!(FormatString::from_str("{[1234}"), {
+            Err(FormatParseError::MissingRightBracket)
+        });
     }
 
     #[test]
