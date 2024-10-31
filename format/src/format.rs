@@ -869,24 +869,17 @@ impl FormatString {
         let mut right = String::new();
 
         let mut split = false;
+        let mut selected = &mut left;
         let mut inside_brackets = false;
 
         while let Some(char) = chars.next() {
             if char == '[' {
                 inside_brackets = true;
 
-                if split {
-                    right.push(char);
-                } else {
-                    left.push(char);
-                }
+                selected.push(char);
 
                 while let Some(next_char) = chars.next() {
-                    if split {
-                        right.push(next_char);
-                    } else {
-                        left.push(next_char);
-                    }
+                    selected.push(next_char);
 
                     if next_char == ']' {
                         inside_brackets = false;
@@ -898,10 +891,9 @@ impl FormatString {
                 }
             } else if char == ':' && !split && !inside_brackets {
                 split = true;
-            } else if split {
-                right.push(char);
+                selected = &mut right;
             } else {
-                left.push(char);
+                selected.push(char);
             }
         }
 
