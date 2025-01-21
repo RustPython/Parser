@@ -370,13 +370,14 @@ MatchStatement: ast::Stmt = {
             .last()
             .unwrap()
             .end();
+        let subject_range = (subjects.first().unwrap().start()..subjects.last().unwrap().end()).into();
         ast::Stmt::Match(
             ast::StmtMatch {
                 subject: Box::new(ast::Expr::Tuple(
                     ast::ExprTuple {
                         elts: subjects,
                         ctx: ast::ExprContext::Load,
-                        range: (location..end_location).into()
+                        range: subject_range,
                     },
                 )),
                 cases,

@@ -274,6 +274,34 @@ impl crate::fold::Fold<TextRange> for LinearLocator<'_> {
             keywords,
         })
     }
+
+    fn fold_pattern_match_mapping(
+        &mut self,
+        node: crate::PatternMatchMapping<TextRange>,
+    ) -> Result<crate::PatternMatchMapping<Self::TargetU>, Self::Error> {
+        let crate::PatternMatchMapping {
+            keys,
+            patterns,
+            rest,
+            range,
+        } = node;
+        let context = self.will_map_user(&range);
+
+        let mut located_keys = Vec::with_capacity(keys.len());
+        let mut located_patterns = Vec::with_capacity(patterns.len());
+        for (key, value) in keys.into_iter().zip(patterns.into_iter()) {
+            located_keys.push(self.fold(key)?);
+            located_patterns.push(self.fold(value)?);
+        }
+        let rest = self.fold(rest)?;
+        let range = self.map_user(range, context)?;
+        Ok(crate::PatternMatchMapping {
+            keys: located_keys,
+            patterns: located_patterns,
+            rest,
+            range,
+        })
+    }
 }
 
 struct LinearLookaheadLocator<'a, 'b>(&'b mut LinearLocator<'a>);
