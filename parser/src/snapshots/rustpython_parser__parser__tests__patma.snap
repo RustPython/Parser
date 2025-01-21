@@ -3783,7 +3783,7 @@ expression: parse_ast
             range: 2720..2760,
             subject: Tuple(
                 ExprTuple {
-                    range: 2720..2760,
+                    range: 2726..2730,
                     elts: [
                         Name(
                             ExprName {

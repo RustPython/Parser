@@ -1,5 +1,5 @@
 // auto-generated: "lalrpop 0.20.0"
-// sha3: de5ffc51d44962eb297cbbf668fae33652eed69586405ebef2229fc02d183bc8
+// sha3: c2ba3f0f3de013733a18ba664f36f7f587254cc430656e553ceada96d33c409b
 use crate::{
     ast::{self as ast, Ranged, bigint::BigInt},
     lexer::{LexicalError, LexicalErrorType},
@@ -30842,13 +30842,14 @@ fn __action82<
             .last()
             .unwrap()
             .end();
+        let subject_range = (subjects.first().unwrap().start()..subjects.last().unwrap().end()).into();
         ast::Stmt::Match(
             ast::StmtMatch {
                 subject: Box::new(ast::Expr::Tuple(
                     ast::ExprTuple {
                         elts: subjects,
                         ctx: ast::ExprContext::Load,
-                        range: (location..end_location).into()
+                        range: subject_range,
                     },
                 )),
                 cases,
