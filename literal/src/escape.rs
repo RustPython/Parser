@@ -232,7 +232,7 @@ impl UnicodeEscape<'_> {
     }
 }
 
-impl<'a> Escape for UnicodeEscape<'a> {
+impl Escape for UnicodeEscape<'_> {
     fn source_len(&self) -> usize {
         self.source.len()
     }
@@ -251,24 +251,6 @@ impl<'a> Escape for UnicodeEscape<'a> {
             Self::write_char(ch, self.layout().quote, formatter)?;
         }
         Ok(())
-    }
-}
-
-#[cfg(test)]
-mod unicode_escape_tests {
-    use super::*;
-
-    #[test]
-    fn changed() {
-        fn test(s: &str) -> bool {
-            UnicodeEscape::new_repr(s).changed()
-        }
-        assert!(!test("hello"));
-        assert!(!test("'hello'"));
-        assert!(!test("\"hello\""));
-
-        assert!(test("'\"hello"));
-        assert!(test("hello\n"));
     }
 }
 
@@ -391,7 +373,7 @@ impl AsciiEscape<'_> {
     }
 }
 
-impl<'a> Escape for AsciiEscape<'a> {
+impl Escape for AsciiEscape<'_> {
     fn source_len(&self) -> usize {
         self.source.len()
     }
@@ -437,5 +419,23 @@ impl BytesRepr<'_, '_> {
 impl std::fmt::Display for BytesRepr<'_, '_> {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.write(formatter)
+    }
+}
+
+#[cfg(test)]
+mod unicode_escape_tests {
+    use super::*;
+
+    #[test]
+    fn changed() {
+        fn test(s: &str) -> bool {
+            UnicodeEscape::new_repr(s).changed()
+        }
+        assert!(!test("hello"));
+        assert!(!test("'hello'"));
+        assert!(!test("\"hello\""));
+
+        assert!(test("'\"hello"));
+        assert!(test("hello\n"));
     }
 }
