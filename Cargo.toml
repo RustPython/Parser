@@ -32,7 +32,7 @@ log = "0.4.16"
 num-complex = "0.4.0"
 num-bigint = "0.4.3"
 num-traits = "0.2"
-malachite-bigint = "0.2.0"
+malachite-bigint = "0.2.1"
 memchr = "2.5.0"
 rand = "0.8.5"
 serde = { version = "1.0.133", default-features = false }
