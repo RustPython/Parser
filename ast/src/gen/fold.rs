@@ -2896,13 +2896,24 @@ pub fn fold_type_param_type_var<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: TypeParamTypeVar<U>,
 ) -> Result<TypeParamTypeVar<F::TargetU>, F::Error> {
-    let TypeParamTypeVar { name, bound, range } = node;
+    let TypeParamTypeVar {
+        name,
+        bound,
+        default_value,
+        range,
+    } = node;
     let context = folder.will_map_user(&range);
 
     let name = Foldable::fold(name, folder)?;
     let bound = Foldable::fold(bound, folder)?;
+    let default_value = Foldable::fold(default_value, folder)?;
     let range = folder.map_user(range, context)?;
-    Ok(TypeParamTypeVar { name, bound, range })
+    Ok(TypeParamTypeVar {
+        name,
+        bound,
+        default_value,
+        range,
+    })
 }
 impl<T, U> Foldable<T, U> for TypeParamParamSpec<T> {
     type Mapped = TypeParamParamSpec<U>;
@@ -2917,12 +2928,21 @@ pub fn fold_type_param_param_spec<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: TypeParamParamSpec<U>,
 ) -> Result<TypeParamParamSpec<F::TargetU>, F::Error> {
-    let TypeParamParamSpec { name, range } = node;
+    let TypeParamParamSpec {
+        name,
+        default_value,
+        range,
+    } = node;
     let context = folder.will_map_user(&range);
 
     let name = Foldable::fold(name, folder)?;
+    let default_value = Foldable::fold(default_value, folder)?;
     let range = folder.map_user(range, context)?;
-    Ok(TypeParamParamSpec { name, range })
+    Ok(TypeParamParamSpec {
+        name,
+        default_value,
+        range,
+    })
 }
 impl<T, U> Foldable<T, U> for TypeParamTypeVarTuple<T> {
     type Mapped = TypeParamTypeVarTuple<U>;
@@ -2937,12 +2957,21 @@ pub fn fold_type_param_type_var_tuple<U, F: Fold<U> + ?Sized>(
     #[allow(unused)] folder: &mut F,
     node: TypeParamTypeVarTuple<U>,
 ) -> Result<TypeParamTypeVarTuple<F::TargetU>, F::Error> {
-    let TypeParamTypeVarTuple { name, range } = node;
+    let TypeParamTypeVarTuple {
+        name,
+        default_value,
+        range,
+    } = node;
     let context = folder.will_map_user(&range);
 
     let name = Foldable::fold(name, folder)?;
+    let default_value = Foldable::fold(default_value, folder)?;
     let range = folder.map_user(range, context)?;
-    Ok(TypeParamTypeVarTuple { name, range })
+    Ok(TypeParamTypeVarTuple {
+        name,
+        default_value,
+        range,
+    })
 }
 impl<T, U> Foldable<T, U> for ArgWithDefault<T> {
     type Mapped = ArgWithDefault<U>;
