@@ -853,13 +853,24 @@ pub trait Visitor<R = crate::text_size::TextRange> {
         if let Some(value) = node.bound {
             self.visit_expr(*value);
         }
+        if let Some(value) = node.default_value {
+            self.visit_expr(*value);
+        }
     }
     fn visit_type_param_param_spec(&mut self, node: TypeParamParamSpec<R>) {
         self.generic_visit_type_param_param_spec(node)
     }
-    fn generic_visit_type_param_param_spec(&mut self, node: TypeParamParamSpec<R>) {}
+    fn generic_visit_type_param_param_spec(&mut self, node: TypeParamParamSpec<R>) {
+        if let Some(value) = node.default_value {
+            self.visit_expr(*value);
+        }
+    }
     fn visit_type_param_type_var_tuple(&mut self, node: TypeParamTypeVarTuple<R>) {
         self.generic_visit_type_param_type_var_tuple(node)
     }
-    fn generic_visit_type_param_type_var_tuple(&mut self, node: TypeParamTypeVarTuple<R>) {}
+    fn generic_visit_type_param_type_var_tuple(&mut self, node: TypeParamTypeVarTuple<R>) {
+        if let Some(value) = node.default_value {
+            self.visit_expr(*value);
+        }
+    }
 }
