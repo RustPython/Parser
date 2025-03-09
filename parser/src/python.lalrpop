@@ -1174,19 +1174,19 @@ TypeParamList: Vec<ast::TypeParam> = {
 };
 
 TypeParam: ast::TypeParam = {
-    <location:@L> <name:Identifier> <bound:(":" <Test<"all">>)?> <end_location:@R>  => {
+    <location:@L> <name:Identifier> <bound:(":" <Test<"all">>)?> <default:("=" <Test<"all">>)?> <end_location:@R>  => {
         ast::TypeParam::TypeVar(
-            ast::TypeParamTypeVar { name, bound: bound.map(Box::new), range: (location..end_location).into() }
+            ast::TypeParamTypeVar { name, bound: bound.map(Box::new), default_value: default.map(Box::new), range: (location..end_location).into()  }
         )
     },
-    <location:@L> "*" <name:Identifier> <end_location:@R>  => {
+    <location:@L> "*" <name:Identifier> <default:("=" <Test<"all">>)?> <end_location:@R>  => {
         ast::TypeParam::TypeVarTuple(
-            ast::TypeParamTypeVarTuple { name, range: (location..end_location).into() }
+            ast::TypeParamTypeVarTuple { name, default_value: default.map(Box::new), range: (location..end_location).into() }
         )
     },
-    <location:@L> "**" <name:Identifier> <end_location:@R>  => {
+    <location:@L> "**" <name:Identifier> <default:("=" <Test<"all">>)?> <end_location:@R>  => {
         ast::TypeParam::ParamSpec(
-            ast::TypeParamParamSpec { name, range: (location..end_location).into() }
+            ast::TypeParamParamSpec { name, default_value: default.map(Box::new), range: (location..end_location).into() }
         )
     }
 };
