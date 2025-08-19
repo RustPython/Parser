@@ -1,6 +1,6 @@
 # RustPython parser as a library
 
-This project is forked from [RustPython][RustPython] project. The parser is one of the core part of [RustPython] and [Ruff] project.
+This project is forked from [RustPython][RustPython] project. The parser is one of the core parts of [RustPython] and was one of the core parts of the [Ruff] project.
 
 We try to keep these crates as a well-packaged library for more potential users.
 
