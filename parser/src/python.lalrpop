@@ -878,7 +878,8 @@ TryStatement: ast::Stmt = {
 };
 
 ExceptStarClause: ast::ExceptHandler = {
-    <location:@L> "except" "*" <typ:Test<"all">> ":" <body:Suite> => {
+    // PEP 758 covers `except*` too.
+    <location:@L> "except" "*" <typ:GenericList<Test<"all">>> ":" <body:Suite> => {
         let end_location = body.last().unwrap().end();
         ast::ExceptHandler::ExceptHandler(
             ast::ExceptHandlerExceptHandler {
@@ -904,7 +905,11 @@ ExceptStarClause: ast::ExceptHandler = {
 
 
 ExceptClause: ast::ExceptHandler = {
-    <location:@L> "except" <typ:Test<"all">?> ":" <body:Suite> => {
+    // PEP 758: several exception types without parentheses, as long as there
+    // is no `as` clause. `GenericList` already collapses a single element to
+    // itself and wraps the rest in a tuple, which is exactly the shape CPython
+    // produces for `except A, B:`.
+    <location:@L> "except" <typ:GenericList<Test<"all">>?> ":" <body:Suite> => {
         let end_location = body.last().unwrap().end();
         ast::ExceptHandler::ExceptHandler(
             ast::ExceptHandlerExceptHandler {
