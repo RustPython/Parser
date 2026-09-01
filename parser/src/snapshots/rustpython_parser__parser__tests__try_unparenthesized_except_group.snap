@@ -1,0 +1,254 @@
+---
+source: parser/src/parser.rs
+expression: parse_ast
+---
+[
+    Try(
+        StmtTry {
+            range: 0..75,
+            body: [
+                Raise(
+                    StmtRaise {
+                        range: 9..28,
+                        exc: Some(
+                            Call(
+                                ExprCall {
+                                    range: 15..28,
+                                    func: Name(
+                                        ExprName {
+                                            range: 15..25,
+                                            id: Identifier(
+                                                "ValueError",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    args: [
+                                        Constant(
+                                            ExprConstant {
+                                                range: 26..27,
+                                                value: Int(
+                                                    1,
+                                                ),
+                                                kind: None,
+                                            },
+                                        ),
+                                    ],
+                                    keywords: [],
+                                },
+                            ),
+                        ),
+                        cause: None,
+                    },
+                ),
+            ],
+            handlers: [
+                ExceptHandler(
+                    ExceptHandlerExceptHandler {
+                        range: 29..75,
+                        type_: Some(
+                            Tuple(
+                                ExprTuple {
+                                    range: 36..54,
+                                    elts: [
+                                        Name(
+                                            ExprName {
+                                                range: 36..45,
+                                                id: Identifier(
+                                                    "TypeError",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                        Name(
+                                            ExprName {
+                                                range: 47..54,
+                                                id: Identifier(
+                                                    "OSError",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                },
+                            ),
+                        ),
+                        name: None,
+                        body: [
+                            Expr(
+                                StmtExpr {
+                                    range: 60..75,
+                                    value: Call(
+                                        ExprCall {
+                                            range: 60..75,
+                                            func: Name(
+                                                ExprName {
+                                                    range: 60..65,
+                                                    id: Identifier(
+                                                        "print",
+                                                    ),
+                                                    ctx: Load,
+                                                },
+                                            ),
+                                            args: [
+                                                Constant(
+                                                    ExprConstant {
+                                                        range: 66..74,
+                                                        value: Str(
+                                                            "caught",
+                                                        ),
+                                                        kind: None,
+                                                    },
+                                                ),
+                                            ],
+                                            keywords: [],
+                                        },
+                                    ),
+                                },
+                            ),
+                        ],
+                    },
+                ),
+            ],
+            orelse: [],
+            finalbody: [],
+        },
+    ),
+    TryStar(
+        StmtTryStar {
+            range: 77..176,
+            body: [
+                Raise(
+                    StmtRaise {
+                        range: 86..126,
+                        exc: Some(
+                            Call(
+                                ExprCall {
+                                    range: 92..126,
+                                    func: Name(
+                                        ExprName {
+                                            range: 92..106,
+                                            id: Identifier(
+                                                "ExceptionGroup",
+                                            ),
+                                            ctx: Load,
+                                        },
+                                    ),
+                                    args: [
+                                        Constant(
+                                            ExprConstant {
+                                                range: 107..111,
+                                                value: Str(
+                                                    "eg",
+                                                ),
+                                                kind: None,
+                                            },
+                                        ),
+                                        List(
+                                            ExprList {
+                                                range: 113..125,
+                                                elts: [
+                                                    Call(
+                                                        ExprCall {
+                                                            range: 114..124,
+                                                            func: Name(
+                                                                ExprName {
+                                                                    range: 114..122,
+                                                                    id: Identifier(
+                                                                        "KeyError",
+                                                                    ),
+                                                                    ctx: Load,
+                                                                },
+                                                            ),
+                                                            args: [],
+                                                            keywords: [],
+                                                        },
+                                                    ),
+                                                ],
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    ],
+                                    keywords: [],
+                                },
+                            ),
+                        ),
+                        cause: None,
+                    },
+                ),
+            ],
+            handlers: [
+                ExceptHandler(
+                    ExceptHandlerExceptHandler {
+                        range: 127..176,
+                        type_: Some(
+                            Tuple(
+                                ExprTuple {
+                                    range: 135..155,
+                                    elts: [
+                                        Name(
+                                            ExprName {
+                                                range: 135..143,
+                                                id: Identifier(
+                                                    "KeyError",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                        Name(
+                                            ExprName {
+                                                range: 145..155,
+                                                id: Identifier(
+                                                    "IndexError",
+                                                ),
+                                                ctx: Load,
+                                            },
+                                        ),
+                                    ],
+                                    ctx: Load,
+                                },
+                            ),
+                        ),
+                        name: None,
+                        body: [
+                            Expr(
+                                StmtExpr {
+                                    range: 161..176,
+                                    value: Call(
+                                        ExprCall {
+                                            range: 161..176,
+                                            func: Name(
+                                                ExprName {
+                                                    range: 161..166,
+                                                    id: Identifier(
+                                                        "print",
+                                                    ),
+                                                    ctx: Load,
+                                                },
+                                            ),
+                                            args: [
+                                                Constant(
+                                                    ExprConstant {
+                                                        range: 167..175,
+                                                        value: Str(
+                                                            "caught",
+                                                        ),
+                                                        kind: None,
+                                                    },
+                                                ),
+                                            ],
+                                            keywords: [],
+                                        },
+                                    ),
+                                },
+                            ),
+                        ],
+                    },
+                ),
+            ],
+            orelse: [],
+            finalbody: [],
+        },
+    ),
+]

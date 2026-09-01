@@ -864,6 +864,24 @@ except OSError as e:
     }
 
     #[test]
+    fn test_try_unparenthesized_except_group() {
+        let parse_ast = ast::Suite::parse(
+            r#"try:
+    raise ValueError(1)
+except TypeError, OSError:
+    print('caught')
+
+try:
+    raise ExceptionGroup('eg', [KeyError()])
+except* KeyError, IndexError:
+    print('caught')"#,
+            "<test>",
+        )
+        .unwrap();
+        insta::assert_debug_snapshot!(parse_ast);
+    }
+
+    #[test]
     fn test_try_star() {
         let parse_ast = ast::Suite::parse(
             r#"try:
